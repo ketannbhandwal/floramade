@@ -9,8 +9,8 @@ import { motion } from 'framer-motion';
 
 function Products({ products = [] }) {
   return (
-    <section id="products" className="py-24 px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section id="products" className="py-16 md:py-20 lg:py-24 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
         {/* Header Section */}
         <div className="flex flex-col">
           <SectionHeader
@@ -20,7 +20,7 @@ function Products({ products = [] }) {
         </div>
 
         {/* 3-Column Grid */}
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {products.length > 0 ? (
             products.slice(0, 3).map((p, i) => (
               <motion.div 
@@ -34,7 +34,7 @@ function Products({ products = [] }) {
               </motion.div>
             ))
           ) : (
-            <p className="text-foreground/30 col-span-full text-center py-24 font-light italic">
+            <p className="text-foreground/30 col-span-full text-center py-16 md:py-24 font-light italic text-sm sm:text-base">
               New arrivals coming soon.
             </p>
           )}

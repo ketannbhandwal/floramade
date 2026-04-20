@@ -27,10 +27,13 @@ const ProductSchema = new Schema(
     ],
     reviews: [
       {
+        userId: { type: Schema.Types.ObjectId, ref: 'User' },
         name: String,
         image: String,
         rating: Number,
         comment: String,
+        approved: { type: Boolean, default: false },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
     images: [{ type: String }],

@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import toast from "react-hot-toast";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
-import { ShieldCheck, Truck, CreditCard, ChevronRight } from "lucide-react";
+import { ShieldCheck, Truck, CreditCard, ChevronRight, MapPin, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
@@ -24,6 +24,10 @@ export default function CheckoutPage() {
   });
   const [paymentMethod, setPaymentMethod] = useState("razorpay");
   const [marketingConsent, setMarketingConsent] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
+  const [showNewAddress, setShowNewAddress] = useState(false);
+  const [saveToProfile, setSaveToProfile] = useState(false);
   const [address, setAddress] = useState(() => {
     if (typeof window === "undefined") {
       return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
@@ -37,13 +41,77 @@ export default function CheckoutPage() {
     }
   });
 
+  useEffect(() => {
+    loadAddresses();
+  }, []);
+
+  async function loadAddresses() {
+    try {
+      const res = await fetch("/api/addresses");
+      const data = await res.json();
+      if (res.ok && data.addresses?.length > 0) {
+        setSavedAddresses(data.addresses);
+        const defaultAddr = data.addresses.find(addr => addr.isDefault);
+        if (defaultAddr) {
+          setSelectedAddressId(defaultAddr._id);
+          setAddress({
+            fullName: defaultAddr.fullName,
+            phone: defaultAddr.phone,
+            addressLine: defaultAddr.addressLine,
+            city: defaultAddr.city,
+            state: defaultAddr.state,
+            pincode: defaultAddr.pincode,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load addresses:", error);
+    }
+  }
+
+  function selectAddress(addr) {
+    setSelectedAddressId(addr._id);
+    setAddress({
+      fullName: addr.fullName,
+      phone: addr.phone,
+      addressLine: addr.addressLine,
+      city: addr.city,
+      state: addr.state,
+      pincode: addr.pincode,
+    });
+    setShowNewAddress(false);
+  }
+
   const selectedItems = useMemo(() => (buyNowItems.length ? buyNowItems : cartItems), [buyNowItems, cartItems]);
-  const finalTotal = useMemo(
+  const subtotal = useMemo(
     () => selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [selectedItems]
   );
+  const shippingCost = useMemo(() => (subtotal >= 600 ? 0 : 50), [subtotal]);
+  const finalTotal = useMemo(() => subtotal + shippingCost, [subtotal, shippingCost]);
 
   async function placeCodOrder() {
+    // Save address to profile if checkbox is checked
+    if (saveToProfile && address.fullName && address.phone && address.addressLine && address.city && address.state && address.pincode) {
+      try {
+        await fetch("/api/addresses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName: address.fullName,
+            phone: address.phone,
+            addressLine: address.addressLine,
+            city: address.city,
+            state: address.state,
+            pincode: address.pincode,
+            isDefault: savedAddresses.length === 0,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to save address to profile:", error);
+      }
+    }
+
     const res = await fetch("/api/orders/cod", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,6 +152,27 @@ export default function CheckoutPage() {
       description: "Checkout Payment",
       order_id: order.id,
       handler: async (response) => {
+        // Save address to profile if checkbox is checked
+        if (saveToProfile && address.fullName && address.phone && address.addressLine && address.city && address.state && address.pincode) {
+          try {
+            await fetch("/api/addresses", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fullName: address.fullName,
+                phone: address.phone,
+                addressLine: address.addressLine,
+                city: address.city,
+                state: address.state,
+                pincode: address.pincode,
+                isDefault: savedAddresses.length === 0,
+              }),
+            });
+          } catch (error) {
+            console.error("Failed to save address to profile:", error);
+          }
+        }
+
         const verify = await fetch("/api/payment/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -131,14 +220,99 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-medium tracking-[0.01em]">Delivery Address</h2>
             </div>
             
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
-              <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
-              <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
-              <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
-              <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
-              <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
-            </div>
+            {savedAddresses.length > 0 && !showNewAddress && (
+              <div className="space-y-4">
+                <p className="text-sm text-foreground/60">Select a saved address or add a new one</p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {savedAddresses.map((addr) => (
+                    <div
+                      key={addr._id}
+                      onClick={() => selectAddress(addr)}
+                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        selectedAddressId === addr._id
+                          ? 'border-accent bg-accent/5 shadow-md'
+                          : 'border-border bg-white hover:border-accent/30'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="h-5 w-5 rounded-full border-2 mt-0.5 flex items-center justify-center">
+                          {selectedAddressId === addr._id && (
+                            <div className="h-2.5 w-2.5 rounded-full bg-accent" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground">{addr.fullName}</p>
+                          <p className="text-sm text-foreground/70">{addr.phone}</p>
+                          <p className="text-sm text-foreground/70 mt-1">{addr.addressLine}</p>
+                          <p className="text-sm text-foreground/70">{addr.city}, {addr.state} - {addr.pincode}</p>
+                          {addr.isDefault && (
+                            <span className="inline-block mt-2 text-xs font-bold text-accent uppercase tracking-wider">Default</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setShowNewAddress(true)}
+                  className="flex items-center gap-2 text-accent text-sm font-medium hover:text-accent/80 transition-colors"
+                >
+                  <Plus size={16} /> Add New Address
+                </button>
+              </div>
+            )}
+            
+            {showNewAddress && (
+              <div className="space-y-4">
+                <button
+                  onClick={() => setShowNewAddress(false)}
+                  className="flex items-center gap-2 text-foreground/60 text-sm hover:text-foreground transition-colors"
+                >
+                  ← Back to saved addresses
+                </button>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
+                  <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
+                  <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
+                  <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
+                  <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
+                  <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="saveToProfile"
+                    checked={saveToProfile}
+                    onChange={(e) => setSaveToProfile(e.target.checked)}
+                    className="w-5 h-5 rounded border-foreground/20"
+                  />
+                  <label htmlFor="saveToProfile" className="text-sm text-foreground/70">Save this address to my profile for future orders</label>
+                </div>
+              </div>
+            )}
+            
+            {savedAddresses.length === 0 && (
+              <div className="space-y-4">
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
+                  <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
+                  <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
+                  <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
+                  <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
+                  <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="saveToProfileNoAddresses"
+                    checked={saveToProfile}
+                    onChange={(e) => setSaveToProfile(e.target.checked)}
+                    className="w-5 h-5 rounded border-foreground/20"
+                  />
+                  <label htmlFor="saveToProfileNoAddresses" className="text-sm text-foreground/70">Save this address to my profile for future orders</label>
+                </div>
+              </div>
+            )}
           </section>
 
           {/* Payment Method */}
@@ -195,39 +369,54 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div className="mt-8 pt-8 border-t border-background/20 space-y-6">
-              <div className="flex justify-between items-end">
+            <div className="mt-8 pt-8 border-t border-background/20 space-y-4">
+              <div className="flex justify-between items-center">
+                <p className="text-background/60 font-light">Subtotal</p>
+                <p className="text-background/90">₹ {subtotal}</p>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-background/60 font-light">Shipping</p>
+                <p className={shippingCost === 0 ? "text-accent font-medium" : "text-background/90"}>
+                  {shippingCost === 0 ? "FREE" : `₹ ${shippingCost}`}
+                </p>
+              </div>
+              {shippingCost > 0 && subtotal < 600 && (
+                <p className="text-xs text-background/50">
+                  Add ₹{600 - subtotal} more for free shipping
+                </p>
+              )}
+              <div className="flex justify-between items-end pt-4 border-t border-background/20">
                 <p className="text-background/60 font-light">Grand Total</p>
                 <p className="text-3xl font-light text-accent">₹ {finalTotal}</p>
               </div>
-
-              <div className="space-y-4">
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <input 
-                    type="checkbox" 
-                    className="mt-1 accent-accent rounded border-background/30"
-                    checked={marketingConsent}
-                    onChange={(e) => setMarketingConsent(e.target.checked)}
-                  />
-                  <span className="text-[11px] text-background/70 leading-relaxed group-hover:text-background transition-colors">
-                    I agree to receive marketing emails about new rituals and wellness tips.
-                  </span>
-                </label>
-
-                <p className="text-[10px] text-background/60 leading-relaxed">
-                  By placing this order, you agree to Fiveetatva's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
-                </p>
-              </div>
-
-              <button 
-                onClick={handlePayment} 
-                className="w-full bg-accent text-background py-6 rounded-full font-bold uppercase tracking-[0.1em] text-xs hover:bg-accent/90 transition-all duration-500 shadow-xl mt-4"
-              >
-                {paymentMethod === "cod" ? "Place COD Order" : "Pay with Razorpay"}
-              </button>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-2 text-background/40 text-[10px] uppercase tracking-[0.1em] font-bold">
+            <div className="space-y-4 mt-6">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input 
+                  type="checkbox" 
+                  className="mt-1 accent-accent rounded border-background/30"
+                  checked={marketingConsent}
+                  onChange={(e) => setMarketingConsent(e.target.checked)}
+                />
+                <span className="text-[11px] text-background/70 leading-relaxed group-hover:text-background transition-colors">
+                  I agree to receive marketing emails about new rituals and wellness tips.
+                </span>
+              </label>
+
+              <p className="text-[10px] text-background/60 leading-relaxed">
+                By placing this order, you agree to Fiveetatva's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
+              </p>
+            </div>
+
+            <button 
+              onClick={handlePayment} 
+              className="w-full bg-accent text-background py-6 rounded-full font-bold uppercase tracking-[0.1em] text-xs hover:bg-accent/90 transition-all duration-500 shadow-xl mt-6"
+            >
+              {paymentMethod === "cod" ? "Place COD Order" : "Pay with Razorpay"}
+            </button>
+
+            <div className="mt-6 flex items-center justify-center gap-2 text-background/40 text-[10px] uppercase tracking-[0.1em] font-bold">
               <ShieldCheck size={14} /> 100% Secure Checkout
             </div>
           </div>

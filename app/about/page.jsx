@@ -29,10 +29,10 @@ export default function AboutPage() {
             className="absolute inset-0"
           >
             <Image 
-              src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=2400&auto=format&fit=crop" 
+              src="/assets/about.jpg" 
               alt="About Fiveetatva" 
               fill 
-              className="object-cover"
+              className="object-cover opacity-60"
               priority
             />
           </motion.div>
@@ -50,7 +50,7 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="text-6xl md:text-8xl font-light text-background leading-tight"
             >
-              Our <span className="font-display italic text-primary">Journey</span>
+              Our <span className="font-display italic text-white/60">Journey</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -62,6 +62,7 @@ export default function AboutPage() {
             </motion.p>
           </div>
         </section>
+        
 
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-20 md:py-32 space-y-24">
           
@@ -105,7 +106,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
               <Image 
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop" 
+                src="/assets/aboutus2.webp" 
                 alt="Ayurvedic Wellness" 
                 fill 
                 className="object-cover"

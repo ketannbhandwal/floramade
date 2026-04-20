@@ -19,7 +19,7 @@ export default function HomeSections({ products }) {
     <div className="bg-background text-foreground w-full">
       <Landing />
       <Certificate />
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-24 md:py-32 space-y-32">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-16 md:py-24 lg:py-32 space-y-16 md:space-y-24 lg:space-y-32">
         <Products products={products} />
       </div>
       <Philosophy />

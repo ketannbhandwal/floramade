@@ -44,7 +44,7 @@ export async function generateMetadata({ params }) {
       ...product.ingredients || [],
     ],
     openGraph: {
-      type: "product",
+      type: "website",
       locale: "en_IN",
       url: `https://fiveetatva.com/product/${slug}`,
       title: product.name,

@@ -64,7 +64,7 @@ export default function Navbar() {
       hasDropdown: true,
       subLinks: [
         { label: "MadhuCurex Powder", href: "/product/madhucurex-powder", description: "For Sugar" },
-        { label: "MadhuCurex Capsule", href: "/product/madhucurex-capsule", description: "For Sugar" },
+        { label: "MadhuCurex Capsule", href: "/product/madhucurex-capsules", description: "For Sugar" },
         { label: "Paachan Sathi Powder", href: "/product/paachan-sathi-powder", description: "For Digestion" },
       ]
     },
@@ -79,22 +79,19 @@ export default function Navbar() {
 
   const textColor = isLightText ? "text-white" : "text-foreground";
   const mutedTextColor = isLightText ? "text-white/70 hover:text-white" : "text-foreground/60 hover:text-foreground";
-  const logoColor = isLightText ? "text-white" : "text-foreground";
   const badgeBg = isLightText ? "bg-white text-foreground" : "bg-accent text-background";
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${headerClasses}`}
-      >
-        <div className="container-premium flex items-center justify-between">
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-background/90 backdrop-blur-xl shadow-sm' : hasDarkHero ? 'bg-transparent' : 'bg-background/90 backdrop-blur-xl'}`}>
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-6 flex items-center justify-between gap-4 md:gap-8">
           {/* Logo */}
           <Image 
             src="/assets/logo.png" 
             alt="Fiveetatva" 
             width={110}
             height={110}
-            className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 ${logoColor}`}
+            className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 ${textColor}`}
           />
 
           {/* Desktop Navigation */}
@@ -313,20 +310,24 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="p-8 md:p-16 border-t border-border flex flex-col sm:flex-row justify-between gap-6"
+              className="p-8 md:p-16 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6"
             >
-              <div className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-foreground/40">Contact</p>
-                <a href="mailto:hello@fiveetatva.com" className="text-lg hover:text-accent transition-colors duration-500 block">hello@fiveetatva.com</a>
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center">
+                <Link href="/account" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                  Account
+                </Link>
+                {user && (
+                  <Link href="/logout" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                    Logout
+                  </Link>
+                )}
+                {user?.role === 'admin' && (
+                  <Link href="/admin" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                    Admin
+                  </Link>
+                )}
               </div>
-              <div className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.2em] text-foreground/40">Socials</p>
-                <div className="flex gap-4">
-                  {['Instagram', 'Facebook', 'Twitter'].map(social => (
-                    <a key={social} href="#" className="text-sm hover:text-accent transition-colors duration-500">{social}</a>
-                  ))}
-                </div>
-              </div>
+              <p className="text-xs text-foreground/40">© 2024 Fiveetatva</p>
             </motion.div>
           </motion.div>
         )}

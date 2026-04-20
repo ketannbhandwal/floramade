@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart } from "lucide-react";
+import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
@@ -76,6 +76,8 @@ export default function ProductDetails({ product, relatedProducts }) {
   const [quantity, setQuantity] = useState(1);
   const [buyNowOpen, setBuyNowOpen] = useState(false);
   const [buyDetails, setBuyDetails] = useState({ fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" });
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewData, setReviewData] = useState({ name: "", rating: 5, comment: "" });
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
@@ -115,12 +117,43 @@ export default function ProductDetails({ product, relatedProducts }) {
     router.push("/checkout");
   }
 
+  async function handleSubmitReview() {
+    if (!reviewData.name || !reviewData.comment) {
+      return toast.error("Please fill in all fields");
+    }
+
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product._id,
+          rating: reviewData.rating,
+          comment: reviewData.comment,
+          name: reviewData.name,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit review");
+      }
+
+      toast.success(data.message || "Review submitted successfully!");
+      setReviewOpen(false);
+      setReviewData({ name: "", rating: 5, comment: "" });
+    } catch (error) {
+      toast.error(error.message || "Failed to submit review");
+    }
+  }
+
   return (
-    <div className="w-full bg-background text-foreground pb-20 pt-24 md:pt-32">
+    <div className="w-full bg-background text-foreground pb-16 md:pb-20 pt-20 md:pt-24 lg:pt-32">
       <ProductStructuredData product={product} />
       {/* HERO SECTION */}
-      <section className="relative w-full flex items-center pb-16 md:pb-24">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 w-full grid lg:grid-cols-2 gap-12 md:gap-16 items-start">
+      <section className="relative w-full flex items-center pb-12 md:pb-16 lg:pb-24">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 w-full grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* Images */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -166,9 +199,11 @@ export default function ProductDetails({ product, relatedProducts }) {
               <p className="text-base text-foreground/60 leading-relaxed max-w-lg font-light">
                 {product.description}
               </p>
-              <div className="flex items-end gap-6 pt-4 border-t border-border">
-                <p className="text-2xl font-light">₹{product.discountPrice}</p>
-                <p className="text-lg text-foreground/40 line-through mb-1 font-light">₹{product.price}</p>
+              <div className="flex items-baseline gap-3 md:gap-4">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-light">₹{product.discountPrice}</h2>
+                {product.price > product.discountPrice && (
+                  <p className="text-base md:text-lg text-foreground/50 line-through font-light">₹{product.price}</p>
+                )}
               </div>
             </div>
 
@@ -194,26 +229,20 @@ export default function ProductDetails({ product, relatedProducts }) {
             <div className="flex flex-col sm:flex-row gap-3 pt-6">
               <button 
                 onClick={handleWishlist}
-                className={`h-11 rounded-full border transition-all px-4 duration-300 font-light uppercase tracking-[0.1em] text-xs flex items-center justify-center gap-2 ${
+                className={`h-11 rounded-full border transition-all px-4 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs flex items-center justify-center gap-2 ${
                   isInWishlist(product._id) 
                     ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white' 
                     : 'border-foreground/20 text-foreground hover:bg-foreground hover:text-background'
                 }`}
               >
                 <Heart size={16} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
-                {isInWishlist(product._id) ? 'Wishlisted' : 'Wishlist'}
+                <span className="hidden sm:inline">Wishlist</span>
               </button>
               <button 
                 onClick={handleAddToCart}
-                className="flex-1 h-11 rounded-full border border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-all duration-300 py-2 font-light uppercase tracking-[0.1em] text-xs"
+                className="h-11 rounded-full bg-foreground text-background transition-all px-6 sm:px-8 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs hover:bg-accent hover:text-background"
               >
                 Add to Cart
-              </button>
-              <button 
-                onClick={() => setBuyNowOpen(true)}
-                className="flex-1 h-11 rounded-full bg-accent py-2 text-background hover:bg-accent/90 transition-colors duration-300 font-light uppercase tracking-[0.1em] text-xs"
-              >
-                Buy Now
               </button>
             </div>
 
@@ -257,69 +286,106 @@ export default function ProductDetails({ product, relatedProducts }) {
       </section>
 
       {/* BENEFITS SECTION */}
-      <section className="py-20 bg-muted text-foreground mx-auto">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-          <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-light">Benefits</h2>
-            <p className="text-foreground/60 max-w-xl mx-auto font-light text-base">Every element is meticulously balanced to restore your body's natural intelligence.</p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(product.benefits || []).map((b, i) => (
-              <motion.div 
-                key={b}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="flex gap-3"
-              >
-                <div className="h-1.5 w-1.5 rounded-full bg-accent mt-2 shrink-0"></div>
-                <p className="text-base font-light leading-relaxed text-foreground/70">{b}</p>
-              </motion.div>
-            ))}
-          </div>
+      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <motion.div {...fadeUp} className="text-center mb-10 md:mb-12 space-y-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Trust & Quality</h2>
+          <p className="text-foreground/50 max-w-md mx-auto font-light text-sm sm:text-base">
+            Every formulation undergoes rigorous testing to ensure purity and efficacy.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+          {[
+            { icon: ShieldCheck, title: "Lab Tested", desc: "Quality verified" },
+            { icon: Leaf, title: "Natural", desc: "Herbal ingredients" },
+            { icon: Award, title: "Certified", desc: "Authentic Ayurveda" },
+          ].map((item, i) => (
+            <motion.div 
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center space-y-4"
+            >
+              <div className="inline-flex h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-accent/10 items-center justify-center">
+                <item.icon size={20} className="text-accent sm:size-24" />
+              </div>
+              <h3 className="text-base sm:text-lg font-light">{item.title}</h3>
+              <p className="text-xs sm:text-sm text-foreground/50 font-light">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Certificate */}
-      <Certificate />
+      {/* BENEFITS */}
+      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Benefits</h2>
+            <p className="text-foreground/50 font-light text-sm sm:text-base">
+              Time-tested Ayurvedic wisdom meets modern wellness.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {(product.benefits || []).map((benefit, i) => (
+              <motion.div 
+                key={benefit}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-start gap-4 p-4 md:p-6 bg-white/30 border border-foreground/5 rounded-2xl"
+              >
+                <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 size={16} className="text-accent" />
+                </div>
+                <p className="text-sm sm:text-base text-foreground/70 font-light leading-relaxed">{benefit}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
 
       {/* INGREDIENTS & USAGE */}
-      <section className="py-20 max-w-[1200px] mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <motion.div {...fadeUp} className="space-y-8">
+      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+        <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
           <div className="space-y-4">
-            <h2 className="text-3xl md:text-4xl font-light">Ingredients</h2>
-            <p className="text-foreground/60 font-light text-base leading-relaxed max-w-md">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Ingredients</h2>
+            <p className="text-foreground/60 font-light text-sm sm:text-base leading-relaxed max-w-md">
               We source only the most potent botanicals, honoring traditional harvesting methods.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 md:gap-3">
             {(product.ingredients || []).map((ing, i) => (
               <motion.span 
                 key={ing}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="px-4 py-2 rounded-full border border-foreground/10 bg-white/50 text-xs uppercase tracking-[0.05em] hover:border-accent transition-colors cursor-default"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                className="px-3 py-1.5 md:px-4 md:py-2 bg-accent/10 text-accent rounded-full text-[10px] sm:text-xs font-medium uppercase tracking-[0.05em]"
               >
                 {ing}
               </motion.span>
             ))}
           </div>
         </motion.div>
-
-        <motion.div {...fadeUp} className="bg-muted/50 border border-foreground/5 rounded-2xl p-8">
-          <h3 className="text-2xl font-display italic text-accent mb-8">How to Use</h3>
-          <div className="space-y-6">
+        <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">How to Use</h2>
+            <p className="text-foreground/60 font-light text-sm sm:text-base leading-relaxed max-w-md">
+              For best results, follow the recommended dosage consistently.
+            </p>
+          </div>
+          <div className="space-y-4 md:space-y-6">
             {(product.usage || []).map((step, i) => (
-              <div key={step} className="flex gap-4">
+              <div key={step} className="flex gap-3 md:gap-4">
                 <div className="flex-shrink-0">
                   <div className="h-6 w-6 rounded-full border border-accent text-accent flex items-center justify-center text-xs font-medium">
-                    {i+1}
+                    {i + 1}
                   </div>
                 </div>
-                <p className="text-base text-foreground/70 font-light leading-relaxed">{step}</p>
+                <p className="text-xs sm:text-sm text-foreground/70 leading-relaxed">{step}</p>
               </div>
             ))}
           </div>
@@ -330,51 +396,50 @@ export default function ProductDetails({ product, relatedProducts }) {
       <section className="py-20 md:py-24 max-w-[1500px] mx-auto px-10 md:px-16">
         <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
           <h3 className="text-[#1b3a27]/60 font-medium tracking-[0.2em] uppercase text-sm mb-4">Testimonials</h3>
-          <h2 className="text-4xl md:text-5xl font-serif text-[#1b3a27]">Voices of Harmony</h2>
+          <Button 
+            onClick={() => setReviewOpen(true)}
+            className="px-6 py-3 rounded-full bg-accent text-background hover:bg-accent/90 transition-colors"
+          >
+            Write a Review
+          </Button>
         </motion.div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {(product.reviews || [
-            { name: "Ananya Sharma", role: "Verified Customer", text: "The MadhuCurex has completely transformed my energy levels. I feel more balanced than ever." },
-            { name: "Dr. Rajesh Mehta", role: "Ayurvedic Expert", text: "As an Ayurvedic practitioner, I'm impressed by the purity of Fiveetatva's extracts." },
-            { name: "Vikram Singh", role: "Verified Customer", text: "Paachan Sathi is now a staple in my daily routine. My digestive health has improved." }
-          ]).map((review, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {(product.reviews || []).slice(0, 3).map((review, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative p-10 rounded-[2rem] bg-white/30 border border-border/50 flex flex-col h-full transition-all duration-500 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)] hover:-translate-y-2 hover:bg-white/40"
+              className="group relative p-6 md:p-8 lg:p-10 rounded-[1.5rem] md:rounded-[2rem] bg-white/30 border border-border/50 flex flex-col h-full transition-all duration-500 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)] hover:-translate-y-2 hover:bg-white/40"
             >
-              <div className="flex gap-1 mb-8">
+              <div className="flex gap-1 mb-6 md:mb-8">
                 {[...Array(review.rating || 5)].map((_, idx) => (
-                  <Star key={idx} size={14} fill="#f59e0b" className="text-amber-500" />
+                  <Star key={idx} size={12} className="text-amber-500 sm:size-14" fill="#f59e0b" />
                 ))}
               </div>
 
-              <p className="text-sm text-foreground/70 leading-relaxed mb-12 flex-grow font-light">
+              <p className="text-xs sm:text-sm text-foreground/70 leading-relaxed mb-8 md:mb-12 flex-grow font-light">
                 "{review.comment}"
               </p>
 
-              <div className="flex items-center gap-4 pt-2 border-t border-border/50">
+              <div className="flex items-center gap-3 md:gap-4 pt-2 border-t border-border/50">
                 <div className="relative flex-shrink-0">
                   {review.image ? (
                     <img 
                       src={review.image} 
                       alt={review.name} 
-                      className="w-14 h-14 rounded-full object-cover shadow-lg border-2 border-white"
+                      className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover object-top shadow-lg border-2 border-white"
                     />
                   ) : (
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-accent/20 to-accent/40 flex items-center justify-center text-accent font-bold text-sm shadow-md">
-                      {review.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-accent/20 to-accent/40 flex items-center justify-center text-accent font-bold text-xs sm:text-sm shadow-md">
+                      {review.name.charAt(0)}
                     </div>
                   )}
                 </div>
-                <div>
-                  <h4 className="font-medium text-foreground text-sm">{review.name}</h4>
-                  <p className="text-[10px] text-foreground/50 font-black uppercase tracking-widest mt-0.5">
-                    {review.role || "Verified Customer"}
-                  </p>
+                <div className="flex-shrink-0">
+                  <h4 className="text-xs sm:text-sm font-medium text-foreground">{review.name}</h4>
+                  <p className="text-[10px] sm:text-xs text-foreground/50">Verified Buyer</p>
                 </div>
               </div>
             </motion.div>
@@ -445,6 +510,41 @@ export default function ProductDetails({ product, relatedProducts }) {
           </div>
         </section>
       )}
+
+      {/* REVIEW MODAL */}
+      <Modal open={reviewOpen} title="Write a Review" onClose={() => setReviewOpen(false)}>
+        <div className="space-y-6 mt-4">
+          <div className="space-y-4">
+            <Input label="Your Name" value={reviewData.name} onChange={(e) => setReviewData((prev) => ({ ...prev, name: e.target.value }))} />
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Rating</label>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    onClick={() => setReviewData((prev) => ({ ...prev, rating: star }))}
+                    className="text-2xl transition-colors"
+                  >
+                    <Star size={24} fill={reviewData.rating >= star ? "#f59e0b" : "none"} className={reviewData.rating >= star ? "text-amber-500" : "text-gray-300"} />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Your Review</label>
+              <textarea
+                value={reviewData.comment}
+                onChange={(e) => setReviewData((prev) => ({ ...prev, comment: e.target.value }))}
+                className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-accent min-h-[120px]"
+                placeholder="Share your experience with this product..."
+              />
+            </div>
+          </div>
+          <Button onClick={handleSubmitReview} className="w-full">
+            Submit Review
+          </Button>
+        </div>
+      </Modal>
 
       {/* BUY NOW MODAL */}
       <Modal open={buyNowOpen} title="Quick Checkout" onClose={() => setBuyNowOpen(false)}>

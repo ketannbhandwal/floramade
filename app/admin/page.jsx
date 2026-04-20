@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Area,
@@ -183,6 +183,48 @@ export default function AdminPage() {
     loadData();
   }
 
+  async function approveReview(productId, reviewId, approved) {
+    try {
+      const res = await fetch(`/api/reviews/${reviewId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, approved }),
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        return toast.error(errorData.error || "Failed to update review");
+      }
+      
+      toast.success(approved ? "Review approved" : "Review unapproved");
+      loadData();
+    } catch (error) {
+      console.error("Approve review error:", error);
+      toast.error("Failed to update review");
+    }
+  }
+
+  async function deleteReview(productId, reviewId) {
+    try {
+      const res = await fetch(`/api/reviews/${reviewId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId }),
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        return toast.error(errorData.error || "Failed to delete review");
+      }
+      
+      toast.success("Review deleted");
+      loadData();
+    } catch (error) {
+      console.error("Delete review error:", error);
+      toast.error("Failed to delete review");
+    }
+  }
+
   async function toggleVisibility(product) {
     const res = await fetch(`/api/products/${product.slug}`, {
       method: "PUT",
@@ -220,22 +262,23 @@ export default function AdminPage() {
     { key: "dashboard", label: "Overview", icon: LayoutDashboard },
     { key: "products", label: "Inventory", icon: Package },
     { key: "orders", label: "Transactions", icon: ReceiptText },
+    { key: "reviews", label: "Reviews", icon: MessageSquare },
     { key: "users", label: "Customers", icon: Users },
   ];
 
   return (
-    <div className="min-h-screen bg-background w-full pt-24 md:pt-32 pb-24">
-      <div className="max-w-[1600px] mx-auto px-6 grid gap-8 lg:grid-cols-[260px_1fr]">
+    <div className="min-h-screen bg-background w-full pt-20 md:pt-24 lg:pt-32 pb-16 md:pb-20 lg:pb-24">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 grid gap-6 md:gap-8 lg:grid-cols-[240px_1fr]">
         
         {/* SIDEBAR */}
         <motion.aside 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="space-y-6"
+          className="space-y-4 md:space-y-6"
         >
-          <div className="pt-6 pb-8">
-            <h1 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Dashboard</h1>
-            <p className="text-sm text-foreground/50 mt-2">Manage your premium store</p>
+          <div className="pt-4 md:pt-6 pb-6 md:pb-8">
+            <h1 className="text-2xl md:text-3xl font-display italic text-secondary tracking-[0.01em]">Dashboard</h1>
+            <p className="text-xs md:text-sm text-foreground/50 mt-2">Manage your premium store</p>
           </div>
           
           <div className="flex flex-col gap-2">
@@ -243,10 +286,10 @@ export default function AdminPage() {
               <button 
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 ${activeTab === tab.key ? "bg-foreground text-background shadow-lg shadow-foreground/10" : "hover:bg-white/50 text-foreground/70"}`}
+                className={`flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all duration-300 ${activeTab === tab.key ? "bg-foreground text-background shadow-lg shadow-foreground/10" : "hover:bg-white/50 text-foreground/70"}`}
               >
-                <tab.icon size={18} /> 
-                <span className="text-sm uppercase tracking-[0.05em] font-medium">{tab.label}</span>
+                <tab.icon size={14} className="md:size-18" /> 
+                <span className="text-[11px] md:text-sm uppercase tracking-[0.05em] font-medium">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -335,13 +378,13 @@ export default function AdminPage() {
             {/* PRODUCTS TAB */}
             {activeTab === "products" && (
               <motion.div key="products" {...fadeAnim} className="space-y-8">
-                <form onSubmit={saveProduct} className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] p-8 md:p-10 shadow-sm space-y-8">
+                <form onSubmit={saveProduct} className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] p-6 md:p-8 lg:p-10 shadow-sm space-y-6 md:space-y-8">
                   <div>
-                    <h2 className="text-3xl font-display italic text-secondary mb-2">{editingSlug ? "Edit Formulation" : "Add Formulation"}</h2>
-                    <p className="text-sm text-foreground/50">Manage your product catalog.</p>
+                    <h2 className="text-2xl md:text-3xl font-display italic text-secondary mb-2">{editingSlug ? "Edit Formulation" : "Add Formulation"}</h2>
+                    <p className="text-xs md:text-sm text-foreground/50">Manage your product catalog.</p>
                   </div>
                   
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     <Input label="Name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
                     <Input label="Slug" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} />
                     <Input label="Stock Quantity" type="number" value={form.stock} onChange={(e) => setForm((f) => ({ ...f, stock: Number(e.target.value) }))} />
@@ -350,10 +393,10 @@ export default function AdminPage() {
                     <Input label="Delivery Days" type="number" value={form.deliveryDays || 5} onChange={(e) => setForm((f) => ({ ...f, deliveryDays: Number(e.target.value) }))} placeholder="e.g., 5" />
                   </div>
 
-                  <div className="space-y-6">
-                    <textarea className="w-full min-h-[120px] rounded-2xl border border-foreground/10 p-4 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 resize-none transition-all" placeholder="Detailed Description..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+                  <div className="space-y-4 md:space-y-6">
+                    <textarea className="w-full min-h-[100px] md:min-h-[120px] rounded-xl md:rounded-2xl border border-foreground/10 p-3 md:p-4 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 resize-none transition-all" placeholder="Detailed Description..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
                     
-                    <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2">
                       <Input label="Benefits (comma separated)" value={form.benefits} onChange={(e) => setForm((f) => ({ ...f, benefits: e.target.value }))} />
                       <Input label="Ingredients (comma separated)" value={form.ingredients} onChange={(e) => setForm((f) => ({ ...f, ingredients: e.target.value }))} />
                       <Input label="Usage Steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
@@ -538,6 +581,77 @@ export default function AdminPage() {
                           </td>
                         </tr>
                       ))}
+                    </tbody>
+                  </table>
+                </div>
+              </motion.div>
+            )}
+
+            {/* REVIEWS TAB */}
+            {activeTab === "reviews" && (
+              <motion.div key="reviews" {...fadeAnim} className="space-y-8">
+                <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
+                  <div className="p-8 border-b border-foreground/5">
+                    <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Manage Reviews</h2>
+                  </div>
+                  <table className="w-full text-left">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.05em] text-foreground/50">
+                      <tr>
+                        <th className="px-8 py-6 font-medium">Product</th>
+                        <th className="px-8 py-6 font-medium">Customer</th>
+                        <th className="px-8 py-6 font-medium">Rating</th>
+                        <th className="px-8 py-6 font-medium">Review</th>
+                        <th className="px-8 py-6 font-medium">Status</th>
+                        <th className="px-8 py-6 font-medium text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-foreground/5">
+                      {products.flatMap(p => 
+                        (p.reviews || []).map((review, idx) => (
+                          <tr key={`${p._id}-${review._id || idx}`} className="hover:bg-white/40 transition-colors">
+                            <td className="px-8 py-6">
+                              <p className="font-medium text-foreground">{p.name}</p>
+                            </td>
+                            <td className="px-8 py-6">
+                              <p className="font-medium text-foreground">{review.name}</p>
+                              <p className="text-xs text-foreground/50">{new Date(review.createdAt || Date.now()).toLocaleDateString()}</p>
+                            </td>
+                            <td className="px-8 py-6">
+                              <div className="flex gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <span key={i} className={i < review.rating ? "text-amber-500" : "text-gray-300"}>★</span>
+                                ))}
+                              </div>
+                            </td>
+                            <td className="px-8 py-6 max-w-xs">
+                              <p className="text-sm text-foreground/70 line-clamp-2">{review.comment}</p>
+                            </td>
+                            <td className="px-8 py-6">
+                              <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${review.approved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                                {review.approved ? 'Approved' : 'Pending'}
+                              </span>
+                            </td>
+                            <td className="px-8 py-6">
+                              <div className="flex justify-end gap-2">
+                                <button
+                                  onClick={() => approveReview(p._id, review._id || idx, !review.approved)}
+                                  className="p-2 rounded-lg hover:bg-green-100 text-green-600 transition-colors"
+                                  title={review.approved ? "Unapprove" : "Approve"}
+                                >
+                                  {review.approved ? <X size={16} /> : <Check size={16} />}
+                                </button>
+                                <button
+                                  onClick={() => deleteReview(p._id, review._id || idx)}
+                                  className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition-colors"
+                                  title="Delete"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

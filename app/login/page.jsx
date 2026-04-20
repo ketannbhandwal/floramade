@@ -47,7 +47,9 @@ export default function LoginPage() {
       <p className="mt-4 text-sm text-[#6d5648]">
         New customer? <Link href="/register" className="font-medium underline">Create account</Link>
       </p>
-      <p className="mt-2 text-xs text-[#8b6e56]">Admin demo: admin@fiveetatva.com / admin123</p>
+      <p className="mt-2 text-sm text-[#6d5648]">
+        <Link href="/forgot-password" className="font-medium underline">Forgot password?</Link>
+      </p>
       </div>
     </div>
   );
