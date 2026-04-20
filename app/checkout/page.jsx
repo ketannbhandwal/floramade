@@ -1,0 +1,247 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+import toast from "react-hot-toast";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
+import EmptyState from "@/components/ui/EmptyState";
+import { ShieldCheck, Truck, CreditCard, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+
+export default function CheckoutPage() {
+  const { cartItems, total, clearCart } = useCart();
+  const [buyNowItems] = useState(() => {
+    if (typeof window === "undefined") return [];
+    const saved = localStorage.getItem("fiveetatva-buy-now-items");
+    if (!saved) return [];
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return [];
+    }
+  });
+  const [paymentMethod, setPaymentMethod] = useState("razorpay");
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [address, setAddress] = useState(() => {
+    if (typeof window === "undefined") {
+      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+    }
+    const saved = localStorage.getItem("fiveetatva-buy-now-address");
+    if (!saved) return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+    try {
+      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "", ...JSON.parse(saved) };
+    } catch {
+      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+    }
+  });
+
+  const selectedItems = useMemo(() => (buyNowItems.length ? buyNowItems : cartItems), [buyNowItems, cartItems]);
+  const finalTotal = useMemo(
+    () => selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [selectedItems]
+  );
+
+  async function placeCodOrder() {
+    const res = await fetch("/api/orders/cod", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
+    });
+    const data = await res.json();
+    if (!res.ok) return toast.error(data.message || "Failed to place COD order");
+    toast.success("COD order placed successfully");
+    localStorage.removeItem("fiveetatva-buy-now-items");
+    localStorage.removeItem("fiveetatva-buy-now-address");
+    if (!buyNowItems.length) clearCart();
+  }
+
+  async function handlePayment() {
+    if (selectedItems.length === 0) return toast.error("Cart is empty");
+    if (Object.values(address).some((value) => !String(value).trim())) {
+      return toast.error("Please complete delivery address");
+    }
+    if (paymentMethod === "cod") return placeCodOrder();
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    document.body.appendChild(script);
+    await new Promise((resolve) => (script.onload = resolve));
+
+    const orderRes = await fetch("/api/payment/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: finalTotal }),
+    });
+    const { order } = await orderRes.json();
+
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: "INR",
+      name: "Fiveetatva",
+      description: "Checkout Payment",
+      order_id: order.id,
+      handler: async (response) => {
+        const verify = await fetch("/api/payment/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...response, cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
+        });
+        if (verify.ok) {
+          toast.success("Order placed successfully");
+          localStorage.removeItem("fiveetatva-buy-now-items");
+          localStorage.removeItem("fiveetatva-buy-now-address");
+          if (!buyNowItems.length) clearCart();
+        } else {
+          toast.error("Payment verification failed");
+        }
+      },
+    };
+    new window.Razorpay(options).open();
+  }
+
+  if (selectedItems.length === 0) {
+    return (
+      <EmptyState
+        title="No items to checkout"
+        description="Add products to your cart before proceeding."
+        action={<Link href="/"><Button>Explore Collection</Button></Link>}
+      />
+    );
+  }
+
+  return (
+    <div className="max-w-[1400px] mx-auto px-6 pt-32 md:pt-40 pb-12 md:pb-24">
+      <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-start">
+        
+        <div className="space-y-12">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-5xl font-light tracking-tight">Checkout</h1>
+            <p className="text-foreground/50 font-light">Please fill your delivery details before payment.</p>
+          </div>
+
+          {/* Delivery Address */}
+          <section className="bg-white rounded-[2rem] border border-border p-8 md:p-12 space-y-8 shadow-sm">
+            <div className="flex items-center gap-4 border-b border-border pb-6">
+              <div className="h-10 w-10 rounded-full bg-accent/10 text-accent flex items-center justify-center">
+                <Truck size={20} />
+              </div>
+              <h2 className="text-xl font-medium tracking-[0.01em]">Delivery Address</h2>
+            </div>
+            
+            <div className="grid gap-6 sm:grid-cols-2">
+              <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
+              <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
+              <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
+              <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
+              <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
+              <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
+            </div>
+          </section>
+
+          {/* Payment Method */}
+          <section className="bg-white rounded-[2rem] border border-border p-8 md:p-12 space-y-8 shadow-sm">
+            <div className="flex items-center gap-4 border-b border-border pb-6">
+              <div className="h-10 w-10 rounded-full bg-accent/10 text-accent flex items-center justify-center">
+                <CreditCard size={20} />
+              </div>
+              <h2 className="text-xl font-medium">Payment Method</h2>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { id: "razorpay", label: "Online Payment", desc: "Cards, UPI, NetBanking" },
+                { id: "cod", label: "Cash on Delivery", desc: "Pay when you receive" },
+              ].map((method) => (
+                <label 
+                  key={method.id}
+                  className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 flex flex-col gap-1 ${
+                    paymentMethod === method.id ? 'border-accent bg-accent/5 shadow-md' : 'border-border bg-white hover:border-accent/30'
+                  }`}
+                >
+                  <input 
+                    type="radio" 
+                    name="paymentMethod" 
+                    className="absolute top-4 right-4 accent-accent"
+                    checked={paymentMethod === method.id} 
+                    onChange={() => setPaymentMethod(method.id)} 
+                  />
+                  <span className="font-bold text-sm uppercase tracking-[0.1em]">{method.label}</span>
+                  <span className="text-xs text-foreground/50 tracking-[0.01em]">{method.desc}</span>
+                </label>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* Order Summary */}
+        <aside className="lg:sticky lg:top-32 space-y-8">
+          <div className="bg-foreground text-background rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            
+            <h2 className="text-2xl font-light mb-8 text-background">Order <span className="font-display italic text-accent">Summary</span></h2>
+            
+            <div className="space-y-6 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
+              {selectedItems.map((item) => (
+                <div key={item.productId} className="flex justify-between gap-4 text-sm border-b border-background/20 pb-4">
+                  <div className="space-y-1">
+                    <p className="font-medium text-background/90 leading-tight">{item.name}</p>
+                    <p className="text-xs text-background/50 uppercase tracking-[0.1em]">Qty: {item.quantity}</p>
+                  </div>
+                  <span className="font-medium text-accent whitespace-nowrap">₹ {item.price * item.quantity}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-background/20 space-y-6">
+              <div className="flex justify-between items-end">
+                <p className="text-background/60 font-light">Grand Total</p>
+                <p className="text-3xl font-light text-accent">₹ {finalTotal}</p>
+              </div>
+
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 accent-accent rounded border-background/30"
+                    checked={marketingConsent}
+                    onChange={(e) => setMarketingConsent(e.target.checked)}
+                  />
+                  <span className="text-[11px] text-background/70 leading-relaxed group-hover:text-background transition-colors">
+                    I agree to receive marketing emails about new rituals and wellness tips.
+                  </span>
+                </label>
+
+                <p className="text-[10px] text-background/60 leading-relaxed">
+                  By placing this order, you agree to Fiveetatva's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
+                </p>
+              </div>
+
+              <button 
+                onClick={handlePayment} 
+                className="w-full bg-accent text-background py-6 rounded-full font-bold uppercase tracking-[0.1em] text-xs hover:bg-accent/90 transition-all duration-500 shadow-xl mt-4"
+              >
+                {paymentMethod === "cod" ? "Place COD Order" : "Pay with Razorpay"}
+              </button>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-2 text-background/40 text-[10px] uppercase tracking-[0.1em] font-bold">
+              <ShieldCheck size={14} /> 100% Secure Checkout
+            </div>
+          </div>
+
+          <div className="bg-muted p-8 rounded-3xl space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-[0.1em] text-foreground/40">Need Help?</h4>
+            <p className="text-xs text-foreground/60 leading-relaxed">Our practitioners are available for any questions regarding your ritual.</p>
+            <Link href="/contact" className="inline-flex items-center gap-2 text-xs font-bold text-accent hover:text-foreground transition-colors">
+              Contact Support <ChevronRight size={14} />
+            </Link>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  );
+}
