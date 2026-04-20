@@ -7,22 +7,17 @@ import Input from "@/components/ui/Input";
 import Link from "next/link";
 import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  Cell,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  Pie,
-  PieChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
+import dynamic from "next/dynamic";
+
+const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
+const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
+const ResponsiveContainer = dynamic(() => import("recharts").then(mod => mod.ResponsiveContainer), { ssr: false });
+const Area = dynamic(() => import("recharts").then(mod => mod.Area), { ssr: false });
+const Bar = dynamic(() => import("recharts").then(mod => mod.Bar), { ssr: false });
+const CartesianGrid = dynamic(() => import("recharts").then(mod => mod.CartesianGrid), { ssr: false });
+const XAxis = dynamic(() => import("recharts").then(mod => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import("recharts").then(mod => mod.YAxis), { ssr: false });
+const Tooltip = dynamic(() => import("recharts").then(mod => mod.Tooltip), { ssr: false });
 
 const empty = {
   name: "", slug: "", price: 0, discountPrice: 0, stock: 0,
