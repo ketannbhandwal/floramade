@@ -1,69 +1,53 @@
-import React from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const certificates = [
-  { id: 1, title: 'ISO 9001', desc: 'Quality Management' },
-  { id: 2, title: 'Organic', desc: 'Pure Extracts' },
-  { id: 3, title: 'GMP', desc: 'Pharma Grade' },
-  { id: 4, title: 'AYUSH', desc: 'Tradition' },
-]
+  { id: 1, title: 'ISO Certified', name: 'ISO 9001' },
+  { id: 2, title: 'DSIR Recognised', name: 'DSIR' },
+  { id: 3, title: 'Kerala Govt. Approved Centre', name: 'Kerala' },
+  { id: 4, title: 'NABH Accredited', name: 'NABH' },
+];
 
-function Certificate() {
+function CertificateSlider() {
   return (
-    <section className="py-20 md:py-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20">
-        
-        {/* Left Side: Sticky/Fixed on Desktop */}
-        <div className="lg:w-1/3 flex flex-col justify-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h4 className="text-[#c5a059] font-medium tracking-[0.2em] uppercase text-xs mb-6">Accreditation</h4>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#1b3a27] leading-[0.9]">Trusted <br/>Standards</h2>
-            <div className="w-16 h-px bg-[#c5a059] my-8" />
-            <p className="text-[#1b3a27]/60 leading-relaxed max-w-md">
-              We uphold the highest levels of purity and safety. Every product we craft meets rigorous international standards.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Right Side: Responsive Grid */}
-        <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-          {certificates.map((cert, index) => (
-            <motion.div 
-              key={cert.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              // Only apply the staggered vertical shift on tablets and up
-              className={`relative aspect-[5/4] sm:aspect-[4/5] bg-[#f5f2ed] rounded-2xl p-6 lg:p-8 flex flex-col justify-between group 
-                ${index === 1 || index === 3 ? 'md:translate-y-12' : ''}`}
+    <section className="py-16 mt-10 overflow-hidden">
+      <h2 className="text-center text-4xl font-bold text-[#1b3a27] mb-16">
+        Certified by Years of Trust
+      </h2>
+      
+      <div className="relative flex overflow-x-hidden">
+        <motion.div
+          className="flex gap-10 pr-10"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 40, // Slower for a premium feel
+            ease: "linear",
+          }}
+        >
+          {[...certificates, ...certificates].map((cert, index) => (
+            <div
+              key={`${cert.id}-${index}`}
+              className="flex-shrink-0 flex items-center gap-6 bg-transparent border-2 border-[#1b3a27]/10 rounded-full py-5 px-10 hover:border-[#1b3a27]/30 transition-colors duration-300"
             >
-              <div className="flex-grow flex items-center justify-center">
-                <div className="w-20 h-20 lg:w-24 lg:h-24 relative transition-transform duration-700 group-hover:scale-110">
-                   <Image 
-                     src={`/certificate/${cert.id}.svg`} 
-                     alt={cert.title} 
-                     fill 
-                     sizes="(max-width: 768px) 100vw, 25vw"
-                     className="object-contain mix-blend-multiply" 
-                   />
-                </div>
+              <div className="w-14 h-14 relative">
+                <Image 
+                  src={`/certificate/${cert.id}.svg`} 
+                  alt={cert.title} 
+                  fill
+                  className="object-contain"
+                />
               </div>
-              
-              <div className="mt-4">
-                <h3 className="text-[#1b3a27] font-serif text-lg lg:text-xl">{cert.title}</h3>
-                <p className="text-[#1b3a27]/50 text-[10px] lg:text-xs tracking-[0.2em] uppercase mt-1">{cert.desc}</p>
-              </div>
-            </motion.div>
+              <span className="text-[#1b3a27] font-semibold text-lg whitespace-nowrap">
+                {cert.title}
+              </span>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
-export default Certificate
+export default CertificateSlider;
