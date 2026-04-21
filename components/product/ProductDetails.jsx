@@ -23,7 +23,7 @@ const ProductStructuredData = ({ product }) => {
     "image": product.images,
     "brand": {
       "@type": "Brand",
-      "name": "Fiveetatva"
+      "name": "Fiveetatv"
     },
     "offers": {
       "@type": "Offer",
@@ -34,7 +34,7 @@ const ProductStructuredData = ({ product }) => {
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Fiveetatva"
+        "name": "Fiveetatv"
       }
     },
     "aggregateRating": {
@@ -149,11 +149,11 @@ export default function ProductDetails({ product, relatedProducts }) {
   }
 
   return (
-    <div className="w-full bg-background text-foreground pb-16 md:pb-20 pt-20 md:pt-24 lg:pt-32">
+    <div className="w-full bg-background text-foreground pb-8 md:pb-12 pt-20 md:pt-24 lg:pt-28">
       <ProductStructuredData product={product} />
       {/* HERO SECTION */}
-      <section className="relative w-full flex items-center pb-12 md:pb-16 lg:pb-24">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 w-full grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+      <section className="relative w-full flex items-center pb-8 md:pb-12 lg:pb-16">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 w-full grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-14 items-start">
           {/* Images */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -281,21 +281,36 @@ export default function ProductDetails({ product, relatedProducts }) {
                 )}
               </div>
             </div>
+
+            {/* KEY BENEFITS - Moved here for better visibility */}
+            {product.benefits && product.benefits.length > 0 && (
+              <div className="pt-8 border-t border-border mt-6">
+                <h4 className="text-xs uppercase tracking-[0.1em] font-medium text-foreground/50 mb-4">Key Benefits</h4>
+                <div className="grid gap-3">
+                  {product.benefits.slice(0, 3).map((benefit, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="h-5 w-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 size={12} className="text-accent" />
+                      </div>
+                      <span className="text-xs text-foreground/70 font-light">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
 
-      <CertificateSlider />
-
       {/* BENEFITS SECTION */}
-      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-        <motion.div {...fadeUp} className="text-center mb-10 md:mb-12 space-y-4">
+      <section className="py-6 md:py-8 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <motion.div {...fadeUp} className="text-center mb-6 md:mb-8 space-y-3">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Trust & Quality</h2>
           <p className="text-foreground/50 max-w-md mx-auto font-light text-sm sm:text-base">
             Every formulation undergoes rigorous testing to ensure purity and efficacy.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
           {[
             { icon: ShieldCheck, title: "Lab Tested", desc: "Quality verified" },
             { icon: Leaf, title: "Natural", desc: "Herbal ingredients" },
@@ -320,7 +335,7 @@ export default function ProductDetails({ product, relatedProducts }) {
       </section>
 
       {/* BENEFITS */}
-      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+      <section className="py-6 md:py-8 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
           <div className="space-y-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Benefits</h2>
@@ -348,8 +363,10 @@ export default function ProductDetails({ product, relatedProducts }) {
         </motion.div>
       </section>
 
+      <CertificateSlider />
+
       {/* INGREDIENTS & USAGE */}
-      <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+      <section className="py-8 md:py-12 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-14 items-center">
         <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
           <div className="space-y-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Ingredients</h2>
@@ -395,7 +412,7 @@ export default function ProductDetails({ product, relatedProducts }) {
       </section>
 
       {/* REVIEWS */}
-      <section className="py-20 md:py-24 max-w-[1500px] mx-auto px-10 md:px-16">
+      <section className="py-12 md:py-16 max-w-[1500px] mx-auto px-6 md:px-12">
         <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
           <h3 className="text-[#1b3a27]/60 font-medium tracking-[0.2em] uppercase text-sm mb-4">Testimonials</h3>
           <Button 
@@ -450,7 +467,7 @@ export default function ProductDetails({ product, relatedProducts }) {
       </section>
 
       {/* FAQs */}
-      <section className="py-20 max-w-3xl mx-auto px-6">
+      <section className="py-12 max-w-3xl mx-auto px-6">
         <motion.div {...fadeUp} className="text-center mb-12 space-y-4">
            <h2 className="text-3xl md:text-4xl font-light">Questions</h2>
         </motion.div>
@@ -485,7 +502,7 @@ export default function ProductDetails({ product, relatedProducts }) {
 
       {/* RELATED PRODUCTS */}
       {relatedProducts && relatedProducts.length > 0 && (
-        <section className="py-20 max-w-[1200px] mx-auto px-6 md:px-12 border-t border-foreground/10 mt-12">
+        <section className="py-12 max-w-[1200px] mx-auto px-6 md:px-12 border-t border-foreground/10 mt-8">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-light">You May Also Like</h2>
           </div>

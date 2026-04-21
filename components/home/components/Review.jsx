@@ -5,87 +5,115 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const reviews = [
+  {
+    name: "Mr. Shivansh",
+    role: "Verified Customer",
+    text: "Maine 4 months se Fiveetatv products use kiye hain aur results bahut impressive hain. Mera overall health improve ho gaya hai aur energy level bhi stable hai. Natural formulation pe completely trust karta hoon.",
+    img: "/review/16.jpeg",
+    initials: "S"
+  },
+  {
+    name: "Mr. Vijay Kumar",
+    role: "Verified Customer",
+    text: "Excellent products hain. Maine 2 months se use kar raha hoon aur digestion mein bahut improvement dekha. Pure ingredients hain aur koi side effects nahi. Highly recommend karta hoon.",
+    img: "/review/1.jpeg",
+    initials: "VK"
+  },
+  {
+    name: "Mrs Badama Devi",
+    role: "Verified Customer",
+    text: "Bahut acche results mile hain. Sugar control ke liye best hai. Doctor ne bhi recommend kiya tha. Regular use karne se bahut fayda hua hai. Quality outstanding hai.",
+    img: "/review/2.jpeg",
+    initials: "BD"
+  },
+  {
+    name: "Mr. Rajneesh",
+    role: "Verified Customer",
+    text: "Digestion ke liye excellent hai. Ab bloating nahi hoti! Digestive issues se years se struggle kar raha tha, aur ye products lifesaver nikle. Har meal ke baad lighter aur comfortable feel karta hoon.",
+    img: "/review/4.jpeg",
+    initials: "R"
+  },
   { 
     name: "Mr. Birender Kumar", 
     role: "Verified Customer", 
-    text: "I've been using Fiveetatva products for 3 months now and my blood sugar levels have stabilized remarkably. The natural ingredients give me peace of mind, and I no longer experience those mid-day energy crashes. Highly recommend for anyone looking for a natural approach to wellness.", 
+    text: "Main 3 months se Fiveetatv products use kar raha hoon aur mera blood sugar level bahut improve ho gaya hai. Natural ingredients hain toh mind bhi peaceful rehta hai, aur ab mid-day mein energy crash nahi hota. Natural wellness ke liye highly recommend karta hoon.", 
     img: "/review/15.jpeg",
     initials: "BK"
   },
   { 
     name: "Mr. Jamuna Bhardwaj", 
     role: "Verified Customer", 
-    text: "Good results after 2 weeks of use. My sugar cravings have reduced significantly and I feel more energetic throughout the day. The products are easy to use and don't have any unpleasant aftertaste. Will continue using this product.", 
+    text: "2 weeks ke baad results bahut acche mil rahe hain. Mere sugar cravings kam ho gaye hain aur poora din energetic feel karta hoon. Products use karne mein easy hain aur koi bad taste nahi hai. Continue use karunga main.", 
     img: "/review/14.jpeg",
     initials: "JB" 
   },
   { 
     name: "Mrs. Indra Devi", 
     role: "Verified Customer", 
-    text: "Very effective and natural. My doctor recommended trying Ayurvedic support for my metabolic health, and these products have been a game-changer. Love that they're made in India with pure ingredients. The quality is evident in the results.", 
+    text: "Bahut effective aur natural hai. Doctor ne Ayurvedic support try karne ko bola tha, aur ye products game-changer nikle. Made in India hai pure ingredients ke saath, bahut accha lagta hai. Quality mein results dikhte hain.", 
     img: "/review/13.jpeg",
     initials: "ID" 
   },
   { 
     name: "Mr. Amarnath", 
     role: "Verified Customer", 
-    text: "Great products for daily use. Easy to consume and I've noticed a significant improvement in my sugar levels after using this for 6 weeks. The herbal blend makes it feel comprehensive and effective.", 
+    text: "Daily use ke liye great products hain. Consume karne mein easy hai aur 6 weeks use karne ke baad mera sugar level mein significant improvement dekha. Herbal blend comprehensive aur effective feel hota hai.", 
     img: "/review/12.jpeg",
     initials: "A" 
   },
   { 
     name: "Mrs. Chanda Devi", 
     role: "Verified Customer", 
-    text: "Good quality and effective. The products have a pleasant natural taste. My post-meal sugar spikes have reduced considerably since I started using this. Trust the Ayurvedic formulation completely.", 
+    text: "Good quality aur effective hai. Products ka natural taste pleasant hai. Isse use karne ke baad mere post-meal sugar spikes kam ho gaye hain. Ayurvedic formulation pe completely trust karta hoon.", 
     img: "/review/11.jpeg",
     initials: "CD" 
   },
   { 
     name: "Rakesh Divakar", 
     role: "Verified Customer", 
-    text: "Best Ayurvedic products I've used. The combination of traditional herbs works synergistically to support metabolic health. Made in India with authentic ingredients - that's what convinced me to try it, and it delivers.", 
+    text: "Best Ayurvedic products maine use kiye hain. Traditional herbs ka combination metabolic health ke liye kaam karta hai. Made in India authentic ingredients ke saath - ye mujhe convince kiya try karne ko, aur ye deliver bhi karta hai.", 
     img: "/review/10.jpeg",
     initials: "RD" 
   },
   { 
     name: "Mr. Rajneesh", 
     role: "Verified Customer", 
-    text: "Excellent for digestion. No more bloating! I've struggled with digestive issues for years, and these products have been a lifesaver. Feel lighter and more comfortable after every meal now.", 
+    text: "Digestion ke liye excellent hai. Ab bloating nahi hoti! Digestive issues se years se struggle kar raha tha, aur ye products lifesaver nikle. Har meal ke baad lighter aur comfortable feel karta hoon.", 
     img: "/review/9.jpeg",
     initials: "R" 
   },
   { 
     name: "Mr. Surender Kumar", 
     role: "Verified Customer", 
-    text: "Very effective for acidity relief. I used to rely on antacids regularly, but since starting these products, my acidity has reduced dramatically. Love that it's made with traditional Ayurvedic herbs. A must-have for anyone with digestive concerns.", 
+    text: "Acidity relief ke liye very effective hai. Pehle antacids pe depend karta tha, lekin ye products start karne ke baad acidity bahut kam ho gayi. Traditional Ayurvedic herbs se bana hai - digestive concerns walo ke liye must-have hai.", 
     img: "/review/8.jpeg",
     initials: "SK" 
   },
   { 
     name: "Amarjit", 
     role: "Verified Customer", 
-    text: "Best digestive products available. The taste is mild and pleasant, unlike some other products that can be harsh. The herbal combination is perfect for overall gut health. Highly recommend for daily use.", 
+    text: "Best digestive products available hain. Taste mild aur pleasant hai, harsh nahi hai jaise kuch products. Herbal combination overall gut health ke liye perfect hai. Daily use ke liye highly recommend karta hoon.", 
     img: "/review/7.jpeg",
     initials: "A" 
   },
   { 
     name: "Mrs. Sarita Devi", 
     role: "Verified Customer", 
-    text: "Amazing results! I've tried many Ayurvedic products before, but Fiveetatva stands out. The quality is exceptional and the results speak for themselves. My family and I are now regular customers.", 
+    text: "Amazing results! Pehle bahut Ayurvedic products try kiye, lekin Fiveetatv standout hai. Quality exceptional hai aur results khud bolte hain. Meri family aur main ab regular customers hain.", 
     img: "/review/6.jpeg",
     initials: "SD" 
   },
   { 
     name: "Mr. Nand Kishor Poddar", 
     role: "Verified Customer", 
-    text: "Truly authentic Ayurvedic formulation. The attention to detail in the ingredients selection is evident. These products have helped me maintain balanced health naturally. Highly recommend to everyone looking for genuine Ayurvedic solutions.", 
+    text: "Truly authentic Ayurvedic formulation hai. Ingredients selection mein detail ka attention evident hai. Ye products ne mujhe naturally balanced health maintain karne mein help kiya hai. Genuine Ayurvedic solutions dhundhne walo ko highly recommend karta hoon.", 
     img: "/review/5.jpeg",
     initials: "NKP" 
   },
   { 
     name: "Virender", 
     role: "Verified Customer", 
-    text: "Outstanding quality and effectiveness. The products are exactly what I was looking for - natural, potent, and made with care. The delivery was prompt and the packaging is excellent. Will definitely order again.", 
+    text: "Outstanding quality aur effectiveness hai. Products exactly wahi hain jo main dhundh raha tha - natural, potent, aur care se bane. Delivery prompt tha aur packaging excellent hai. Definitely order karunga again.", 
     img: "/review/3.jpeg",
     initials: "V" 
   }

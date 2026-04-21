@@ -30,7 +30,7 @@ export default function AboutPage() {
           >
             <Image 
               src="/assets/about.jpg" 
-              alt="About Fiveetatva" 
+              alt="About Fiveetatv" 
               fill 
               className="object-cover opacity-60"
               priority
@@ -213,7 +213,7 @@ export default function AboutPage() {
           <motion.section {...fadeUp} className="bg-foreground rounded-2xl p-12 md:p-16 text-background relative overflow-hidden">
             <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-light">Why Choose Fiveetatva?</h2>
+                <h2 className="text-3xl md:text-4xl font-light">Why Choose Fiveetatv?</h2>
                 <p className="text-background/70 text-base font-light leading-relaxed max-w-md">
                   In a world of generic supplements, we offer precision wellness rooted in authenticity.
                 </p>

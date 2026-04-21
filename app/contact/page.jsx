@@ -30,7 +30,7 @@ export default function ContactPage() {
       <div className="bg-background text-foreground w-full overflow-hidden">
         
         {/* --- HERO --- */}
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6">
+        <section className="relative pt-20 pb-12 md:pt-24 md:pb-16 px-6">
           <motion.div 
             {...floatAnimation}
             className="absolute top-20 right-20 hidden lg:block"
@@ -41,19 +41,19 @@ export default function ContactPage() {
           </motion.div>
 
           <div className="max-w-[1440px] mx-auto">
-            <motion.div {...cardVariants} className="max-w-4xl space-y-8">
+            <motion.div {...cardVariants} className="max-w-4xl mx-auto space-y-8 text-center">
               <Badge variant="luxury">Get in Touch</Badge>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light leading-[1.1] tracking-tight">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] tracking-tight">
                 We'd Love to <span className="font-display italic text-accent">Hear</span> From You
               </h1>
-              <p className="text-foreground/60 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
+              <p className="text-foreground/60 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
                 Have questions about our wellness rituals or formulations? Our Ayurvedic practitioners are here to guide you on your journey to balance and vitality.
               </p>
             </motion.div>
           </div>
         </section>
 
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-32 md:pb-48">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-16 md:pb-24">
           
           {/* --- CONTACT INFO CARDS --- */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -99,7 +99,7 @@ export default function ContactPage() {
                 transition={{ delay: item.delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -12, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative block overflow-hidden rounded-3xl bg-gradient-to-br bg-white/30 backdrop-blur-sm p-8 md:p-10 border border-border/50 space-y-6 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-700"
+                className="group relative block overflow-hidden rounded-2xl bg-gradient-to-br bg-white/30 backdrop-blur-sm p-6 md:p-8 border border-border/50 space-y-4 hover:shadow-xl hover:shadow-accent/10 transition-all duration-700"
               >
                 {/* Animated gradient background on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
@@ -129,10 +129,10 @@ export default function ContactPage() {
           </div>
 
           {/* --- CONSULTATION CARD --- */}
-          <motion.div 
+          <motion.div
             {...cardVariants}
             transition={{ delay: 0.4, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-20 relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent/20 via-accent/10 to-highlight/10 border border-accent/30"
+            className="mt-12 relative overflow-hidden rounded-2xl bg-gradient-to-br from-accent/20 via-accent/10 to-highlight/10 border border-accent/30"
           >
             {/* Floating decorative elements */}
             <motion.div 
@@ -161,15 +161,15 @@ export default function ContactPage() {
               }}
             />
             
-            <div className="relative z-10 p-12 md:p-20">
-              <div className="flex flex-col lg:flex-row gap-12 items-center">
+            <div className="relative z-10 p-8 md:p-12">
+              <div className="flex flex-col lg:flex-row gap-8 items-center">
                 <div className="lg:w-1/3 text-center lg:text-left">
                   <motion.div 
-                    className="h-20 w-20 rounded-full bg-accent text-background flex items-center justify-center mx-auto lg:mx-0 mb-6"
+                    className="h-16 w-16 rounded-full bg-accent text-background flex items-center justify-center mx-auto lg:mx-0 mb-4"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <MessageSquare size={40} strokeWidth={1.5} />
+                    <MessageSquare size={32} strokeWidth={1.5} />
                   </motion.div>
                   <Badge variant="luxury" className="mb-4">Premium Service</Badge>
                   <h3 className="text-3xl md:text-4xl font-light text-foreground leading-tight">
@@ -188,7 +188,7 @@ export default function ContactPage() {
                     href="tel:9318445297"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center gap-3 bg-accent text-background px-10 py-5 rounded-full text-xs font-light tracking-[0.1em] uppercase hover:bg-accent/90 transition-all duration-500 shadow-lg shadow-accent/20"
+                    className="inline-flex items-center gap-3 bg-accent text-background px-8 py-4 rounded-full text-xs font-light tracking-[0.1em] uppercase hover:bg-accent/90 transition-all duration-500 shadow-lg shadow-accent/20"
                   >
                     Book Consultation
                     <ArrowRight size={16} />

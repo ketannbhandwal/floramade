@@ -36,7 +36,7 @@ export default function MobileMenu({ open, onClose, user, logout }) {
             className="fixed bottom-0 left-0 top-0 z-[60] w-[86%] max-w-[350px] border-r border-[#dce7bf] bg-[#fbfcf4] p-6 md:hidden"
           >
             <div className="mb-7 flex items-center justify-between">
-              <p className="font-display text-2xl text-[#3e5c32]">Fiveetatva</p>
+              <p className="font-display text-2xl text-[#3e5c32]">Fiveetatv</p>
               <button type="button" onClick={onClose} className="rounded-lg border border-[#dbe8bf] p-1.5 text-[#4f6245]">
                 <X className="h-4 w-4" />
               </button>

@@ -40,7 +40,7 @@ export default function RegisterPage() {
     <div className="w-full pt-32 md:pt-40 pb-20 px-6">
       <div className="mx-auto max-w-md rounded-[2rem] border border-border bg-white/50 backdrop-blur-sm p-8 shadow-sm">
       <h1 className="mb-2 text-3xl font-semibold text-[#36532f]">Create Account</h1>
-      <p className="mb-5 text-sm text-[#5f7456]">Join Fiveetatva and start your premium wellness journey.</p>
+      <p className="mb-5 text-sm text-[#5f7456]">Join Fiveetatv and start your premium wellness journey.</p>
       <form onSubmit={onSubmit} className="space-y-4">
         <Input label="Full name" error={errors.name} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
         <Input label="Email" error={errors.email} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />

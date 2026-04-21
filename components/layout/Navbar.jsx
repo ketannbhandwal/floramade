@@ -7,8 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { NAV_LINKS, PRODUCT_CATEGORIES } from "./nav-config";
 
 export default function Navbar() {
   const { cartItems } = useCart();
@@ -19,7 +20,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [productsOpen, setProductsOpen] = useState(false);
+  const [diabetesDropdownOpen, setDiabetesDropdownOpen] = useState(false);
+  const [mobileDiabetesOpen, setMobileDiabetesOpen] = useState(false);
 
   const isHome = router.pathname === "/";
   const isAbout = router.pathname === "/about";
@@ -59,15 +61,6 @@ export default function Navbar() {
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
     { label: "Wishlist", href: "/wishlist" },
-    { 
-      label: "Products", 
-      hasDropdown: true,
-      subLinks: [
-        { label: "MadhuCurex Powder", href: "/product/madhucurex-powder", description: "For Sugar" },
-        { label: "MadhuCurex Capsule", href: "/product/madhucurex-capsules", description: "For Sugar" },
-        { label: "Paachan Sathi Powder", href: "/product/paachan-sathi-powder", description: "For Digestion" },
-      ]
-    },
   ];
 
   // Determine if text should be light (white) based on route and scroll state
@@ -83,49 +76,131 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-background/90 backdrop-blur-xl shadow-sm' : hasDarkHero ? 'bg-transparent' : 'bg-background/90 backdrop-blur-xl'}`}>
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-6 flex items-center justify-between gap-4 md:gap-8">
-          {/* Logo */}
-          <Link href="/">
-            <Image 
-              src="/assets/logo.png" 
-              alt="Fiveetatva" 
+      <header className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 bg-white/60 backdrop-blur-xl border-b border-border/50`}>
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-6 flex items-center gap-4 md:gap-8">
+          {/* Mobile Menu Button (Left) */}
+          <button
+            onClick={() => setOpenMenu(true)}
+            className="lg:hidden p-2 -ml-2 rounded-full transition-all duration-500 hover:bg-foreground/5"
+            aria-label="Menu"
+          >
+            <Menu size={22} strokeWidth={1.5} />
+          </button>
+
+          {/* Logo (Center) */}
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
+            <Image
+              src="/assets/logo.png"
+              alt="Fiveetatv"
               width={110}
               height={110}
-              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 ${textColor} cursor-pointer`}
+              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 text-foreground cursor-pointer`}
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {NAV_LINKS.map((link) => (
-              <div key={link.label} className="relative">
-                {link.hasDropdown ? (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`text-xs uppercase tracking-tight font-light transition-all duration-500 text-foreground/60 hover:text-foreground`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Icons Right */}
+          <div className={`flex items-center gap-2 md:gap-3 flex-shrink-0 transition-colors duration-500 text-foreground ml-auto`}>
+
+            {/* Search */}
+            <div className="flex items-center relative">
+              <form onSubmit={handleSearch} className="hidden md:flex items-center bg-white/50 backdrop-blur-sm rounded-full px-3 py-1.5 border border-border hover:border-accent transition-all duration-300">
+                <Search size={14} strokeWidth={1.5} className="text-foreground/40" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-transparent outline-none text-sm ml-1.5 w-36 text-foreground placeholder:text-foreground/40"
+                />
+              </form>
+              <Link href="/search" className="md:hidden p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10" aria-label="Search">
+                <Search size={18} strokeWidth={1.5} />
+              </Link>
+            </div>
+
+            {/* Admin */}
+            {user?.role === 'admin' && (
+              <Link href="/admin" className="hidden md:flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Admin">
+                <LayoutDashboard size={18} strokeWidth={1.5} />
+              </Link>
+            )}
+
+            {/* Account */}
+            <Link href="/account" className="hidden md:flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Account">
+              <UserRound size={18} strokeWidth={1.5} />
+            </Link>
+
+            {/* Cart */}
+            <Link href="/cart" className="relative p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Cart">
+              <ShoppingBag size={18} strokeWidth={1.5} />
+              <AnimatePresence>
+                {cartItems.length > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    className={`absolute top-0 right-0 h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-light shadow-sm bg-accent text-background`}
+                  >
+                    {cartItems.length}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Secondary Navigation Bar - Product Categories */}
+      <nav className="hidden lg:block fixed top-[72px] md:top-[88px] left-0 right-0 z-50 bg-white/60 backdrop-blur-xl border-b border-border/50 shadow-sm">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="flex items-center justify-center gap-12 py-3">
+            {PRODUCT_CATEGORIES.map((category) => (
+              <div key={category.label} className="relative">
+                {category.hasDropdown ? (
                   <>
                     <button
-                      onClick={() => setProductsOpen(!productsOpen)}
-                      className={`text-xs uppercase tracking-tight font-light transition-all duration-500 ${mutedTextColor} flex items-center gap-1`}
+                      onMouseEnter={() => setDiabetesDropdownOpen(true)}
+                      onMouseLeave={() => setDiabetesDropdownOpen(false)}
+                      className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 flex items-center gap-1.5 group"
                     >
-                      {link.label}
-                      <span className={`transition-transform duration-300 ${productsOpen ? 'rotate-180' : ''}`}>▼</span>
+                      {category.label}
+                      <ChevronDown size={14} className={`transition-transform duration-300 ${diabetesDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
                     <AnimatePresence>
-                      {productsOpen && (
+                      {diabetesDropdownOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: -10 }}
+                          initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                          exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.3 }}
-                          className="absolute top-full left-0 mt-4 bg-background/90 backdrop-blur-xl border border-border rounded-2xl shadow-2xl py-4 min-w-[280px] overflow-hidden"
+                          onMouseEnter={() => setDiabetesDropdownOpen(true)}
+                          onMouseLeave={() => setDiabetesDropdownOpen(false)}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-background border border-border rounded-2xl shadow-2xl py-4 min-w-[320px] overflow-hidden"
                         >
-                          {link.subLinks.map((subLink) => (
+                          <div className="px-6 py-2 border-b border-border/50 mb-2">
+                            <p className="text-[10px] uppercase tracking-widest text-accent font-medium">{category.label}</p>
+                          </div>
+                          {category.subLinks.map((subLink) => (
                             <Link
                               key={subLink.label}
                               href={subLink.href}
-                              className="block px-6 py-3 hover:bg-muted/50 transition-colors duration-300"
+                              className="block px-6 py-3 hover:bg-muted/30 transition-colors duration-300 group"
                             >
-                              <p className="text-sm font-light text-foreground">{subLink.label}</p>
-                              <p className="text-xs text-foreground/50 mt-1">{subLink.description}</p>
+                              <p className="text-sm font-light text-foreground group-hover:text-accent transition-colors">{subLink.label}</p>
+                              <p className="text-[10px] text-foreground/40 mt-1 uppercase tracking-wider">{subLink.description}</p>
                             </Link>
                           ))}
                         </motion.div>
@@ -134,111 +209,47 @@ export default function Navbar() {
                   </>
                 ) : (
                   <Link
-                    href={link.href}
-                    className={`text-xs uppercase tracking-tight font-light transition-all duration-500 ${mutedTextColor}`}
+                    href={category.href}
+                    className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
                   >
-                    {link.label}
+                    {category.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                 )}
               </div>
             ))}
-          </nav>
-
-          {/* Icons Right */}
-          <div className={`flex items-center gap-2 md:gap-3 flex-shrink-0 transition-colors duration-500 ${textColor}`}>
-            
-            {/* Search */}
-            <div className="flex items-center relative">
-              <AnimatePresence>
-                {searchOpen && (
-                  <motion.div
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: 200, opacity: 1 }}
-                    exit={{ width: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="overflow-hidden absolute right-8 top-1/2 -translate-y-1/2 z-20 md:right-10 hidden md:block"
-                  >
-                    <form onSubmit={handleSearch} className="flex items-center">
-                      <input
-                        autoFocus
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={`bg-transparent border-b py-1 text-sm outline-none w-32 md:w-48 pr-2 transition-colors ${
-                          isLightText
-                            ? 'border-white/30 text-white placeholder:text-white/50'
-                            : 'border-border text-foreground placeholder:text-foreground/40'
-                        }`}
-                      />
-                    </form>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <Link href="/search" className="md:hidden p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10" aria-label="Search">
-                <Search size={18} strokeWidth={1.5} />
-              </Link>
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="hidden md:block p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10"
-                aria-label="Search"
-              >
-                {searchOpen ? <X size={18} strokeWidth={1.5} /> : <Search size={18} strokeWidth={1.5} />}
-              </button>
-            </div>
-
-            {/* Account */}
-            <Link href="/account" className="flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Account">
-              <UserRound size={18} strokeWidth={1.5} />
-            </Link>
-            {/* Admin */}
-            {user?.role === 'admin' && (
-              <Link href="/admin" className="flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Admin">
-                <LayoutDashboard size={18} strokeWidth={1.5} />
-              </Link>
-            )}
-            {/* Cart */}
-            <Link href="/cart" className="relative p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Cart">
-              <ShoppingBag size={18} strokeWidth={1.5} />
-              <AnimatePresence>
-                {cartItems.length > 0 && (
-                  <motion.span 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className={`absolute top-0 right-0 h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-light shadow-sm ${badgeBg}`}
-                  >
-                    {cartItems.length}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
-
-            {/* Mobile Menu Toggle */}
-            <button 
-              onClick={() => setOpenMenu(true)} 
-              className="lg:hidden p-2 -mr-2 rounded-full transition-all duration-500 hover:bg-foreground/5"
-              aria-label="Menu"
+            <Link
+              href="/policy"
+              className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
             >
-              <Menu size={22} strokeWidth={1.5} />
-            </button>
+              Our Policies
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </Link>
           </div>
         </div>
-      </header>
+      </nav>
 
       {/* Luxury Full-Screen Mobile Menu */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {openMenu && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[100] bg-background flex flex-col"
           >
             {/* Header inside Menu */}
             <div className="flex items-center justify-between p-6 md:p-8">
-              <span className="text-2xl font-display text-foreground">Fiveetatva.</span>
+              <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
+            <Image
+              src="/assets/logo.png"
+              alt="Fiveetatv"
+              width={100}
+              height={100}
+              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 text-foreground cursor-pointer`}
+            />
+          </Link>
               <button 
                 onClick={() => setOpenMenu(false)} 
                 className="p-3 rounded-full bg-muted text-foreground hover:bg-border transition-all duration-500"
@@ -248,47 +259,64 @@ export default function Navbar() {
             </div>
 
             {/* Menu Links */}
-            <div className="flex-1 flex flex-col justify-center px-8 md:px-16">
-              <nav className="flex flex-col gap-4 md:gap-6">
-                {NAV_LINKS.map((link, i) => (
-                  <div key={link.label} className="overflow-hidden">
+            <div className="flex-1 flex flex-col justify-center px-8 md:px-16 overflow-y-auto">
+              <nav className="flex flex-col gap-6 py-12">
+                {/* Main Links */}
+                <div className="flex flex-col gap-4">
+                  {NAV_LINKS.map((link, i) => (
                     <motion.div
-                      initial={{ y: "100%" }}
-                      animate={{ y: 0 }}
-                      exit={{ y: "100%" }}
-                      transition={{ 
-                        duration: 0.7, 
-                        delay: 0.1 + i * 0.1,
-                        ease: [0.22, 1, 0.36, 1] 
-                      }}
+                      key={link.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
                     >
-                      {link.hasDropdown ? (
-                        <div>
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpenMenu(false)}
+                        className="text-2xl md:text-3xl font-display text-foreground hover:text-accent transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Categories */}
+                <div className="pt-8 border-t border-border/50 flex flex-col gap-4">
+                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Shop by Concern</p>
+                  {PRODUCT_CATEGORIES.map((category, i) => (
+                    <motion.div
+                      key={category.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 + i * 0.1 }}
+                    >
+                      {category.hasDropdown ? (
+                        <div className="flex flex-col gap-3">
                           <button
-                            onClick={() => setProductsOpen(!productsOpen)}
-                            className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 flex items-center gap-4"
+                            onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)}
+                            className="text-xl md:text-2xl font-display text-foreground/80 flex items-center gap-3"
                           >
-                            {link.label}
-                            <span className={`text-2xl transition-transform duration-300 ${productsOpen ? 'rotate-180' : ''}`}>▼</span>
+                            {category.label}
+                            <ChevronDown size={20} className={`transition-transform duration-300 ${mobileDiabetesOpen ? 'rotate-180' : ''}`} />
                           </button>
                           <AnimatePresence>
-                            {productsOpen && (
+                            {mobileDiabetesOpen && (
                               <motion.div
                                 initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
+                                animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden pl-4 mt-4 space-y-4"
+                                className="pl-4 flex flex-col gap-4 overflow-hidden"
                               >
-                                {link.subLinks.map((subLink) => (
+                                {category.subLinks.map((sub) => (
                                   <Link
-                                    key={subLink.label}
-                                    href={subLink.href}
+                                    key={sub.label}
+                                    href={sub.href}
                                     onClick={() => setOpenMenu(false)}
-                                    className="block text-xl md:text-2xl font-light text-foreground/70 hover:text-accent transition-colors duration-300"
+                                    className="group"
                                   >
-                                    {subLink.label}
-                                    <span className="block text-sm text-foreground/40 mt-1">{subLink.description}</span>
+                                    <p className="text-lg text-foreground/70 group-hover:text-accent transition-colors">{sub.label}</p>
+                                    <p className="text-md text-foreground/30 uppercase tracking-widest">{sub.description}</p>
                                   </Link>
                                 ))}
                               </motion.div>
@@ -297,56 +325,50 @@ export default function Navbar() {
                         </div>
                       ) : (
                         <Link
-                          href={link.href}
+                          href={category.href}
                           onClick={() => setOpenMenu(false)}
-                          className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 block"
+                          className="text-xl md:text-2xl font-display text-foreground/80 hover:text-accent transition-colors"
                         >
-                          {link.label}
+                          {category.label}
                         </Link>
                       )}
                     </motion.div>
-                  </div>
-                ))}
-                {/* Add Admin link above Account when user is admin */}
-                {user?.role === 'admin' && (
+                  ))}
                   <motion.div
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "100%" }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.1 + NAV_LINKS.length * 0.1,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 }}
                   >
+                    <Link
+                      href="/policy"
+                      onClick={() => setOpenMenu(false)}
+                      className="text-xl md:text-2xl font-display text-foreground/80 hover:text-accent transition-colors"
+                    >
+                      Our Policies
+                    </Link>
+                  </motion.div>
+                </div>
+
+                {/* Account */}
+                <div className="pt-8 border-t border-border/50 flex flex-col gap-4">
+                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Account</p>
+                  {user?.role === 'admin' && (
                     <Link
                       href="/admin"
                       onClick={() => setOpenMenu(false)}
-                      className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 block"
+                      className="text-xl font-display text-foreground/70 hover:text-accent transition-colors"
                     >
-                      Admin
+                      Admin Dashboard
                     </Link>
-                  </motion.div>
-                )}
-                {/* Add Account link after Contact */}
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "100%" }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.1 + (NAV_LINKS.length + (user?.role === 'admin' ? 1 : 0)) * 0.1,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
+                  )}
                   <Link
                     href="/account"
                     onClick={() => setOpenMenu(false)}
-                    className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 block"
+                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors"
                   >
-                    Account
+                    My Account
                   </Link>
-                </motion.div>
+                </div>
               </nav>
             </div>
 
@@ -372,7 +394,7 @@ export default function Navbar() {
                   </Link>
                 )}
               </div>
-              <p className="text-xs text-foreground/40">© 2026 Fiveetatva</p>
+              <p className="text-xs text-foreground/40">© 2026 Fiveetatv</p>
             </motion.div>
           </motion.div>
         )}

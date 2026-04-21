@@ -123,6 +123,7 @@ export default function CheckoutPage() {
     localStorage.removeItem("fiveetatva-buy-now-items");
     localStorage.removeItem("fiveetatva-buy-now-address");
     if (!buyNowItems.length) clearCart();
+    router.push("/account");
   }
 
   async function handlePayment() {
@@ -148,7 +149,7 @@ export default function CheckoutPage() {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: "INR",
-      name: "Fiveetatva",
+      name: "Fiveetatv",
       description: "Checkout Payment",
       order_id: order.id,
       handler: async (response) => {
@@ -183,6 +184,7 @@ export default function CheckoutPage() {
           localStorage.removeItem("fiveetatva-buy-now-items");
           localStorage.removeItem("fiveetatva-buy-now-address");
           if (!buyNowItems.length) clearCart();
+          router.push("/account");
         } else {
           toast.error("Payment verification failed");
         }
@@ -405,7 +407,7 @@ export default function CheckoutPage() {
               </label>
 
               <p className="text-[10px] text-background/60 leading-relaxed">
-                By placing this order, you agree to Fiveetatva's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
+                By placing this order, you agree to Fiveetatv's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
               </p>
             </div>
 

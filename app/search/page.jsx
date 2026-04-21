@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Search as SearchIcon, FileText, X } from "lucide-react";
+import { Search as SearchIcon, FileText, X, File, User, ShoppingCart } from "lucide-react";
 import PageTransition from "@/components/ui/PageTransition";
+import { SEARCH_PAGES } from "@/components/layout/nav-config";
 
 const PDFS = [
   { name: "Terms and Conditions", path: "/terms/Terms and Conditions.pdf" },
@@ -27,7 +28,7 @@ export default function SearchPage() {
 
   const performSearch = async (q) => {
     if (!q) {
-      setResults({ products: [], pdfs: [] });
+      setResults({ products: [], pdfs: [], pages: [] });
       return;
     }
 
@@ -37,11 +38,17 @@ export default function SearchPage() {
       const products = await productsRes.json();
 
       // Filter PDFs
-      const filteredPdfs = PDFS.filter(pdf => 
+      const filteredPdfs = PDFS.filter(pdf =>
         pdf.name.toLowerCase().includes(q.toLowerCase())
       );
 
-      setResults({ products, pdfs: filteredPdfs });
+      // Filter pages
+      const filteredPages = SEARCH_PAGES.filter(page =>
+        page.title.toLowerCase().includes(q.toLowerCase()) ||
+        page.description.toLowerCase().includes(q.toLowerCase())
+      );
+
+      setResults({ products, pdfs: filteredPdfs, pages: filteredPages });
     } catch (error) {
       console.error("Search error:", error);
     }
@@ -106,8 +113,8 @@ export default function SearchPage() {
                     >
                       <Link href={`/product/${product.slug}`} className="block">
                         <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-muted mb-4">
-                          <img 
-                            src={product.images?.[0] || '/placeholder.png'} 
+                          <img
+                            src={product.images?.[0] || '/placeholder.png'}
                             alt={product.name}
                             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                           />
@@ -116,6 +123,40 @@ export default function SearchPage() {
                         <p className="text-sm text-foreground/60 font-light">₹{product.discountPrice}</p>
                       </Link>
                     </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Pages */}
+            {results.pages && results.pages.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 }}
+              >
+                <h2 className="text-xl font-light mb-6 tracking-[0.01em]">Pages ({results.pages.length})</h2>
+                <div className="space-y-4">
+                  {results.pages.map((page, i) => (
+                    <motion.a
+                      key={page.href}
+                      href={page.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * i }}
+                      className="flex items-center gap-4 p-4 rounded-xl border border-border bg-white/30 hover:bg-white/50 hover:border-accent transition-all duration-300 group"
+                    >
+                      <div className="h-12 w-12 rounded-full bg-accent/10 text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-background transition-all duration-300">
+                        <File size={20} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-foreground">{page.title}</p>
+                        <p className="text-xs text-foreground/50">{page.description}</p>
+                      </div>
+                      <span className="text-accent text-sm font-light tracking-[0.05em] group-hover:translate-x-1 transition-transform duration-300">
+                        View
+                      </span>
+                    </motion.a>
                   ))}
                 </div>
               </motion.div>
@@ -158,14 +199,14 @@ export default function SearchPage() {
             )}
 
             {/* No Results */}
-            {results.products.length === 0 && results.pdfs.length === 0 && query && (
+            {results.products.length === 0 && results.pdfs.length === 0 && (!results.pages || results.pages.length === 0) && query && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-center py-20"
               >
                 <p className="text-foreground/60 text-lg font-light">No results found for "{query}"</p>
-                <p className="text-foreground/40 text-sm mt-2">Try searching for products or documents</p>
+                <p className="text-foreground/40 text-sm mt-2">Try searching for products, pages, or documents</p>
               </motion.div>
             )}
           </div>
