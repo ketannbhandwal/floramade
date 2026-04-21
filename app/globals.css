@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'FunnelDisplay';
@@ -18,17 +20,6 @@
   --muted: #f0ebe1; /* Slightly darker oak white */
   --border: #e6dfd3; /* Soft neutral tone */
   --font-funnel: 'FunnelDisplay', sans-serif;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
-  --color-highlight: var(--highlight);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --font-sans: var(--font-funnel);
 }
 
 body {
