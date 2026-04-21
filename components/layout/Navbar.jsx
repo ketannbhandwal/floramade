@@ -86,13 +86,15 @@ export default function Navbar() {
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-background/90 backdrop-blur-xl shadow-sm' : hasDarkHero ? 'bg-transparent' : 'bg-background/90 backdrop-blur-xl'}`}>
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-6 flex items-center justify-between gap-4 md:gap-8">
           {/* Logo */}
-          <Image 
-            src="/assets/logo.png" 
-            alt="Fiveetatva" 
-            width={110}
-            height={110}
-            className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 ${textColor}`}
-          />
+          <Link href="/">
+            <Image 
+              src="/assets/logo.png" 
+              alt="Fiveetatva" 
+              width={110}
+              height={110}
+              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 ${textColor} cursor-pointer`}
+            />
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
@@ -154,7 +156,7 @@ export default function Navbar() {
                     animate={{ width: 200, opacity: 1 }}
                     exit={{ width: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="overflow-hidden absolute right-8 top-1/2 -translate-y-1/2"
+                    className="overflow-hidden absolute right-8 top-1/2 -translate-y-1/2 z-20 md:right-10 hidden md:block"
                   >
                     <form onSubmit={handleSearch} className="flex items-center">
                       <input
@@ -163,9 +165,9 @@ export default function Navbar() {
                         placeholder="Search..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className={`bg-transparent border-b py-1 text-sm outline-none w-full pr-2 transition-colors ${
-                          isLightText 
-                            ? 'border-white/30 text-white placeholder:text-white/50' 
+                        className={`bg-transparent border-b py-1 text-sm outline-none w-32 md:w-48 pr-2 transition-colors ${
+                          isLightText
+                            ? 'border-white/30 text-white placeholder:text-white/50'
                             : 'border-border text-foreground placeholder:text-foreground/40'
                         }`}
                       />
@@ -173,9 +175,12 @@ export default function Navbar() {
                   </motion.div>
                 )}
               </AnimatePresence>
-              <button 
+              <Link href="/search" className="md:hidden p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10" aria-label="Search">
+                <Search size={18} strokeWidth={1.5} />
+              </Link>
+              <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                className={`p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10`}
+                className="hidden md:block p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10"
                 aria-label="Search"
               >
                 {searchOpen ? <X size={18} strokeWidth={1.5} /> : <Search size={18} strokeWidth={1.5} />}
@@ -302,6 +307,46 @@ export default function Navbar() {
                     </motion.div>
                   </div>
                 ))}
+                {/* Add Admin link above Account when user is admin */}
+                {user?.role === 'admin' && (
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.1 + NAV_LINKS.length * 0.1,
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                  >
+                    <Link
+                      href="/admin"
+                      onClick={() => setOpenMenu(false)}
+                      className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 block"
+                    >
+                      Admin
+                    </Link>
+                  </motion.div>
+                )}
+                {/* Add Account link after Contact */}
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.1 + (NAV_LINKS.length + (user?.role === 'admin' ? 1 : 0)) * 0.1,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
+                  <Link
+                    href="/account"
+                    onClick={() => setOpenMenu(false)}
+                    className="text-4xl md:text-6xl font-display text-foreground hover:text-accent transition-colors duration-500 block"
+                  >
+                    Account
+                  </Link>
+                </motion.div>
               </nav>
             </div>
 
@@ -327,7 +372,7 @@ export default function Navbar() {
                   </Link>
                 )}
               </div>
-              <p className="text-xs text-foreground/40">© 2024 Fiveetatva</p>
+              <p className="text-xs text-foreground/40">© 2026 Fiveetatva</p>
             </motion.div>
           </motion.div>
         )}

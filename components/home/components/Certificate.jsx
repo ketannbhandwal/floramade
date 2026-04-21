@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const certificates = [
-  { id: 1, title: 'ISO Certified', name: 'ISO 9001' },
-  { id: 2, title: 'DSIR Recognised', name: 'DSIR' },
-  { id: 3, title: 'Kerala Govt. Approved Centre', name: 'Kerala' },
-  { id: 4, title: 'NABH Accredited', name: 'NABH' },
+  { id: 1, title: 'Gultun Free', name: 'Gultun Free' },
+  { id: 2, title: 'Pure, Natural', name: 'Vegan' },
+  { id: 3, title: 'Clinical Tested', name: 'Ingredient' },
+  { id: 4, title: 'GMO Free', name: 'GMO Free' },
 ];
 
 function CertificateSlider() {

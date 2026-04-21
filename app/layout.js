@@ -29,7 +29,7 @@ const organizationSchema = {
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "care@fiveetatva.com",
+    "email": "fiveetatv@gmail.com",
     "contactType": "customer service"
   },
   "sameAs": [

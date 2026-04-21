@@ -32,6 +32,7 @@ export default function LoginPage() {
     await refreshUser();
     toast.success("Welcome back");
     router.push("/");
+    router.refresh();
   }
 
   return (

@@ -61,9 +61,9 @@ export default function ContactPage() {
               { 
                 icon: Phone, 
                 label: "Call Us", 
-                value: "+91 98765 43210", 
+                value: "9318445297", 
                 sub: "Mon-Sat, 10am - 6pm IST",
-                action: "tel:+919876543210",
+                action: "tel:9318445297",
                 delay: 0.1,
                 color: "from-accent/20 to-accent/5",
                 iconColor: "text-accent",
@@ -72,9 +72,9 @@ export default function ContactPage() {
               { 
                 icon: Mail, 
                 label: "Email Us", 
-                value: "hello@fiveetatva.com", 
+                value: "fiveetatv@gmail.com", 
                 sub: "Response within 24 hours",
-                action: "mailto:hello@fiveetatva.com",
+                action: "mailto:fiveetatv@gmail.com",
                 delay: 0.2,
                 color: "from-highlight/30 to-highlight/10",
                 iconColor: "text-foreground/70",
@@ -83,9 +83,9 @@ export default function ContactPage() {
               { 
                 icon: MessageSquare, 
                 label: "WhatsApp", 
-                value: "+91 98765 43210", 
+                value: "9318445297", 
                 sub: "Chat with us instantly",
-                action: "https://wa.me/919876543210",
+                action: "https://wa.me/919318445297",
                 delay: 0.3,
                 color: "from-foreground/10 to-foreground/5",
                 iconColor: "text-foreground/70",
@@ -185,7 +185,7 @@ export default function ContactPage() {
                 
                 <div className="lg:w-1/3 text-center lg:text-right">
                   <motion.a 
-                    href="tel:+919876543210"
+                    href="tel:9318445297"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center gap-3 bg-accent text-background px-10 py-5 rounded-full text-xs font-light tracking-[0.1em] uppercase hover:bg-accent/90 transition-all duration-500 shadow-lg shadow-accent/20"

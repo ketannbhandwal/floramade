@@ -35,7 +35,7 @@ export default function Footer() {
                   <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                 </svg>
               </a>
-              <a href="mailto:care@fiveetatva.com" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-border/50 flex items-center justify-center hover:bg-accent hover:text-background hover:border-accent transition-all duration-500 group">
+              <a href="mailto:fiveetatv@gmail.com" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-border/50 flex items-center justify-center hover:bg-accent hover:text-background hover:border-accent transition-all duration-500 group">
                 <Mail size={14} strokeWidth={1.5} />
               </a>
             </div>
@@ -54,10 +54,10 @@ export default function Footer() {
           <div className="md:col-span-2 space-y-4 md:space-y-6">
             <p className="text-[10px] uppercase tracking-[0.1em] font-light text-foreground/40">Legal</p>
             <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-foreground/60">
-              <li><Link href="/terms" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Terms</Link></li>
-              <li><Link href="/privacy-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Privacy</Link></li>
-              <li><Link href="/refund-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Refund Policy</Link></li>
-              <li><Link href="/shipping-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Shipping</Link></li>
+              <li><a href="/terms/Terms and Conditions.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Terms</a></li>
+              <li><a href="/terms/Privacypolicy.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Privacy</a></li>
+              <li><a href="/terms/Refund policy.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Refund Policy</a></li>
+              <li><a href="/terms/shipping and cancellation.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Shipping</a></li>
             </ul>
           </div>
 
@@ -66,7 +66,11 @@ export default function Footer() {
             <div className="space-y-3 md:space-y-4">
               <div>
                 <p className="text-xs sm:text-sm font-medium text-foreground mb-1">Email</p>
-                <a href="mailto:care@fiveetatva.com" className="text-xs sm:text-sm text-foreground/60 font-light hover:text-accent transition-colors duration-500">care@fiveetatva.com</a>
+                <a href="mailto:fiveetatv@gmail.com" className="text-xs sm:text-sm text-foreground/60 font-light hover:text-accent transition-colors duration-500">fiveetatv@gmail.com</a>
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-foreground mb-1">Phone</p>
+                <a href="tel:9318445297" className="text-xs sm:text-sm text-foreground/60 font-light hover:text-accent transition-colors duration-500">9318445297</a>
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-foreground mb-1">Location</p>
@@ -88,6 +92,9 @@ export default function Footer() {
             </p>
             <div className="h-[1px] w-8 bg-foreground/20" />
           </div>
+          <p className="text-xs text-foreground/40 font-light">
+            Designed by Valtrix Studio
+          </p>
         </div>
         
       </div>

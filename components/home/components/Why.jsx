@@ -1,10 +1,25 @@
-import React from 'react'
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Sparkles, Leaf, ShieldCheck } from "lucide-react";
 
 function Why() {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const images = [
+        "/why/IMG_7885.JPG.jpeg",
+        "/why/IMG_7886.JPG.jpeg",
+        "/why/IMG_7887.JPG.jpeg"
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <section className="py-24 px-6 max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -18,12 +33,23 @@ function Why() {
                 >
                     <div className="absolute inset-0 bg-accent/20 rounded-[2rem] transform rotate-3" />
                     <div className="relative h-full w-full overflow-hidden rounded-[2rem] shadow-2xl">
-                        <Image
-                            src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=2000&auto=format&fit=crop"
-                            alt="Natural Ingredients"
-                            fill
-                            className="object-cover hover:scale-105 transition-transform duration-700"
-                        />
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentImageIndex}
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -50 }}
+                                transition={{ duration: 0.5 }}
+                                className="absolute inset-0"
+                            >
+                                <Image
+                                    src={images[currentImageIndex]}
+                                    alt="Natural Ingredients"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </motion.div>
+                        </AnimatePresence>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <div className="absolute bottom-8 left-8 text-white">
                             <span className="text-xs font-bold uppercase tracking-[0.2em] bg-white/20 px-3 py-1 rounded-full backdrop-blur-md">Since 2024</span>

@@ -12,7 +12,7 @@ import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, A
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
-import Certificate from "../home/components/Certificate";
+import CertificateSlider from "../home/components/Certificate";
 
 const ProductStructuredData = ({ product }) => {
   const productSchema = {
@@ -284,6 +284,8 @@ export default function ProductDetails({ product, relatedProducts }) {
           </motion.div>
         </div>
       </section>
+
+      <CertificateSlider />
 
       {/* BENEFITS SECTION */}
       <section className="py-16 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
