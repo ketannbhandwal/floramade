@@ -8,6 +8,7 @@ import Link from "next/link";
 import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
@@ -22,7 +23,7 @@ const Tooltip = dynamic(() => import("recharts").then(mod => mod.Tooltip), { ssr
 const empty = {
   name: "", slug: "", price: 0, discountPrice: 0, stock: 0,
   isVisible: true, description: "", benefits: "", ingredients: "",
-  usage: "", images: [],
+  usage: "", images: [], videoUrl: "",
 };
 
 const fadeAnim = {
@@ -33,6 +34,7 @@ const fadeAnim = {
 };
 
 export default function AdminPage() {
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
@@ -91,16 +93,16 @@ export default function AdminPage() {
     loadData();
   }, []);
 
-  async function handleImageUpload(file) {
+  async function handleFileUpload(file, type = 'image') {
     if (!file) return null;
-    
-    const formData = new FormData();
-    formData.append('file', file);
     
     try {
       const res = await fetch('/api/upload', {
         method: 'POST',
-        body: JSON.stringify({ image: await fileToBase64(file) }),
+        body: JSON.stringify({ 
+          file: await fileToBase64(file),
+          type 
+        }),
         headers: { 'Content-Type': 'application/json' },
       });
       
@@ -108,9 +110,17 @@ export default function AdminPage() {
       const data = await res.json();
       return data.url;
     } catch (error) {
-      toast.error('Image upload failed');
+      toast.error(`${type.charAt(0).toUpperCase() + type.slice(1)} upload failed`);
       return null;
     }
+  }
+
+  async function handleImageUpload(file) {
+    return handleFileUpload(file, 'image');
+  }
+
+  async function handleVideoUpload(file) {
+    return handleFileUpload(file, 'video');
   }
 
   async function fileToBase64(file) {
@@ -138,6 +148,7 @@ export default function AdminPage() {
       ingredients: form.ingredients ? form.ingredients.split(",").map((x) => x.trim()).filter(Boolean) : [],
       usage: form.usage ? form.usage.split(",").map((x) => x.trim()).filter(Boolean) : [],
       images: form.images || [],
+      videoUrl: form.videoUrl || "",
       trustQuality: form.trustQuality,
       faqs: form.faqs || [],
       reviews: form.reviews || [],
@@ -157,6 +168,7 @@ export default function AdminPage() {
       
       if (!res.ok) {
         const errorData = await res.json();
+        setUploading(false);
         return toast.error(errorData.message || "Save failed");
       }
       
@@ -164,7 +176,8 @@ export default function AdminPage() {
       setForm(empty);
       setEditingSlug("");
       setUploading(false);
-      loadData();
+      await loadData();
+      router.refresh(); // Force Next.js to revalidate
     } catch (error) {
       console.error("Save error:", error);
       toast.error("Failed to save product. Please try again.");
@@ -175,7 +188,8 @@ export default function AdminPage() {
   async function deleteProduct(slug) {
     await fetch(`/api/products/${slug}`, { method: "DELETE" });
     toast.success("Product deleted");
-    loadData();
+    await loadData();
+    router.refresh();
   }
 
   async function approveReview(productId, reviewId, approved) {
@@ -192,7 +206,8 @@ export default function AdminPage() {
       }
       
       toast.success(approved ? "Review approved" : "Review unapproved");
-      loadData();
+      await loadData();
+      router.refresh();
     } catch (error) {
       console.error("Approve review error:", error);
       toast.error("Failed to update review");
@@ -213,7 +228,8 @@ export default function AdminPage() {
       }
       
       toast.success("Review deleted");
-      loadData();
+      await loadData();
+      router.refresh();
     } catch (error) {
       console.error("Delete review error:", error);
       toast.error("Failed to delete review");
@@ -228,7 +244,8 @@ export default function AdminPage() {
     });
     if (!res.ok) return toast.error("Visibility update failed");
     toast.success(`Product ${product.isVisible ? "hidden" : "unhidden"}`);
-    loadData();
+    await loadData();
+    router.refresh();
   }
 
   async function updateOrderStatus(orderId, status) {
@@ -239,7 +256,8 @@ export default function AdminPage() {
     });
     if (!res.ok) return toast.error("Status update failed");
     toast.success("Order status updated");
-    loadData();
+    await loadData();
+    router.refresh();
   }
 
   function startEdit(product) {
@@ -395,6 +413,52 @@ export default function AdminPage() {
                       <Input label="Benefits (comma separated)" value={form.benefits} onChange={(e) => setForm((f) => ({ ...f, benefits: e.target.value }))} />
                       <Input label="Ingredients (comma separated)" value={form.ingredients} onChange={(e) => setForm((f) => ({ ...f, ingredients: e.target.value }))} />
                       <Input label="Usage Steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
+                    </div>
+
+                    {/* Video Upload Section */}
+                    <div className="space-y-4">
+                      <label className="block text-sm font-medium uppercase tracking-[0.05em] text-foreground/70">Product Video</label>
+                      <div className="border-2 border-dashed border-foreground/20 rounded-2xl p-6 text-center hover:border-primary transition-colors">
+                        <input
+                          type="file"
+                          accept="video/*"
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            
+                            setUploading(true);
+                            const url = await handleVideoUpload(file);
+                            if (url) {
+                              setForm((f) => ({ ...f, videoUrl: url }));
+                              toast.success("Video uploaded");
+                            }
+                            setUploading(false);
+                          }}
+                          className="hidden"
+                          id="video-upload"
+                        />
+                        <label htmlFor="video-upload" className="cursor-pointer">
+                          <div className="space-y-2">
+                            <p className="text-sm font-medium text-foreground">Click to upload video</p>
+                            <p className="text-xs text-foreground/50">MP4, MOV up to 20MB</p>
+                          </div>
+                        </label>
+                      </div>
+
+                      {form.videoUrl && (
+                        <div className="relative aspect-video rounded-xl overflow-hidden border border-foreground/10 max-w-sm">
+                          <video src={form.videoUrl} className="w-full h-full object-cover" controls />
+                          <button
+                            type="button"
+                            onClick={() => setForm((f) => ({ ...f, videoUrl: "" }))}
+                            className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                      
+                      <Input label="Or Video URL" value={form.videoUrl} onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))} />
                     </div>
 
                     {/* Image Upload Section */}

@@ -3,10 +3,11 @@ import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
+import { revalidateTag } from 'next/cache';
 
 export async function POST(request) {
   try {
-    const { productId, rating, comment, name } = await request.json();
+    const { productId, rating, comment, name, image } = await request.json();
 
     if (!productId || !rating || !comment || !name) {
       return NextResponse.json(
@@ -54,6 +55,7 @@ export async function POST(request) {
     product.reviews.push({
       userId: user.userId,
       name,
+      image: image || "", // Use provided image URL if any
       rating,
       comment,
       approved: true, // Auto-approve reviews
@@ -61,6 +63,8 @@ export async function POST(request) {
     });
 
     await product.save();
+
+    revalidateTag('products');
 
     return NextResponse.json(
       { message: "Review submitted successfully." },

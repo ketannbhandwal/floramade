@@ -3,18 +3,32 @@ import PageTransition from "@/components/ui/PageTransition";
 import ProductDetails from "@/components/product/ProductDetails";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
-import { seedProductsIfEmpty } from "@/lib/seed";
-import { Metadata } from "next";
+import { unstable_cache } from 'next/cache';
+
+const getProductCached = unstable_cache(
+  async (slug) => {
+    await connectDB();
+    return await Product.findOne({ slug, isVisible: true }).lean();
+  },
+  ['product-detail'],
+  { revalidate: 3600, tags: ['products'] }
+);
 
 async function getProduct(slug) {
-  await connectDB();
-  await seedProductsIfEmpty();
-  const product = await Product.findOne({ slug, isVisible: true }).lean();
+  const product = await getProductCached(slug);
   return product ? JSON.parse(JSON.stringify(product)) : null;
 }
 
+const getRelatedCached = unstable_cache(
+  async (currentSlug) => {
+    return await Product.find({ slug: { $ne: currentSlug }, isVisible: true }).limit(2).lean();
+  },
+  ['related-products'],
+  { revalidate: 3600, tags: ['products'] }
+);
+
 async function getRelated(currentSlug) {
-  const products = await Product.find({ slug: { $ne: currentSlug }, isVisible: true }).limit(2).lean();
+  const products = await getRelatedCached(currentSlug);
   return JSON.parse(JSON.stringify(products));
 }
 

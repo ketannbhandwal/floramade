@@ -7,14 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown, LogOut } from "lucide-react";
 import Image from "next/image";
 import { NAV_LINKS, PRODUCT_CATEGORIES } from "./nav-config";
 
 export default function Navbar() {
   const { cartItems } = useCart();
   const { wishlistItems } = useWishlist();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -23,17 +23,33 @@ export default function Navbar() {
   const [diabetesDropdownOpen, setDiabetesDropdownOpen] = useState(false);
   const [mobileDiabetesOpen, setMobileDiabetesOpen] = useState(false);
 
-  const isHome = router.pathname === "/";
-  const isAbout = router.pathname === "/about";
+  const isHome = router.asPath === "/" || router.pathname === "/";
+  const isAbout = router.asPath === "/about" || router.pathname === "/about";
   const hasDarkHero = isHome || isAbout;
+
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      
+      // Handle background change on scroll
+      setScrolled(currentScrollY > 20);
+
+      // Handle show/hide navbar on scroll up/down
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -76,158 +92,171 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 bg-white/60 backdrop-blur-xl border-b border-border/50`}>
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-6 flex items-center gap-4 md:gap-8">
-          {/* Mobile Menu Button (Left) */}
-          <button
-            onClick={() => setOpenMenu(true)}
-            className="lg:hidden p-2 -ml-2 rounded-full transition-all duration-500 hover:bg-foreground/5"
-            aria-label="Menu"
-          >
-            <Menu size={22} strokeWidth={1.5} />
-          </button>
-
-          {/* Logo (Center) */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
-            <Image
-              src="/assets/logo.png"
-              alt="Fiveetatv"
-              width={110}
-              height={110}
-              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 text-foreground cursor-pointer`}
-            />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`text-xs uppercase tracking-tight font-light transition-all duration-500 text-foreground/60 hover:text-foreground`}
+      <div 
+        className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-500 ${
+          visible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <header 
+          className={`relative w-full border-b border-white/10 ${
+            scrolled 
+              ? "bg-[#2A3B32] shadow-lg lg:bg-[#2A3B32] lg:backdrop-blur-xl py-3" 
+              : "bg-[#2A3B32]/95 py-4 md:py-6"
+          }`}
+        >
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-4 md:gap-8">
+            <div className="flex items-center gap-4 md:gap-8">
+              {/* Mobile Menu Button (Left) */}
+              <button
+                onClick={() => setOpenMenu(true)}
+                className="lg:hidden p-2 -ml-2 rounded-full transition-all duration-500 hover:bg-white/5 text-white/80"
+                aria-label="Menu"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+                <Menu size={22} strokeWidth={1.5} />
+              </button>
 
-          {/* Icons Right */}
-          <div className={`flex items-center gap-2 md:gap-3 flex-shrink-0 transition-colors duration-500 text-foreground ml-auto`}>
-
-            {/* Search */}
-            <div className="flex items-center relative">
-              <form onSubmit={handleSearch} className="hidden md:flex items-center bg-white/50 backdrop-blur-sm rounded-full px-3 py-1.5 border border-border hover:border-accent transition-all duration-300">
-                <Search size={14} strokeWidth={1.5} className="text-foreground/40" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent outline-none text-sm ml-1.5 w-36 text-foreground placeholder:text-foreground/40"
+              {/* Logo */}
+              <Link href="/" className="lg:static">
+                <Image
+                  src="/assets/logo.png"
+                  alt="Fiveetatv"
+                  width={100}
+                  height={100}
+                  className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 cursor-pointer object-contain h-12 md:h-16 w-auto`}
                 />
-              </form>
-              <Link href="/search" className="md:hidden p-2 rounded-full transition-all duration-500 hover:bg-foreground/5 z-10" aria-label="Search">
-                <Search size={18} strokeWidth={1.5} />
               </Link>
             </div>
 
-            {/* Admin */}
-            {user?.role === 'admin' && (
-              <Link href="/admin" className="hidden md:flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Admin">
-                <LayoutDashboard size={18} strokeWidth={1.5} />
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-8">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`text-xs uppercase tracking-tight font-light transition-all duration-500 text-white/60 hover:text-white`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Icons Right */}
+            <div className={`flex items-center gap-2 md:gap-3 flex-shrink-0 transition-colors duration-500 text-white/80`}>
+              {/* Search */}
+              <div className="flex items-center relative">
+                <form onSubmit={handleSearch} className="hidden md:flex items-center bg-white/5 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/10 hover:border-accent transition-all duration-300">
+                  <Search size={14} strokeWidth={1.5} className="text-white/40" />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-transparent outline-none text-sm ml-1.5 w-36 text-white placeholder:text-white/40"
+                  />
+                </form>
+                <Link href="/search" className="md:hidden p-2 rounded-full transition-all duration-500 hover:bg-white/5 z-10" aria-label="Search">
+                  <Search size={18} strokeWidth={1.5} />
+                </Link>
+              </div>
+
+              {/* Admin */}
+              {user?.role === 'admin' && (
+                <Link href="/admin" className="hidden md:flex p-2 rounded-full transition-all duration-500 hover:bg-white/5" aria-label="Admin">
+                  <LayoutDashboard size={18} strokeWidth={1.5} />
+                </Link>
+              )}
+
+              {/* Account */}
+              <Link href="/account" className="flex p-2 rounded-full transition-all duration-500 hover:bg-white/5" aria-label="Account">
+                <UserRound size={18} strokeWidth={1.5} />
               </Link>
-            )}
 
-            {/* Account */}
-            <Link href="/account" className="hidden md:flex p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Account">
-              <UserRound size={18} strokeWidth={1.5} />
-            </Link>
-
-            {/* Cart */}
-            <Link href="/cart" className="relative p-2 rounded-full transition-all duration-500 hover:bg-foreground/5" aria-label="Cart">
-              <ShoppingBag size={18} strokeWidth={1.5} />
-              <AnimatePresence>
-                {cartItems.length > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className={`absolute top-0 right-0 h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-light shadow-sm bg-accent text-background`}
-                  >
-                    {cartItems.length}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
+              {/* Cart */}
+              <Link href="/cart" className="relative p-2 rounded-full transition-all duration-500 hover:bg-white/5" aria-label="Cart">
+                <ShoppingBag size={18} strokeWidth={1.5} />
+                <AnimatePresence>
+                  {cartItems.length > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className={`absolute top-0 right-0 h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-light shadow-sm bg-accent text-white`}
+                    >
+                      {cartItems.length}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Secondary Navigation Bar - Product Categories */}
-      <nav className="hidden lg:block fixed top-[72px] md:top-[88px] left-0 right-0 z-50 bg-white/60 backdrop-blur-xl border-b border-border/50 shadow-sm">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-          <div className="flex items-center justify-center gap-12 py-3">
-            {PRODUCT_CATEGORIES.map((category) => (
-              <div key={category.label} className="relative">
-                {category.hasDropdown ? (
-                  <>
-                    <button
-                      onMouseEnter={() => setDiabetesDropdownOpen(true)}
-                      onMouseLeave={() => setDiabetesDropdownOpen(false)}
-                      className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 flex items-center gap-1.5 group"
+        {/* Secondary Navigation Bar - Product Categories */}
+        <nav className="hidden lg:block w-full bg-[#2A3B32] border-b border-white/10 shadow-sm">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+            <div className="flex items-center justify-center gap-12 py-3">
+              {PRODUCT_CATEGORIES.map((category) => (
+                <div key={category.label} className="relative">
+                  {category.hasDropdown ? (
+                    <>
+                      <button
+                        onMouseEnter={() => setDiabetesDropdownOpen(true)}
+                        onMouseLeave={() => setDiabetesDropdownOpen(false)}
+                        className="text-xs uppercase tracking-tight font-light text-white/70 hover:text-white transition-all duration-300 flex items-center gap-1.5 group"
+                      >
+                        {category.label}
+                        <ChevronDown size={14} className={`transition-transform duration-300 ${diabetesDropdownOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {diabetesDropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.3 }}
+                            onMouseEnter={() => setDiabetesDropdownOpen(true)}
+                            onMouseLeave={() => setDiabetesDropdownOpen(false)}
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-[#2A3B32] border border-white/10 rounded-2xl shadow-2xl py-4 min-w-[320px] overflow-hidden"
+                          >
+                            <div className="px-6 py-2 border-b border-white/10 mb-2">
+                              <p className="text-[10px] uppercase tracking-widest text-accent font-medium">{category.label}</p>
+                            </div>
+                            {category.subLinks.map((subLink) => (
+                              <Link
+                                key={subLink.label}
+                                href={subLink.href}
+                                className="block px-6 py-3 hover:bg-white/5 transition-colors duration-300 group"
+                              >
+                                <p className="text-sm font-light text-white group-hover:text-accent transition-colors">{subLink.label}</p>
+                                <p className="text-[10px] text-white/40 mt-1 uppercase tracking-wider">{subLink.description}</p>
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <Link
+                      href={category.href}
+                      className="text-xs uppercase tracking-tight font-light text-white/70 hover:text-white transition-all duration-300 relative group"
                     >
                       {category.label}
-                      <ChevronDown size={14} className={`transition-transform duration-300 ${diabetesDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    <AnimatePresence>
-                      {diabetesDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.3 }}
-                          onMouseEnter={() => setDiabetesDropdownOpen(true)}
-                          onMouseLeave={() => setDiabetesDropdownOpen(false)}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-background border border-border rounded-2xl shadow-2xl py-4 min-w-[320px] overflow-hidden"
-                        >
-                          <div className="px-6 py-2 border-b border-border/50 mb-2">
-                            <p className="text-[10px] uppercase tracking-widest text-accent font-medium">{category.label}</p>
-                          </div>
-                          {category.subLinks.map((subLink) => (
-                            <Link
-                              key={subLink.label}
-                              href={subLink.href}
-                              className="block px-6 py-3 hover:bg-muted/30 transition-colors duration-300 group"
-                            >
-                              <p className="text-sm font-light text-foreground group-hover:text-accent transition-colors">{subLink.label}</p>
-                              <p className="text-[10px] text-foreground/40 mt-1 uppercase tracking-wider">{subLink.description}</p>
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </>
-                ) : (
-                  <Link
-                    href={category.href}
-                    className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
-                  >
-                    {category.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                )}
-              </div>
-            ))}
-            <Link
-              href="/policy"
-              className="text-xs uppercase tracking-tight font-light text-foreground/80 hover:text-foreground transition-all duration-300 relative group"
-            >
-              Our Policies
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
-            </Link>
+                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                    </Link>
+                  )}
+                </div>
+              ))}
+              <Link
+                href="/policy"
+                className="text-xs uppercase tracking-tight font-light text-white/70 hover:text-white transition-all duration-300 relative group"
+              >
+                Our Policies
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Luxury Full-Screen Mobile Menu */}
       <AnimatePresence mode="wait">
@@ -237,65 +266,46 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] bg-background flex flex-col"
+            className="fixed inset-0 z-[100] bg-white flex flex-col"
           >
             {/* Header inside Menu */}
-            <div className="flex items-center justify-between p-6 md:p-8">
-              <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
-            <Image
-              src="/assets/logo.png"
-              alt="Fiveetatv"
-              width={100}
-              height={100}
-              className={`text-xl md:text-2xl font-display font-medium relative z-10 flex-shrink-0 transition-colors duration-500 text-foreground cursor-pointer`}
-            />
-          </Link>
-              <button 
-                onClick={() => setOpenMenu(false)} 
-                className="p-3 rounded-full bg-muted text-foreground hover:bg-border transition-all duration-500"
+            <div className="flex items-center justify-between p-6 md:p-8 border-b border-border/10">
+              <Link href="/" onClick={() => setOpenMenu(false)}>
+                <Image src="/assets/logo.png" alt="Fiveetatv" width={90} height={90} className="object-contain" />
+              </Link>
+              <button
+                onClick={() => setOpenMenu(false)}
+                className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
+                aria-label="Close menu"
               >
-                <X size={20} strokeWidth={1.5} />
+                <X size={24} strokeWidth={1.5} />
               </button>
             </div>
 
-            {/* Menu Links */}
-            <div className="flex-1 flex flex-col justify-center px-8 md:px-16 overflow-y-auto">
-              <nav className="flex flex-col gap-6 py-12">
-                {/* Main Links */}
-                <div className="flex flex-col gap-4">
-                  {NAV_LINKS.map((link, i) => (
-                    <motion.div
-                      key={link.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpenMenu(false)}
-                        className="text-2xl md:text-3xl font-display text-foreground hover:text-accent transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
+            {/* Links in Menu */}
+            <div className="flex-1 overflow-y-auto px-6 py-8">
+              <nav className="flex flex-col gap-8">
+                <Link
+                  href="/"
+                  onClick={() => setOpenMenu(false)}
+                  className="text-3xl md:text-4xl font-display font-light italic text-foreground hover:text-accent transition-colors"
+                >
+                  Home
+                </Link>
 
-                {/* Categories */}
-                <div className="pt-8 border-t border-border/50 flex flex-col gap-4">
-                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Shop by Concern</p>
+                <div className="flex flex-col gap-6">
                   {PRODUCT_CATEGORIES.map((category, i) => (
                     <motion.div
                       key={category.label}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + i * 0.1 }}
+                      transition={{ delay: 0.1 + i * 0.1 }}
                     >
                       {category.hasDropdown ? (
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-4">
                           <button
                             onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)}
-                            className="text-xl md:text-2xl font-display text-foreground/80 flex items-center gap-3"
+                            className="text-2xl md:text-3xl font-display text-foreground/80 flex items-center justify-between w-full"
                           >
                             {category.label}
                             <ChevronDown size={20} className={`transition-transform duration-300 ${mobileDiabetesOpen ? 'rotate-180' : ''}`} />
@@ -315,8 +325,8 @@ export default function Navbar() {
                                     onClick={() => setOpenMenu(false)}
                                     className="group"
                                   >
-                                    <p className="text-lg text-foreground/70 group-hover:text-accent transition-colors">{sub.label}</p>
-                                    <p className="text-md text-foreground/30 uppercase tracking-widest">{sub.description}</p>
+                                    <p className="text-xl text-foreground/70 group-hover:text-accent transition-colors">{sub.label}</p>
+                                    <p className="text-sm text-foreground/30 uppercase tracking-widest">{sub.description}</p>
                                   </Link>
                                 ))}
                               </motion.div>
@@ -327,46 +337,52 @@ export default function Navbar() {
                         <Link
                           href={category.href}
                           onClick={() => setOpenMenu(false)}
-                          className="text-xl md:text-2xl font-display text-foreground/80 hover:text-accent transition-colors"
+                          className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
                         >
                           {category.label}
                         </Link>
                       )}
                     </motion.div>
                   ))}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    <Link
-                      href="/policy"
-                      onClick={() => setOpenMenu(false)}
-                      className="text-xl md:text-2xl font-display text-foreground/80 hover:text-accent transition-colors"
-                    >
-                      Our Policies
-                    </Link>
-                  </motion.div>
                 </div>
 
-                {/* Account */}
-                <div className="pt-8 border-t border-border/50 flex flex-col gap-4">
-                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Account</p>
-                  {user?.role === 'admin' && (
+                <div className="flex flex-col gap-6 pt-6 border-t border-border/10">
+                  {NAV_LINKS.filter(l => l.label !== "Home").map((link, i) => (
                     <Link
-                      href="/admin"
+                      key={link.label}
+                      href={link.href}
                       onClick={() => setOpenMenu(false)}
-                      className="text-xl font-display text-foreground/70 hover:text-accent transition-colors"
+                      className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
                     >
-                      Admin Dashboard
+                      {link.label}
                     </Link>
-                  )}
+                  ))}
+                  <Link
+                    href="/policy"
+                    onClick={() => setOpenMenu(false)}
+                    className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
+                  >
+                    Our Policies
+                  </Link>
+                </div>
+
+                <div className="flex flex-col gap-6 pt-6 border-t border-border/10">
+                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Account</p>
                   <Link
                     href="/account"
                     onClick={() => setOpenMenu(false)}
-                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors"
+                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors flex items-center gap-3"
                   >
+                    <UserRound size={20} strokeWidth={1.5} />
                     My Account
+                  </Link>
+                  <Link
+                    href="/cart"
+                    onClick={() => setOpenMenu(false)}
+                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors flex items-center gap-3"
+                  >
+                    <ShoppingBag size={20} strokeWidth={1.5} />
+                    My Cart ({cartItems.length})
                   </Link>
                 </div>
               </nav>
@@ -384,9 +400,17 @@ export default function Navbar() {
                   Account
                 </Link>
                 {user && (
-                  <Link href="/logout" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                  <button 
+                    onClick={async () => {
+                      setOpenMenu(false);
+                      await logout();
+                      router.push("/");
+                      router.refresh();
+                    }} 
+                    className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300"
+                  >
                     Logout
-                  </Link>
+                  </button>
                 )}
                 {user?.role === 'admin' && (
                   <Link href="/admin" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">

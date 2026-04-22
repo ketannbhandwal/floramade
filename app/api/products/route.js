@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
@@ -39,5 +40,6 @@ export async function POST(req) {
     return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
   }
   const product = await Product.create(payload);
+  revalidateTag('products');
   return NextResponse.json({ product }, { status: 201 });
 }

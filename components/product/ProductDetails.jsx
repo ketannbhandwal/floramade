@@ -77,7 +77,8 @@ export default function ProductDetails({ product, relatedProducts }) {
   const [buyNowOpen, setBuyNowOpen] = useState(false);
   const [buyDetails, setBuyDetails] = useState({ fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" });
   const [reviewOpen, setReviewOpen] = useState(false);
-  const [reviewData, setReviewData] = useState({ name: "", rating: 5, comment: "" });
+  const [reviewData, setReviewData] = useState({ name: "", rating: 5, comment: "", imageFile: null });
+  const [uploading, setUploading] = useState(false);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
@@ -89,7 +90,33 @@ export default function ProductDetails({ product, relatedProducts }) {
     toast.success(`${quantity} ${quantity > 1 ? 'items' : 'item'} added to cart`);
   }
 
-  function handleWishlist() {
+  async function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+  }
+
+  async function handleImageUpload(file) {
+    if (!file) return null;
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: JSON.stringify({ file: await fileToBase64(file), type: 'image' }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      return data.url;
+    } catch (error) {
+      toast.error('Image upload failed');
+      return null;
+    }
+  }
+
+  async function handleWishlist() {
     if (isInWishlist(product._id)) {
       removeFromWishlist(product._id);
       toast.success("Removed from wishlist");
@@ -122,6 +149,16 @@ export default function ProductDetails({ product, relatedProducts }) {
       return toast.error("Please fill in all fields");
     }
 
+    setUploading(true);
+    let imageUrl = "";
+    if (reviewData.imageFile) {
+      imageUrl = await handleImageUpload(reviewData.imageFile);
+      if (!imageUrl) {
+        setUploading(false);
+        return; // handleImageUpload already toasts error
+      }
+    }
+
     try {
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -131,6 +168,7 @@ export default function ProductDetails({ product, relatedProducts }) {
           rating: reviewData.rating,
           comment: reviewData.comment,
           name: reviewData.name,
+          image: imageUrl,
         }),
       });
 
@@ -162,10 +200,26 @@ export default function ProductDetails({ product, relatedProducts }) {
             className="flex flex-col gap-6"
           >
             <div className="relative aspect-[3/4] w-full overflow-hidden bg-foreground/5 rounded-3xl shadow-2xl">
-              <Image src={activeImg} alt={product.name} fill className="object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              {activeImg === 'video' ? (
+                <video src={product.videoUrl} className="w-full h-full object-cover" controls autoPlay loop muted />
+              ) : (
+                <>
+                  <Image src={activeImg} alt={product.name} fill className="object-cover" priority />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                </>
+              )}
             </div>
             <div className="flex gap-3 justify-center overflow-x-auto pb-2">
+              {product.videoUrl && (
+                <button 
+                  onClick={() => setActiveImg('video')}
+                  className={`relative w-24 h-32 overflow-hidden rounded-xl transition-all duration-300 flex-shrink-0 ${activeImg === 'video' ? 'opacity-100 ring-2 ring-accent ring-offset-2 ring-offset-background shadow-lg scale-105' : 'opacity-60 hover:opacity-100 hover:scale-105'} bg-foreground/5`}
+                >
+                  <div className="w-full h-full flex items-center justify-center bg-black/20">
+                    <Zap size={24} className="text-accent" />
+                  </div>
+                </button>
+              )}
               {product.images.map((img, idx) => (
                 <button 
                   key={img} 
@@ -207,6 +261,27 @@ export default function ProductDetails({ product, relatedProducts }) {
               </div>
             </div>
 
+            {/* PRODUCT HIGHLIGHTS WITH ICONS */}
+            <div className="pt-8 border-t border-border mt-8">
+              <div className="grid grid-cols-2 gap-6 md:gap-8">
+                {[
+                  { icon: "/condi/1.svg", label: "Reduces Gas and Bloating" },
+                  { icon: "/condi/2.svg", label: "Supports Gut Health" },
+                  { icon: "/condi/3.svg", label: "Relieves Constipation" },
+                  { icon: "/condi/4.svg", label: "Promotes Healthy Digestion" }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-4 group">
+                    <div className="relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 bg-accent/5 rounded-2xl p-3 group-hover:bg-accent/10 transition-all duration-300">
+                      <Image src={item.icon} alt={item.label} fill className="object-contain p-2" />
+                    </div>
+                    <span className="text-xs sm:text-sm uppercase tracking-wider font-medium text-foreground/80 leading-snug">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="flex items-center gap-6 pt-4">
               <div className="flex items-center border border-border h-11 w-32 justify-between px-4 rounded-full">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="hover:text-accent transition-colors"><Minus size={16} strokeWidth={1.5} /></button>
@@ -240,7 +315,7 @@ export default function ProductDetails({ product, relatedProducts }) {
               </button>
               <button 
                 onClick={handleAddToCart}
-                className="h-11 rounded-full bg-foreground text-background transition-all px-6 sm:px-8 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs hover:bg-accent hover:text-background"
+                className="h-11 rounded-full bg-foreground text-background transition-all px-6 sm:px-8 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs hover:bg-accent hover:text-background flex-1"
               >
                 Add to Cart
               </button>
@@ -361,6 +436,38 @@ export default function ProductDetails({ product, relatedProducts }) {
             ))}
           </div>
         </motion.div>
+      </section>
+
+      {/* HOW TO CONSUME */}
+      <section className="py-12 md:py-20 bg-muted/20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <motion.div {...fadeUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-light italic font-display text-secondary">How to Consume</h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
+            {[
+              { img: "/consume/1.webp", step: "Step 01" },
+              { img: "/consume/2.webp", step: "Step 02" },
+              { img: "/consume/3.webp", step: "Step 03" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative"
+              >
+                <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-white shadow-2xl">
+                  <Image src={item.img} alt={`Step ${i + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute top-6 left-6 bg-accent text-white text-xs uppercase tracking-[0.2em] font-medium px-6 py-2 rounded-full shadow-lg backdrop-blur-md">
+                    {item.step}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <CertificateSlider />
@@ -535,6 +642,17 @@ export default function ProductDetails({ product, relatedProducts }) {
         <div className="space-y-6 mt-4">
           <div className="space-y-4">
             <Input label="Your Name" value={reviewData.name} onChange={(e) => setReviewData((prev) => ({ ...prev, name: e.target.value }))} />
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Your Photo (Optional)</label>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={(e) => setReviewData(prev => ({ ...prev, imageFile: e.target.files[0] }))}
+                className="w-full text-sm text-foreground/50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-medium file:bg-accent/10 file:text-accent hover:file:bg-accent/20"
+              />
+            </div>
+
             <div className="space-y-2">
               <label className="text-sm font-medium">Rating</label>
               <div className="flex gap-2">
@@ -559,8 +677,8 @@ export default function ProductDetails({ product, relatedProducts }) {
               />
             </div>
           </div>
-          <Button onClick={handleSubmitReview} className="w-full">
-            Submit Review
+          <Button onClick={handleSubmitReview} className="w-full" disabled={uploading}>
+            {uploading ? "Uploading..." : "Submit Review"}
           </Button>
         </div>
       </Modal>

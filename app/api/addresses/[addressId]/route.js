@@ -20,12 +20,18 @@ export async function DELETE(request, { params }) {
       );
     }
 
+    const addressToDelete = userData.addresses.find(addr => addr._id.toString() === addressId);
+    if (!addressToDelete) {
+      return NextResponse.json({ error: "Address not found" }, { status: 404 });
+    }
+
+    const wasDefault = addressToDelete.isDefault;
+
     userData.addresses = userData.addresses.filter(
       addr => addr._id.toString() !== addressId
     );
 
-    const deletedWasDefault = userData.addresses.some(addr => addr._id.toString() === addressId && addr.isDefault);
-    if (deletedWasDefault && userData.addresses.length > 0) {
+    if (wasDefault && userData.addresses.length > 0) {
       userData.addresses[0].isDefault = true;
     }
 

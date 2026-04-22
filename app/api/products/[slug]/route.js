@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
@@ -24,6 +25,7 @@ export async function PUT(req, { params }) {
     return NextResponse.json({ message: "Product not found" }, { status: 404 });
   }
   
+  revalidateTag('products');
   return NextResponse.json({ product });
 }
 
@@ -33,5 +35,6 @@ export async function DELETE(_, { params }) {
   await connectDB();
   const { slug } = await params;
   await Product.findOneAndDelete({ slug });
+  revalidateTag('products');
   return NextResponse.json({ message: "Deleted" });
 }

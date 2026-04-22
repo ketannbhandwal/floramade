@@ -2,14 +2,21 @@ import PageTransition from "@/components/ui/PageTransition";
 import ProductCard from "@/components/product/ProductCard";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
-import { seedProductsIfEmpty } from "@/lib/seed";
 import CollectionContent from "./CollectionContent";
 import { Metadata } from "next";
+import { unstable_cache } from 'next/cache';
+
+const getProductsCached = unstable_cache(
+  async (category) => {
+    await connectDB();
+    return await Product.find({ category, isVisible: true }).lean();
+  },
+  ['collection-products'],
+  { revalidate: 3600, tags: ['products'] }
+);
 
 async function getProducts(category) {
-  await connectDB();
-  await seedProductsIfEmpty();
-  const products = await Product.find({ category, isVisible: true }).lean();
+  const products = await getProductsCached(category);
   return JSON.parse(JSON.stringify(products));
 }
 

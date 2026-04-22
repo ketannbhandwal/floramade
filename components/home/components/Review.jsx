@@ -116,6 +116,13 @@ const reviews = [
     text: "Outstanding quality aur effectiveness hai. Products exactly wahi hain jo main dhundh raha tha - natural, potent, aur care se bane. Delivery prompt tha aur packaging excellent hai. Definitely order karunga again.", 
     img: "/review/3.jpeg",
     initials: "V" 
+  },
+  {
+    name: "Mrs Jaykumari",
+    role: "Verified Customer",
+    text: "Fiveetatv products ne meri life badal di hai. Natural aur effective solution dhundhne walo ke liye ye best choice hai. Highly recommended!",
+    img: "/review/17.jpeg",
+    initials: "JK"
   }
 ];
 

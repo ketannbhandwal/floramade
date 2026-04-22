@@ -2,20 +2,32 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LogoutPage() {
   const router = useRouter();
+  const { logout } = useAuth();
 
   useEffect(() => {
-    // Clear the token cookie
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    async function handleLogout() {
+      try {
+        // Clear via Context
+        await logout();
+        
+        // Clear via Cookie (Double safety)
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        
+        // Redirect
+        router.push("/");
+        router.refresh();
+      } catch (err) {
+        console.error("Logout failed:", err);
+        router.push("/");
+      }
+    }
     
-    // Redirect to home page after a short delay
-    setTimeout(() => {
-      router.push("/");
-      router.refresh();
-    }, 500);
-  }, [router]);
+    handleLogout();
+  }, [router, logout]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">

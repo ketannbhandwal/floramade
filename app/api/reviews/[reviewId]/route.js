@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
+import { revalidateTag } from 'next/cache';
 
 export async function DELETE(request, { params }) {
   try {
@@ -43,6 +44,8 @@ export async function DELETE(request, { params }) {
     );
 
     await product.save();
+
+    revalidateTag('products');
 
     return NextResponse.json(
       { message: "Review deleted successfully" },
@@ -101,6 +104,8 @@ export async function PATCH(request, { params }) {
 
     review.approved = approved;
     await product.save();
+
+    revalidateTag('products');
 
     return NextResponse.json(
       { message: "Review updated successfully" },
