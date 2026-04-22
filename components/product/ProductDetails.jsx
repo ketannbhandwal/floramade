@@ -73,6 +73,8 @@ const fadeUp = {
 
 export default function ProductDetails({ product, relatedProducts }) {
   const [activeImg, setActiveImg] = useState(product.images[0]);
+  const [isHovering, setIsHovering] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [buyNowOpen, setBuyNowOpen] = useState(false);
   const [buyDetails, setBuyDetails] = useState({ fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" });
@@ -115,6 +117,47 @@ export default function ProductDetails({ product, relatedProducts }) {
       return null;
     }
   }
+
+  const handleDragChange = (e) => {
+    if (!isHovering) return;
+    
+    // Accumulate movement
+    const movementX = e.movementX;
+    setDragOffset(prev => prev + movementX);
+    
+    // Higher sensitivity threshold (pixels) to prevent too fast changes
+    const threshold = 120; 
+
+    if (Math.abs(dragOffset) > threshold) {
+      const currentIndex = product.images.indexOf(activeImg);
+      
+      // If current is video or not in images array, we go to first image on swipe
+      if (currentIndex === -1) {
+        if (product.images && product.images.length > 0) {
+          setActiveImg(product.images[0]);
+        }
+        setDragOffset(0);
+        return;
+      }
+
+      if (dragOffset > 0) {
+        // Drag right -> previous image
+        const prevIdx = (currentIndex - 1 + product.images.length) % product.images.length;
+        setActiveImg(product.images[prevIdx]);
+      } else {
+        // Drag left -> next image
+        const nextIdx = (currentIndex + 1) % product.images.length;
+        setActiveImg(product.images[nextIdx]);
+      }
+      // Reset accumulator after a swap
+      setDragOffset(0);
+    }
+  };
+
+  const resetDrag = () => {
+    setDragOffset(0);
+    setIsHovering(false);
+  };
 
   async function handleWishlist() {
     if (isInWishlist(product._id)) {
@@ -199,17 +242,104 @@ export default function ProductDetails({ product, relatedProducts }) {
             transition={{ duration: 1, ease: "easeOut" }}
             className="flex flex-col gap-6"
           >
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-foreground/5 rounded-3xl shadow-2xl">
-              {activeImg === 'video' ? (
-                <video src={product.videoUrl} className="w-full h-full object-cover" controls autoPlay loop muted />
+            <div 
+              className={`relative aspect-[3/4] w-full overflow-hidden bg-foreground/5 rounded-3xl shadow-2xl transition-all duration-300 ${isHovering ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={resetDrag}
+              onMouseMove={handleDragChange}
+              onMouseUp={() => setDragOffset(0)}
+            >
+              {activeImg === 'video' && product.videoUrl ? (
+                <div className="relative w-full h-full bg-black">
+                  <video 
+                    key={product.videoUrl}
+                    className="w-full h-full object-cover" 
+                    controls 
+                    autoPlay 
+                    loop 
+                    muted
+                    playsInline
+                    preload="auto"
+                  >
+                    <source src={product.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               ) : (
                 <>
-                  <Image src={activeImg} alt={product.name} fill className="object-cover" priority />
+                  <motion.div
+                    key={activeImg}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image 
+                      src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
+                      alt={product.name} 
+                      fill 
+                      className="object-cover select-none pointer-events-none" 
+                      priority 
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                  
+                  {/* Image Indicators */}
+                  {product.images?.length > 1 && (
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                      {product.images.map((img, i) => (
+                        <div 
+                          key={i} 
+                          className={`h-1 rounded-full transition-all duration-500 ${activeImg === img ? 'w-6 bg-accent' : 'w-2 bg-white/40'}`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </>
               )}
             </div>
-            <div className="flex gap-3 justify-center overflow-x-auto pb-2">
+            
+            {/* Navigation Buttons for Side/Back view */}
+            <div className="flex justify-between items-center px-2">
+              <div className="flex gap-2">
+                {product.images?.length > 1 && (
+                  <>
+                    <button 
+                      onClick={() => {
+                        const idx = product.images.indexOf(activeImg);
+                        const prevIdx = (idx === -1) ? 0 : (idx - 1 + product.images.length) % product.images.length;
+                        setActiveImg(product.images[prevIdx]);
+                      }}
+                      className="group p-3 rounded-full border border-foreground/10 hover:bg-accent hover:border-accent transition-all duration-300"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft size={20} className="text-foreground/70 group-hover:text-white" />
+                    </button>
+                    <button 
+                      onClick={() => {
+                        const idx = product.images.indexOf(activeImg);
+                        const nextIdx = (idx === -1) ? 0 : (idx + 1) % product.images.length;
+                        setActiveImg(product.images[nextIdx]);
+                      }}
+                      className="group p-3 rounded-full border border-foreground/10 hover:bg-accent hover:border-accent transition-all duration-300"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight size={20} className="text-foreground/70 group-hover:text-white" />
+                    </button>
+                  </>
+                )}
+              </div>
+              
+              <div className="flex gap-2">
+                {product.images.length > 1 && (
+                  <span className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">
+                    {product.images.indexOf(activeImg) + 1} / {product.images.length}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-start overflow-x-auto pb-4 no-scrollbar scroll-smooth">
               {product.videoUrl && (
                 <button 
                   onClick={() => setActiveImg('video')}

@@ -266,16 +266,16 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] bg-white flex flex-col"
+            className="fixed inset-0 z-[100] bg-[#2A3B32] flex flex-col text-white"
           >
             {/* Header inside Menu */}
-            <div className="flex items-center justify-between p-6 md:p-8 border-b border-border/10">
+            <div className="flex items-center justify-between p-6 md:p-8 border-b border-white/10">
               <Link href="/" onClick={() => setOpenMenu(false)}>
                 <Image src="/assets/logo.png" alt="Fiveetatv" width={90} height={90} className="object-contain" />
               </Link>
               <button
                 onClick={() => setOpenMenu(false)}
-                className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
+                className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/80"
                 aria-label="Close menu"
               >
                 <X size={24} strokeWidth={1.5} />
@@ -288,7 +288,7 @@ export default function Navbar() {
                 <Link
                   href="/"
                   onClick={() => setOpenMenu(false)}
-                  className="text-3xl md:text-4xl font-display font-light italic text-foreground hover:text-accent transition-colors"
+                  className="text-3xl md:text-4xl font-display font-light italic text-white hover:text-accent transition-colors"
                 >
                   Home
                 </Link>
@@ -305,7 +305,7 @@ export default function Navbar() {
                         <div className="flex flex-col gap-4">
                           <button
                             onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)}
-                            className="text-2xl md:text-3xl font-display text-foreground/80 flex items-center justify-between w-full"
+                            className="text-2xl md:text-3xl font-display text-white/90 flex items-center justify-between w-full"
                           >
                             {category.label}
                             <ChevronDown size={20} className={`transition-transform duration-300 ${mobileDiabetesOpen ? 'rotate-180' : ''}`} />
@@ -325,8 +325,8 @@ export default function Navbar() {
                                     onClick={() => setOpenMenu(false)}
                                     className="group"
                                   >
-                                    <p className="text-xl text-foreground/70 group-hover:text-accent transition-colors">{sub.label}</p>
-                                    <p className="text-sm text-foreground/30 uppercase tracking-widest">{sub.description}</p>
+                                    <p className="text-xl text-white/70 group-hover:text-accent transition-colors">{sub.label}</p>
+                                    <p className="text-sm text-white/30 uppercase tracking-widest">{sub.description}</p>
                                   </Link>
                                 ))}
                               </motion.div>
@@ -337,7 +337,7 @@ export default function Navbar() {
                         <Link
                           href={category.href}
                           onClick={() => setOpenMenu(false)}
-                          className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
+                          className="text-2xl md:text-3xl font-display text-white/90 hover:text-accent transition-colors"
                         >
                           {category.label}
                         </Link>
@@ -346,13 +346,13 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                <div className="flex flex-col gap-6 pt-6 border-t border-border/10">
+                <div className="flex flex-col gap-6 pt-6 border-t border-white/10">
                   {NAV_LINKS.filter(l => l.label !== "Home").map((link, i) => (
                     <Link
                       key={link.label}
                       href={link.href}
                       onClick={() => setOpenMenu(false)}
-                      className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
+                      className="text-2xl md:text-3xl font-display text-white/90 hover:text-accent transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -360,18 +360,18 @@ export default function Navbar() {
                   <Link
                     href="/policy"
                     onClick={() => setOpenMenu(false)}
-                    className="text-2xl md:text-3xl font-display text-foreground/80 hover:text-accent transition-colors"
+                    className="text-2xl md:text-3xl font-display text-white/90 hover:text-accent transition-colors"
                   >
                     Our Policies
                   </Link>
                 </div>
 
-                <div className="flex flex-col gap-6 pt-6 border-t border-border/10">
-                  <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">Account</p>
+                <div className="flex flex-col gap-6 pt-6 border-t border-white/10">
+                  <p className="text-[10px] uppercase tracking-widest text-white/40 font-medium">Account</p>
                   <Link
                     href="/account"
                     onClick={() => setOpenMenu(false)}
-                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors flex items-center gap-3"
+                    className="text-xl font-display text-white/70 hover:text-accent transition-colors flex items-center gap-3"
                   >
                     <UserRound size={20} strokeWidth={1.5} />
                     My Account
@@ -379,7 +379,7 @@ export default function Navbar() {
                   <Link
                     href="/cart"
                     onClick={() => setOpenMenu(false)}
-                    className="text-xl font-display text-foreground/70 hover:text-accent transition-colors flex items-center gap-3"
+                    className="text-xl font-display text-white/70 hover:text-accent transition-colors flex items-center gap-3"
                   >
                     <ShoppingBag size={20} strokeWidth={1.5} />
                     My Cart ({cartItems.length})
@@ -393,10 +393,10 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="p-8 md:p-16 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6"
+              className="p-8 md:p-16 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6"
             >
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center">
-                <Link href="/account" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                <Link href="/account" onClick={() => setOpenMenu(false)} className="text-sm text-white/60 hover:text-accent transition-colors duration-300">
                   Account
                 </Link>
                 {user && (
@@ -407,18 +407,18 @@ export default function Navbar() {
                       router.push("/");
                       router.refresh();
                     }} 
-                    className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300"
+                    className="text-sm text-white/60 hover:text-accent transition-colors duration-300"
                   >
                     Logout
                   </button>
                 )}
                 {user?.role === 'admin' && (
-                  <Link href="/admin" onClick={() => setOpenMenu(false)} className="text-sm text-foreground/60 hover:text-accent transition-colors duration-300">
+                  <Link href="/admin" onClick={() => setOpenMenu(false)} className="text-sm text-white/60 hover:text-accent transition-colors duration-300">
                     Admin
                   </Link>
                 )}
               </div>
-              <p className="text-xs text-foreground/40">© 2026 Fiveetatv</p>
+              <p className="text-xs text-white/40">© 2026 Fiveetatv</p>
             </motion.div>
           </motion.div>
         )}

@@ -97,20 +97,22 @@ export default function AdminPage() {
     if (!file) return null;
     
     try {
+      const base64 = await fileToBase64(file);
       const res = await fetch('/api/upload', {
         method: 'POST',
         body: JSON.stringify({ 
-          file: await fileToBase64(file),
+          file: base64,
           type 
         }),
         headers: { 'Content-Type': 'application/json' },
       });
       
-      if (!res.ok) throw new Error('Upload failed');
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
       return data.url;
     } catch (error) {
-      toast.error(`${type.charAt(0).toUpperCase() + type.slice(1)} upload failed`);
+      console.error("Upload error:", error);
+      toast.error(`${type.charAt(0).toUpperCase() + type.slice(1)} upload failed: ${error.message}`);
       return null;
     }
   }

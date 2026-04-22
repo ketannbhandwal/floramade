@@ -12,7 +12,7 @@ const certificates = [
 function CertificateSlider() {
   return (
     <section className="py-16 mt-10 overflow-hidden">
-      <h2 className="text-center text-4xl font-bold text-[#1b3a27] mb-16">
+      <h2 className="text-center text-4xl font-extrabold text-[#1b3a27] mb-16">
         Certified by Years of Trust
       </h2>
       
