@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import FloatingLeaf from '@/components/ui/FloatingLeaf';
 
 const reviews = [
   {
@@ -164,7 +165,22 @@ const Review = () => {
       <div className="absolute -top-24 -right-24 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[120px] -z-10" />
       <div className="absolute -bottom-24 -left-24 w-[600px] h-[600px] bg-purple-50/50 rounded-full blur-[120px] -z-10" />
 
-      <div className="max-w-7xl mx-auto">
+      {/* Decorative Leaves */}
+      <FloatingLeaf 
+        type="single" 
+        className="w-16 h-16 md:w-24 md:h-24 top-20 left-[8%] opacity-60 rotate-[-25deg]" 
+        delay={0.2} 
+        parallaxSpeed={40} 
+      />
+      <FloatingLeaf 
+        type="branch" 
+        className="w-48 h-48 md:w-64 md:h-64 bottom-10 -right-16 opacity-30 rotate-[100deg]" 
+        delay={0.5} 
+        parallaxSpeed={-50} 
+        blur
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">

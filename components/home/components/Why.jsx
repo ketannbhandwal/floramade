@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Sparkles, Leaf, ShieldCheck } from "lucide-react";
+import FloatingLeaf from '@/components/ui/FloatingLeaf';
 
 function Why() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -21,8 +22,23 @@ function Why() {
     }, []);
 
     return (
-        <section className="py-24 px-6 max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
+        <section className="py-24 px-6 max-w-7xl mx-auto relative">
+            {/* Decorative Leaves */}
+            <FloatingLeaf 
+                type="branch" 
+                className="w-56 h-56 md:w-80 md:h-80 -bottom-20 -left-20 opacity-30 rotate-[60deg]" 
+                delay={0.2} 
+                parallaxSpeed={70} 
+                blur
+            />
+            <FloatingLeaf 
+                type="single" 
+                className="w-16 h-16 md:w-20 md:h-20 top-20 right-10 opacity-60 rotate-[-15deg]" 
+                delay={0.6} 
+                parallaxSpeed={-40} 
+            />
+
+            <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
 
                 {/* Image Section with Modern Floating Card Effect */}
                 <motion.div

@@ -13,6 +13,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import CertificateSlider from "../home/components/Certificate";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
 const ProductStructuredData = ({ product }) => {
   const productSchema = {
@@ -525,30 +526,73 @@ export default function ProductDetails({ product, relatedProducts }) {
 
       <CertificateSlider />
 
-      {/* INGREDIENTS & USAGE */}
-      <section className="py-8 md:py-12 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-14 items-center">
-        <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">Ingredients</h2>
-            <p className="text-foreground/60 font-light text-sm sm:text-base leading-relaxed max-w-md">
-              We source only the most potent botanicals, honoring traditional harvesting methods.
+      {/* INGREDIENTS WITH IMAGES */}
+      <section className="py-12 md:py-20 bg-[#EBF1E4]/30 relative overflow-hidden">
+        <FloatingLeaf 
+          type="single" 
+          className="w-16 h-16 top-10 left-[10%] opacity-50 rotate-[30deg]" 
+          delay={0.2} 
+          parallaxSpeed={40} 
+        />
+        <FloatingLeaf 
+          type="branch" 
+          className="w-48 h-48 bottom-0 -right-10 opacity-20 rotate-[-45deg]" 
+          delay={0.5} 
+          parallaxSpeed={-30} 
+          blur
+        />
+        
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+          <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-light text-slate-900 mb-4">Key Ingredients</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto font-light">
+              Pure, potent, and ethically sourced. Discover the natural power behind our formulation.
             </p>
-          </div>
-          <div className="flex flex-wrap gap-2 md:gap-3">
-            {(product.ingredients || []).map((ing, i) => (
-              <motion.span 
-                key={ing}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="px-3 py-1.5 md:px-4 md:py-2 bg-accent/10 text-accent rounded-full text-[10px] sm:text-xs font-medium uppercase tracking-[0.05em]"
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+            {[
+              { name: "Amla", img: "/ingridients/Amla.webp", desc: "Rich in Vitamin C, boosts immunity" },
+              { name: "Haritaki", img: "/ingridients/Haritaki_4e781681-e0e8-490c-97fd-e0494b52cc5b.webp", desc: "Improves digestion & detoxification" },
+              { name: "Bibhitaki", img: "/ingridients/Bibhitaki.webp", desc: "Supports respiratory & metabolic health" },
+              { name: "Jeera", img: "/ingridients/Jeera-eng.webp", desc: "Enhances metabolism & relieves bloating" },
+              { name: "Pudina", img: "/ingridients/Pudina-Ind_20901f19-a6e7-4936-a78d-c4373c5282ab.webp", desc: "Cools the stomach & aids digestion" },
+              { name: "Saunf", img: "/ingridients/Saunf-eng.webp", desc: "Reduces acidity & freshens breath" },
+              { name: "Kali Mirch", img: "/ingridients/Kali_Mirch-eng.webp", desc: "Improves nutrient absorption" },
+              { name: "Hing", img: "/ingridients/Hing-eng.webp", desc: "Relieves gas and abdominal pain" },
+              { name: "Carom Seeds", img: "/ingridients/Carom_Seeds-English.webp", desc: "Quick relief from indigestion" },
+              { name: "Kala Namak", img: "/ingridients/Kala_Namak-eng.webp", desc: "Aids digestion and adds trace minerals" },
+            ].map((ing, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group flex flex-col items-center text-center space-y-3"
               >
-                {ing}
-              </motion.span>
+                <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-white shadow-md group-hover:shadow-xl transition-all duration-500 border border-slate-100 p-2">
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image 
+                      src={ing.img} 
+                      alt={ing.name} 
+                      fill 
+                      className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm md:text-base font-semibold text-slate-800">{ing.name}</h4>
+                  <p className="text-[10px] md:text-xs text-slate-500 mt-1 leading-tight">{ing.desc}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
+      </section>
+
+      {/* HOW TO USE */}
+      <section className="py-12 md:py-20 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
         <motion.div {...fadeUp} className="space-y-6 md:space-y-8">
           <div className="space-y-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">How to Use</h2>
@@ -557,7 +601,11 @@ export default function ProductDetails({ product, relatedProducts }) {
             </p>
           </div>
           <div className="space-y-4 md:space-y-6">
-            {(product.usage || []).map((step, i) => (
+            {(product.usage || [
+              "Take 1-2 tablets twice daily.",
+              "Consume with warm water after meals.",
+              "For best results, use consistently for 3 months."
+            ]).map((step, i) => (
               <div key={step} className="flex gap-3 md:gap-4">
                 <div className="flex-shrink-0">
                   <div className="h-6 w-6 rounded-full border border-accent text-accent flex items-center justify-center text-xs font-medium">

@@ -1,6 +1,7 @@
 "use client";
 
 import Landing from "./components/Landing";
+import BetterThanSection from "./components/BetterThanSection";
 import Products from "./components/Products";
 import Philosophy from "./components/Philosophy";
 import Why from "./components/Why";
@@ -18,8 +19,9 @@ export default function HomeSections({ products }) {
   return (
     <div className="bg-background text-foreground w-full">
       <Landing />
+      <BetterThanSection />
       <Certificate />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-16 md:py-24 lg:py-32 space-y-16 md:space-y-24 lg:space-y-32">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16 space-y-16 md:space-y-24 lg:space-y-32">
         <Products products={products} />
       </div>
       <Philosophy />

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { Sprout, Wind, Flame, Droplets, Mountain } from 'lucide-react'
+import FloatingLeaf from '@/components/ui/FloatingLeaf'
 
 const elementStyles = {
   Akasha: {
@@ -42,8 +43,23 @@ function Philosophy() {
   ]
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-background to-muted/20">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-6 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+      {/* Decorative Leaves */}
+      <FloatingLeaf 
+        type="branch" 
+        className="w-64 h-64 md:w-96 md:h-96 top-10 -right-32 opacity-20 rotate-[180deg]" 
+        delay={0.2} 
+        parallaxSpeed={90} 
+        blur
+      />
+      <FloatingLeaf 
+        type="double" 
+        className="w-20 h-20 md:w-28 md:h-28 bottom-20 left-[5%] opacity-50 rotate-[30deg]" 
+        delay={0.5} 
+        parallaxSpeed={-40} 
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16">
           <SectionHeader
             label="Our Philosophy"
