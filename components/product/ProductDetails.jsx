@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award } from "lucide-react";
+import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award, ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
@@ -230,280 +230,203 @@ export default function ProductDetails({ product, relatedProducts }) {
   }
 
   return (
-    <div className="w-full bg-background text-foreground pb-8 md:pb-12 pt-20 md:pt-24 lg:pt-28">
+    <div className="w-full bg-white text-slate-900 pb-8 md:pb-12 pt-24 md:pt-32 lg:pt-36">
       <ProductStructuredData product={product} />
+      
       {/* HERO SECTION */}
-      <section className="relative w-full flex items-center pb-8 md:pb-12 lg:pb-16">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 w-full grid lg:grid-cols-2 gap-6 md:gap-10 lg:gap-14 items-start">
-          {/* Images */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col gap-6"
-          >
-            <div 
-              className={`relative aspect-[3/4] w-full overflow-hidden bg-foreground/5 rounded-3xl shadow-2xl transition-all duration-300 ${isHovering ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={resetDrag}
-              onMouseMove={handleDragChange}
-              onMouseUp={() => setDragOffset(0)}
-            >
-              {activeImg === 'video' && product.videoUrl ? (
-                <div className="relative w-full h-full bg-black">
-                  <video 
-                    key={product.videoUrl}
-                    className="w-full h-full object-cover" 
-                    controls 
-                    autoPlay 
-                    loop 
-                    muted
-                    playsInline
-                    preload="auto"
-                  >
-                    <source src={product.videoUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              ) : (
-                <>
-                  <motion.div
-                    key={activeImg}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image 
-                      src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
-                      alt={product.name} 
-                      fill 
-                      className="object-cover select-none pointer-events-none" 
-                      priority 
-                    />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-                  
-                  {/* Image Indicators */}
-                  {product.images?.length > 1 && (
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                      {product.images.map((img, i) => (
-                        <div 
-                          key={i} 
-                          className={`h-1 rounded-full transition-all duration-500 ${activeImg === img ? 'w-6 bg-accent' : 'w-2 bg-white/40'}`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+      <section className="relative w-full pb-8 md:pb-12 lg:pb-16">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12">
             
-            {/* Navigation Buttons for Side/Back view */}
-            <div className="flex justify-between items-center px-2">
-              <div className="flex gap-2">
+            {/* 1. IMAGES SECTION - MOBILE OPTIMIZED */}
+            <div className="w-full flex flex-col gap-4">
+              <div 
+                className={`relative aspect-square w-full max-w-[500px] mx-auto overflow-hidden bg-slate-50 rounded-2xl md:rounded-[2.5rem] shadow-lg transition-all duration-300 ${isHovering ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={resetDrag}
+                onMouseMove={handleDragChange}
+                onMouseUp={() => setDragOffset(0)}
+              >
+                <motion.div
+                  key={activeImg}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative w-full h-full"
+                >
+                  <Image 
+                    src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
+                    alt={product.name} 
+                    fill 
+                    className="object-contain select-none pointer-events-none p-2 sm:p-0" 
+                    priority 
+                  />
+                </motion.div>
+                
+                {/* Mobile Arrows */}
                 {product.images?.length > 1 && (
-                  <>
+                  <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20">
                     <button 
-                      onClick={() => {
-                        const idx = product.images.indexOf(activeImg);
-                        const prevIdx = (idx === -1) ? 0 : (idx - 1 + product.images.length) % product.images.length;
-                        setActiveImg(product.images[prevIdx]);
+                      onClick={(e) => {
+                        e.preventDefault(); e.stopPropagation();
+                        const images = product.images || [];
+                        const idx = images.indexOf(activeImg);
+                        const prevIdx = (idx <= 0) ? images.length - 1 : idx - 1;
+                        setActiveImg(images[prevIdx]);
                       }}
-                      className="group p-3 rounded-full border border-foreground/10 hover:bg-accent hover:border-accent transition-all duration-300"
-                      aria-label="Previous image"
+                      className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
                     >
-                      <ChevronLeft size={20} className="text-foreground/70 group-hover:text-white" />
+                      <ChevronLeft size={18} className="text-slate-700" />
                     </button>
                     <button 
-                      onClick={() => {
-                        const idx = product.images.indexOf(activeImg);
-                        const nextIdx = (idx === -1) ? 0 : (idx + 1) % product.images.length;
-                        setActiveImg(product.images[nextIdx]);
+                      onClick={(e) => {
+                        e.preventDefault(); e.stopPropagation();
+                        const images = product.images || [];
+                        const idx = images.indexOf(activeImg);
+                        const nextIdx = (idx >= images.length - 1) ? 0 : idx + 1;
+                        setActiveImg(images[nextIdx]);
                       }}
-                      className="group p-3 rounded-full border border-foreground/10 hover:bg-accent hover:border-accent transition-all duration-300"
-                      aria-label="Next image"
+                      className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
                     >
-                      <ChevronRight size={20} className="text-foreground/70 group-hover:text-white" />
+                      <ChevronRight size={18} className="text-slate-700" />
                     </button>
-                  </>
+                  </div>
+                )}
+
+                {/* Progress Indicators */}
+                {product.images?.length > 1 && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/5 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+                    {product.images.map((img, i) => (
+                      <div 
+                        key={i} 
+                        className={`h-1 rounded-full transition-all duration-300 ${activeImg === img ? 'w-4 bg-accent' : 'w-1 bg-white/40'}`}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
               
-              <div className="flex gap-2">
-                {product.images.length > 1 && (
-                  <span className="text-[10px] uppercase tracking-widest text-foreground/40 font-medium">
-                    {product.images.indexOf(activeImg) + 1} / {product.images.length}
+              {/* Thumbnails */}
+              <div className="flex gap-2 overflow-x-auto pb-4 px-1 no-scrollbar scroll-smooth snap-x max-w-full mx-auto justify-start sm:justify-center">
+                {product.images.map((img, idx) => (
+                  <button 
+                    key={`${img}-${idx}`} 
+                    onClick={() => setActiveImg(img)}
+                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === img ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
+                  >
+                    <Image src={img} alt={`Thumb ${idx}`} fill className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {/* 2. CONTENT SECTION */}
+            <div className="flex flex-col gap-6 md:gap-8">
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-[10px] font-bold uppercase tracking-wider">
+                    Ayurvedic Excellence
                   </span>
-                )}
-              </div>
-            </div>
-
-            <div className="flex gap-3 justify-start overflow-x-auto pb-4 no-scrollbar scroll-smooth">
-              {product.videoUrl && (
-                <button 
-                  onClick={() => setActiveImg('video')}
-                  className={`relative w-24 h-32 overflow-hidden rounded-xl transition-all duration-300 flex-shrink-0 ${activeImg === 'video' ? 'opacity-100 ring-2 ring-accent ring-offset-2 ring-offset-background shadow-lg scale-105' : 'opacity-60 hover:opacity-100 hover:scale-105'} bg-foreground/5`}
-                >
-                  <div className="w-full h-full flex items-center justify-center bg-black/20">
-                    <Zap size={24} className="text-accent" />
-                  </div>
-                </button>
-              )}
-              {product.images.map((img, idx) => (
-                <button 
-                  key={img} 
-                  onClick={() => setActiveImg(img)}
-                  className={`relative w-24 h-32 overflow-hidden rounded-xl transition-all duration-300 flex-shrink-0 ${activeImg === img ? 'opacity-100 ring-2 ring-accent ring-offset-2 ring-offset-background shadow-lg scale-105' : 'opacity-60 hover:opacity-100 hover:scale-105'} bg-foreground/5`}
-                >
-                  <Image src={img} alt={`Product image ${idx + 1}`} fill className="object-cover" />
-                </button>
-              ))}
-            </div>
-          </motion.div>
-          
-          {/* Info */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="space-y-8 lg:sticky lg:top-40"
-          >
-            <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl font-light tracking-tight leading-[1.1]">{product.name}</h1>
-              <div className="flex items-center gap-4 pt-2">
-                <div className="flex text-accent">
-                  {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
+                  {product.stock > 0 ? (
+                    <span className="flex items-center gap-1 text-green-600 text-[10px] font-bold uppercase tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse" />
+                      In Stock
+                    </span>
+                  ) : (
+                    <span className="text-red-500 text-[10px] font-bold uppercase tracking-wider">Out of Stock</span>
+                  )}
                 </div>
-                <span className="text-sm text-foreground/50">{product.rating} / 5.0 ({product.reviewsCount})</span>
+                <h1 className="text-2xl sm:text-3xl lg:text-5xl font-light tracking-tight text-slate-900 leading-[1.15]">
+                  {product.name}
+                </h1>
+                <div className="flex items-center gap-3">
+                  <div className="flex text-amber-500">
+                    {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={14} className="fill-current" />)}
+                  </div>
+                  <span className="text-xs text-slate-400">({product.reviewsCount} reviews)</span>
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-6">
-              <p className="text-base text-foreground/60 leading-relaxed max-w-lg font-light">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900">₹{product.discountPrice}</span>
+                  {product.price > product.discountPrice && (
+                    <span className="text-lg sm:text-xl text-slate-300 line-through">₹{product.price}</span>
+                  )}
+                </div>
+                <p className="text-xs text-green-600 font-medium">Save ₹{product.price - product.discountPrice} Today</p>
+              </div>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-light">
                 {product.description}
               </p>
-              <div className="flex items-baseline gap-3 md:gap-4">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-light">₹{product.discountPrice}</h2>
-                {product.price > product.discountPrice && (
-                  <p className="text-base md:text-lg text-foreground/50 line-through font-light">₹{product.price}</p>
-                )}
-              </div>
-            </div>
 
-            {/* PRODUCT HIGHLIGHTS WITH ICONS */}
-            <div className="pt-8 border-t border-border mt-8">
-              <div className="grid grid-cols-2 gap-6 md:gap-8">
+              {/* FEATURES GRID */}
+              <div className="grid grid-cols-2 gap-3 py-6 border-y border-slate-100">
                 {[
-                  { icon: "/condi/1.svg", label: "Reduces Gas and Bloating" },
-                  { icon: "/condi/2.svg", label: "Supports Gut Health" },
-                  { icon: "/condi/3.svg", label: "Relieves Constipation" },
-                  { icon: "/condi/4.svg", label: "Promotes Healthy Digestion" }
+                  { icon: "/feature/1.svg", label: "Reduces Gas and Bloating" },
+                  { icon: "/feature/2.svg", label: "Supports Gut Health" },
+                  { icon: "/feature/3.svg", label: "Relieves Constipation" },
+                  { icon: "/feature/4.svg", label: "Promotes Healthy Digestion" }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-4 group">
-                    <div className="relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 bg-accent/5 rounded-2xl p-3 group-hover:bg-accent/10 transition-all duration-300">
-                      <Image src={item.icon} alt={item.label} fill className="object-contain p-2" />
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="relative h-9 w-9 flex-shrink-0 bg-accent/5 rounded-lg p-1.5">
+                      <Image src={item.icon} alt={item.label} fill className="object-contain" />
                     </div>
-                    <span className="text-xs sm:text-sm uppercase tracking-wider font-medium text-foreground/80 leading-snug">
+                    <span className="text-[10px] sm:text-xs uppercase tracking-wider font-bold text-slate-700 leading-tight">
                       {item.label}
                     </span>
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div className="flex items-center gap-6 pt-4">
-              <div className="flex items-center border border-border h-11 w-32 justify-between px-4 rounded-full">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="hover:text-accent transition-colors"><Minus size={16} strokeWidth={1.5} /></button>
-                <span className="font-light text-base">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="hover:text-accent transition-colors"><Plus size={16} strokeWidth={1.5} /></button>
-              </div>
-              <p className="text-sm text-foreground/50 font-light">{product.stock} in stock</p>
-            </div>
-
-            <div className="flex items-center gap-2 pt-2">
-              <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center">
-                <ShoppingBag size={16} className="text-accent" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">Estimated Delivery</p>
-                <p className="text-xs text-foreground/60">{product.deliveryDays || 5} business days</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 pt-6">
-              <button 
-                onClick={handleWishlist}
-                className={`h-11 rounded-full border transition-all px-4 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs flex items-center justify-center gap-2 ${
-                  isInWishlist(product._id) 
-                    ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white' 
-                    : 'border-foreground/20 text-foreground hover:bg-foreground hover:text-background'
-                }`}
-              >
-                <Heart size={16} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
-                <span className="hidden sm:inline">Wishlist</span>
-              </button>
-              <button 
-                onClick={handleAddToCart}
-                className="h-11 rounded-full bg-foreground text-background transition-all px-6 sm:px-8 duration-300 font-light uppercase tracking-[0.05em] text-[11px] sm:text-xs hover:bg-accent hover:text-background flex-1"
-              >
-                Add to Cart
-              </button>
-            </div>
-
-            <div className="pt-8 border-t border-border mt-6">
-              <h4 className="text-xs uppercase tracking-[0.1em] font-medium text-foreground/50 mb-4">Trust & Quality</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {product.trustQuality?.naturalIngredients && (
-                  <div className="flex items-center gap-2">
-                    <Leaf size={16} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.05em] text-foreground/70">Natural Ingredients</span>
-                  </div>
-                )}
-                {product.trustQuality?.labTested && (
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck size={16} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.05em] text-foreground/70">Lab Tested</span>
-                  </div>
-                )}
-                {product.trustQuality?.noAddedSugar && (
-                  <div className="flex items-center gap-2">
-                    <Zap size={16} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.05em] text-foreground/70">No Added Sugar</span>
-                  </div>
-                )}
-                {product.trustQuality?.madeInIndia && (
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.05em] text-foreground/70">Made in India</span>
-                  </div>
-                )}
-                {product.trustQuality?.ayurvedicFormulation && (
-                  <div className="flex items-center gap-2">
-                    <ShoppingBag size={16} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.05em] text-foreground/70">Ayurvedic</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* KEY BENEFITS - Moved here for better visibility */}
-            {product.benefits && product.benefits.length > 0 && (
-              <div className="pt-8 border-t border-border mt-6">
-                <h4 className="text-xs uppercase tracking-[0.1em] font-medium text-foreground/50 mb-4">Key Benefits</h4>
-                <div className="grid gap-3">
-                  {product.benefits.slice(0, 3).map((benefit, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="h-5 w-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 size={12} className="text-accent" />
-                      </div>
-                      <span className="text-xs text-foreground/70 font-light">{benefit}</span>
+              {/* PURCHASE CONTROLS - MOBILE OPTIMIZED */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Quantity</span>
+                    <div className="flex items-center gap-6">
+                      <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="h-8 w-8 flex items-center justify-center rounded-full bg-white shadow-sm border border-slate-200 active:bg-slate-50 transition-colors">
+                        <Minus size={14} />
+                      </button>
+                      <span className="text-lg font-medium w-4 text-center">{quantity}</span>
+                      <button onClick={() => setQuantity(quantity + 1)} className="h-8 w-8 flex items-center justify-center rounded-full bg-white shadow-sm border border-slate-200 active:bg-slate-50 transition-colors">
+                        <Plus size={14} />
+                      </button>
                     </div>
-                  ))}
+                  </div>
+                  <div className="h-10 w-[1px] bg-slate-200" />
+                  <div className="flex flex-col gap-1 text-right">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Delivery</span>
+                    <span className="text-sm font-medium">{product.deliveryDays || 5} Business Days</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-[64px_1fr] gap-3">
+                  <button 
+                    onClick={handleWishlist}
+                    className={`h-14 rounded-2xl border transition-all flex items-center justify-center ${
+                      isInWishlist(product._id) ? 'border-red-100 bg-red-50 text-red-500' : 'border-slate-200 bg-white'
+                    }`}
+                  >
+                    <Heart size={20} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
+                  </button>
+                  <button 
+                    onClick={handleAddToCart}
+                    className="h-14 rounded-2xl bg-[#2A3B32] text-white flex items-center justify-center gap-3 hover:bg-black transition-all active:scale-[0.98] shadow-lg shadow-black/10"
+                  >
+                    <ShoppingBag size={20} />
+                    <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
+                  </button>
+                </div>
+                
+                <div className="flex items-center justify-center gap-3 py-2">
+                  <ShieldCheck size={16} className="text-slate-300" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">100% Secure Checkout & Quality Guaranteed</span>
                 </div>
               </div>
-            )}
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -588,8 +511,8 @@ export default function ProductDetails({ product, relatedProducts }) {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="group relative"
               >
-                <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-white shadow-2xl">
-                  <Image src={item.img} alt={`Step ${i + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="relative aspect-[4/5] shadow-2xl">
+                  <Image src={item.img} alt={`Step ${i + 1}`} fill className="object-cover transition-transform duration-700" />
                   <div className="absolute top-6 left-6 bg-accent text-white text-xs uppercase tracking-[0.2em] font-medium px-6 py-2 rounded-full shadow-lg backdrop-blur-md">
                     {item.step}
                   </div>

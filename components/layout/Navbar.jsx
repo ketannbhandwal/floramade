@@ -269,16 +269,16 @@ export default function Navbar() {
             className="fixed inset-0 z-[100] bg-[#2A3B32] flex flex-col text-white"
           >
             {/* Header inside Menu */}
-            <div className="flex items-center justify-between p-6 md:p-8 border-b border-white/10">
+            <div className="sticky top-0 flex items-center justify-between p-6 md:p-8 bg-[#2A3B32] border-b border-white/10 z-20">
               <Link href="/" onClick={() => setOpenMenu(false)}>
                 <Image src="/assets/logo.png" alt="Fiveetatv" width={90} height={90} className="object-contain" />
               </Link>
               <button
                 onClick={() => setOpenMenu(false)}
-                className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/80"
+                className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all text-white border border-white/20 active:scale-90"
                 aria-label="Close menu"
               >
-                <X size={24} strokeWidth={1.5} />
+                <X size={28} strokeWidth={2} />
               </button>
             </div>
 
