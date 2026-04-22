@@ -98,10 +98,10 @@ export default function Navbar() {
         }`}
       >
         <header 
-          className={`relative w-full border-b border-white/10 ${
+          className={`relative w-full border-b border-white/10 bg-[#2A3B32] ${
             scrolled 
-              ? "bg-[#2A3B32] shadow-lg lg:bg-[#2A3B32] lg:backdrop-blur-xl py-3" 
-              : "bg-[#2A3B32]/95 py-4 md:py-6"
+              ? "shadow-lg py-3" 
+              : "py-4 md:py-6"
           }`}
         >
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-4 md:gap-8">
