@@ -7,6 +7,7 @@ import Philosophy from "./components/Philosophy";
 import Why from "./components/Why";
 import Review from "./components/Review";
 import Certificate from "./components/Certificate";
+import Story from "./components/Story";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -25,6 +26,7 @@ export default function HomeSections({ products }) {
         <Products products={products} />
       </div>
       <Philosophy />
+      <Story />
       <Why />
       <Review />
     </div>

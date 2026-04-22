@@ -619,6 +619,96 @@ export default function ProductDetails({ product, relatedProducts }) {
         </motion.div>
       </section>
 
+      {/* WHY CHOOSE SECTION */}
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden border-t border-slate-100">
+        <FloatingLeaf 
+          type="single" 
+          className="w-16 h-16 top-10 left-[5%] opacity-40 rotate-[15deg]" 
+          delay={0.3} 
+          parallaxSpeed={50} 
+        />
+        <FloatingLeaf 
+          type="branch" 
+          className="w-48 h-48 bottom-0 right-[2%] opacity-10 rotate-[-30deg]" 
+          delay={0.6} 
+          parallaxSpeed={-40} 
+          blur
+        />
+
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Content Left */}
+            <motion.div {...fadeUp} className="space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-light text-slate-900 leading-tight">
+                  Why choose <span className="font-medium">{product.name}</span>?
+                </h2>
+                <p className="text-lg text-slate-600 font-light">Because you deserve the best:</p>
+              </div>
+              
+              <ul className="space-y-6">
+                {[
+                  "A time-tested Ayurvedic recipe, perfectly balanced in the right quantities to support your gut health.",
+                  "Handpicked from India's jungles and Himalayas, with purity in every herb.",
+                  "Clinically tested for safety and effectiveness you can trust."
+                ].map((point, i) => (
+                  <motion.li 
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 + 0.3 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="mt-1 bg-[#2A3B32] p-1 rounded-full text-white flex-shrink-0 shadow-md">
+                      <CheckCircle2 size={16} />
+                    </div>
+                    <p className="text-slate-700 leading-relaxed font-light">{point}</p>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <div className="pt-6 space-y-8">
+                <p className="text-slate-900 font-medium italic border-l-2 border-[#2A3B32] pl-4 py-1">
+                  No shortcuts. No compromises. Just real ingredients, for real results.
+                </p>
+                <Button 
+                  onClick={handleAddToCart}
+                  className="h-14 px-10 rounded-full bg-[#2A3B32] text-white hover:bg-black transition-all shadow-xl shadow-black/10 text-sm font-bold uppercase tracking-widest active:scale-[0.98]"
+                >
+                  Order Now
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Image Right */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative w-full max-w-md mx-auto md:max-w-none"
+            >
+              <div className="text-center mb-6 space-y-1">
+                <h3 className="text-sm md:text-base font-bold tracking-[0.2em] text-slate-500 uppercase">Loved & Trusted By</h3>
+                <p className="text-3xl md:text-4xl font-bold text-[#4B3B32]">2 LAKHS + USERS</p>
+              </div>
+              <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-100 group">
+                <Image 
+                  src="/assets/whychose.webp" 
+                  alt="Trusted by users" 
+                  fill 
+                  className="object-contain sm:object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 text-center mt-6 px-2 leading-relaxed">
+                *These results are indicative and may vary for each individual due to differences in body mechanisms. This product does not guarantee any specific outcomes and should not be considered or used as a cure, remedy, or alternative medicine.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* REVIEWS */}
       <section className="py-12 md:py-16 max-w-[1500px] mx-auto px-6 md:px-12">
         <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
