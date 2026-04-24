@@ -30,7 +30,7 @@ const features = [
 
 export default function BetterThanSection() {
   return (
-    <div className="relative w-full bg-[#EBF1E4] py-6 md:py-8 overflow-hidden">
+    <div className="relative w-full bg-[#EBF1E4] py-7 md:py-8 overflow-hidden">
       <FloatingLeaf 
         type="single" 
         className="w-12 h-12 top-2 right-[20%] opacity-50 rotate-[45deg]" 
