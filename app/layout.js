@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import Providers from "@/components/ui/Providers";
 import CookieConsent from "@/components/ui/CookieConsent";
 import LenisProvider from "@/components/ui/LenisProvider";
+import { Toaster } from "react-hot-toast";
+import { FaWhatsapp } from "react-icons/fa";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -130,6 +132,20 @@ export default function RootLayout({ children }) {
             <main className="w-full flex-1 flex flex-col lg:pt-[92px] relative z-10">{children}</main>
             <Footer />
             <CookieConsent />
+            
+            {/* Floating WhatsApp Button */}
+            <a 
+              href="https://wa.me/919318445297" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="fixed bottom-8 right-8 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 active:scale-95 group"
+              aria-label="Contact us on WhatsApp"
+            >
+              <FaWhatsapp size={32} />
+              <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-slate-900 px-4 py-2 rounded-xl text-sm font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none border border-slate-100">
+                Chat with us
+              </span>
+            </a>
           </LenisProvider>
         </Providers>
       </body>

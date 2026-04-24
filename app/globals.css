@@ -15,7 +15,7 @@
   --background: #f8f5f0; /* Soft warm oak white */
   --foreground: #2b2b2b; /* Deep charcoal */
   --primary: #2b2b2b; /* Deep charcoal */
-  --accent: #7a8f7a; /* Muted herbal green */
+  --accent: #658518; /* Brand Green */
   --highlight: #e8d8a9; /* Soft luxury yellow */
   --muted: #f0ebe1; /* Slightly darker oak white */
   --border: #e6dfd3; /* Soft neutral tone */
@@ -81,7 +81,11 @@ h1, h2, h3, h4, h5, h6 {
 
 button,
 a {
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {

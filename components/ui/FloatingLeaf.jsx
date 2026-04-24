@@ -33,9 +33,9 @@ export default function FloatingLeaf({
       style={{ y }}
       initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
       whileInView={{ opacity: blur ? 0.5 : 0.8, scale: 1, rotate: 0 }}
-      viewport={{ once: false, margin: "-50px" }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 1.2, ease: "easeOut", delay }}
-      className={`absolute pointer-events-none z-0 ${className} ${blur ? 'blur-[3px]' : ''}`}
+      className={`absolute pointer-events-none z-0 ${className} ${blur ? 'blur-[3px]' : ''} will-change-transform`}
     >
       <motion.div
         animate={{
@@ -47,7 +47,7 @@ export default function FloatingLeaf({
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="w-full h-full relative"
+        className="w-full h-full relative will-change-transform"
       >
         <Image src={leafSrc} alt="Leaf decoration" fill className="object-contain" />
       </motion.div>

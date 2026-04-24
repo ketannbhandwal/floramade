@@ -6,14 +6,27 @@ import { useWishlist } from "@/context/WishlistContext";
 import PageTransition from "@/components/ui/PageTransition";
 import WishlistItem from "@/components/wishlist/WishlistItem";
 import { ArrowRight, Heart } from "lucide-react";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
 export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist, total } = useWishlist();
 
   return (
     <PageTransition>
-      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20 relative overflow-hidden">
+        {/* Decorative Leaves */}
+        <FloatingLeaf 
+          type="branch" 
+          className="w-24 h-24 md:w-36 md:h-36 top-10 left-10 opacity-20 -rotate-[15deg]" 
+          delay={0.1} 
+        />
+        <FloatingLeaf 
+          type="single" 
+          className="w-16 h-16 md:w-24 md:h-24 bottom-20 right-10 opacity-15 rotate-[45deg]" 
+          delay={0.4} 
+        />
+        
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

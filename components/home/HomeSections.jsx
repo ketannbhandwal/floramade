@@ -1,20 +1,16 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import Landing from "./components/Landing";
 import BetterThanSection from "./components/BetterThanSection";
-import Products from "./components/Products";
-import Philosophy from "./components/Philosophy";
-import Why from "./components/Why";
-import Review from "./components/Review";
-import Certificate from "./components/Certificate";
-import Story from "./components/Story";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-};
+// Lazy load sections below the fold
+const Products = dynamic(() => import("./components/Products"), { ssr: true });
+const Philosophy = dynamic(() => import("./components/Philosophy"), { ssr: true });
+const Why = dynamic(() => import("./components/Why"), { ssr: true });
+const Review = dynamic(() => import("./components/Review"), { ssr: true });
+const Certificate = dynamic(() => import("./components/Certificate"), { ssr: true });
+const Story = dynamic(() => import("./components/Story"), { ssr: true });
 
 export default function HomeSections({ products }) {
   return (

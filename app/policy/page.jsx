@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ShieldCheck, FileText, RefreshCcw, Truck, ChevronRight } from "lucide-react";
 import PolicyCTA from "@/components/policy/PolicyCTA";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
 const policies = [
   {
@@ -40,7 +41,19 @@ const fadeUp = {
 
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5EF] pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#F8F5EF] pt-24 md:pt-32 relative overflow-hidden">
+      {/* Decorative Leaves */}
+      <FloatingLeaf 
+        type="branch" 
+        className="w-32 h-32 md:w-48 md:h-48 top-10 -right-12 opacity-20 rotate-[120deg]" 
+        delay={0.2} 
+      />
+      <FloatingLeaf 
+        type="single" 
+        className="w-20 h-20 md:w-32 md:h-32 bottom-[30%] -left-8 opacity-15 -rotate-45" 
+        delay={0.5} 
+      />
+      
       {/* Hero Section */}
       <section className="px-6 py-20 text-center relative overflow-hidden">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">

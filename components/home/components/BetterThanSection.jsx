@@ -37,13 +37,6 @@ export default function BetterThanSection() {
         delay={0.1} 
         parallaxSpeed={30} 
       />
-      <FloatingLeaf 
-        type="double" 
-        className="w-16 h-16 bottom-1 left-[10%] opacity-40 rotate-[-15deg]" 
-        delay={0.3} 
-        parallaxSpeed={-20} 
-        blur
-      />
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {features.map((feature, idx) => (

@@ -7,6 +7,7 @@ import Link from "next/link";
 import PageTransition from "@/components/ui/PageTransition";
 import Philosophy from "@/components/home/components/Philosophy";
 import Certificate from "@/components/home/components/Certificate";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -18,7 +19,23 @@ const fadeUp = {
 export default function AboutPage() {
   return (
     <PageTransition>
-      <div className="bg-background text-foreground w-full overflow-hidden">
+      <div className="bg-background text-foreground w-full overflow-hidden relative">
+        {/* Decorative Leaves */}
+        <FloatingLeaf 
+          type="branch" 
+          className="w-32 h-32 md:w-48 md:h-48 top-[20%] -left-12 opacity-30 -rotate-12" 
+          delay={0.2} 
+        />
+        <FloatingLeaf 
+          type="single" 
+          className="w-20 h-20 md:w-32 md:h-32 top-[45%] -right-8 opacity-20 rotate-45" 
+          delay={0.5} 
+        />
+        <FloatingLeaf 
+          type="double" 
+          className="w-24 h-24 md:w-40 md:h-40 bottom-[15%] -left-10 opacity-25 rotate-[15deg]" 
+          delay={0.8} 
+        />
         
         {/* --- HERO --- */}
         <section className="relative h-[70vh] w-full flex items-center justify-center bg-foreground overflow-hidden">
@@ -71,7 +88,7 @@ export default function AboutPage() {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-light leading-tight">
-                  About Fiveetatv
+                  About Fiveetatva
                 </h2>
                 <div className="flex items-center gap-2 text-sm text-foreground/50">
                   <Globe size={14} />
@@ -80,10 +97,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-6 text-foreground/60 font-light text-base leading-relaxed">
                 <p>
-                  <span className="text-foreground font-medium">Fiveetatv</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Rahul Gour & Suraj Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
+                  <span className="text-foreground font-medium">Fiveetatva</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Rahul Gour & Suraj Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
                 </p>
                 <p>
-                  At Fiveetatv, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
+                  At Fiveetatva, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
                 </p>
                 <p>
                   We bridge the gap between traditional Ayurvedic wisdom and modern health needs by combining authentic formulations with rigorous scientific standardization. Every product is crafted with intention, using ethically sourced botanicals and time-tested recipes from classical Ayurvedic texts.

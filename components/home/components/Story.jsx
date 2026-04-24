@@ -69,16 +69,10 @@ export default function Story() {
                 src="/assets/story.webp" 
                 alt="Our Story - Trusted by many" 
                 fill 
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
+                quality={80}
               />
-              {/* Optional fallback overlay if text isn't baked into the image */}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <h3 className="text-white text-3xl md:text-5xl lg:text-6xl font-bold text-center leading-tight drop-shadow-lg">
-                  20 Lakh+ <br />
-                  Bottles Sold
-                </h3>
-              </div>
             </div>
           </motion.div>
 

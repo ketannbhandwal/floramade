@@ -12,7 +12,7 @@ export default function Footer() {
           
           <div className="md:col-span-5 space-y-6 md:space-y-8">
             <div className="flex items-center justify-start">
-              <Image src="/assets/logo.png" alt="Fiveetatv Logo" width={150} height={38} className={`w-[120px] md:w-[150px] lg:w-[192px] h-auto`} />
+              <Image src="/assets/logo.png" alt="Fiveetatva Logo" width={150} height={38} className={`w-[120px] md:w-[150px] lg:w-[192px] h-auto`} />
             </div>
             <p className="text-xs sm:text-sm text-slate-500 font-light leading-relaxed max-w-md">
               Premium Ayurvedic wellness inspired by the five natural elements. Crafted with intention for balanced living.
@@ -74,7 +74,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-slate-900 mb-1">Address</p>
-                <p className="text-xs sm:text-sm text-slate-500 font-light">Fiveetatv</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-light">Fiveetatva</p>
                 <p className="text-xs sm:text-sm text-slate-500 font-light">Delhi, India</p>
               </div>
               <div className="pt-2">
@@ -89,7 +89,7 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-slate-100">
           <p className="text-xs text-slate-400 font-light">
-            © {new Date().getFullYear()} Fiveetatv Ayurveda. All rights reserved.
+            © {new Date().getFullYear()} Fiveetatva Ayurveda. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             <div className="h-[1px] w-8 bg-slate-100" />
@@ -99,7 +99,7 @@ export default function Footer() {
             <div className="h-[1px] w-8 bg-slate-100" />
           </div>
           <p className="text-xs text-slate-400 font-light">
-            Designed by Valtrix Studio
+            Fiveetatva
           </p>
         </div>
         

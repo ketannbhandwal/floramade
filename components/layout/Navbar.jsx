@@ -7,9 +7,50 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown, LogOut } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown, LogOut, Leaf, Phone } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { NAV_LINKS, PRODUCT_CATEGORIES } from "./nav-config";
+
+const AnnouncementBar = () => (
+  <div className="bg-[#658518] text-white py-1.5 px-4 sm:px-6 md:px-8 lg:px-12">
+    <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[10px] sm:text-xs font-medium tracking-wide">
+      <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-1.5">
+          <Leaf size={12} className="text-white/80" />
+          <span>Free Shipping on Orders Above ₹499</span>
+        </div>
+      </div>
+      
+      <div className="hidden md:flex items-center gap-6">
+        <div className="flex items-center gap-1.5">
+          <Phone size={12} className="text-white/80" />
+          <span>Call Now: <a href="tel:+919318445297" className="hover:underline">+91 9318445297</a></span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <a href="#" className="hover:text-white/80 transition-colors">
+          <FaFacebookF size={12} />
+        </a>
+        <a href="#" className="hover:text-white/80 transition-colors">
+          <FaInstagram size={14} />
+        </a>
+        <a href="https://wa.me/919318445297" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors">
+          <FaWhatsapp size={14} />
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
+const NAV_LINKS_LIST = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Wishlist", href: "/wishlist" },
+];
 
 export default function Navbar() {
   const { cartItems } = useCart();
@@ -26,16 +67,23 @@ export default function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          setScrolled(currentScrollY > 20);
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setVisible(false);
-      } else {
-        setVisible(true);
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            setVisible(false);
+          } else {
+            setVisible(true);
+          }
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
       }
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -61,13 +109,6 @@ export default function Navbar() {
     };
   }, [openMenu]);
 
-  const NAV_LINKS_LIST = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Wishlist", href: "/wishlist" },
-  ];
-
   return (
     <>
       <div 
@@ -75,6 +116,7 @@ export default function Navbar() {
           visible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
+        <AnnouncementBar />
         <div className="bg-white shadow-sm border-b border-black/5">
           <header className={`relative w-full ${scrolled ? "py-1" : "py-2.5"} transition-all duration-300`}>
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-4 md:gap-8">
@@ -89,7 +131,7 @@ export default function Navbar() {
                 <Link href="/">
                   <Image
                     src="/assets/logo.png"
-                    alt="Fiveetatv"
+                    alt="Fiveetatva"
                     width={90}
                     height={90}
                     className="h-9 md:h-12 w-auto object-contain cursor-pointer transition-all duration-300"

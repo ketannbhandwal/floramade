@@ -38,6 +38,7 @@ export default function AdminPage() {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
+  const [inquiries, setInquiries] = useState([]);
   const [form, setForm] = useState(empty);
   const [editingSlug, setEditingSlug] = useState("");
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -76,17 +77,20 @@ export default function AdminPage() {
   }, [orders]);
 
   async function loadData() {
-    const [p, o, u] = await Promise.all([
+    const [p, o, u, i] = await Promise.all([
       fetch("/api/products?includeAll=true"),
       fetch("/api/orders/all"),
       fetch("/api/users/all"),
+      fetch("/api/inquiries"),
     ]);
     const pData = await p.json();
     const oData = await o.json();
     const uData = await u.json();
+    const iData = await i.json();
     setProducts(pData.products || []);
     setOrders(oData.orders || []);
     setUsers(uData.users || []);
+    setInquiries(iData || []);
   }
 
   useEffect(() => {
@@ -278,6 +282,7 @@ export default function AdminPage() {
     { key: "products", label: "Inventory", icon: Package },
     { key: "orders", label: "Transactions", icon: ReceiptText },
     { key: "reviews", label: "Reviews", icon: MessageSquare },
+    { key: "inquiries", label: "Inquiries", icon: Phone },
     { key: "users", label: "Customers", icon: Users },
   ];
 
@@ -713,6 +718,56 @@ export default function AdminPage() {
                           </tr>
                         ))
                       )}
+                    </tbody>
+                  </table>
+                </div>
+              </motion.div>
+            )}
+
+            {/* INQUIRIES TAB */}
+            {activeTab === "inquiries" && (
+              <motion.div key="inquiries" {...fadeAnim} className="space-y-8">
+                <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
+                  <div className="p-8 border-b border-foreground/5">
+                    <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Inquiries & Consultations</h2>
+                  </div>
+                  <table className="w-full text-left">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.05em] text-foreground/50">
+                      <tr>
+                        <th className="px-8 py-6 font-medium">Customer</th>
+                        <th className="px-8 py-6 font-medium">Type</th>
+                        <th className="px-8 py-6 font-medium">Product/Msg</th>
+                        <th className="px-8 py-6 font-medium">Date</th>
+                        <th className="px-8 py-6 font-medium text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-foreground/5">
+                      {inquiries.map((inq) => (
+                        <tr key={inq._id} className="hover:bg-white/40 transition-colors">
+                          <td className="px-8 py-6">
+                            <p className="font-medium text-foreground">{inq.name}</p>
+                            <p className="text-sm text-accent font-bold">{inq.phone}</p>
+                          </td>
+                          <td className="px-8 py-6">
+                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${inq.type === 'consultation' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                              {inq.type}
+                            </span>
+                          </td>
+                          <td className="px-8 py-6 max-w-xs">
+                            <p className="text-sm text-foreground/70 line-clamp-2">
+                              {inq.productSlug ? `Product: ${inq.productSlug}` : inq.message || "Consultation Request"}
+                            </p>
+                          </td>
+                          <td className="px-8 py-6">
+                            <p className="text-xs text-foreground/50">{new Date(inq.createdAt).toLocaleDateString()}</p>
+                          </td>
+                          <td className="px-8 py-6 text-right">
+                            <a href={`tel:${inq.phone}`} className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.05em] font-medium text-accent hover:text-secondary transition-colors">
+                              Call Now <Phone size={14} />
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

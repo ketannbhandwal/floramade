@@ -10,7 +10,7 @@ const getProductCached = unstable_cache(
     await connectDB();
     return await Product.findOne({ slug, isVisible: true }).lean();
   },
-  ['product-detail'],
+  ['product-detail-v2'],
   { revalidate: 3600, tags: ['products'] }
 );
 

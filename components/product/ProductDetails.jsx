@@ -8,12 +8,13 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award, ChevronLeft, ChevronRight, Phone } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import CertificateSlider from "../home/components/Certificate";
 import FloatingLeaf from "@/components/ui/FloatingLeaf";
+import DoctorConsultationModal from "@/components/ui/DoctorConsultationModal";
 
 const ProductStructuredData = ({ product }) => {
   const productSchema = {
@@ -24,7 +25,7 @@ const ProductStructuredData = ({ product }) => {
     "image": product.images,
     "brand": {
       "@type": "Brand",
-      "name": "Fiveetatv"
+      "name": "Fiveetatva"
     },
     "offers": {
       "@type": "Offer",
@@ -35,7 +36,7 @@ const ProductStructuredData = ({ product }) => {
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Fiveetatv"
+        "name": "Fiveetatva"
       }
     },
     "aggregateRating": {
@@ -80,6 +81,7 @@ export default function ProductDetails({ product, relatedProducts }) {
   const [buyNowOpen, setBuyNowOpen] = useState(false);
   const [buyDetails, setBuyDetails] = useState({ fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" });
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [consultationOpen, setConsultationOpen] = useState(false);
   const [reviewData, setReviewData] = useState({ name: "", rating: 5, comment: "", imageFile: null });
   const [uploading, setUploading] = useState(false);
   const { addToCart } = useCart();
@@ -340,6 +342,24 @@ export default function ProductDetails({ product, relatedProducts }) {
                 <h1 className="text-2xl sm:text-3xl lg:text-5xl font-light tracking-tight text-slate-900 leading-[1.15]">
                   {product.name}
                 </h1>
+                
+                {/* Consultation Banner Trigger */}
+                <button 
+                  onClick={() => setConsultationOpen(true)}
+                  className="w-full mt-4 flex items-center justify-between p-4 bg-green-50 border border-[#658518]/20 rounded-2xl group hover:bg-green-100 transition-all text-left"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#658518] shadow-sm">
+                      <Phone size={18} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-[#658518] uppercase tracking-widest">Limited Time Offer</p>
+                      <p className="text-sm font-bold text-slate-800">Apply for Free Doctor Consultation</p>
+                    </div>
+                  </div>
+                  <ChevronRight size={18} className="text-[#658518] group-hover:translate-x-1 transition-transform" />
+                </button>
+
                 <div className="flex items-center gap-3">
                   <div className="flex text-amber-500">
                     {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={14} className="fill-current" />)}
@@ -552,16 +572,16 @@ export default function ProductDetails({ product, relatedProducts }) {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
             {[
-              { name: "Amla", img: "/ingridients/Amla.webp", desc: "Rich in Vitamin C, boosts immunity" },
-              { name: "Haritaki", img: "/ingridients/Haritaki_4e781681-e0e8-490c-97fd-e0494b52cc5b.webp", desc: "Improves digestion & detoxification" },
-              { name: "Bibhitaki", img: "/ingridients/Bibhitaki.webp", desc: "Supports respiratory & metabolic health" },
-              { name: "Jeera", img: "/ingridients/Jeera-eng.webp", desc: "Enhances metabolism & relieves bloating" },
-              { name: "Pudina", img: "/ingridients/Pudina-Ind_20901f19-a6e7-4936-a78d-c4373c5282ab.webp", desc: "Cools the stomach & aids digestion" },
-              { name: "Saunf", img: "/ingridients/Saunf-eng.webp", desc: "Reduces acidity & freshens breath" },
-              { name: "Kali Mirch", img: "/ingridients/Kali_Mirch-eng.webp", desc: "Improves nutrient absorption" },
-              { name: "Hing", img: "/ingridients/Hing-eng.webp", desc: "Relieves gas and abdominal pain" },
-              { name: "Carom Seeds", img: "/ingridients/Carom_Seeds-English.webp", desc: "Quick relief from indigestion" },
-              { name: "Kala Namak", img: "/ingridients/Kala_Namak-eng.webp", desc: "Aids digestion and adds trace minerals" },
+              { name: "Amla", img: "/ingredients/Amla.webp", desc: "Rich in Vitamin C, boosts immunity" },
+              { name: "Haritaki", img: "/ingredients/Haritaki_4e781681-e0e8-490c-97fd-e0494b52cc5b.webp", desc: "Improves digestion & detoxification" },
+              { name: "Bibhitaki", img: "/ingredients/Bibhitaki.webp", desc: "Supports respiratory & metabolic health" },
+              { name: "Jeera", img: "/ingredients/Jeera-eng.webp", desc: "Enhances metabolism & relieves bloating" },
+              { name: "Pudina", img: "/ingredients/Pudina-Ind_20901f19-a6e7-4936-a78d-c4373c5282ab.webp", desc: "Cools the stomach & aids digestion" },
+              { name: "Saunf", img: "/ingredients/Saunf-eng.webp", desc: "Reduces acidity & freshens breath" },
+              { name: "Kali Mirch", img: "/ingredients/Kali_Mirch-eng.webp", desc: "Improves nutrient absorption" },
+              { name: "Hing", img: "/ingredients/Hing-eng.webp", desc: "Relieves gas and abdominal pain" },
+              { name: "Carom Seeds", img: "/ingredients/Carom_Seeds-English.webp", desc: "Quick relief from indigestion" },
+              { name: "Kala Namak", img: "/ingredients/Kala_Namak-eng.webp", desc: "Aids digestion and adds trace minerals" },
             ].map((ing, i) => (
               <motion.div
                 key={i}
@@ -895,6 +915,12 @@ export default function ProductDetails({ product, relatedProducts }) {
           </button>
         </div>
       </Modal>
+
+      <DoctorConsultationModal 
+        isOpen={consultationOpen} 
+        onClose={() => setConsultationOpen(false)} 
+        productSlug={product.slug}
+      />
     </div>
   );
 }

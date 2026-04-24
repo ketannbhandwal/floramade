@@ -77,7 +77,7 @@ function Why() {
                 {/* Content Section */}
                 <div className="space-y-12">
                     <SectionHeader
-                        label="Why Fiveetatv"
+                        label="Why Fiveetatva"
                         title="Crafted with Intention"
                         description="We believe in uncompromising quality. Our formulations are crafted with ethically sourced herbs, standardized for potency, and backed by ancient Ayurvedic wisdom."
                         align="left"

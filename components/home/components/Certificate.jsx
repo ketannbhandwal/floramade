@@ -12,42 +12,19 @@ const certificates = [
 
 function CertificateSlider() {
   return (
-    <section className="py-16 mt-10 overflow-hidden relative">
-      {/* Decorative Leaves */}
-      <FloatingLeaf 
-        type="single" 
-        className="w-16 h-16 md:w-20 md:h-20 top-0 left-[10%] opacity-70 rotate-[20deg]" 
-        delay={0.3} 
-        parallaxSpeed={60} 
-      />
-      <FloatingLeaf 
-        type="double" 
-        className="w-20 h-20 md:w-28 md:h-28 bottom-0 right-[5%] opacity-50 rotate-[-120deg]" 
-        delay={0.7} 
-        parallaxSpeed={-50} 
-        blur
-      />
-
-      <h2 className="text-center text-4xl font-extrabold text-[#1b3a27] mb-16 relative z-10">
-        Certified by Years of Trust
-      </h2>
-      
-      <div className="relative flex overflow-x-hidden">
-        <motion.div
-          className="flex gap-10 pr-10"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            duration: 40, // Slower for a premium feel
-            ease: "linear",
-          }}
-        >
-          {[...certificates, ...certificates].map((cert, index) => (
+    <section className="py-20 overflow-hidden relative bg-muted/30">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+        <h2 className="text-center text-3xl md:text-4xl font-light text-[#1b3a27] mb-16 tracking-tight">
+          Certified by <span className="font-medium italic">Years of Trust</span>
+        </h2>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
+          {certificates.map((cert) => (
             <div
-              key={`${cert.id}-${index}`}
-              className="flex-shrink-0 flex items-center gap-6 bg-transparent border-2 border-[#1b3a27]/10 rounded-full py-5 px-10 hover:border-[#1b3a27]/30 transition-colors duration-300"
+              key={cert.id}
+              className="group flex flex-col items-center gap-6 p-8 bg-white border border-[#1b3a27]/5 rounded-3xl hover:border-[#1b3a27]/20 transition-all duration-500 hover:shadow-xl hover:shadow-[#1b3a27]/5"
             >
-              <div className="w-14 h-14 relative">
+              <div className="w-16 h-16 md:w-20 md:h-20 relative grayscale group-hover:grayscale-0 transition-all duration-500">
                 <Image 
                   src={`/certificate/${cert.id}.svg`} 
                   alt={cert.title} 
@@ -55,12 +32,17 @@ function CertificateSlider() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-[#1b3a27] font-semibold text-lg whitespace-nowrap">
-                {cert.title}
-              </span>
+              <div className="text-center space-y-1">
+                <span className="block text-[#1b3a27] font-medium text-lg tracking-tight">
+                  {cert.title}
+                </span>
+                <span className="block text-[10px] uppercase tracking-widest text-[#1b3a27]/40 font-bold">
+                  {cert.name}
+                </span>
+              </div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

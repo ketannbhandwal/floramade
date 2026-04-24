@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MessageSquare, ArrowRight, Sparkles } from "lucide-react";
 import PageTransition from "@/components/ui/PageTransition";
 import { Badge } from "@/components/ui/Badge";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
+import { useState } from "react";
+import DoctorConsultationModal from "@/components/ui/DoctorConsultationModal";
 
 const cardVariants = {
   initial: { opacity: 0, y: 40, scale: 0.95 },
@@ -25,9 +28,22 @@ const floatAnimation = {
 };
 
 export default function ContactPage() {
+  const [consultationOpen, setConsultationOpen] = useState(false);
+
   return (
     <PageTransition>
-      <div className="bg-background text-foreground w-full overflow-hidden">
+      <div className="bg-background text-foreground w-full overflow-hidden relative">
+        {/* Decorative Leaves */}
+        <FloatingLeaf 
+          type="single" 
+          className="w-20 h-20 md:w-32 md:h-32 top-10 left-10 opacity-20 -rotate-12" 
+          delay={0.1} 
+        />
+        <FloatingLeaf 
+          type="double" 
+          className="w-24 h-24 md:w-40 md:h-40 bottom-20 right-10 opacity-25 rotate-[30deg]" 
+          delay={0.4} 
+        />
         
         {/* --- HERO --- */}
         <section className="relative pt-20 pb-12 md:pt-24 md:pb-16 px-6">
@@ -184,15 +200,15 @@ export default function ContactPage() {
                 </div>
                 
                 <div className="lg:w-1/3 text-center lg:text-right">
-                  <motion.a 
-                    href="tel:9318445297"
+                  <motion.button 
+                    onClick={() => setConsultationOpen(true)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center gap-3 bg-accent text-background px-8 py-4 rounded-full text-xs font-light tracking-[0.1em] uppercase hover:bg-accent/90 transition-all duration-500 shadow-lg shadow-accent/20"
                   >
                     Book Consultation
                     <ArrowRight size={16} />
-                  </motion.a>
+                  </motion.button>
                   <p className="mt-4 text-sm text-foreground/50 font-light">
                     Free initial assessment
                   </p>
@@ -201,6 +217,11 @@ export default function ContactPage() {
             </div>
           </motion.div>
         </div>
+        
+        <DoctorConsultationModal 
+          isOpen={consultationOpen} 
+          onClose={() => setConsultationOpen(false)} 
+        />
       </div>
     </PageTransition>
   );

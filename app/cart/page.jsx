@@ -7,6 +7,7 @@ import PageTransition from "@/components/ui/PageTransition";
 import EmptyState from "@/components/ui/EmptyState";
 import CartItem from "@/components/cart/CartItem";
 import { ArrowRight, ShieldCheck, Truck } from "lucide-react";
+import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, total } = useCart();
@@ -15,8 +16,20 @@ export default function CartPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20 relative overflow-hidden">
+        {/* Decorative Leaves */}
+        <FloatingLeaf 
+          type="single" 
+          className="w-16 h-16 md:w-24 md:h-24 top-20 right-10 opacity-20 rotate-[30deg]" 
+          delay={0.1} 
+        />
+        <FloatingLeaf 
+          type="double" 
+          className="w-20 h-20 md:w-32 md:h-32 bottom-40 -left-10 opacity-15 rotate-[-15deg]" 
+          delay={0.4} 
+        />
+        
+        <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
