@@ -1,10 +1,10 @@
-import dbConnect from "@/lib/db";
+import { connectDB } from "@/lib/db";
 import Inquiry from "@/models/Inquiry";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    await dbConnect();
+    await connectDB();
     const body = await req.json();
     const { name, phone, email, message, type, productSlug } = body;
 
@@ -30,7 +30,7 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    await dbConnect();
+    await connectDB();
     // This should ideally be protected by admin middleware
     const inquiries = await Inquiry.find().sort({ createdAt: -1 });
     return NextResponse.json(inquiries);
