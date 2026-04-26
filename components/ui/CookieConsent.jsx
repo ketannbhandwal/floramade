@@ -9,7 +9,7 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("fiveetatva-cookie-consent");
+    const consent = localStorage.getItem("fiveetatv-cookie-consent");
     if (!consent) {
       const timer = setTimeout(() => setVisible(true), 2000);
       return () => clearTimeout(timer);
@@ -17,7 +17,7 @@ export default function CookieConsent() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("fiveetatva-cookie-consent", "accepted");
+    localStorage.setItem("fiveetatv-cookie-consent", "accepted");
     setVisible(false);
   };
 

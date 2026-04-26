@@ -12,7 +12,7 @@ const slides = [
   { 
     mobile: "/posters/mobile1.png", 
     desktop: "/posters/desk1.png",
-    title: "Embrace Natural Wellness with Fiveetatva",
+    title: "Embrace Natural Wellness with Fiveetatv",
     subtitle: "Pure by Nature, Effective by Science",
     description: "Ayurvedic solutions for a healthier, happier you. Made with pure herbs. Backed by tradition.",
     primaryCTA: "Shop Now",
@@ -71,8 +71,8 @@ export default function Landing() {
                       </motion.p>
                       
                       <h1 className="text-5xl lg:text-6xl font-display text-[#2b2b2b] leading-[1.1] font-bold">
-                        {slide.title.split('Fiveetatva')[0]}
-                        <span className="text-[#e2b826]">Fiveetatva</span>
+                        {slide.title.split('Fiveetatv')[0]}
+                        <span className="text-[#e2b826]">Fiveetatv</span>
                       </h1>
 
                       <p className="text-[#4b4b4b] text-lg font-light leading-relaxed max-w-sm">

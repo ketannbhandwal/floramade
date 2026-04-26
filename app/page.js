@@ -5,10 +5,10 @@ import Product from "@/models/Product";
 import { seedProductsIfEmpty } from "@/lib/seed";
 
 export const metadata = {
-  title: "Fiveetatva | Premium Ayurvedic Wellness Products in Delhi, India",
-  description: "Fiveetatva - Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur in Delhi, India. Shop natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
+  title: "Fiveetatv | Premium Ayurvedic Wellness Products in Delhi, India",
+  description: "Fiveetatv - Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur in Delhi, India. Shop natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
   keywords: [
-    "Fiveetatva",
+    "Fiveetatv",
     "Ayurvedic products",
     "Ayurveda India",
     "herbal supplements",
@@ -31,24 +31,23 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://fiveetatva.com",
-    title: "Fiveetatva | Premium Ayurvedic Wellness Products",
+    url: "https://fiveetatv.com",
+    title: "Fiveetatv | Premium Ayurvedic Wellness Products",
     description: "Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: [
       {
         url: "/assets/logo.png",
         width: 1200,
         height: 630,
-        alt: "Fiveetatva - Premium Ayurvedic Wellness",
+        alt: "Fiveetatv - Premium Ayurvedic Wellness",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fiveetatva | Premium Ayurvedic Wellness Products",
+    title: "Fiveetatv | Premium Ayurvedic Wellness Products",
     description: "Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: ["/assets/logo.png"],
-    creator: "@fiveetatva",
   },
 };
 

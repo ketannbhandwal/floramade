@@ -1,5 +1,5 @@
-# Fiveetatva Ayurvedic Wellness - Robots.txt
-# https://fiveetatva.com
+# Fiveetatv Ayurvedic Wellness - Robots.txt
+# https://fiveetatv.com
 
 User-agent: *
 Allow: /
@@ -15,7 +15,7 @@ Disallow: /wishlist/
 Disallow: /search?
 
 # Sitemap
-Sitemap: https://fiveetatva.com/sitemap.xml
+Sitemap: https://fiveetatv.com/sitemap.xml
 
 # Crawl delay
 Crawl-delay: 1

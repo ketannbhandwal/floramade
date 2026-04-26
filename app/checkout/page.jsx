@@ -14,7 +14,7 @@ export default function CheckoutPage() {
   const { cartItems, total, clearCart } = useCart();
   const [buyNowItems] = useState(() => {
     if (typeof window === "undefined") return [];
-    const saved = localStorage.getItem("fiveetatva-buy-now-items");
+    const saved = localStorage.getItem("fiveetatv-buy-now-items");
     if (!saved) return [];
     try {
       return JSON.parse(saved);
@@ -32,7 +32,7 @@ export default function CheckoutPage() {
     if (typeof window === "undefined") {
       return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
     }
-    const saved = localStorage.getItem("fiveetatva-buy-now-address");
+    const saved = localStorage.getItem("fiveetatv-buy-now-address");
     if (!saved) return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
     try {
       return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "", ...JSON.parse(saved) };
@@ -120,8 +120,8 @@ export default function CheckoutPage() {
     const data = await res.json();
     if (!res.ok) return toast.error(data.message || "Failed to place COD order");
     toast.success("COD order placed successfully");
-    localStorage.removeItem("fiveetatva-buy-now-items");
-    localStorage.removeItem("fiveetatva-buy-now-address");
+    localStorage.removeItem("fiveetatv-buy-now-items");
+    localStorage.removeItem("fiveetatv-buy-now-address");
     if (!buyNowItems.length) clearCart();
     router.push("/account");
   }
@@ -181,8 +181,8 @@ export default function CheckoutPage() {
         });
         if (verify.ok) {
           toast.success("Order placed successfully");
-          localStorage.removeItem("fiveetatva-buy-now-items");
-          localStorage.removeItem("fiveetatva-buy-now-address");
+          localStorage.removeItem("fiveetatv-buy-now-items");
+          localStorage.removeItem("fiveetatv-buy-now-address");
           if (!buyNowItems.length) clearCart();
           router.push("/account");
         } else {

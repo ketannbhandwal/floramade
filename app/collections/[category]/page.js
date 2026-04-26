@@ -25,11 +25,11 @@ export async function generateMetadata({ params }) {
   const categoryTitle = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   
   return {
-    title: `${categoryTitle} Collection | Fiveetatva`,
-    description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatva. Natural formulations for wellness and health. 100% natural, lab-tested.`,
+    title: `${categoryTitle} Collection | Fiveetatv`,
+    description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatv. Natural formulations for wellness and health. 100% natural, lab-tested.`,
     keywords: [
       categoryTitle,
-      "Fiveetatva",
+      "Fiveetatv",
       "Ayurvedic products",
       "herbal supplements",
       "natural wellness",
@@ -41,27 +41,26 @@ export async function generateMetadata({ params }) {
     openGraph: {
       type: "website",
       locale: "en_IN",
-      url: `https://fiveetatva.com/collections/${category}`,
-      title: `${categoryTitle} Collection | Fiveetatva`,
-      description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatva.`,
+      url: `https://fiveetatv.com/collections/${category}`,
+      title: `${categoryTitle} Collection | Fiveetatv`,
+      description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatv.`,
       images: [
         {
           url: "/assets/logo.png",
           width: 1200,
           height: 630,
-          alt: `${categoryTitle} Collection - Fiveetatva`,
+          alt: `Fiveetatv ${categoryTitle} Collection`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${categoryTitle} Collection | Fiveetatva`,
-      description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatva.`,
+      title: `${categoryTitle} Collection | Fiveetatv`,
+      description: `Explore our ${categoryTitle} collection of premium Ayurvedic products by Fiveetatv.`,
       images: ["/assets/logo.png"],
-      creator: "@fiveetatva",
     },
     alternates: {
-      canonical: `https://fiveetatva.com/collections/${category}`,
+      canonical: `https://fiveetatv.com/collections/${category}`,
     },
   };
 }

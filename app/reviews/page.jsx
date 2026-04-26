@@ -125,7 +125,7 @@ export default function ReviewsPage() {
               What Our <span className="font-display italic text-accent">Community</span> Says
             </h1>
             <p className="text-lg text-slate-500 font-light">
-              Real stories from real people who have transformed their wellness journey with Fiveetatva.
+              Real stories from real people who have transformed their wellness journey with Fiveetatv.
             </p>
           </div>
 

@@ -25,18 +25,18 @@ const ProductStructuredData = ({ product }) => {
     "image": product.images,
     "brand": {
       "@type": "Brand",
-      "name": "Fiveetatva"
+      "name": "Fiveetatv"
     },
     "offers": {
       "@type": "Offer",
-      "url": `https://fiveetatva.com/product/${product.slug}`,
+      "url": `https://fiveetatv.com/product/${product.slug}`,
       "priceCurrency": "INR",
       "price": product.discountPrice || product.price,
       "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Fiveetatva"
+        "name": "Fiveetatv"
       }
     },
     "aggregateRating": {
@@ -184,8 +184,8 @@ export default function ProductDetails({ product, relatedProducts }) {
       image: product.images?.[0],
       slug: product.slug,
     }];
-    localStorage.setItem("fiveetatva-buy-now-items", JSON.stringify(buyNowItem));
-    localStorage.setItem("fiveetatva-buy-now-address", JSON.stringify(buyDetails));
+    localStorage.setItem("fiveetatv-buy-now-items", JSON.stringify(buyNowItem));
+    localStorage.setItem("fiveetatv-buy-now-address", JSON.stringify(buyDetails));
     setBuyNowOpen(false);
     router.push("/checkout");
   }

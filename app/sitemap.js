@@ -5,7 +5,7 @@ export default async function sitemap() {
   await connectDB();
   const products = await Product.find({ isVisible: true }).lean();
   
-  const baseUrl = "https://fiveetatva.com";
+  const baseUrl = "https://fiveetatv.com";
   
   const staticPages = [
     {

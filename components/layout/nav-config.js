@@ -32,7 +32,7 @@ export const PRODUCT_CATEGORIES = [
 ];
 
 export const SEARCH_PAGES = [
-  { href: "/about", title: "About Fiveetatva", description: "Brand philosophy and our wellness mission." },
+  { href: "/about", title: "About Fiveetatv", description: "Brand philosophy and our wellness mission." },
   { href: "/contact", title: "Contact", description: "Support, wholesale, and order help." },
   { href: "/privacy-policy", title: "Privacy Policy", description: "How we protect user data." },
   { href: "/terms", title: "Terms & Conditions", description: "Order and platform terms." },

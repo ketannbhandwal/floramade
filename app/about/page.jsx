@@ -83,12 +83,12 @@ export default function AboutPage() {
 
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-20 md:py-32 space-y-24">
           
-          {/* --- ABOUT FIVEETATVA --- */}
+          {/* --- ABOUT FIVEETATV --- */}
           <motion.section {...fadeUp} className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-light leading-tight">
-                  About Fiveetatva
+                  About Fiveetatv
                 </h2>
                 <div className="flex items-center gap-2 text-sm text-foreground/50">
                   <Globe size={14} />
@@ -97,10 +97,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-6 text-foreground/60 font-light text-base leading-relaxed">
                 <p>
-                  <span className="text-foreground font-medium">Fiveetatva</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Rahul Gour & Suraj Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
+                  <span className="text-foreground font-medium">Fiveetatv</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Rahul Gour & Suraj Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
                 </p>
                 <p>
-                  At Fiveetatva, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
+                  At Fiveetatv, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
                 </p>
                 <p>
                   We bridge the gap between traditional Ayurvedic wisdom and modern health needs by combining authentic formulations with rigorous scientific standardization. Every product is crafted with intention, using ethically sourced botanicals and time-tested recipes from classical Ayurvedic texts.

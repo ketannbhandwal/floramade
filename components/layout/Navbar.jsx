@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown, LogOut, Leaf, Phone } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X, Search, LayoutDashboard, Heart, ChevronDown, LogOut, Leaf, Phone, Star } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { NAV_LINKS, PRODUCT_CATEGORIES } from "./nav-config";
@@ -65,6 +65,11 @@ export default function Navbar() {
 
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -131,7 +136,7 @@ export default function Navbar() {
                 <Link href="/">
                   <Image
                     src="/assets/logo.png"
-                    alt="Fiveetatva"
+                    alt="Fiveetatv"
                     width={90}
                     height={90}
                     className="h-9 md:h-12 w-auto object-contain cursor-pointer transition-all duration-300"
@@ -166,7 +171,7 @@ export default function Navbar() {
                   <Search size={18} strokeWidth={1.5} />
                 </Link>
 
-                {user?.role === 'admin' && (
+                {mounted && user?.role === 'admin' && (
                   <Link href="/admin" className="hidden md:flex p-2 rounded-full hover:bg-black/5">
                     <LayoutDashboard size={18} strokeWidth={1.5} />
                   </Link>
@@ -178,7 +183,7 @@ export default function Navbar() {
 
                 <Link href="/cart" className="relative p-2 rounded-full hover:bg-black/5">
                   <ShoppingBag size={18} strokeWidth={1.5} />
-                  {cartItems.length > 0 && (
+                  {mounted && cartItems.length > 0 && (
                     <span className="absolute top-0 right-0 h-4 w-4 rounded-full flex items-center justify-center text-[9px] font-light shadow-sm bg-accent text-white">
                       {cartItems.length}
                     </span>
@@ -274,44 +279,94 @@ export default function Navbar() {
                 <Link href="/" onClick={() => setOpenMenu(false)} className="text-3xl font-display font-light italic text-white">
                   Home
                 </Link>
-                {PRODUCT_CATEGORIES.map((category, i) => (
-                  <div key={category.label}>
-                    {category.hasDropdown ? (
-                      <div className="flex flex-col gap-4">
-                        <button onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)} className="text-2xl font-display text-white/90 flex items-center justify-between w-full">
-                          {category.label}
-                          <ChevronDown size={20} className={mobileDiabetesOpen ? 'rotate-180' : ''} />
-                        </button>
-                        <AnimatePresence>
-                          {mobileDiabetesOpen && (
-                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="pl-4 flex flex-col gap-4 overflow-hidden">
-                              {category.subLinks.map((sub) => (
-                                <Link key={sub.label} href={sub.href} onClick={() => setOpenMenu(false)}>
-                                  <p className="text-xl text-white/70">{sub.label}</p>
-                                  <p className="text-sm text-white/30 uppercase tracking-widest">{sub.description}</p>
-                                </Link>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+
+                <div className="space-y-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Categories</p>
+                  <div className="flex flex-col gap-6">
+                    {PRODUCT_CATEGORIES.map((category) => (
+                      <div key={category.label}>
+                        {category.hasDropdown ? (
+                          <div className="flex flex-col gap-4">
+                            <button onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)} className="text-2xl font-display text-white/90 flex items-center justify-between w-full">
+                              {category.label}
+                              <ChevronDown size={20} className={mobileDiabetesOpen ? 'rotate-180' : ''} />
+                            </button>
+                            <AnimatePresence>
+                              {mobileDiabetesOpen && (
+                                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="pl-4 flex flex-col gap-4 overflow-hidden">
+                                  {category.subLinks.map((sub) => (
+                                    <Link key={sub.label} href={sub.href} onClick={() => setOpenMenu(false)}>
+                                      <p className="text-xl text-white/70">{sub.label}</p>
+                                      <p className="text-sm text-white/30 uppercase tracking-widest">{sub.description}</p>
+                                    </Link>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        ) : (
+                          <Link href={category.href} onClick={() => setOpenMenu(false)} className="text-2xl font-display text-white/90">
+                            {category.label}
+                          </Link>
+                        )}
                       </div>
-                    ) : (
-                      <Link href={category.href} onClick={() => setOpenMenu(false)} className="text-2xl font-display text-white/90">
-                        {category.label}
-                      </Link>
-                    )}
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <div className="space-y-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Pages</p>
+                  <div className="flex flex-col gap-6">
+                    {NAV_LINKS_LIST.filter(link => link.label !== "Home").map((link) => (
+                      <Link 
+                        key={link.label} 
+                        href={link.href} 
+                        onClick={() => setOpenMenu(false)}
+                        className="text-2xl font-display text-white/90 flex items-center gap-3"
+                      >
+                        {link.label === "Wishlist" && <Heart size={20} className="text-primary" />}
+                        {link.label === "Reviews" && <Star size={20} className="text-primary" />}
+                        {link.label}
+                      </Link>
+                    ))}
+                    <Link href="/policy" onClick={() => setOpenMenu(false)} className="text-2xl font-display text-white/90">
+                      Our Policies
+                    </Link>
+                  </div>
+                </div>
               </nav>
             </div>
 
-            <div className="p-8 border-t border-white/10 flex flex-col gap-6">
+            <div className="p-8 border-t border-white/10 flex flex-col gap-6 bg-[#24342C]">
               <div className="flex flex-col gap-4">
-                <Link href="/account" onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3"><UserRound size={20} /> My Account</Link>
-                <Link href="/cart" onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3"><ShoppingBag size={20} /> My Cart ({cartItems.length})</Link>
-                {user && <button onClick={() => { setOpenMenu(false); logout(); router.push("/"); }} className="text-xl flex items-center gap-3 text-red-400"><LogOut size={20} /> Logout</button>}
+                <Link href={mounted && user ? "/account" : "/login"} onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3">
+                  <UserRound size={20} /> {mounted && user ? "My Account" : "Login / Register"}
+                </Link>
+                <Link href="/cart" onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3">
+                  <ShoppingBag size={20} /> My Cart ({mounted ? cartItems.length : 0})
+                </Link>
+                {mounted && user && (
+                  <button 
+                    onClick={() => { setOpenMenu(false); logout(); router.push("/"); }} 
+                    className="text-xl flex items-center gap-3 text-red-400"
+                  >
+                    <LogOut size={20} /> Logout
+                  </button>
+                )}
               </div>
-              <p className="text-xs text-white/40">© 2026 Fiveetatv</p>
+              
+              <div className="flex items-center gap-6 pt-2">
+                <a href="https://wa.me/919318445297" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+                  <FaWhatsapp size={20} />
+                </a>
+                <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+                  <FaInstagram size={20} />
+                </a>
+                <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+                  <FaFacebookF size={20} />
+                </a>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-white/20">© {new Date().getFullYear()} Fiveetatv Ayurveda</p>
             </div>
           </motion.div>
         )}

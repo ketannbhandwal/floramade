@@ -41,7 +41,7 @@ export default function Story() {
             
             <div className="space-y-6 text-slate-700 text-sm md:text-base leading-relaxed font-light">
               <p>
-                At Fiveetatva, our mission is simple: to make better health
+                At Fiveetatv, our mission is simple: to make better health
                 accessible to everyone. Inspired by the age-old wisdom of
                 Ayurveda, we've combined nature's finest ingredients with
                 modern science to create supplements you can trust.

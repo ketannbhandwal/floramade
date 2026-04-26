@@ -38,16 +38,16 @@ export async function generateMetadata({ params }) {
   
   if (!product) {
     return {
-      title: "Product Not Found | Fiveetatva",
+      title: "Product Not Found | Fiveetatv",
     };
   }
 
   return {
-    title: `${product.name} | Fiveetatva`,
-    description: `${product.description} - Natural Ayurvedic product by Fiveetatva. ${product.benefits?.join(', ')}. 100% natural, lab-tested formulation.`,
+    title: `${product.name} | Fiveetatv`,
+    description: `${product.description} - Natural Ayurvedic product by Fiveetatv. ${product.benefits?.join(', ')}. 100% natural, lab-tested formulation.`,
     keywords: [
       product.name,
-      "Fiveetatva",
+      "Fiveetatv",
       "Ayurvedic products",
       "herbal supplements",
       "natural wellness",
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       type: "website",
       locale: "en_IN",
-      url: `https://fiveetatva.com/product/${slug}`,
+      url: `https://fiveetatv.com/product/${slug}`,
       title: product.name,
       description: product.description,
       images: product.images?.map(img => ({
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }) {
       images: product.images || [],
     },
     alternates: {
-      canonical: `https://fiveetatva.com/product/${slug}`,
+      canonical: `https://fiveetatv.com/product/${slug}`,
     },
   };
 }
