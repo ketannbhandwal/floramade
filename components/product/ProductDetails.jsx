@@ -544,6 +544,58 @@ export default function ProductDetails({ product, relatedProducts }) {
         </div>
       </section>
 
+      {/* PRODUCT FORMULA SECTION (INFOGRAPHIC) */}
+      {product.formulaimage && (
+        <section className="py-20 md:py-32 bg-white overflow-hidden border-y border-slate-50">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div 
+              {...fadeUp}
+              className="text-center space-y-6 mb-16 md:mb-24"
+            >
+              <span className="text-accent font-bold uppercase tracking-[0.4em] text-[10px] md:text-xs opacity-60">The Fiveetatv Way</span>
+              <h2 className="text-4xl md:text-7xl font-light text-slate-900 leading-tight">
+                Your Formula for <span className="font-display italic text-accent block md:inline">
+                  {product.category === 'diabetes' ? 'Balanced Blood Sugar' : 
+                   product.category === 'digestion' ? 'Healthy Digestion' : 
+                   'Better Health'}
+                </span>
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full"
+            >
+              {/* Ultra-clean presentation: No borders, just pure content with soft depth */}
+              <div className="relative w-full overflow-hidden">
+                <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[2.8/1]">
+                  <Image 
+                    src={product.formulaimage} 
+                    alt="Product Formula Infographic" 
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              {...fadeUp}
+              className="mt-16 md:mt-24 text-center"
+            >
+              <div className="w-16 h-px bg-accent/30 mx-auto mb-8" />
+              <p className="text-slate-500 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed italic">
+                "Our holistic approach ensures that your journey towards wellness is balanced, natural, and sustainable."
+              </p>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       <CertificateSlider />
 
       {/* INGREDIENTS WITH IMAGES */}

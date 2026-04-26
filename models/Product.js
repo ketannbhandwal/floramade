@@ -37,6 +37,7 @@ const ProductSchema = new Schema(
       },
     ],
     images: [{ type: String }],
+    formulaimage: { type: String },
     videoUrl: { type: String },
     rating: { type: Number, default: 4.5 },
     reviewsCount: { type: Number, default: 0 },
