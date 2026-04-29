@@ -24,10 +24,6 @@ export const PRODUCT_CATEGORIES = [
   {
     label: "Digestive Health",
     href: "/product/paachan-sathi-powder"
-  },
-  {
-    label: "Digestive Capsules",
-    href: "/product/madhucurex-capsules"
   }
 ];
 

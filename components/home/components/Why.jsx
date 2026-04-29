@@ -26,14 +26,14 @@ function Why() {
             {/* Decorative Leaves */}
             <FloatingLeaf 
                 type="branch" 
-                className="w-56 h-56 md:w-80 md:h-80 -bottom-20 -left-20 opacity-30 rotate-[60deg]" 
+                className="w-56 h-56 md:w-80 md:h-80 -bottom-20 -left-20 opacity-25 rotate-[60deg]" 
                 delay={0.2} 
                 parallaxSpeed={70} 
                 blur
             />
             <FloatingLeaf 
                 type="single" 
-                className="w-16 h-16 md:w-20 md:h-20 top-20 right-10 opacity-60 rotate-[-15deg]" 
+                className="w-16 h-16 md:w-20 md:h-20 top-20 right-10 opacity-45 rotate-[-15deg]" 
                 delay={0.6} 
                 parallaxSpeed={-40} 
             />
@@ -68,8 +68,7 @@ function Why() {
                         </AnimatePresence>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <div className="absolute bottom-8 left-8 text-white">
-                            <span className="text-xs font-bold uppercase tracking-[0.2em] bg-white/20 px-3 py-1 rounded-full backdrop-blur-md">Since 2024</span>
-                            <p className="mt-4 text-xl font-light"> Balanced Health, Limitless Living</p>
+                            <p className="text-xl font-light">Balanced Health, Limitless Living</p>
                         </div>
                     </div>
                 </motion.div>

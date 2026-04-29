@@ -276,28 +276,28 @@ export default function Navbar() {
 
             <div className="flex-1 overflow-y-auto px-6 py-8">
               <nav className="flex flex-col gap-8">
-                <Link href="/" onClick={() => setOpenMenu(false)} className="text-3xl font-display font-light italic text-white">
+                <Link href="/" onClick={() => setOpenMenu(false)} className="text-xl font-display font-light italic text-white">
                   Home
                 </Link>
 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Categories</p>
-                  <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-4">
                     {PRODUCT_CATEGORIES.map((category) => (
                       <div key={category.label}>
                         {category.hasDropdown ? (
-                          <div className="flex flex-col gap-4">
-                            <button onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)} className="text-2xl font-display text-white/90 flex items-center justify-between w-full">
+                          <div className="flex flex-col gap-3">
+                            <button onClick={() => setMobileDiabetesOpen(!mobileDiabetesOpen)} className="text-lg font-display text-white/90 flex items-center justify-between w-full">
                               {category.label}
-                              <ChevronDown size={20} className={mobileDiabetesOpen ? 'rotate-180' : ''} />
+                              <ChevronDown size={16} className={mobileDiabetesOpen ? 'rotate-180' : ''} />
                             </button>
                             <AnimatePresence>
                               {mobileDiabetesOpen && (
-                                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="pl-4 flex flex-col gap-4 overflow-hidden">
+                                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="pl-4 flex flex-col gap-3 overflow-hidden">
                                   {category.subLinks.map((sub) => (
                                     <Link key={sub.label} href={sub.href} onClick={() => setOpenMenu(false)}>
-                                      <p className="text-xl text-white/70">{sub.label}</p>
-                                      <p className="text-sm text-white/30 uppercase tracking-widest">{sub.description}</p>
+                                      <p className="text-base text-white/70">{sub.label}</p>
+                                      <p className="text-xs text-white/30 uppercase tracking-widest">{sub.description}</p>
                                     </Link>
                                   ))}
                                 </motion.div>
@@ -305,7 +305,7 @@ export default function Navbar() {
                             </AnimatePresence>
                           </div>
                         ) : (
-                          <Link href={category.href} onClick={() => setOpenMenu(false)} className="text-2xl font-display text-white/90">
+                          <Link href={category.href} onClick={() => setOpenMenu(false)} className="text-lg font-display text-white/90">
                             {category.label}
                           </Link>
                         )}
@@ -314,22 +314,22 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Pages</p>
-                  <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-4">
                     {NAV_LINKS_LIST.filter(link => link.label !== "Home").map((link) => (
                       <Link 
                         key={link.label} 
                         href={link.href} 
                         onClick={() => setOpenMenu(false)}
-                        className="text-2xl font-display text-white/90 flex items-center gap-3"
+                        className="text-lg font-display text-white/90 flex items-center gap-3"
                       >
-                        {link.label === "Wishlist" && <Heart size={20} className="text-primary" />}
-                        {link.label === "Reviews" && <Star size={20} className="text-primary" />}
+                        {link.label === "Wishlist" && <Heart size={16} className="text-primary" />}
+                        {link.label === "Reviews" && <Star size={16} className="text-primary" />}
                         {link.label}
                       </Link>
                     ))}
-                    <Link href="/policy" onClick={() => setOpenMenu(false)} className="text-2xl font-display text-white/90">
+                    <Link href="/policy" onClick={() => setOpenMenu(false)} className="text-lg font-display text-white/90">
                       Our Policies
                     </Link>
                   </div>
@@ -337,20 +337,20 @@ export default function Navbar() {
               </nav>
             </div>
 
-            <div className="p-8 border-t border-white/10 flex flex-col gap-6 bg-[#24342C]">
-              <div className="flex flex-col gap-4">
-                <Link href={mounted && user ? "/account" : "/login"} onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3">
-                  <UserRound size={20} /> {mounted && user ? "My Account" : "Login / Register"}
+            <div className="p-8 border-t border-white/10 flex flex-col gap-4 bg-[#24342C]">
+              <div className="flex flex-col gap-3">
+                <Link href={mounted && user ? "/account" : "/login"} onClick={() => setOpenMenu(false)} className="text-base flex items-center gap-3">
+                  <UserRound size={18} /> {mounted && user ? "My Account" : "Login / Register"}
                 </Link>
-                <Link href="/cart" onClick={() => setOpenMenu(false)} className="text-xl flex items-center gap-3">
-                  <ShoppingBag size={20} /> My Cart ({mounted ? cartItems.length : 0})
+                <Link href="/cart" onClick={() => setOpenMenu(false)} className="text-base flex items-center gap-3">
+                  <ShoppingBag size={18} /> My Cart ({mounted ? cartItems.length : 0})
                 </Link>
                 {mounted && user && (
                   <button 
                     onClick={() => { setOpenMenu(false); logout(); router.push("/"); }} 
-                    className="text-xl flex items-center gap-3 text-red-400"
+                    className="text-base flex items-center gap-3 text-red-400"
                   >
-                    <LogOut size={20} /> Logout
+                    <LogOut size={18} /> Logout
                   </button>
                 )}
               </div>

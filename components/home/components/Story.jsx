@@ -18,13 +18,13 @@ export default function Story() {
       {/* Decorative Leaves */}
       <FloatingLeaf 
         type="single" 
-        className="w-16 h-16 md:w-20 md:h-20 top-10 right-[5%] opacity-40 rotate-[15deg]" 
+        className="w-16 h-16 md:w-20 md:h-20 top-10 right-[5%] opacity-30 rotate-[15deg]" 
         delay={0.2} 
         parallaxSpeed={40} 
       />
       <FloatingLeaf 
         type="double" 
-        className="w-24 h-24 md:w-32 md:h-32 bottom-0 left-[2%] opacity-20 rotate-[-45deg]" 
+        className="w-24 h-24 md:w-32 md:h-32 bottom-0 left-[2%] opacity-15 rotate-[-45deg]" 
         delay={0.5} 
         parallaxSpeed={-30} 
         blur

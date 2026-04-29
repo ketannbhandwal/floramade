@@ -2,10 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ShieldCheck, Leaf, Award, ArrowRight, CheckCircle2, Target, Eye, Droplets, Wind, Flame, Mountain, Globe } from "lucide-react";
+import { ShieldCheck, Leaf, Award, ArrowRight, CheckCircle2, Target, Eye, Globe } from "lucide-react";
 import Link from "next/link";
 import PageTransition from "@/components/ui/PageTransition";
-import Philosophy from "@/components/home/components/Philosophy";
 import Certificate from "@/components/home/components/Certificate";
 import FloatingLeaf from "@/components/ui/FloatingLeaf";
 
@@ -188,8 +187,7 @@ export default function AboutPage() {
             </div>
           </motion.section>
 
-          {/* --- PHILOSOPHY (5 ELEMENTS) --- */}
-          <Philosophy />
+          
 
           {/* --- QUALITY & TRUST --- */}
           <motion.section {...fadeUp} className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">

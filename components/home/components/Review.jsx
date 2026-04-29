@@ -48,83 +48,6 @@ const reviews = [
     img: "/review/14.jpeg",
     initials: "JB" 
   },
-  { 
-    name: "Mrs. Indra Devi", 
-    role: "Verified Customer", 
-    text: "Bahut effective aur natural hai. Doctor ne Ayurvedic support try karne ko bola tha, aur ye products game-changer nikle. Made in India hai pure ingredients ke saath, bahut accha lagta hai. Quality mein results dikhte hain.", 
-    img: "/review/13.jpeg",
-    initials: "ID" 
-  },
-  { 
-    name: "Mr. Amarnath", 
-    role: "Verified Customer", 
-    text: "Daily use ke liye great products hain. Consume karne mein easy hai aur 6 weeks use karne ke baad mera sugar level mein significant improvement dekha. Herbal blend comprehensive aur effective feel hota hai.", 
-    img: "/review/12.jpeg",
-    initials: "A" 
-  },
-  { 
-    name: "Mrs. Chanda Devi", 
-    role: "Verified Customer", 
-    text: "Good quality aur effective hai. Products ka natural taste pleasant hai. Isse use karne ke baad mere post-meal sugar spikes kam ho gaye hain. Ayurvedic formulation pe completely trust karta hoon.", 
-    img: "/review/11.jpeg",
-    initials: "CD" 
-  },
-  { 
-    name: "Rakesh Divakar", 
-    role: "Verified Customer", 
-    text: "Best Ayurvedic products maine use kiye hain. Traditional herbs ka combination metabolic health ke liye kaam karta hai. Made in India authentic ingredients ke saath - ye mujhe convince kiya try karne ko, aur ye deliver bhi karta hai.", 
-    img: "/review/10.jpeg",
-    initials: "RD" 
-  },
-  { 
-    name: "Mr. Rajneesh", 
-    role: "Verified Customer", 
-    text: "Digestion ke liye excellent hai. Ab bloating nahi hoti! Digestive issues se years se struggle kar raha tha, aur ye products lifesaver nikle. Har meal ke baad lighter aur comfortable feel karta hoon.", 
-    img: "/review/9.jpeg",
-    initials: "R" 
-  },
-  { 
-    name: "Mr. Surender Kumar", 
-    role: "Verified Customer", 
-    text: "Acidity relief ke liye very effective hai. Pehle antacids pe depend karta tha, lekin ye products start karne ke baad acidity bahut kam ho gayi. Traditional Ayurvedic herbs se bana hai - digestive concerns walo ke liye must-have hai.", 
-    img: "/review/8.jpeg",
-    initials: "SK" 
-  },
-  { 
-    name: "Amarjit", 
-    role: "Verified Customer", 
-    text: "Best digestive products available hain. Taste mild aur pleasant hai, harsh nahi hai jaise kuch products. Herbal combination overall gut health ke liye perfect hai. Daily use ke liye highly recommend karta hoon.", 
-    img: "/review/7.jpeg",
-    initials: "A" 
-  },
-  { 
-    name: "Mrs. Sarita Devi", 
-    role: "Verified Customer", 
-    text: "Amazing results! Pehle bahut Ayurvedic products try kiye, lekin Fiveetatv standout hai. Quality exceptional hai aur results khud bolte hain. Meri family aur main ab regular customers hain.", 
-    img: "/review/6.jpeg",
-    initials: "SD" 
-  },
-  { 
-    name: "Mr. Nand Kishor Poddar", 
-    role: "Verified Customer", 
-    text: "Truly authentic Ayurvedic formulation hai. Ingredients selection mein detail ka attention evident hai. Ye products ne mujhe naturally balanced health maintain karne mein help kiya hai. Genuine Ayurvedic solutions dhundhne walo ko highly recommend karta hoon.", 
-    img: "/review/5.jpeg",
-    initials: "NKP" 
-  },
-  { 
-    name: "Virender", 
-    role: "Verified Customer", 
-    text: "Outstanding quality aur effectiveness hai. Products exactly wahi hain jo main dhundh raha tha - natural, potent, aur care se bane. Delivery prompt tha aur packaging excellent hai. Definitely order karunga again.", 
-    img: "/review/3.jpeg",
-    initials: "V" 
-  },
-  {
-    name: "Mrs Jaykumari",
-    role: "Verified Customer",
-    text: "Fiveetatv products ne meri life badal di hai. Natural aur effective solution dhundhne walo ke liye ye best choice hai. Highly recommended!",
-    img: "/review/17.jpeg",
-    initials: "JK"
-  }
 ];
 
 const Review = () => {
@@ -141,21 +64,18 @@ const Review = () => {
 
   const variants = {
     enter: (direction) => ({
-      x: direction > 0 ? 40 : -40,
+      x: direction > 0 ? 20 : -20,
       opacity: 0,
-      filter: "blur(12px)",
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      filter: "blur(0px)",
     },
     exit: (direction) => ({
       zIndex: 0,
-      x: direction < 0 ? 40 : -40,
+      x: direction < 0 ? 20 : -20,
       opacity: 0,
-      filter: "blur(12px)",
     })
   };
 
@@ -168,13 +88,13 @@ const Review = () => {
       {/* Decorative Leaves */}
       <FloatingLeaf 
         type="single" 
-        className="w-16 h-16 md:w-24 md:h-24 top-20 left-[8%] opacity-60 rotate-[-25deg]" 
+        className="w-16 h-16 md:w-24 md:h-24 top-20 left-[8%] opacity-45 rotate-[-25deg]" 
         delay={0.2} 
         parallaxSpeed={40} 
       />
       <FloatingLeaf 
         type="branch" 
-        className="w-48 h-48 md:w-64 md:h-64 bottom-10 -right-16 opacity-30 rotate-[100deg]" 
+        className="w-48 h-48 md:w-64 md:h-64 bottom-10 -right-16 opacity-25 rotate-[100deg]" 
         delay={0.5} 
         parallaxSpeed={-50} 
         blur
@@ -210,7 +130,7 @@ const Review = () => {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
               className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
               {reviews.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage).map((rev, index) => (
