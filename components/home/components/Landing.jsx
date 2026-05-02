@@ -45,6 +45,7 @@ export default function Landing() {
                   src={`${slide.desktop}?v=2`} 
                   alt={slide.title} 
                   fill 
+                  quality={95}
                   className="object-cover"
                   sizes="100vw"
                   priority={index === 0}

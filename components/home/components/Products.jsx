@@ -1,15 +1,26 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import ProductCard from '@/components/product/ProductCard';
+import ProductSkeleton from '@/components/product/ProductSkeleton';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLenis } from '@studio-freight/react-lenis';
 import FloatingLeaf from '@/components/ui/FloatingLeaf';
 
 function Products({ products = [] }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, [products]);
+
   return (
     <section id="products" className="py-16 md:py-20 lg:py-24 px-4 sm:px-6 relative overflow-hidden">
       <FloatingLeaf 
@@ -41,7 +52,13 @@ function Products({ products = [] }) {
         </motion.div>
 
         <div className="grid gap-8 md:gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {products.length > 0 ? (
+          {isLoading ? (
+            <>
+              <ProductSkeleton />
+              <ProductSkeleton />
+              <ProductSkeleton />
+            </>
+          ) : products.length > 0 ? (
             products.slice(0, 3).map((p, i) => (
               <motion.div 
                 key={p._id || i} 
@@ -71,7 +88,7 @@ function Products({ products = [] }) {
           className="flex justify-center pt-4"
         >
           <Link 
-            href="/collections" 
+            href="/collection" 
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#658518] text-white rounded-lg font-medium text-sm hover:bg-[#546e14] transition-all shadow-lg shadow-green-900/10 active:scale-95 group"
           >
             View All Products

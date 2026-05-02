@@ -1,16 +1,34 @@
 "use client";
 
+import { memo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
 import { ShoppingBag, Heart, ArrowUpRight } from "lucide-react";
 
-export default function ProductCard({ product }) {
+const BLUR_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k=";
+
+function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+
+  const handleWishlist = useCallback((e) => {
+    e.preventDefault();
+    if (isInWishlist(product._id)) {
+      removeFromWishlist(product._id);
+      toast.success("Removed");
+    } else {
+      addToWishlist(product);
+      toast.success("Saved to favorites");
+    }
+  }, [product._id, isInWishlist, addToWishlist, removeFromWishlist]);
+
+  const handleAddToCart = useCallback(() => {
+    addToCart(product);
+    toast.success("Added to Bag");
+  }, [product, addToCart]);
 
   return (
     <div className="group flex flex-col w-full transition-all duration-500">
@@ -22,6 +40,9 @@ export default function ProductCard({ product }) {
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
+            quality={95}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k="
             className="object-cover transition-transform duration-1000 group-hover:scale-105"
           />
         </Link>
@@ -33,11 +54,7 @@ export default function ProductCard({ product }) {
           </span>
           
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              isInWishlist(product._id) ? removeFromWishlist(product._id) : addToWishlist(product);
-              toast.success(isInWishlist(product._id) ? "Removed" : "Saved to favorites");
-            }}
+            onClick={handleWishlist}
             className="pointer-events-auto w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm active:scale-90 transition-transform"
           >
             <Heart 
@@ -50,10 +67,7 @@ export default function ProductCard({ product }) {
         {/* Permanent Quick Add - Minimalist Floating Pill */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4">
           <button
-            onClick={() => {
-              addToCart(product);
-              toast.success("Added to Bag");
-            }}
+            onClick={handleAddToCart}
             className="w-full max-w-[160px] py-3 bg-black/90 backdrop-blur-md text-white rounded-full flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all"
           >
             <ShoppingBag size={14} strokeWidth={2.5} />
@@ -91,3 +105,5 @@ export default function ProductCard({ product }) {
     </div>
   );
 }
+
+export default memo(ProductCard);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award, ChevronLeft, ChevronRight, Phone } from "lucide-react";
+import { CheckCircle2, Leaf, ShieldCheck, ShoppingBag, Star, Zap, Plus, Minus, ArrowRight, Quote, Heart, Award, ChevronLeft, ChevronRight, Phone, Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
@@ -74,7 +74,7 @@ const fadeUp = {
 };
 
 export default function ProductDetails({ product, relatedProducts }) {
-  const [activeImg, setActiveImg] = useState(product.images[0]);
+  const [activeImg, setActiveImg] = useState(product.slug === "madhucurex-powder" && "/productvideo/1.mp4" || product.images[0]);
   const [isHovering, setIsHovering] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -84,9 +84,55 @@ export default function ProductDetails({ product, relatedProducts }) {
   const [consultationOpen, setConsultationOpen] = useState(false);
   const [reviewData, setReviewData] = useState({ name: "", rating: 5, comment: "", imageFile: null });
   const [uploading, setUploading] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef(null);
+  const videoContainerRef = useRef(null);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
+
+  const videoSrc = product.slug === "madhucurex-powder" ? "/productvideo/1.mp4" : null;
+
+  function toggleVideo() {
+    if (videoRef.current) {
+      if (videoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setVideoPlaying(!videoPlaying);
+    }
+  }
+
+  function handleVideoTimeUpdate() {
+    if (videoRef.current && videoRef.current.duration) {
+      setVideoProgress((videoRef.current.currentTime / videoRef.current.duration) * 100);
+    }
+  }
+
+  function handleVideoSeek(e) {
+    if (videoRef.current) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      videoRef.current.currentTime = percent * videoRef.current.duration;
+      setVideoProgress(percent * 100);
+    }
+  }
+
+  function toggleMute() {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  }
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 
   function handleAddToCart() {
     for (let i = 0; i < quantity; i++) {
@@ -249,33 +295,98 @@ export default function ProductDetails({ product, relatedProducts }) {
                 onMouseLeave={resetDrag}
                 onMouseMove={handleDragChange}
                 onMouseUp={() => setDragOffset(0)}
+                ref={videoContainerRef}
               >
-                <motion.div
-                  key={activeImg}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative w-full h-full"
-                >
-                  <Image 
-                    src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
-                    alt={product.name} 
-                    fill 
-                    className="object-contain select-none pointer-events-none p-2 sm:p-0" 
-                    priority 
-                  />
-                </motion.div>
+                {videoSrc && activeImg === videoSrc ? (
+                  <div className="relative w-full h-full">
+                    <video
+                      ref={videoRef}
+                      src={videoSrc}
+                      className="w-full h-full object-contain"
+                      onTimeUpdate={handleVideoTimeUpdate}
+                      onPlay={() => setVideoPlaying(true)}
+                      onPause={() => setVideoPlaying(false)}
+                      playsInline
+                    />
+                    
+                    <div className={`absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 ${videoPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
+                      <button 
+                        onClick={toggleVideo}
+                        className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+                      >
+                        {videoPlaying ? (
+                          <Pause size={32} className="text-slate-800 ml-1" />
+                        ) : (
+                          <Play size={32} className="text-slate-800 ml-1" />
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12">
+                      <div className="space-y-2">
+                        <div 
+                          className="h-1.5 bg-white/30 rounded-full cursor-pointer group"
+                          onClick={handleVideoSeek}
+                        >
+                          <div 
+                            className="h-full bg-accent rounded-full relative transition-all"
+                            style={{ width: `${videoProgress}%` }}
+                          >
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between text-white text-xs">
+                          <span>{videoRef.current ? formatTime(videoRef.current.currentTime) : '0:00'} / {videoRef.current ? formatTime(videoRef.current.duration) : '0:00'}</span>
+                          <div className="flex items-center gap-3">
+                            <button onClick={toggleMute} className="hover:text-accent transition-colors">
+                              {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                            </button>
+                            <button 
+                              onClick={() => videoRef.current?.requestFullscreen()}
+                              className="hover:text-accent transition-colors"
+                            >
+                              <Maximize size={18} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <motion.div
+                    key={activeImg}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image 
+                      src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
+                      alt={product.name} 
+                      fill 
+                      quality={95}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k="
+                      className="object-contain select-none pointer-events-none p-2 sm:p-0" 
+                      priority 
+                    />
+                  </motion.div>
+                )}
                 
                 {/* Mobile Arrows */}
-                {product.images?.length > 1 && (
+                {((product.images?.length > 1) || videoSrc) && (
                   <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20">
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        const images = product.images || [];
-                        const idx = images.indexOf(activeImg);
-                        const prevIdx = (idx <= 0) ? images.length - 1 : idx - 1;
-                        setActiveImg(images[prevIdx]);
+                        if (activeImg === videoSrc && product.images?.length > 0) {
+                          setActiveImg(product.images[product.images.length - 1]);
+                        } else {
+                          const images = product.images || [];
+                          const currentIdx = images.indexOf(activeImg);
+                          const prevIdx = currentIdx <= 0 ? images.length - 1 : currentIdx - 1;
+                          setActiveImg(images[prevIdx]);
+                        }
                       }}
                       className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
                     >
@@ -284,10 +395,14 @@ export default function ProductDetails({ product, relatedProducts }) {
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        const images = product.images || [];
-                        const idx = images.indexOf(activeImg);
-                        const nextIdx = (idx >= images.length - 1) ? 0 : idx + 1;
-                        setActiveImg(images[nextIdx]);
+                        if (activeImg === videoSrc && product.images?.length > 0) {
+                          setActiveImg(product.images[0]);
+                        } else {
+                          const images = product.images || [];
+                          const currentIdx = images.indexOf(activeImg);
+                          const nextIdx = currentIdx >= images.length - 1 ? 0 : currentIdx + 1;
+                          setActiveImg(images[nextIdx]);
+                        }
                       }}
                       className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
                     >
@@ -297,8 +412,15 @@ export default function ProductDetails({ product, relatedProducts }) {
                 )}
 
                 {/* Progress Indicators */}
-                {product.images?.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/5 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+                {((product.images?.length > 1) || videoSrc) && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                    {videoSrc && (
+                      <div 
+                        className={`text-[10px] font-medium transition-all duration-300 ${activeImg === videoSrc ? 'text-accent' : 'text-white/40'}`}
+                      >
+                        Video
+                      </div>
+                    )}
                     {product.images.map((img, i) => (
                       <div 
                         key={i} 
@@ -311,13 +433,24 @@ export default function ProductDetails({ product, relatedProducts }) {
               
               {/* Thumbnails */}
               <div className="flex gap-2 overflow-x-auto pb-4 px-1 no-scrollbar scroll-smooth snap-x max-w-full mx-auto justify-start sm:justify-center">
+                {videoSrc && (
+                  <button 
+                    onClick={() => setActiveImg(videoSrc)}
+                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === videoSrc ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
+                  >
+                    <video src={videoSrc} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <Play size={20} className="text-white" />
+                    </div>
+                  </button>
+                )}
                 {product.images.map((img, idx) => (
                   <button 
                     key={`${img}-${idx}`} 
                     onClick={() => setActiveImg(img)}
                     className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === img ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
                   >
-                    <Image src={img} alt={`Thumb ${idx}`} fill className="object-cover" />
+                    <Image src={img} alt={`Thumb ${idx}`} fill quality={85} placeholder="blur" blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k=" className="object-cover" />
                   </button>
                 ))}
               </div>
@@ -370,12 +503,19 @@ export default function ProductDetails({ product, relatedProducts }) {
 
               <div className="flex flex-col gap-1">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900">₹{product.discountPrice}</span>
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">₹{product.discountPrice}</span>
                   {product.price > product.discountPrice && (
-                    <span className="text-lg sm:text-xl text-slate-300 line-through">₹{product.price}</span>
+                    <span className="text-base sm:text-lg text-slate-400 line-through decoration-2">₹{product.price}</span>
                   )}
                 </div>
-                <p className="text-xs text-green-600 font-medium">Save ₹{product.price - product.discountPrice} Today</p>
+                <div className="flex items-center gap-2">
+                  {product.price > product.discountPrice && (
+                    <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded">
+                      {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% off
+                    </span>
+                  )}
+                  <p className="text-xs text-green-600 font-medium">Save ₹{product.price - product.discountPrice}</p>
+                </div>
               </div>
 
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-light">
@@ -384,17 +524,31 @@ export default function ProductDetails({ product, relatedProducts }) {
 
               {/* FEATURES GRID */}
               <div className="grid grid-cols-2 gap-3 py-6 border-y border-slate-100">
-                {[
-                  { icon: "/feature/1.svg", label: "Reduces Gas and Bloating" },
-                  { icon: "/feature/2.svg", label: "Supports Gut Health" },
-                  { icon: "/feature/3.svg", label: "Relieves Constipation" },
-                  { icon: "/feature/4.svg", label: "Promotes Healthy Digestion" }
+                {product.category === 'diabetes' ? [
+                  { icon: "/feature/5svg.svg", label: "Balances Sugar Levels*" },
+                  { icon: "/feature/6.svg", label: "Enhances Insulin Sensitivity*" },
+                  { icon: "/feature/7.svg", label: "Reduces Sugar Cravings*" },
+                  { icon: "/feature/8.svg", label: "Improves Heart Health*" }
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3">
-                    <div className="relative h-9 w-9 flex-shrink-0 bg-accent/5 rounded-lg p-1.5">
-                      <Image src={item.icon} alt={item.label} fill className="object-contain" />
+                    <div className="relative h-12 w-12 flex-shrink-0 rounded-full bg-white shadow-sm border border-slate-100 p-2">
+                      <Image src={item.icon} alt={item.label} fill className="object-contain p-1" />
                     </div>
-                    <span className="text-[10px] sm:text-xs uppercase tracking-wider font-bold text-slate-700 leading-tight">
+                    <span className="text-[10px] sm:text-xs tracking-wider font-semibold text-slate-700 leading-tight w-24">
+                      {item.label}
+                    </span>
+                  </div>
+                )) : [
+                  { icon: "/feature/1.svg", label: "Reduces Gas and Bloating*" },
+                  { icon: "/feature/2.svg", label: "Supports Gut Health*" },
+                  { icon: "/feature/3.svg", label: "Relieves Constipation*" },
+                  { icon: "/feature/4.svg", label: "Promotes Healthy Digestion*" }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="relative h-12 w-12 flex-shrink-0 rounded-full bg-white shadow-sm border border-slate-100 p-2">
+                      <Image src={item.icon} alt={item.label} fill className="object-contain p-1" />
+                    </div>
+                    <span className="text-[10px] sm:text-xs tracking-wider font-semibold text-slate-700 leading-tight w-24">
                       {item.label}
                     </span>
                   </div>
@@ -519,11 +673,19 @@ export default function ProductDetails({ product, relatedProducts }) {
             <h2 className="text-3xl md:text-5xl font-light italic font-display text-secondary">How to Consume</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
-            {[
+            {(product.slug === "paachan-sathi-powder" ? [
+              { img: "/consume/pachansathipowder1.jpeg", step: "Step 01" },
+              { img: "/consume/pachansathipowder2.jpeg", step: "Step 02" },
+              { img: "/consume/pachansathipowder3.jpeg", step: "Step 03" }
+            ] : product.slug === "madhucurex-powder" || product.slug === "madhucurex-capsules" ? [
+              { img: "/consume/powder1.jpeg", step: "Step 01" },
+              { img: "/consume/powder2.jpeg", step: "Step 02" },
+              { img: "/consume/powder3.jpeg", step: "Step 03" }
+            ] : [
               { img: "/consume/1.webp", step: "Step 01" },
               { img: "/consume/2.webp", step: "Step 02" },
               { img: "/consume/3.webp", step: "Step 03" }
-            ].map((item, i) => (
+            ]).map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.95 }}

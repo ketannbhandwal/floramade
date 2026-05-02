@@ -18,7 +18,7 @@ export default function Footer() {
               Premium Ayurvedic wellness inspired by the five natural elements. Crafted with intention for balanced living.
             </p>
             <div className="flex gap-2 md:gap-3 pt-2">
-              <a href="#" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
+              <a href="https://www.instagram.com/fiveetatvofficial?igsh=MTl4Y3p2MHJqZTRiOA==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>

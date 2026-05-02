@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ProductCard from "@/components/product/ProductCard";
+import { ProductGridSkeleton } from "@/components/product/ProductSkeleton";
 import { ArrowRight } from "lucide-react";
 
 const fadeUp = {
@@ -13,6 +15,16 @@ const fadeUp = {
 };
 
 export default function CollectionContent({ products, category }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, [products]);
+
   return (
     <div className="min-h-screen bg-background text-foreground w-full pt-24 md:pt-32 pb-20">
       <div className="max-w-[1200px] mx-auto px-6 md:px-12">
@@ -32,7 +44,9 @@ export default function CollectionContent({ products, category }) {
         </motion.div>
 
         {/* Products Grid */}
-        {products && products.length > 0 ? (
+        {isLoading ? (
+          <ProductGridSkeleton count={6} />
+        ) : products && products.length > 0 ? (
           <div className="grid gap-8 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product, i) => (
               <motion.div

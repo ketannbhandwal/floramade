@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Eye, Lock, FileText, Database, ShieldAlert } from "lucide-react";
 import PolicyCTA from "@/components/policy/PolicyCTA";
 import CouponSection from "@/components/policy/CouponSection";
 
@@ -25,91 +24,106 @@ export default function PrivacyPolicyPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#7A9E7E]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
-      {/* Data Collection - Section (Light) */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-light italic font-display text-[#2F3E36]">Information We Collect</h2>
-                <p className="text-[#2F3E36]/60 font-light leading-relaxed">
-                  To provide you with a premium Ayurvedic experience, we collect essential information during your journey with us.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                {[
-                  { icon: FileText, title: "Personal Details", text: "Name, email address, and phone number for account creation and communication." },
-                  { icon: Database, title: "Order Information", text: "Shipping address and purchase history to fulfill your wellness requirements." },
-                  { icon: Eye, title: "Usage Data", text: "Browsing behavior and preferences to personalize your experience on our website." }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex gap-6 items-start">
-                    <div className="h-10 w-10 rounded-full bg-[#7A9E7E]/10 flex items-center justify-center flex-shrink-0 mt-1">
-                      <item.icon size={18} className="text-[#7A9E7E]" />
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-medium text-[#2F3E36]">{item.title}</h4>
-                      <p className="text-sm text-[#2F3E36]/50 font-light">{item.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative aspect-square rounded-[3rem] overflow-hidden bg-[#2F3E36] flex items-center justify-center p-12 text-center"
-            >
-              <div className="space-y-8 relative z-10">
-                <ShieldCheck size={100} className="mx-auto text-[#7A9E7E]/30" />
-                <h3 className="text-3xl font-light italic text-white/90">Data Protection</h3>
-                <p className="text-white/40 font-light text-sm max-w-xs mx-auto uppercase tracking-widest">Industry standard encryption</p>
-              </div>
-            </motion.div>
+      {/* Content Section */}
+      <section className="py-16 px-6">
+        <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] shadow-sm border border-[#2F3E36]/5 text-[#2F3E36]/80 font-light leading-relaxed space-y-8">
+          
+          <div className="space-y-4">
+            <h2 className="text-3xl font-display text-[#2F3E36]">Privacy Policy</h2>
+            <p className="font-medium">Effective Date: 17-April-2026</p>
+            <p>At Fiveetatv, we value your trust and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you visit or make a purchase from our website.</p>
           </div>
-        </div>
-      </section>
 
-      {/* Security - Section (Dark) */}
-      <section className="py-24 px-6 bg-[#2F3E36] text-white">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: Lock,
-              title: "Payment Security",
-              desc: "We do not store your credit card or payment information. All transactions are handled via secure, PCI-compliant payment gateways."
-            },
-            {
-              icon: ShieldAlert,
-              title: "Third-Party Sharing",
-              desc: "We never sell your data. Information is only shared with trusted logistics partners to ensure your order reaches you safely."
-            },
-            {
-              icon: Eye,
-              title: "Transparency",
-              desc: "You have the right to access, modify, or request deletion of your personal data at any time through your account settings."
-            }
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="p-10 rounded-[2.5rem] border border-white/10 bg-white/5 space-y-6"
-            >
-              <item.icon size={28} className="text-[#7A9E7E]" />
-              <h3 className="text-2xl font-light font-display">{item.title}</h3>
-              <p className="text-sm text-white/50 font-light leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Information We Collect</h3>
+            <p>When you use our website, we may collect the following information:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Personal details such as your name, email address, phone number, and shipping address</li>
+              <li>Order details and purchase history</li>
+              <li>Payment information (processed securely through third-party payment gateways)</li>
+              <li>Technical data such as IP address, browser type, device information, and cookies</li>
+            </ul>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">How We Use Your Information</h3>
+            <p>We use your information for the following purposes:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>To process and deliver your orders</li>
+              <li>To communicate with you regarding orders, updates, and support</li>
+              <li>To improve our website, products, and customer experience</li>
+              <li>To send promotional offers and updates, where you have opted to receive them</li>
+              <li>To prevent fraud and ensure secure transactions</li>
+            </ul>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Sharing of Information</h3>
+            <p>We do not sell, rent, or trade your personal information. However, we may share your data with trusted third parties, including:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Payment gateway providers for secure transactions</li>
+              <li>Shipping and logistics partners for order delivery</li>
+              <li>Service providers who assist in operating our website</li>
+            </ul>
+            <p>These third parties are expected to handle your data securely and only for the intended purpose.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Data Security</h3>
+            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, loss, misuse, or alteration.</p>
+            <p>While we follow industry-standard security practices and work with trusted service providers, no method of transmission over the internet or electronic storage can be guaranteed to be completely secure.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Third-Party Services & Limitation of Liability</h3>
+            <p>Our website may use third-party services such as payment gateways, hosting providers, and logistics partners. While we work with trusted providers, Fiveetatv shall not be held responsible for any data breaches, losses, or unauthorized access arising from third-party systems or factors beyond our reasonable control.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Cookies</h3>
+            <p>Our website uses cookies to enhance your browsing experience and analyze website traffic. You can choose to disable cookies through your browser settings; however, this may affect certain functionalities of the website.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Access, update, or request deletion of your personal information</li>
+              <li>Opt out of receiving promotional communications at any time</li>
+            </ul>
+            <p>To exercise these rights, please contact us using the details below.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Third-Party Links</h3>
+            <p>Our website may contain links to external websites. We are not responsible for the privacy practices or content of such third-party websites.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Data Retention</h3>
+            <p>We will retain your personal information only for as long as necessary to fulfill the purposes outlined in this policy. After this period, your data will be securely deleted.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Children's Privacy</h3>
+            <p>Our website is not intended for children under 18 years of age. We do not knowingly collect personal information from individuals under 18.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Changes to This Policy</h3>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display text-[#2F3E36]">Contact Us</h3>
+            <p>If you have any questions or concerns regarding this Privacy Policy, please contact us:</p>
+            <p>
+              <strong>Email:</strong> xxxxxxxxxxxxxx.com<br />
+              <strong>Phone:</strong> +91-XXXXXXXXXX
+            </p>
+            <p>We will respond to your inquiry within 24-48 hours.</p>
+          </div>
+
         </div>
       </section>
 

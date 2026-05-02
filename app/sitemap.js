@@ -27,7 +27,7 @@ export default async function sitemap() {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/collections`,
+      url: `${baseUrl}/collection`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
