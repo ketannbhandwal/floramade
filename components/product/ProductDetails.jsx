@@ -74,7 +74,7 @@ const fadeUp = {
 };
 
 export default function ProductDetails({ product, relatedProducts }) {
-  const [activeImg, setActiveImg] = useState(product.slug === "madhucurex-powder" && "/productvideo/1.mp4" || product.images[0]);
+  const [activeImg, setActiveImg] = useState(product.videoUrl && product.images[0]);
   const [isHovering, setIsHovering] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -93,7 +93,7 @@ export default function ProductDetails({ product, relatedProducts }) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
 
-  const videoSrc = product.slug === "madhucurex-powder" ? "/productvideo/1.mp4" : null;
+  const videoSrc = product.videoUrl ? `https://player.vimeo.com/video/${product.videoUrl}` : null;
 
   function toggleVideo() {
     if (videoRef.current) {
@@ -299,58 +299,13 @@ export default function ProductDetails({ product, relatedProducts }) {
               >
                 {videoSrc && activeImg === videoSrc ? (
                   <div className="relative w-full h-full">
-                    <video
-                      ref={videoRef}
-                      src={videoSrc}
-                      className="w-full h-full object-contain"
-                      onTimeUpdate={handleVideoTimeUpdate}
-                      onPlay={() => setVideoPlaying(true)}
-                      onPause={() => setVideoPlaying(false)}
-                      playsInline
+                    <iframe
+                      src={`${videoSrc}?autoplay=0&byline=0&portrait=0&title=0`}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
                     />
-                    
-                    <div className={`absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 ${videoPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
-                      <button 
-                        onClick={toggleVideo}
-                        className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
-                      >
-                        {videoPlaying ? (
-                          <Pause size={32} className="text-slate-800 ml-1" />
-                        ) : (
-                          <Play size={32} className="text-slate-800 ml-1" />
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12">
-                      <div className="space-y-2">
-                        <div 
-                          className="h-1.5 bg-white/30 rounded-full cursor-pointer group"
-                          onClick={handleVideoSeek}
-                        >
-                          <div 
-                            className="h-full bg-accent rounded-full relative transition-all"
-                            style={{ width: `${videoProgress}%` }}
-                          >
-                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between text-white text-xs">
-                          <span>{videoRef.current ? formatTime(videoRef.current.currentTime) : '0:00'} / {videoRef.current ? formatTime(videoRef.current.duration) : '0:00'}</span>
-                          <div className="flex items-center gap-3">
-                            <button onClick={toggleMute} className="hover:text-accent transition-colors">
-                              {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                            </button>
-                            <button 
-                              onClick={() => videoRef.current?.requestFullscreen()}
-                              className="hover:text-accent transition-colors"
-                            >
-                              <Maximize size={18} />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 ) : (
                   <motion.div
@@ -438,7 +393,12 @@ export default function ProductDetails({ product, relatedProducts }) {
                     onClick={() => setActiveImg(videoSrc)}
                     className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === videoSrc ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
                   >
-                    <video src={videoSrc} className="w-full h-full object-cover" />
+                    <Image 
+                      src={`https://i.vimeocdn.com/video/${product.videoUrl}_200x150.jpg`} 
+                      alt="Video thumbnail" 
+                      fill 
+                      className="object-cover"
+                    />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                       <Play size={20} className="text-white" />
                     </div>
