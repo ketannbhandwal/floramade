@@ -39,6 +39,9 @@ export default function WishlistItem({ item, onRemove, onMoveToCart }) {
           {item.name}
         </Link>
         <p className="text-sm text-foreground/60 font-light tracking-[0.15em] uppercase">₹{item.price}</p>
+        {item.originalPrice > item.price && (
+          <p className="text-xs text-foreground/30 line-through font-light">₹{item.originalPrice}</p>
+        )}
         <div className="md:hidden mt-4 flex items-center gap-3">
           <button 
             onClick={handleMoveToCart}

@@ -66,7 +66,7 @@ export default function Story() {
           >
             <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square">
               <Image 
-                src="/assets/story.webp" 
+                src="/posters/story.jpeg" 
                 alt="Our Story - Trusted by many" 
                 fill 
                 sizes="(max-width: 768px) 100vw, 50vw"

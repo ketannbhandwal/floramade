@@ -15,7 +15,13 @@ export function CartProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+      }
+    } catch (error) {
+      console.warn("Failed to save cart to localStorage:", error);
+    }
   }, [cartItems]);
 
   function addToCart(product) {

@@ -4,6 +4,7 @@ const ProductSchema = new Schema(
   {
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
+    category: { type: String, required: true },
     price: { type: Number, required: true },
     discountPrice: { type: Number, required: true },
     stock: { type: Number, default: 0 },
@@ -19,6 +20,7 @@ const ProductSchema = new Schema(
       madeInIndia: { type: Boolean, default: false },
       ayurvedicFormulation: { type: Boolean, default: false },
     },
+    featureImages: [{ type: String }],
     faqs: [
       {
         question: String,

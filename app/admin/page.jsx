@@ -571,6 +571,7 @@ export default function AdminPage() {
                         <th className="px-8 py-6 font-medium">Product</th>
                         <th className="px-8 py-6 font-medium">Status</th>
                         <th className="px-8 py-6 font-medium">Price</th>
+                        <th className="px-8 py-6 font-medium">MRP</th>
                         <th className="px-8 py-6 font-medium text-right">Actions</th>
                       </tr>
                     </thead>
@@ -584,6 +585,7 @@ export default function AdminPage() {
                             </span>
                           </td>
                           <td className="px-8 py-6 font-light">₹{p.discountPrice}</td>
+                          <td className="px-8 py-6 font-light text-foreground/50 line-through">₹{p.price}</td>
                           <td className="px-8 py-6">
                             <div className="flex justify-end gap-3">
                               <button onClick={() => startEdit(p)} className="text-xs uppercase tracking-[0.05em] font-medium text-accent hover:text-secondary transition-colors">Edit</button>

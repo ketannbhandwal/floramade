@@ -1,15 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['framer-motion', 'lucide-react'],
+    optimizePackageImports: ['framer-motion', 'lucide-react', '@mux/mux-node'],
   },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "i.pravatar.cc" },
-      { protocol: "https", hostname: "i.vimeocdn.com" },
-      { protocol: "https", hostname: "player.vimeo.com" },
+      { protocol: "https", hostname: "image.mux.com" },
+      { protocol: "https", hostname: "stream.mux.com" },
+      { protocol: "https", hostname: "player.mux.com" },
     ],
     localPatterns: [
       {

@@ -4,14 +4,34 @@ import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { revalidateTag } from 'next/cache';
+import { validateFormData, sanitizeInput, detectSpam } from "@/lib/validation";
+
+const reviewSession = new Map();
 
 export async function POST(request) {
   try {
     const { productId, rating, comment, name, image } = await request.json();
 
-    if (!productId || !rating || !comment || !name) {
+    const validation = validateFormData(
+      { productId, rating, comment, name },
+      {
+        productId: { required: true },
+        rating: { required: true },
+        comment: { required: true, minLength: 10, maxLength: 1000, spamCheck: true },
+        name: { required: true, minLength: 2, maxLength: 50 },
+      }
+    );
+
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: Object.values(validation.errors)[0] },
+        { status: 400 }
+      );
+    }
+
+    if (detectSpam(comment) || detectSpam(name)) {
+      return NextResponse.json(
+        { error: "Invalid submission detected" },
         { status: 400 }
       );
     }
@@ -22,6 +42,16 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+    const lastReview = reviewSession.get(clientIp);
+    if (lastReview && Date.now() - lastReview < 30000) {
+      return NextResponse.json(
+        { error: "Please wait before submitting another review" },
+        { status: 429 }
+      );
+    }
+    reviewSession.set(clientIp, Date.now());
 
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;

@@ -15,7 +15,13 @@ export function WishlistProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+      }
+    } catch (error) {
+      console.warn("Failed to save wishlist to localStorage:", error);
+    }
   }, [wishlistItems]);
 
   function addToWishlist(product) {

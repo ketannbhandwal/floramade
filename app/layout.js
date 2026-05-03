@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import Providers from "@/components/ui/Providers";
 import CookieConsent from "@/components/ui/CookieConsent";
 import LenisProvider from "@/components/ui/LenisProvider";
+import NetworkStatus from "@/components/ui/NetworkStatus";
 import { Toaster } from "react-hot-toast";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -120,12 +121,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#658518" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Fiveetatv" />
+        <link rel="apple-touch-icon" href="/assets/logo.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-foreground">
+        <NetworkStatus />
         <Providers>
           <LenisProvider>
             <Navbar />

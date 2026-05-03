@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useLenis } from "@studio-freight/react-lenis";
-import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useSpring, useTransform, motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 export default function FloatingLeaf({ 
@@ -18,65 +17,79 @@ export default function FloatingLeaf({
     branch: "/assets/leaf-branch.svg"
   }[type];
 
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const lenis = useLenis();
-  
-  const y = useMotionValue(0);
-  const rotate = useMotionValue(0);
-  const scale = useMotionValue(1);
-  
-  const smoothY = useTransform(y, (value) => value * 0.5);
-  const smoothRotate = useTransform(rotate, (value) => value * 0.3);
-  const smoothScale = useTransform(scale, (value) => 1 + value * 0.05);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [scrollY, setScrollY] = useState(0);
+
+  const smoothY = useSpring(0, {
+    stiffness: 50,
+    damping: 20,
+    mass: 0.5,
+  });
+
+  const smoothRotate = useSpring(0, {
+    stiffness: 40,
+    damping: 25,
+    mass: 0.3,
+  });
 
   useEffect(() => {
-    const sway = async () => {
-      await controls.start({
-        y: [0, -8, 3, -5, 0],
-        rotate: [0, 3, -2, 4, 0],
-        scale: [1, 1.02, 0.98, 1.01, 1],
-        transition: {
-          duration: 8 + delay * 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-          times: [0, 0.25, 0.5, 0.75, 1],
-        }
-      });
+    if (typeof window === "undefined") return;
+
+    let ticking = false;
+
+    const updateScroll = () => {
+      setScrollY(window.scrollY);
+      ticking = false;
     };
-    sway();
-  }, [delay, controls]);
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   useEffect(() => {
-    if (!lenis) return;
+    const parallaxOffset = scrollY * parallaxSpeed * 0.0008;
+    smoothY.set(parallaxOffset);
     
-    const onScroll = ({ scroll }) => {
-      const parallaxOffset = scroll * parallaxSpeed * 0.001;
-      y.set(parallaxOffset);
-      rotate.set(Math.sin(scroll * 0.002 + delay) * 2);
-    };
-    
-    lenis.on("scroll", onScroll);
-    return () => lenis.off("scroll", onScroll);
-  }, [lenis, parallaxSpeed, delay, y, rotate]);
+    const rotateOffset = Math.sin(scrollY * 0.003 + delay) * 3;
+    smoothRotate.set(rotateOffset);
+  }, [scrollY, parallaxSpeed, delay, smoothY, smoothRotate]);
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.85 }}
-      whileInView={{ opacity: blur ? 0.35 : 0.65, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94], delay }}
+      ref={containerRef}
+      initial={{ opacity: 0, scale: 0.85, rotate: -5 }}
+      animate={isInView ? { 
+        opacity: blur ? 0.35 : 0.65, 
+        scale: 1,
+        rotate: 0
+      } : {}}
+      transition={{ 
+        duration: 1.8, 
+        ease: [0.25, 0.46, 0.45, 0.94], 
+        delay 
+      }}
       className={`absolute pointer-events-none z-0 ${className} ${blur ? 'blur-[2px]' : ''}`}
-      style={{ willChange: 'transform', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))' }}
+      style={{ 
+        willChange: 'transform, opacity',
+        transform: 'translate3d(0, 0, 0)',
+      }}
     >
       <motion.div
-        animate={controls}
         style={{ 
           y: smoothY, 
-          rotate: smoothRotate, 
-          scale: smoothScale,
-          willChange: 'transform' 
+          rotate: smoothRotate,
+          willChange: 'transform',
         }}
         className="w-full h-full relative"
       >
@@ -85,7 +98,8 @@ export default function FloatingLeaf({
           alt="Leaf decoration" 
           fill 
           className="object-contain"
-          style={{ filter: 'saturate(1.1) brightness(1.02)' }}
+          sizes="150px"
+          priority={false}
         />
       </motion.div>
     </motion.div>

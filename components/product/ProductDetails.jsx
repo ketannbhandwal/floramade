@@ -74,7 +74,7 @@ const fadeUp = {
 };
 
 export default function ProductDetails({ product, relatedProducts }) {
-  const [activeImg, setActiveImg] = useState(product.videoUrl && product.images[0]);
+  const [activeImg, setActiveImg] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -87,13 +87,46 @@ export default function ProductDetails({ product, relatedProducts }) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [playbackId, setPlaybackId] = useState(null);
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef(null);
   const videoContainerRef = useRef(null);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
 
-  const videoSrc = product.videoUrl ? `https://player.vimeo.com/video/${product.videoUrl}` : null;
+  useEffect(() => {
+    async function fetchPlaybackId() {
+      try {
+        setVideoLoading(true);
+        setVideoError(false);
+        
+        if (product.videoUrl) {
+          if (product.videoUrl.includes('player.mux.com')) {
+            setPlaybackId(product.videoUrl.replace('https://player.mux.com/', ''));
+            setActiveImg('video');
+          } else if (product.videoUrl.length > 20) {
+            setPlaybackId(product.videoUrl);
+            setActiveImg('video');
+          } else {
+            setActiveImg(product.images?.[0]);
+          }
+        } else {
+          setActiveImg(product.images?.[0]);
+        }
+      } catch (err) {
+        console.error("Video load error:", err);
+        setVideoError(true);
+        setActiveImg(product.images?.[0]);
+      } finally {
+        setVideoLoading(false);
+      }
+    }
+    fetchPlaybackId();
+  }, [product.videoUrl, product.images]);
+
+  const videoSrc = playbackId ? `https://player.mux.com/${playbackId}?autoplay=0&muted=0` : null;
 
   function toggleVideo() {
     if (videoRef.current) {
@@ -290,22 +323,26 @@ export default function ProductDetails({ product, relatedProducts }) {
             {/* 1. IMAGES SECTION - MOBILE OPTIMIZED */}
             <div className="w-full flex flex-col gap-4">
               <div 
-                className={`relative aspect-square w-full max-w-[500px] mx-auto overflow-hidden bg-slate-50 rounded-2xl md:rounded-[2.5rem] shadow-lg transition-all duration-300 ${isHovering ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+                className={`relative aspect-square w-full max-w-[500px] mx-auto overflow-hidden bg-slate-50 rounded-2xl md:rounded-[2.5rem] shadow-lg transition-all duration-300 ${videoSrc && !isHovering ? 'cursor-pointer' : isHovering ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={resetDrag}
                 onMouseMove={handleDragChange}
                 onMouseUp={() => setDragOffset(0)}
+                onClick={() => videoSrc && setActiveImg('video')}
                 ref={videoContainerRef}
               >
-                {videoSrc && activeImg === videoSrc ? (
-                  <div className="relative w-full h-full">
-                    <iframe
-                      src={`${videoSrc}?autoplay=0&byline=0&portrait=0&title=0`}
-                      className="w-full h-full"
-                      frameBorder="0"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                    />
+{videoSrc && activeImg === 'video' ? (
+                  <div className="relative w-full h-full flex items-center justify-center bg-black">
+                    {videoLoading ? (
+                      <div className="text-white text-sm">Loading video...</div>
+                    ) : (
+                      <iframe
+                        src={videoSrc}
+                        style={{ width: "100%", height: "100%", border: "none" }}
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
                   </div>
                 ) : (
                   <motion.div
@@ -316,7 +353,7 @@ export default function ProductDetails({ product, relatedProducts }) {
                     className="relative w-full h-full"
                   >
                     <Image 
-                      src={activeImg || (product.images && product.images[0]) || '/placeholder.png'} 
+                      src={activeImg || product.images?.[0] || '/placeholder.png'} 
                       alt={product.name} 
                       fill 
                       quality={95}
@@ -324,17 +361,20 @@ export default function ProductDetails({ product, relatedProducts }) {
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k="
                       className="object-contain select-none pointer-events-none p-2 sm:p-0" 
                       priority 
+                      onError={(e) => {
+                        e.target.src = '/placeholder.png';
+                      }}
                     />
                   </motion.div>
                 )}
-                
+
                 {/* Mobile Arrows */}
                 {((product.images?.length > 1) || videoSrc) && (
                   <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-20">
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        if (activeImg === videoSrc && product.images?.length > 0) {
+                        if (activeImg === 'video' && product.images?.length > 0) {
                           setActiveImg(product.images[product.images.length - 1]);
                         } else {
                           const images = product.images || [];
@@ -350,7 +390,7 @@ export default function ProductDetails({ product, relatedProducts }) {
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        if (activeImg === videoSrc && product.images?.length > 0) {
+                        if (activeImg === 'video' && product.images?.length > 0) {
                           setActiveImg(product.images[0]);
                         } else {
                           const images = product.images || [];
@@ -371,7 +411,7 @@ export default function ProductDetails({ product, relatedProducts }) {
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                     {videoSrc && (
                       <div 
-                        className={`text-[10px] font-medium transition-all duration-300 ${activeImg === videoSrc ? 'text-accent' : 'text-white/40'}`}
+                        className={`text-[10px] font-medium transition-all duration-300 ${activeImg === 'video' ? 'text-accent' : 'text-white/40'}`}
                       >
                         Video
                       </div>
@@ -390,16 +430,10 @@ export default function ProductDetails({ product, relatedProducts }) {
               <div className="flex gap-2 overflow-x-auto pb-4 px-1 no-scrollbar scroll-smooth snap-x max-w-full mx-auto justify-start sm:justify-center">
                 {videoSrc && (
                   <button 
-                    onClick={() => setActiveImg(videoSrc)}
-                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === videoSrc ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
+                    onClick={() => setActiveImg('video')}
+                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === 'video' ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
                   >
-                    <Image 
-                      src={`https://i.vimeocdn.com/video/${product.videoUrl}_200x150.jpg`} 
-                      alt="Video thumbnail" 
-                      fill 
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-600 flex items-center justify-center">
                       <Play size={20} className="text-white" />
                     </div>
                   </button>
@@ -484,7 +518,18 @@ export default function ProductDetails({ product, relatedProducts }) {
 
               {/* FEATURES GRID */}
               <div className="grid grid-cols-2 gap-3 py-6 border-y border-slate-100">
-                {product.category === 'diabetes' ? [
+                {(product.featureImages && product.featureImages.length > 0 && product.benefits) ? (
+                  product.benefits.slice(0, 4).map((benefit, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="relative h-12 w-12 flex-shrink-0 rounded-full bg-white shadow-sm border border-slate-100 p-2">
+                        <Image src={product.featureImages[idx]} alt={benefit} fill className="object-contain p-1" />
+                      </div>
+                      <span className="text-[10px] sm:text-xs tracking-wider font-semibold text-slate-700 leading-tight w-24">
+                        {benefit}
+                      </span>
+                    </div>
+                  ))
+                ) : product.category === 'diabetes' ? [
                   { icon: "/feature/5svg.svg", label: "Balances Sugar Levels*" },
                   { icon: "/feature/6.svg", label: "Enhances Insulin Sensitivity*" },
                   { icon: "/feature/7.svg", label: "Reduces Sugar Cravings*" },
@@ -537,22 +582,66 @@ export default function ProductDetails({ product, relatedProducts }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[64px_1fr] gap-3">
-                  <button 
-                    onClick={handleWishlist}
-                    className={`h-14 rounded-2xl border transition-all flex items-center justify-center ${
-                      isInWishlist(product._id) ? 'border-red-100 bg-red-50 text-red-500' : 'border-slate-200 bg-white'
-                    }`}
-                  >
-                    <Heart size={20} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
-                  </button>
-                  <button 
-                    onClick={handleAddToCart}
-                    className="h-14 rounded-2xl bg-[#2A3B32] text-white flex items-center justify-center gap-3 hover:bg-black transition-all active:scale-[0.98] shadow-lg shadow-black/10"
-                  >
-                    <ShoppingBag size={20} />
-                    <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
-                  </button>
+                <div className="space-y-4">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                    <div className="text-center mb-3">
+                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.15em]">We Accept</span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
+                        <svg className="w-8 h-6" viewBox="0 0 32 20" fill="none">
+                          <rect width="32" height="20" rx="3" fill="#1A1F71"/>
+                          <path d="M12 11L14 6H17L19 11H12Z" fill="white"/>
+                          <path d="M22 6L24 11H21L20 8H17L18 6H22Z" fill="white" opacity="0.7"/>
+                        </svg>
+                        <span className="text-[10px] font-semibold text-slate-700">Credit/Debit Card</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
+                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+                          <rect width="32" height="32" rx="6" fill="#22C55E"/>
+                          <path d="M16 8L12 14H14V18H16V8ZM20 14H22V18H20V14Z" fill="white"/>
+                          <circle cx="16" cy="22" r="2" fill="white"/>
+                        </svg>
+                        <span className="text-[10px] font-semibold text-slate-700">UPI</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
+                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+                          <circle cx="16" cy="16" r="14" stroke="#6366F1" strokeWidth="2" fill="white"/>
+                          <path d="M12 16H20M16 12V20" stroke="#6366F1" strokeWidth="2"/>
+                        </svg>
+                        <span className="text-[10px] font-semibold text-slate-700">Net Banking</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
+                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+                          <rect x="4" y="10" width="24" height="14" rx="2" stroke="#F59E0B" strokeWidth="2" fill="white"/>
+                          <path d="M4 16H28" stroke="#F59E0B" strokeWidth="2"/>
+                          <path d="M10 12L8 14H12L10 12Z" fill="#F59E0B"/>
+                        </svg>
+                        <span className="text-[10px] font-semibold text-slate-700">EMI</span>
+                      </div>
+                    </div>
+                    <div className="text-center mt-3">
+                      <span className="text-[9px] text-slate-400">Secure payments via Razorpay</span>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-[64px_1fr] gap-3">
+                    <button 
+                      onClick={handleWishlist}
+                      className={`h-14 rounded-2xl border transition-all flex items-center justify-center ${
+                        isInWishlist(product._id) ? 'border-red-100 bg-red-50 text-red-500' : 'border-slate-200 bg-white'
+                      }`}
+                    >
+                      <Heart size={20} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
+                    </button>
+                    <button 
+                      onClick={handleAddToCart}
+                      className="h-14 rounded-2xl bg-[#2A3B32] text-white flex items-center justify-center gap-3 hover:bg-black transition-all active:scale-[0.98] shadow-lg shadow-black/10"
+                    >
+                      <ShoppingBag size={20} />
+                      <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
+                    </button>
+                  </div>
                 </div>
                 
                 <div className="flex items-center justify-center gap-3 py-2">
@@ -633,18 +722,18 @@ export default function ProductDetails({ product, relatedProducts }) {
             <h2 className="text-3xl md:text-5xl font-light italic font-display text-secondary">How to Consume</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
-            {(product.slug === "paachan-sathi-powder" ? [
-              { img: "/consume/pachansathipowder1.jpeg", step: "Step 01" },
-              { img: "/consume/pachansathipowder2.jpeg", step: "Step 02" },
-              { img: "/consume/pachansathipowder3.jpeg", step: "Step 03" }
-            ] : product.slug === "madhucurex-powder" || product.slug === "madhucurex-capsules" ? [
-              { img: "/consume/powder1.jpeg", step: "Step 01" },
-              { img: "/consume/powder2.jpeg", step: "Step 02" },
-              { img: "/consume/powder3.jpeg", step: "Step 03" }
+            {(product.slug === "madhucurex-powder" || product.slug === "madhucurex-capsules" ? [
+              { img: "/consume/powder1.jpeg", step: "Step 01", title: "Measure the Dose", desc: "Take 1 teaspoon (2.5g) of MadhuCurex powder using the provided measuring scoop." },
+              { img: "/consume/powder2.jpeg", step: "Step 02", title: "Mix Well", desc: "Add the powder to 1 cup (250ml) of lukewarm water. Stir thoroughly until completely dissolved." },
+              { img: "/consume/powder3.jpeg", step: "Step 03", title: "Consume Daily", desc: "Drink the mixture twice daily, preferably 30 minutes before breakfast and dinner for optimal results." }
+            ] : product.slug === "paachan-sathi-powder" ? [
+              { img: "/consume/pachansathipowder1.jpeg", step: "Step 01", title: "Measure the Dose", desc: "Take ½ to 1 teaspoon of Paachan Sathi powder after your meals." },
+              { img: "/consume/pachansathipowder2.jpeg", step: "Step 02", title: "Mix with Water", desc: "Blend the powder in a glass of lukewarm water for best results." },
+              { img: "/consume/pachansathipowder3.jpeg", step: "Step 03", title: "Enjoy Relief", desc: "Consume after lunch and dinner to support healthy digestion and reduce bloating." }
             ] : [
-              { img: "/consume/1.webp", step: "Step 01" },
-              { img: "/consume/2.webp", step: "Step 02" },
-              { img: "/consume/3.webp", step: "Step 03" }
+              { img: "/consume/1.webp", step: "Step 01", title: "Take as Directed", desc: "Consume 1-2 capsules twice daily with lukewarm water." },
+              { img: "/consume/2.webp", step: "Step 02", title: "Before Meals", desc: "Take the capsules 30 minutes before your meals for better absorption." },
+              { img: "/consume/3.webp", step: "Step 03", title: "Stay Consistent", desc: "For optimal results, maintain a regular schedule and use consistently." }
             ]).map((item, i) => (
               <motion.div
                 key={i}
@@ -652,13 +741,17 @@ export default function ProductDetails({ product, relatedProducts }) {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative"
+                className="group relative flex flex-col"
               >
-                <div className="relative aspect-[4/5] shadow-2xl">
-                  <Image src={item.img} alt={`Step ${i + 1}`} fill className="object-cover transition-transform duration-700" />
-                  <div className="absolute top-6 left-6 bg-accent text-white text-xs uppercase tracking-[0.2em] font-medium px-6 py-2 rounded-full shadow-lg backdrop-blur-md">
+                <div className="relative aspect-[4/5] shadow-2xl rounded-2xl overflow-hidden">
+                  <Image src={item.img} alt={item.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute top-4 left-4 bg-accent text-white text-xs uppercase tracking-[0.2em] font-medium px-4 py-1.5 rounded-full shadow-lg backdrop-blur-md">
                     {item.step}
                   </div>
+                </div>
+                <div className="mt-6 text-center space-y-2">
+                  <h4 className="text-lg font-medium text-slate-800">{item.title}</h4>
+                  <p className="text-sm text-slate-600 leading-relaxed font-light">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -745,42 +838,72 @@ export default function ProductDetails({ product, relatedProducts }) {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
-            {[
-              { name: "Amla", img: "/ingredients/Amla.webp", desc: "Rich in Vitamin C, boosts immunity" },
-              { name: "Haritaki", img: "/ingredients/Haritaki_4e781681-e0e8-490c-97fd-e0494b52cc5b.webp", desc: "Improves digestion & detoxification" },
-              { name: "Bibhitaki", img: "/ingredients/Bibhitaki.webp", desc: "Supports respiratory & metabolic health" },
-              { name: "Jeera", img: "/ingredients/Jeera-eng.webp", desc: "Enhances metabolism & relieves bloating" },
-              { name: "Pudina", img: "/ingredients/Pudina-Ind_20901f19-a6e7-4936-a78d-c4373c5282ab.webp", desc: "Cools the stomach & aids digestion" },
-              { name: "Saunf", img: "/ingredients/Saunf-eng.webp", desc: "Reduces acidity & freshens breath" },
-              { name: "Kali Mirch", img: "/ingredients/Kali_Mirch-eng.webp", desc: "Improves nutrient absorption" },
-              { name: "Hing", img: "/ingredients/Hing-eng.webp", desc: "Relieves gas and abdominal pain" },
-              { name: "Carom Seeds", img: "/ingredients/Carom_Seeds-English.webp", desc: "Quick relief from indigestion" },
-              { name: "Kala Namak", img: "/ingredients/Kala_Namak-eng.webp", desc: "Aids digestion and adds trace minerals" },
-            ].map((ing, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group flex flex-col items-center text-center space-y-3"
-              >
-                <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-white shadow-md group-hover:shadow-xl transition-all duration-500 border border-slate-100 p-2">
-                  <div className="relative w-full h-full rounded-full overflow-hidden">
-                    <Image 
-                      src={ing.img} 
-                      alt={ing.name} 
-                      fill 
-                      className="object-cover group-hover:scale-110 transition-transform duration-700" 
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-sm md:text-base font-semibold text-slate-800">{ing.name}</h4>
-                  <p className="text-[10px] md:text-xs text-slate-500 mt-1 leading-tight">{ing.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+            {(() => {
+              const getIngredientData = (name) => {
+                const map = {
+                  "Ajwain": { img: "/ingredients/Carom_Seeds-English.webp", color: "bg-emerald-600" },
+                  "Saunf": { img: "/ingredients/Saunf-eng.webp", color: "bg-emerald-500" },
+                  "Hing": { img: "/ingredients/Hing-eng.webp", color: "bg-amber-600" },
+                  "Hing (Asafoetida)": { img: "/ingredients/Hing-eng.webp", color: "bg-amber-600" },
+                  "Jeera": { img: "/ingredients/Jeera-eng.webp", color: "bg-amber-500" },
+                  "Sonth": { img: "/ingredients/Jeera-eng.webp", color: "bg-orange-400" },
+                  "Sonth (Ginger)": { img: "/ingredients/Jeera-eng.webp", color: "bg-orange-400" },
+                  "Pippali": { img: "/ingredients/Pudina-Ind_20901f19-a6e7-4936-a78d-c4373c5282ab.webp", color: "bg-emerald-500" },
+                  "Haritaki": { img: "/ingredients/Haritaki_4e781681-e0e8-490c-97fd-e0494b52cc5b.webp", color: "bg-yellow-600" },
+                  "Amla": { img: "/ingredients/Amla.webp", color: "bg-emerald-500" },
+                  "Bahera": { img: "/ingredients/Bibhitaki.webp", color: "bg-amber-500" },
+                  "Kala Namak": { img: "/ingredients/Kala_Namak-eng.webp", color: "bg-slate-400" },
+                  "Neem": { img: null, color: "bg-emerald-700" },
+                  "Karela": { img: null, color: "bg-emerald-600" },
+                  "Jamun": { img: null, color: "bg-purple-800" },
+                  "Gudmar": { img: null, color: "bg-emerald-600" },
+                  "Paneer Dodi": { img: null, color: "bg-emerald-500" },
+                  "Vijaysar": { img: null, color: "bg-amber-600" },
+                  "Methi": { img: null, color: "bg-emerald-600" },
+                  "Triphala": { img: null, color: "bg-amber-700" },
+                  "Gudmar (Gymnema Sylvestre)": { img: null, color: "bg-emerald-600" },
+                  "Karela (Bitter Gourd)": { img: null, color: "bg-emerald-600" },
+                  "Jamun (Java Plum)": { img: null, color: "bg-purple-800" },
+                  "Vijaysar (Indian Kino Tree)": { img: null, color: "bg-amber-600" },
+                };
+                return map[name] || { img: null, color: "bg-emerald-600" };
+              };
+              return (product.ingredients || []).slice(0, 10).map((ing, i) => {
+                const ingName = typeof ing === 'string' ? ing : ing.name;
+                const ingData = getIngredientData(ingName);
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className="group flex flex-col items-center text-center space-y-3"
+                  >
+                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-white shadow-md group-hover:shadow-xl transition-all duration-500 border border-slate-100 p-2">
+                      {ingData.img ? (
+                        <div className="relative w-full h-full rounded-full overflow-hidden">
+                          <Image 
+                            src={ingData.img} 
+                            alt={ingName} 
+                            fill 
+                            className="object-cover group-hover:scale-110 transition-transform duration-700"
+                            unoptimized
+                          />
+                        </div>
+                      ) : (
+                        <div className={`relative w-full h-full rounded-full overflow-hidden ${ingData.color} flex items-center justify-center`}>
+                          <span className="text-2xl md:text-3xl font-medium text-white">{ingName.charAt(0)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="text-sm md:text-base font-semibold text-slate-800">{ingName}</h4>
+                    </div>
+                  </motion.div>
+                );
+              });
+            })()}
           </div>
         </div>
       </section>
@@ -889,7 +1012,7 @@ export default function ProductDetails({ product, relatedProducts }) {
               </div>
               <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-100 group">
                 <Image 
-                  src="/assets/whychose.webp" 
+                  src="/posters/toohome.jpeg" 
                   alt="Trusted by users" 
                   fill 
                   className="object-contain sm:object-cover group-hover:scale-105 transition-transform duration-700"
