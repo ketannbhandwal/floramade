@@ -8,6 +8,7 @@ import Certificate from "./components/Certificate";
 
 const Products = dynamic(() => import("./components/Products"), { ssr: true });
 const Why = dynamic(() => import("./components/Why"), { ssr: true });
+const VideoSection = dynamic(() => import("./components/VideoSection"), { ssr: true });
 const Review = dynamic(() => import("./components/Review"), { ssr: true });
 const Story = dynamic(() => import("./components/Story"), { ssr: true });
 
@@ -45,6 +46,9 @@ export default function HomeSections({ products }) {
       </Suspense>
       <Suspense fallback={null}>
         <Why />
+      </Suspense>
+      <Suspense fallback={null}>
+        <VideoSection products={products} />
       </Suspense>
       <Suspense fallback={null}>
         <Review />

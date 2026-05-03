@@ -21,11 +21,8 @@ export async function GET(req) {
   const query = includeAll ? {} : { isVisible: true };
   const products = await Product.find(query).sort({ createdAt: -1 }).lean();
   
-  return NextResponse.json({ products }, {
-    headers: {
-      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
-    },
-  });
+  // No cache for admin
+  return NextResponse.json({ products });
 }
 
 export async function POST(req) {

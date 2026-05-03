@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import EmptyState from "@/components/ui/EmptyState";
 import Link from "next/link";
@@ -14,7 +15,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UserRound, Settings, ShoppingBag, LogOut, ArrowRight, MapPin, Plus, Trash2 } from "lucide-react";
 
 export default function AccountPage() {
-  const { user, refreshUser, logout } = useAuth();
+  const router = useRouter();
+  const { user, loading, refreshUser, logout } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+          <div className="h-12 w-12 rounded-full bg-foreground/10"></div>
+          <p className="text-foreground/50">Loading...</p>
+        </div>
+      </div>
+    );
+  }
   const [orders, setOrders] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [profile, setProfile] = useState({ name: "", phone: "" });

@@ -105,15 +105,16 @@ export default function ProductDetails({ product, relatedProducts }) {
         if (product.videoUrl) {
           if (product.videoUrl.includes('player.mux.com')) {
             setPlaybackId(product.videoUrl.replace('https://player.mux.com/', ''));
-            setActiveImg('video');
           } else if (product.videoUrl.length > 20) {
             setPlaybackId(product.videoUrl);
-            setActiveImg('video');
-          } else {
-            setActiveImg(product.images?.[0]);
           }
-        } else {
-          setActiveImg(product.images?.[0]);
+        }
+        
+        // Always show the first image by default
+        if (product.images && product.images.length > 0) {
+          setActiveImg(product.images[0]);
+        } else if (product.videoUrl) {
+          setActiveImg('video');
         }
       } catch (err) {
         console.error("Video load error:", err);
@@ -211,27 +212,36 @@ export default function ProductDetails({ product, relatedProducts }) {
     const threshold = 120; 
 
     if (Math.abs(dragOffset) > threshold) {
-      const currentIndex = product.images.indexOf(activeImg);
+      const images = product.images || [];
+      const hasVideo = !!videoSrc;
       
-      // If current is video or not in images array, we go to first image on swipe
-      if (currentIndex === -1) {
-        if (product.images && product.images.length > 0) {
-          setActiveImg(product.images[0]);
-        }
-        setDragOffset(0);
-        return;
-      }
-
       if (dragOffset > 0) {
-        // Drag right -> previous image
-        const prevIdx = (currentIndex - 1 + product.images.length) % product.images.length;
-        setActiveImg(product.images[prevIdx]);
+        // Drag right -> previous
+        if (activeImg === 'video') {
+          setActiveImg(images[images.length - 1]);
+        } else {
+          const currentIndex = images.indexOf(activeImg);
+          if (currentIndex === 0 && hasVideo) {
+            setActiveImg('video');
+          } else {
+            const prevIdx = currentIndex <= 0 ? images.length - 1 : currentIndex - 1;
+            setActiveImg(images[prevIdx]);
+          }
+        }
       } else {
-        // Drag left -> next image
-        const nextIdx = (currentIndex + 1) % product.images.length;
-        setActiveImg(product.images[nextIdx]);
+        // Drag left -> next
+        if (activeImg === 'video') {
+          setActiveImg(images[0]);
+        } else {
+          const currentIndex = images.indexOf(activeImg);
+          if (currentIndex === images.length - 1 && hasVideo) {
+            setActiveImg('video');
+          } else {
+            const nextIdx = currentIndex >= images.length - 1 ? 0 : currentIndex + 1;
+            setActiveImg(images[nextIdx]);
+          }
+        }
       }
-      // Reset accumulator after a swap
       setDragOffset(0);
     }
   };
@@ -374,13 +384,17 @@ export default function ProductDetails({ product, relatedProducts }) {
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        if (activeImg === 'video' && product.images?.length > 0) {
-                          setActiveImg(product.images[product.images.length - 1]);
+                        const images = product.images || [];
+                        if (activeImg === 'video') {
+                          setActiveImg(images[images.length - 1]);
                         } else {
-                          const images = product.images || [];
                           const currentIdx = images.indexOf(activeImg);
-                          const prevIdx = currentIdx <= 0 ? images.length - 1 : currentIdx - 1;
-                          setActiveImg(images[prevIdx]);
+                          if (currentIdx === 0 && videoSrc) {
+                            setActiveImg('video');
+                          } else {
+                            const prevIdx = currentIdx <= 0 ? images.length - 1 : currentIdx - 1;
+                            setActiveImg(images[prevIdx]);
+                          }
                         }
                       }}
                       className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
@@ -390,13 +404,17 @@ export default function ProductDetails({ product, relatedProducts }) {
                     <button 
                       onClick={(e) => {
                         e.preventDefault(); e.stopPropagation();
-                        if (activeImg === 'video' && product.images?.length > 0) {
-                          setActiveImg(product.images[0]);
+                        const images = product.images || [];
+                        if (activeImg === 'video') {
+                          setActiveImg(images[0]);
                         } else {
-                          const images = product.images || [];
                           const currentIdx = images.indexOf(activeImg);
-                          const nextIdx = currentIdx >= images.length - 1 ? 0 : currentIdx + 1;
-                          setActiveImg(images[nextIdx]);
+                          if (currentIdx === images.length - 1 && videoSrc) {
+                            setActiveImg('video');
+                          } else {
+                            const nextIdx = currentIdx >= images.length - 1 ? 0 : currentIdx + 1;
+                            setActiveImg(images[nextIdx]);
+                          }
                         }
                       }}
                       className="group p-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-md pointer-events-auto active:scale-95 transition-all"
@@ -409,6 +427,12 @@ export default function ProductDetails({ product, relatedProducts }) {
                 {/* Progress Indicators */}
                 {((product.images?.length > 1) || videoSrc) && (
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                    {product.images.map((img, i) => (
+                      <div 
+                        key={i} 
+                        className={`h-1 rounded-full transition-all duration-300 ${activeImg === img ? 'w-4 bg-accent' : 'w-1 bg-white/40'}`}
+                      />
+                    ))}
                     {videoSrc && (
                       <div 
                         className={`text-[10px] font-medium transition-all duration-300 ${activeImg === 'video' ? 'text-accent' : 'text-white/40'}`}
@@ -416,18 +440,21 @@ export default function ProductDetails({ product, relatedProducts }) {
                         Video
                       </div>
                     )}
-                    {product.images.map((img, i) => (
-                      <div 
-                        key={i} 
-                        className={`h-1 rounded-full transition-all duration-300 ${activeImg === img ? 'w-4 bg-accent' : 'w-1 bg-white/40'}`}
-                      />
-                    ))}
                   </div>
                 )}
               </div>
               
-              {/* Thumbnails */}
+              {/* Thumbnails - Images first, Video at end */}
               <div className="flex gap-2 overflow-x-auto pb-4 px-1 no-scrollbar scroll-smooth snap-x max-w-full mx-auto justify-start sm:justify-center">
+                {product.images.map((img, idx) => (
+                  <button 
+                    key={`${img}-${idx}`} 
+                    onClick={() => setActiveImg(img)}
+                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === img ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
+                  >
+                    <Image src={img} alt={`Thumb ${idx}`} fill quality={85} placeholder="blur" blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k=" className="object-cover" />
+                  </button>
+                ))}
                 {videoSrc && (
                   <button 
                     onClick={() => setActiveImg('video')}
@@ -438,15 +465,6 @@ export default function ProductDetails({ product, relatedProducts }) {
                     </div>
                   </button>
                 )}
-                {product.images.map((img, idx) => (
-                  <button 
-                    key={`${img}-${idx}`} 
-                    onClick={() => setActiveImg(img)}
-                    className={`relative w-14 h-14 sm:w-20 sm:h-24 overflow-hidden rounded-xl flex-shrink-0 snap-start transition-all ${activeImg === img ? 'ring-2 ring-accent ring-offset-2' : 'opacity-60'}`}
-                  >
-                    <Image src={img} alt={`Thumb ${idx}`} fill quality={85} placeholder="blur" blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k=" className="object-cover" />
-                  </button>
-                ))}
               </div>
             </div>
             
@@ -1012,7 +1030,7 @@ export default function ProductDetails({ product, relatedProducts }) {
               </div>
               <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden shadow-2xl border border-slate-100 group">
                 <Image 
-                  src="/posters/toohome.jpeg" 
+                  src="/posters/tooohome.png" 
                   alt="Trusted by users" 
                   fill 
                   className="object-contain sm:object-cover group-hover:scale-105 transition-transform duration-700"

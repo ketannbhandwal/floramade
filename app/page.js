@@ -55,7 +55,13 @@ async function getProducts() {
   await connectDB();
   await seedProductsIfEmpty();
   const products = await Product.find({ isVisible: true }).lean();
-  return JSON.parse(JSON.stringify(products));
+  
+  // Reorder products to put MadhuCurex Capsules at the end
+  const capsuleProduct = products.find(p => p.name.includes("MadhuCurex Capsules"));
+  const otherProducts = products.filter(p => !p.name.includes("MadhuCurex Capsules"));
+  const sortedProducts = capsuleProduct ? [...otherProducts, capsuleProduct] : products;
+  
+  return JSON.parse(JSON.stringify(sortedProducts));
 }
 
 export default async function Home() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -8,7 +9,6 @@ import Link from "next/link";
 import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 
 const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
@@ -21,9 +21,10 @@ const YAxis = dynamic(() => import("recharts").then(mod => mod.YAxis), { ssr: fa
 const Tooltip = dynamic(() => import("recharts").then(mod => mod.Tooltip), { ssr: false });
 
 const empty = {
-  name: "", slug: "", price: 0, discountPrice: 0, stock: 0,
+  name: "", slug: "", category: "Ayurvedic", price: 0, discountPrice: 0, stock: 0,
   isVisible: true, description: "", benefits: "", ingredients: "",
-  usage: "", images: [], videoUrl: "",
+  usage: "", images: [], formulaimage: "", videoUrl: "", trustQuality: {},
+  rating: 4.5, reviewsCount: 0, deliveryDays: 5,
 };
 
 const fadeAnim = {
@@ -145,22 +146,22 @@ export default function AdminPage() {
     const payload = {
       name: form.name,
       slug: form.slug,
-      price: form.price,
-      discountPrice: form.discountPrice,
-      stock: form.stock,
+      category: form.category || "Ayurvedic",
+      price: Number(form.price) || 0,
+      discountPrice: Number(form.discountPrice) || 0,
+      stock: Number(form.stock) || 0,
       isVisible: form.isVisible,
-      description: form.description,
+      description: form.description || "",
       benefits: form.benefits ? form.benefits.split(",").map((x) => x.trim()).filter(Boolean) : [],
       ingredients: form.ingredients ? form.ingredients.split(",").map((x) => x.trim()).filter(Boolean) : [],
       usage: form.usage ? form.usage.split(",").map((x) => x.trim()).filter(Boolean) : [],
-      images: form.images || [],
+      featureImages: form.images || [],
+      formulaimage: form.formulaimage || "",
       videoUrl: form.videoUrl || "",
-      trustQuality: form.trustQuality,
-      faqs: form.faqs || [],
-      reviews: form.reviews || [],
-      rating: form.rating,
-      reviewsCount: form.reviewsCount,
-      deliveryDays: form.deliveryDays || 5,
+      trustQuality: form.trustQuality || {},
+      rating: Number(form.rating) || 4.5,
+      reviewsCount: Number(form.reviewsCount) || 0,
+      deliveryDays: Number(form.deliveryDays) || 5,
     };
 
     const url = editingSlug ? `/api/products/${editingSlug}` : "/api/products";
@@ -172,18 +173,24 @@ export default function AdminPage() {
         body: JSON.stringify(payload),
       });
       
+      const data = await res.json();
+      console.log("Save response:", data);
+      
       if (!res.ok) {
-        const errorData = await res.json();
         setUploading(false);
-        return toast.error(errorData.message || "Save failed");
+        return toast.error(data.message || `Save failed: ${res.status}`);
       }
       
       toast.success(editingSlug ? "Product updated" : "Product created");
       setForm(empty);
       setEditingSlug("");
       setUploading(false);
+      
+      // Force fresh fetch
       await loadData();
-      router.refresh(); // Force Next.js to revalidate
+      
+      // Also force a hard refresh to see changes
+      window.location.reload();
     } catch (error) {
       console.error("Save error:", error);
       toast.error("Failed to save product. Please try again.");
@@ -270,10 +277,24 @@ export default function AdminPage() {
     setActiveTab("products");
     setEditingSlug(product.slug);
     setForm({
-      ...product,
+      name: product.name || "",
+      slug: product.slug || "",
+      category: product.category || "Ayurvedic",
+      price: product.price || 0,
+      discountPrice: product.discountPrice || 0,
+      stock: product.stock || 0,
+      isVisible: product.isVisible ?? true,
+      description: product.description || "",
       benefits: (product.benefits || []).join(", "),
       ingredients: (product.ingredients || []).join(", "),
       usage: (product.usage || []).join(", "),
+      images: product.featureImages || product.images || [],
+      formulaimage: product.formulaimage || "",
+      videoUrl: product.videoUrl || "",
+      trustQuality: product.trustQuality || {},
+      rating: product.rating || 4.5,
+      reviewsCount: product.reviewsCount || 0,
+      deliveryDays: product.deliveryDays || 5,
     });
   }
 
@@ -407,6 +428,23 @@ export default function AdminPage() {
                   <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     <Input label="Name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
                     <Input label="Slug" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} />
+                    <div className="space-y-2">
+                      <label className="block text-xs uppercase tracking-[0.05em] text-foreground/70 font-medium">Category</label>
+                      <select
+                        value={form.category || "Ayurvedic"}
+                        onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+                        className="w-full h-12 rounded-2xl border border-foreground/10 px-4 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 transition-all"
+                      >
+                        <option value="Ayurvedic">Ayurvedic</option>
+                        <option value="Wellness">Wellness</option>
+                        <option value="Supplements">Supplements</option>
+                        <option value="Skin Care">Skin Care</option>
+                        <option value="Hair Care">Hair Care</option>
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Digestive">Digestive</option>
+                        <option value="Immunity">Immunity</option>
+                      </select>
+                    </div>
                     <Input label="Stock Quantity" type="number" value={form.stock} onChange={(e) => setForm((f) => ({ ...f, stock: Number(e.target.value) }))} />
                     <Input label="Regular Price (₹)" type="number" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} />
                     <Input label="Sale Price (₹)" type="number" value={form.discountPrice} onChange={(e) => setForm((f) => ({ ...f, discountPrice: Number(e.target.value) }))} />
@@ -578,13 +616,23 @@ export default function AdminPage() {
                     <tbody className="divide-y divide-foreground/5">
                       {products.map((p) => (
                         <tr key={p._id} className="hover:bg-white/40 transition-colors">
-                          <td className="px-8 py-6 font-medium text-foreground">{p.name}</td>
+                          <td className="px-8 py-6">
+                            <div className="flex items-center gap-4">
+                              {p.featureImages?.[0] && (
+                                <img src={p.featureImages[0]} alt={p.name} className="w-12 h-12 rounded-lg object-cover" />
+                              )}
+                              <div>
+                                <p className="font-medium text-foreground">{p.name}</p>
+                                <p className="text-xs text-foreground/50">{p.category}</p>
+                              </div>
+                            </div>
+                          </td>
                           <td className="px-8 py-6">
                             <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${p.isVisible ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                               {p.isVisible ? "Active" : "Hidden"}
                             </span>
                           </td>
-                          <td className="px-8 py-6 font-light">₹{p.discountPrice}</td>
+                          <td className="px-8 py-6 font-light">₹{p.discountPrice || p.price}</td>
                           <td className="px-8 py-6 font-light text-foreground/50 line-through">₹{p.price}</td>
                           <td className="px-8 py-6">
                             <div className="flex justify-end gap-3">
