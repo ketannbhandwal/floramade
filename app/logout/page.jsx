@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import toast from "react-hot-toast";
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -11,18 +12,12 @@ export default function LogoutPage() {
   useEffect(() => {
     async function handleLogout() {
       try {
-        // Clear via Context
         await logout();
-        
-        // Clear via Cookie (Double safety)
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        
-        // Redirect
-        router.push("/");
-        router.refresh();
+        toast.success("Logged out successfully");
+        router.replace("/");
       } catch (err) {
         console.error("Logout failed:", err);
-        router.push("/");
+        router.replace("/");
       }
     }
     

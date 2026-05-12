@@ -181,12 +181,15 @@ export default function AccountPage() {
               >
                 <Settings size={18} /> <span className="text-sm uppercase tracking-[0.1em] font-medium">Settings</span>
               </button>
-              <Link 
-                href="/logout"
-                className="flex items-center gap-4 px-6 py-4 rounded-xl text-red-500/80 hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 mt-4 border-t border-foreground/5"
+              <button 
+                onClick={async () => {
+                  await logout();
+                  router.replace("/");
+                }}
+                className="flex items-center gap-4 px-6 py-4 rounded-xl text-red-500/80 hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 mt-4 border-t border-foreground/5 w-full"
               >
                 <LogOut size={18} /> <span className="text-sm uppercase tracking-[0.1em] font-medium">Logout</span>
-              </Link>
+              </button>
             </div>
           </motion.aside>
 

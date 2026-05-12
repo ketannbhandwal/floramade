@@ -45,6 +45,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [chartsReady] = useState(() => typeof window !== "undefined");
   const [uploading, setUploading] = useState(false);
+  const [imageUrlInput, setImageUrlInput] = useState("");
 
   const totalSales = useMemo(() => orders.reduce((s, o) => s + o.amount, 0), [orders]);
   const averageOrderValue = useMemo(() => (orders.length ? Math.round(totalSales / orders.length) : 0), [orders, totalSales]);
@@ -184,13 +185,11 @@ export default function AdminPage() {
       toast.success(editingSlug ? "Product updated" : "Product created");
       setForm(empty);
       setEditingSlug("");
+      setImageUrlInput("");
       setUploading(false);
       
-      // Force fresh fetch
+      // Refresh data without full page reload
       await loadData();
-      
-      // Also force a hard refresh to see changes
-      window.location.reload();
     } catch (error) {
       console.error("Save error:", error);
       toast.error("Failed to save product. Please try again.");
@@ -202,7 +201,6 @@ export default function AdminPage() {
     await fetch(`/api/products/${slug}`, { method: "DELETE" });
     toast.success("Product deleted");
     await loadData();
-    router.refresh();
   }
 
   async function approveReview(productId, reviewId, approved) {
@@ -220,7 +218,6 @@ export default function AdminPage() {
       
       toast.success(approved ? "Review approved" : "Review unapproved");
       await loadData();
-      router.refresh();
     } catch (error) {
       console.error("Approve review error:", error);
       toast.error("Failed to update review");
@@ -242,7 +239,6 @@ export default function AdminPage() {
       
       toast.success("Review deleted");
       await loadData();
-      router.refresh();
     } catch (error) {
       console.error("Delete review error:", error);
       toast.error("Failed to delete review");
@@ -258,7 +254,6 @@ export default function AdminPage() {
     if (!res.ok) return toast.error("Visibility update failed");
     toast.success(`Product ${product.isVisible ? "hidden" : "unhidden"}`);
     await loadData();
-    router.refresh();
   }
 
   async function updateOrderStatus(orderId, status) {
@@ -270,12 +265,12 @@ export default function AdminPage() {
     if (!res.ok) return toast.error("Status update failed");
     toast.success("Order status updated");
     await loadData();
-    router.refresh();
   }
 
   function startEdit(product) {
     setActiveTab("products");
     setEditingSlug(product.slug);
+    const images = product.featureImages || product.images || [];
     setForm({
       name: product.name || "",
       slug: product.slug || "",
@@ -288,7 +283,7 @@ export default function AdminPage() {
       benefits: (product.benefits || []).join(", "),
       ingredients: (product.ingredients || []).join(", "),
       usage: (product.usage || []).join(", "),
-      images: product.featureImages || product.images || [],
+      images: images,
       formulaimage: product.formulaimage || "",
       videoUrl: product.videoUrl || "",
       trustQuality: product.trustQuality || {},
@@ -296,6 +291,9 @@ export default function AdminPage() {
       reviewsCount: product.reviewsCount || 0,
       deliveryDays: product.deliveryDays || 5,
     });
+    setImageUrlInput(images.join(", "));
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const TABS = [
@@ -573,9 +571,17 @@ export default function AdminPage() {
                         <input
                           type="text"
                           placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"
-                          onChange={(e) => setForm((f) => ({ ...f, images: e.target.value.split(",").map((x) => x.trim()).filter(Boolean) }))}
+                          value={imageUrlInput}
+                          onChange={(e) => setImageUrlInput(e.target.value)}
+                          onBlur={(e) => {
+                            const urls = e.target.value.split(",").map((x) => x.trim()).filter(Boolean);
+                            if (urls.length > 0) {
+                              setForm((f) => ({ ...f, images: urls }));
+                            }
+                          }}
                           className="w-full rounded-2xl border border-foreground/10 p-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 transition-all"
                         />
+                        <p className="text-xs text-foreground/40 mt-1">URLs will be applied when you click outside this field</p>
                       </div>
                     </div>
                   </div>

@@ -41,8 +41,7 @@ export default function LoginPage() {
       
       toast.success("Welcome back!");
       await refreshUser();
-      router.push("/");
-      router.refresh();
+      router.replace("/");
     } catch (err) {
       toast.error("Something went wrong");
       setLoading(false);

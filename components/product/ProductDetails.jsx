@@ -601,71 +601,31 @@ export default function ProductDetails({ product, relatedProducts }) {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                    <div className="text-center mb-3">
-                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.15em]">We Accept</span>
-                    </div>
-                    <div className="grid grid-cols-4 gap-3">
-                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
-                        <svg className="w-8 h-6" viewBox="0 0 32 20" fill="none">
-                          <rect width="32" height="20" rx="3" fill="#1A1F71"/>
-                          <path d="M12 11L14 6H17L19 11H12Z" fill="white"/>
-                          <path d="M22 6L24 11H21L20 8H17L18 6H22Z" fill="white" opacity="0.7"/>
-                        </svg>
-                        <span className="text-[10px] font-semibold text-slate-700">Credit/Debit Card</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
-                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
-                          <rect width="32" height="32" rx="6" fill="#22C55E"/>
-                          <path d="M16 8L12 14H14V18H16V8ZM20 14H22V18H20V14Z" fill="white"/>
-                          <circle cx="16" cy="22" r="2" fill="white"/>
-                        </svg>
-                        <span className="text-[10px] font-semibold text-slate-700">UPI</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
-                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
-                          <circle cx="16" cy="16" r="14" stroke="#6366F1" strokeWidth="2" fill="white"/>
-                          <path d="M12 16H20M16 12V20" stroke="#6366F1" strokeWidth="2"/>
-                        </svg>
-                        <span className="text-[10px] font-semibold text-slate-700">Net Banking</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-2 bg-white p-3 rounded-xl shadow-sm">
-                        <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
-                          <rect x="4" y="10" width="24" height="14" rx="2" stroke="#F59E0B" strokeWidth="2" fill="white"/>
-                          <path d="M4 16H28" stroke="#F59E0B" strokeWidth="2"/>
-                          <path d="M10 12L8 14H12L10 12Z" fill="#F59E0B"/>
-                        </svg>
-                        <span className="text-[10px] font-semibold text-slate-700">EMI</span>
-                      </div>
-                    </div>
-                    <div className="text-center mt-3">
-                      <span className="text-[9px] text-slate-400">Secure payments via Razorpay</span>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-[64px_1fr] gap-3">
-                    <button 
-                      onClick={handleWishlist}
-                      className={`h-14 rounded-2xl border transition-all flex items-center justify-center ${
-                        isInWishlist(product._id) ? 'border-red-100 bg-red-50 text-red-500' : 'border-slate-200 bg-white'
-                      }`}
-                    >
-                      <Heart size={20} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
-                    </button>
-                    <button 
-                      onClick={handleAddToCart}
-                      className="h-14 rounded-2xl bg-[#2A3B32] text-white flex items-center justify-center gap-3 hover:bg-black transition-all active:scale-[0.98] shadow-lg shadow-black/10"
-                    >
-                      <ShoppingBag size={20} />
-                      <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
-                    </button>
-                  </div>
+                  <img src="https://res.cloudinary.com/dqk8v040t/image/upload/v1778585412/pg_zs4xez.webp" alt="" className="w-full h-full object-cover rounded-2xl" />
                 </div>
                 
-                <div className="flex items-center justify-center gap-3 py-2">
-                  <ShieldCheck size={16} className="text-slate-300" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">100% Secure Checkout & Quality Guaranteed</span>
+                <div className="grid grid-cols-[64px_1fr] gap-3">
+                  <button 
+                    onClick={handleWishlist}
+                    className={`h-14 rounded-2xl border transition-all flex items-center justify-center ${
+                      isInWishlist(product._id) ? 'border-red-100 bg-red-50 text-red-500' : 'border-slate-200 bg-white'
+                    }`}
+                  >
+                    <Heart size={20} fill={isInWishlist(product._id) ? "currentColor" : "none"} />
+                  </button>
+                  <button 
+                    onClick={handleAddToCart}
+                    className="h-14 rounded-2xl bg-[#2A3B32] text-white flex items-center justify-center gap-3 hover:bg-black transition-all active:scale-[0.98] shadow-lg shadow-black/10"
+                  >
+                    <ShoppingBag size={20} />
+                    <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
+                  </button>
                 </div>
+              </div>
+              
+              <div className="flex items-center justify-center gap-3 py-2">
+                <ShieldCheck size={16} className="text-slate-300" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">100% Secure Checkout & Quality Guaranteed</span>
               </div>
             </div>
           </div>

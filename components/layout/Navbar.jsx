@@ -347,7 +347,11 @@ export default function Navbar() {
                 </Link>
                 {mounted && user && (
                   <button 
-                    onClick={() => { setOpenMenu(false); logout(); router.push("/"); }} 
+                    onClick={async () => { 
+                      setOpenMenu(false); 
+                      await logout(); 
+                      router.replace("/"); 
+                    }} 
                     className="text-base flex items-center gap-3 text-red-400"
                   >
                     <LogOut size={18} /> Logout

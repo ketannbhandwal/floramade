@@ -8,11 +8,11 @@ export async function PATCH(request, { params }) {
     const user = await getCurrentUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { addressId } = params;
+    const { addressId } = await params;
 
     await connectDB();
 
-    const userData = await User.findById(user.userId);
+    const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(
         { error: "User not found" },

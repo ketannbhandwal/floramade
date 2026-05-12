@@ -83,7 +83,7 @@ export async function POST(request) {
 
     // Add new review
     product.reviews.push({
-      userId: user.userId,
+      userId: user.id,
       name,
       image: image || "", // Use provided image URL if any
       rating,

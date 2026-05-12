@@ -10,7 +10,7 @@ export async function GET() {
 
     await connectDB();
 
-    const userData = await User.findById(user.userId);
+    const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(
         { error: "User not found" },
@@ -44,7 +44,7 @@ export async function POST(request) {
 
     await connectDB();
 
-    const userData = await User.findById(user.userId);
+    const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(
         { error: "User not found" },
