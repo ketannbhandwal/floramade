@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import FloatingLeaf from '@/components/ui/FloatingLeaf';
 
 const certificates = [
-  { id: 1, title: 'Gultun Free', name: 'Gultun Free' },
+  { id: 1, title: 'Gluten Free', name: 'Gluten Free' },
   { id: 2, title: 'Pure, Natural', name: 'Vegan' },
   { id: 3, title: 'Clinical Tested', name: 'Ingredient' },
   { id: 4, title: 'GMO Free', name: 'GMO Free' },
