@@ -621,6 +621,13 @@ export default function ProductDetails({ product, relatedProducts }) {
                     <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Add to Cart</span>
                   </button>
                 </div>
+                <button 
+                  onClick={() => setBuyNowOpen(true)}
+                  className="w-full h-14 rounded-2xl bg-accent text-white flex items-center justify-center gap-3 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg shadow-accent/20"
+                >
+                  <Zap size={20} fill="currentColor" />
+                  <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Buy Now</span>
+                </button>
               </div>
               
               <div className="flex items-center justify-center gap-3 py-2">
@@ -831,18 +838,18 @@ export default function ProductDetails({ product, relatedProducts }) {
                   "Amla": { img: "/ingredients/Amla.webp", color: "bg-emerald-500" },
                   "Bahera": { img: "/ingredients/Bibhitaki.webp", color: "bg-amber-500" },
                   "Kala Namak": { img: "/ingredients/Kala_Namak-eng.webp", color: "bg-slate-400" },
-                  "Neem": { img: null, color: "bg-emerald-700" },
-                  "Karela": { img: null, color: "bg-emerald-600" },
-                  "Jamun": { img: null, color: "bg-purple-800" },
-                  "Gudmar": { img: null, color: "bg-emerald-600" },
-                  "Paneer Dodi": { img: null, color: "bg-emerald-500" },
-                  "Vijaysar": { img: null, color: "bg-amber-600" },
-                  "Methi": { img: null, color: "bg-emerald-600" },
-                  "Triphala": { img: null, color: "bg-amber-700" },
-                  "Gudmar (Gymnema Sylvestre)": { img: null, color: "bg-emerald-600" },
-                  "Karela (Bitter Gourd)": { img: null, color: "bg-emerald-600" },
-                  "Jamun (Java Plum)": { img: null, color: "bg-purple-800" },
-                  "Vijaysar (Indian Kino Tree)": { img: null, color: "bg-amber-600" },
+                  "Neem": { img: "/ingredients/neem.webp", color: "bg-emerald-700" },
+                  "Karela": { img: "/ingredients/karela.jpg", color: "bg-emerald-600" },
+                  "Jamun": { img: "/ingredients/jamun.jpg", color: "bg-purple-800" },
+                  "Gudmar": { img: "/ingredients/gurmar.webp", color: "bg-emerald-600" },
+                  "Paneer Dodi": { img: "/ingredients/panner godi.jfif", color: "bg-emerald-500" },
+                  "Vijaysar": { img: "/ingredients/vijaysar.jfif", color: "bg-amber-600" },
+                  "Methi": { img: "/ingredients/methi.jpg", color: "bg-emerald-600" },
+                  "Triphala": { img: "/ingredients/triphala.jpg", color: "bg-amber-700" },
+                  "Gudmar (Gymnema Sylvestre)": { img: "/ingredients/gurmar.webp", color: "bg-emerald-600" },
+                  "Karela (Bitter Gourd)": { img: "/ingredients/karela.jpg", color: "bg-emerald-600" },
+                  "Jamun (Java Plum)": { img: "/ingredients/jamun.jpg", color: "bg-purple-800" },
+                  "Vijaysar (Indian Kino Tree)": { img: "/ingredients/vijaysar.jfif", color: "bg-amber-600" },
                 };
                 return map[name] || { img: null, color: "bg-emerald-600" };
               };
