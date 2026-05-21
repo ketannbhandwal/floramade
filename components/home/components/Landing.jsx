@@ -49,11 +49,11 @@ export default function Landing() {
 
   return (
     <section className="relative w-full overflow-hidden bg-background">
-      <div className="overflow-hidden w-full aspect-[3/4] md:aspect-[3/1]" ref={emblaRef}>
+      <div className="overflow-hidden w-full aspect-[3/4] md:aspect-[2/1]" ref={emblaRef}>
         <div className="flex h-full">
           {slides.map((slide, index) => (
             <div key={index} className="relative flex-[0_0_100%] min-w-0 h-full">
-              <picture>
+              <picture className="relative block w-full h-full">
                 <source srcSet={`${slide.mobile}?v=2`} media="(max-width: 768px)" />
                 <Image 
                   src={`${slide.desktop}?v=2`} 
