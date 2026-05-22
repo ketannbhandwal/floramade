@@ -7,7 +7,14 @@ import toast from "react-hot-toast";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
-import { ShieldCheck, Truck, CreditCard, ChevronRight, MapPin, Plus } from "lucide-react";
+import {
+  ShieldCheck,
+  Truck,
+  CreditCard,
+  ChevronRight,
+  MapPin,
+  Plus,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
@@ -30,14 +37,44 @@ export default function CheckoutPage() {
   const [saveToProfile, setSaveToProfile] = useState(false);
   const [address, setAddress] = useState(() => {
     if (typeof window === "undefined") {
-      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+      return {
+        fullName: "",
+        phone: "",
+        addressLine: "",
+        city: "",
+        state: "",
+        pincode: "",
+      };
     }
     const saved = localStorage.getItem("fiveetatv-buy-now-address");
-    if (!saved) return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+    if (!saved)
+      return {
+        fullName: "",
+        phone: "",
+        addressLine: "",
+        city: "",
+        state: "",
+        pincode: "",
+      };
     try {
-      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "", ...JSON.parse(saved) };
+      return {
+        fullName: "",
+        phone: "",
+        addressLine: "",
+        city: "",
+        state: "",
+        pincode: "",
+        ...JSON.parse(saved),
+      };
     } catch {
-      return { fullName: "", phone: "", addressLine: "", city: "", state: "", pincode: "" };
+      return {
+        fullName: "",
+        phone: "",
+        addressLine: "",
+        city: "",
+        state: "",
+        pincode: "",
+      };
     }
   });
 
@@ -51,7 +88,7 @@ export default function CheckoutPage() {
       const data = await res.json();
       if (res.ok && data.addresses?.length > 0) {
         setSavedAddresses(data.addresses);
-        const defaultAddr = data.addresses.find(addr => addr.isDefault);
+        const defaultAddr = data.addresses.find((addr) => addr.isDefault);
         if (defaultAddr) {
           setSelectedAddressId(defaultAddr._id);
           setAddress({
@@ -82,17 +119,32 @@ export default function CheckoutPage() {
     setShowNewAddress(false);
   }
 
-  const selectedItems = useMemo(() => (buyNowItems.length ? buyNowItems : cartItems), [buyNowItems, cartItems]);
+  const selectedItems = useMemo(
+    () => (buyNowItems.length ? buyNowItems : cartItems),
+    [buyNowItems, cartItems],
+  );
   const subtotal = useMemo(
-    () => selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [selectedItems]
+    () =>
+      selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [selectedItems],
   );
   const shippingCost = useMemo(() => (subtotal >= 600 ? 0 : 50), [subtotal]);
-  const finalTotal = useMemo(() => subtotal + shippingCost, [subtotal, shippingCost]);
+  const finalTotal = useMemo(
+    () => subtotal + shippingCost,
+    [subtotal, shippingCost],
+  );
 
   async function placeCodOrder() {
     // Save address to profile if checkbox is checked
-    if (saveToProfile && address.fullName && address.phone && address.addressLine && address.city && address.state && address.pincode) {
+    if (
+      saveToProfile &&
+      address.fullName &&
+      address.phone &&
+      address.addressLine &&
+      address.city &&
+      address.state &&
+      address.pincode
+    ) {
       try {
         await fetch("/api/addresses", {
           method: "POST",
@@ -115,10 +167,16 @@ export default function CheckoutPage() {
     const res = await fetch("/api/orders/cod", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
+      body: JSON.stringify({
+        cartItems: selectedItems,
+        amount: finalTotal,
+        address,
+        marketingConsent,
+      }),
     });
     const data = await res.json();
-    if (!res.ok) return toast.error(data.message || "Failed to place COD order");
+    if (!res.ok)
+      return toast.error(data.message || "Failed to place COD order");
     toast.success("COD order placed successfully");
     localStorage.removeItem("fiveetatv-buy-now-items");
     localStorage.removeItem("fiveetatv-buy-now-address");
@@ -133,64 +191,133 @@ export default function CheckoutPage() {
     }
     if (paymentMethod === "cod") return placeCodOrder();
 
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    document.body.appendChild(script);
-    await new Promise((resolve) => (script.onload = resolve));
-
-    const orderRes = await fetch("/api/payment/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: finalTotal }),
+    // 1. Safely load Razorpay script
+    const isLoaded = await new Promise((resolve) => {
+      if (window.Razorpay) return resolve(true);
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
     });
-    const { order } = await orderRes.json();
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currency: "INR",
-      name: "Fiveetatv",
-      description: "Checkout Payment",
-      order_id: order.id,
-      handler: async (response) => {
-        // Save address to profile if checkbox is checked
-        if (saveToProfile && address.fullName && address.phone && address.addressLine && address.city && address.state && address.pincode) {
-          try {
-            await fetch("/api/addresses", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                fullName: address.fullName,
-                phone: address.phone,
-                addressLine: address.addressLine,
-                city: address.city,
-                state: address.state,
-                pincode: address.pincode,
-                isDefault: savedAddresses.length === 0,
-              }),
-            });
-          } catch (error) {
-            console.error("Failed to save address to profile:", error);
+    if (!isLoaded) {
+      return toast.error("Failed to load Razorpay SDK. Please check your connection.");
+    }
+
+    try {
+      // 2. Create Order
+      const orderRes = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: finalTotal }),
+      });
+      
+      const orderData = await orderRes.json();
+      if (!orderRes.ok || !orderData.order) {
+        throw new Error(orderData.message || "Failed to create order. Please check server logs.");
+      }
+      
+      const { order } = orderData;
+
+      // 3. Razorpay Options with UPI priority override
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_SedOXT7fC5vQmu", 
+        amount: order.amount,
+        currency: "INR",
+        name: "Fiveetatva", 
+        description: "Ayurvedic Wellness Products",
+        order_id: order.id,
+        prefill: {
+          name: address.fullName || "",
+          contact: address.phone || "",
+        },
+        config: {
+          display: {
+            blocks: {
+              upi_block: {
+                name: "Pay via UPI",
+                instruments: [
+                  {
+                    method: "upi" // Removed specific flows array to let Razorpay handle it natively
+                  },
+                ],
+              },
+              other_block: {
+                name: "Other Payment Methods",
+                instruments: [
+                  { method: "card" },
+                  { method: "netbanking" },
+                  { method: "wallet" },
+                ],
+              },
+            },
+            sequence: ["block.upi_block", "block.other_block"],
+            preferences: {
+              show_default_blocks: false,
+            },
+          },
+        },
+        theme: {
+          color: "#2B52E1", 
+        },
+        handler: async (response) => {
+          // Save address to profile if checkbox is checked
+          if (saveToProfile && address.fullName && address.phone && address.addressLine && address.city && address.state && address.pincode) {
+            try {
+              await fetch("/api/addresses", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  fullName: address.fullName,
+                  phone: address.phone,
+                  addressLine: address.addressLine,
+                  city: address.city,
+                  state: address.state,
+                  pincode: address.pincode,
+                  isDefault: savedAddresses.length === 0,
+                }),
+              });
+            } catch (error) {
+              console.error("Failed to save address to profile:", error);
+            }
           }
-        }
 
-        const verify = await fetch("/api/payment/verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...response, cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
-        });
-        if (verify.ok) {
-          toast.success("Order placed successfully");
-          localStorage.removeItem("fiveetatv-buy-now-items");
-          localStorage.removeItem("fiveetatv-buy-now-address");
-          if (!buyNowItems.length) clearCart();
-          router.push("/account");
-        } else {
-          toast.error("Payment verification failed");
-        }
-      },
-    };
-    new window.Razorpay(options).open();
+          const verify = await fetch("/api/payment/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...response, cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
+          });
+          if (verify.ok) {
+            toast.success("Order placed successfully");
+            localStorage.removeItem("fiveetatv-buy-now-items");
+            localStorage.removeItem("fiveetatv-buy-now-address");
+            if (!buyNowItems.length) clearCart();
+            router.push("/account");
+          } else {
+            toast.error("Payment verification failed");
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            console.log("Razorpay modal dismissed by user.");
+          },
+        },
+      };
+
+      if (!options.key) {
+        throw new Error("Razorpay Key is missing in frontend.");
+      }
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        toast.error(`Payment failed: ${response.error.description}`);
+      });
+      rzp.open();
+    } catch (error) {
+      console.error("Payment setup failed:", error);
+      toast.error(error.message || "Failed to initialize payment");
+    }
   }
 
   if (selectedItems.length === 0) {
@@ -198,7 +325,11 @@ export default function CheckoutPage() {
       <EmptyState
         title="No items to checkout"
         description="Add products to your cart before proceeding."
-        action={<Link href="/"><Button>Explore Collection</Button></Link>}
+        action={
+          <Link href="/">
+            <Button>Explore Collection</Button>
+          </Link>
+        }
       />
     );
   }
@@ -206,11 +337,14 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-[1400px] mx-auto px-6 pt-32 md:pt-40 pb-12 md:pb-24">
       <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-start">
-        
         <div className="space-y-12">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl font-light tracking-tight">Checkout</h1>
-            <p className="text-foreground/50 font-light">Please fill your delivery details before payment.</p>
+            <h1 className="text-4xl md:text-5xl font-light tracking-tight">
+              Checkout
+            </h1>
+            <p className="text-foreground/50 font-light">
+              Please fill your delivery details before payment.
+            </p>
           </div>
 
           {/* Delivery Address */}
@@ -219,12 +353,16 @@ export default function CheckoutPage() {
               <div className="h-10 w-10 rounded-full bg-accent/10 text-accent flex items-center justify-center">
                 <Truck size={20} />
               </div>
-              <h2 className="text-xl font-medium tracking-[0.01em]">Delivery Address</h2>
+              <h2 className="text-xl font-medium tracking-[0.01em]">
+                Delivery Address
+              </h2>
             </div>
-            
+
             {savedAddresses.length > 0 && !showNewAddress && (
               <div className="space-y-4">
-                <p className="text-sm text-foreground/60">Select a saved address or add a new one</p>
+                <p className="text-sm text-foreground/60">
+                  Select a saved address or add a new one
+                </p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {savedAddresses.map((addr) => (
                     <div
@@ -232,8 +370,8 @@ export default function CheckoutPage() {
                       onClick={() => selectAddress(addr)}
                       className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
                         selectedAddressId === addr._id
-                          ? 'border-accent bg-accent/5 shadow-md'
-                          : 'border-border bg-white hover:border-accent/30'
+                          ? "border-accent bg-accent/5 shadow-md"
+                          : "border-border bg-white hover:border-accent/30"
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -243,12 +381,22 @@ export default function CheckoutPage() {
                           )}
                         </div>
                         <div className="flex-1">
-                          <p className="font-medium text-foreground">{addr.fullName}</p>
-                          <p className="text-sm text-foreground/70">{addr.phone}</p>
-                          <p className="text-sm text-foreground/70 mt-1">{addr.addressLine}</p>
-                          <p className="text-sm text-foreground/70">{addr.city}, {addr.state} - {addr.pincode}</p>
+                          <p className="font-medium text-foreground">
+                            {addr.fullName}
+                          </p>
+                          <p className="text-sm text-foreground/70">
+                            {addr.phone}
+                          </p>
+                          <p className="text-sm text-foreground/70 mt-1">
+                            {addr.addressLine}
+                          </p>
+                          <p className="text-sm text-foreground/70">
+                            {addr.city}, {addr.state} - {addr.pincode}
+                          </p>
                           {addr.isDefault && (
-                            <span className="inline-block mt-2 text-xs font-bold text-accent uppercase tracking-wider">Default</span>
+                            <span className="inline-block mt-2 text-xs font-bold text-accent uppercase tracking-wider">
+                              Default
+                            </span>
                           )}
                         </div>
                       </div>
@@ -263,7 +411,7 @@ export default function CheckoutPage() {
                 </button>
               </div>
             )}
-            
+
             {showNewAddress && (
               <div className="space-y-4">
                 <button
@@ -273,12 +421,64 @@ export default function CheckoutPage() {
                   ← Back to saved addresses
                 </button>
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
-                  <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
-                  <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
-                  <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
-                  <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
-                  <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
+                  <Input
+                    label="Full Name"
+                    placeholder="e.g. John Doe"
+                    value={address.fullName}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        fullName: e.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    label="Phone Number"
+                    placeholder="e.g. 9876543210"
+                    value={address.phone}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="City"
+                    placeholder="e.g. New Delhi"
+                    value={address.city}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, city: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="State"
+                    placeholder="e.g. Delhi"
+                    value={address.state}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, state: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="Pincode"
+                    placeholder="e.g. 110001"
+                    value={address.pincode}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        pincode: e.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    label="Complete Address"
+                    placeholder="House No, Building, Street, Area"
+                    className="sm:col-span-2"
+                    value={address.addressLine}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        addressLine: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <div className="flex items-center gap-3">
                   <input
@@ -288,20 +488,77 @@ export default function CheckoutPage() {
                     onChange={(e) => setSaveToProfile(e.target.checked)}
                     className="w-5 h-5 rounded border-foreground/20"
                   />
-                  <label htmlFor="saveToProfile" className="text-sm text-foreground/70">Save this address to my profile for future orders</label>
+                  <label
+                    htmlFor="saveToProfile"
+                    className="text-sm text-foreground/70"
+                  >
+                    Save this address to my profile for future orders
+                  </label>
                 </div>
               </div>
             )}
-            
+
             {savedAddresses.length === 0 && (
               <div className="space-y-4">
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <Input label="Full Name" placeholder="e.g. John Doe" value={address.fullName} onChange={(e) => setAddress((prev) => ({ ...prev, fullName: e.target.value }))} />
-                  <Input label="Phone Number" placeholder="e.g. 9876543210" value={address.phone} onChange={(e) => setAddress((prev) => ({ ...prev, phone: e.target.value }))} />
-                  <Input label="City" placeholder="e.g. New Delhi" value={address.city} onChange={(e) => setAddress((prev) => ({ ...prev, city: e.target.value }))} />
-                  <Input label="State" placeholder="e.g. Delhi" value={address.state} onChange={(e) => setAddress((prev) => ({ ...prev, state: e.target.value }))} />
-                  <Input label="Pincode" placeholder="e.g. 110001" value={address.pincode} onChange={(e) => setAddress((prev) => ({ ...prev, pincode: e.target.value }))} />
-                  <Input label="Complete Address" placeholder="House No, Building, Street, Area" className="sm:col-span-2" value={address.addressLine} onChange={(e) => setAddress((prev) => ({ ...prev, addressLine: e.target.value }))} />
+                  <Input
+                    label="Full Name"
+                    placeholder="e.g. John Doe"
+                    value={address.fullName}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        fullName: e.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    label="Phone Number"
+                    placeholder="e.g. 9876543210"
+                    value={address.phone}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="City"
+                    placeholder="e.g. New Delhi"
+                    value={address.city}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, city: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="State"
+                    placeholder="e.g. Delhi"
+                    value={address.state}
+                    onChange={(e) =>
+                      setAddress((prev) => ({ ...prev, state: e.target.value }))
+                    }
+                  />
+                  <Input
+                    label="Pincode"
+                    placeholder="e.g. 110001"
+                    value={address.pincode}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        pincode: e.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    label="Complete Address"
+                    placeholder="House No, Building, Street, Area"
+                    className="sm:col-span-2"
+                    value={address.addressLine}
+                    onChange={(e) =>
+                      setAddress((prev) => ({
+                        ...prev,
+                        addressLine: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
                 <div className="flex items-center gap-3">
                   <input
@@ -311,7 +568,12 @@ export default function CheckoutPage() {
                     onChange={(e) => setSaveToProfile(e.target.checked)}
                     className="w-5 h-5 rounded border-foreground/20"
                   />
-                  <label htmlFor="saveToProfileNoAddresses" className="text-sm text-foreground/70">Save this address to my profile for future orders</label>
+                  <label
+                    htmlFor="saveToProfileNoAddresses"
+                    className="text-sm text-foreground/70"
+                  >
+                    Save this address to my profile for future orders
+                  </label>
                 </div>
               </div>
             )}
@@ -328,24 +590,38 @@ export default function CheckoutPage() {
 
             <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { id: "razorpay", label: "Online Payment", desc: "Cards, UPI, NetBanking" },
-                { id: "cod", label: "Cash on Delivery", desc: "Pay when you receive" },
+                {
+                  id: "razorpay",
+                  label: "Online Payment",
+                  desc: "Cards, UPI, NetBanking",
+                },
+                {
+                  id: "cod",
+                  label: "Cash on Delivery",
+                  desc: "Pay when you receive",
+                },
               ].map((method) => (
-                <label 
+                <label
                   key={method.id}
                   className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 flex flex-col gap-1 ${
-                    paymentMethod === method.id ? 'border-accent bg-accent/5 shadow-md' : 'border-border bg-white hover:border-accent/30'
+                    paymentMethod === method.id
+                      ? "border-accent bg-accent/5 shadow-md"
+                      : "border-border bg-white hover:border-accent/30"
                   }`}
                 >
-                  <input 
-                    type="radio" 
-                    name="paymentMethod" 
+                  <input
+                    type="radio"
+                    name="paymentMethod"
                     className="absolute top-4 right-4 accent-accent"
-                    checked={paymentMethod === method.id} 
-                    onChange={() => setPaymentMethod(method.id)} 
+                    checked={paymentMethod === method.id}
+                    onChange={() => setPaymentMethod(method.id)}
                   />
-                  <span className="font-bold text-sm uppercase tracking-[0.1em]">{method.label}</span>
-                  <span className="text-xs text-foreground/50 tracking-[0.01em]">{method.desc}</span>
+                  <span className="font-bold text-sm uppercase tracking-[0.1em]">
+                    {method.label}
+                  </span>
+                  <span className="text-xs text-foreground/50 tracking-[0.01em]">
+                    {method.desc}
+                  </span>
                 </label>
               ))}
             </div>
@@ -356,17 +632,29 @@ export default function CheckoutPage() {
         <aside className="lg:sticky lg:top-32 space-y-8">
           <div className="bg-foreground text-background rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            
-            <h2 className="text-2xl font-light mb-8 text-background">Order <span className="font-display italic text-accent">Summary</span></h2>
-            
+
+            <h2 className="text-2xl font-light mb-8 text-background">
+              Order{" "}
+              <span className="font-display italic text-accent">Summary</span>
+            </h2>
+
             <div className="space-y-6 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
               {selectedItems.map((item) => (
-                <div key={item.productId} className="flex justify-between gap-4 text-sm border-b border-background/20 pb-4">
+                <div
+                  key={item.productId}
+                  className="flex justify-between gap-4 text-sm border-b border-background/20 pb-4"
+                >
                   <div className="space-y-1">
-                    <p className="font-medium text-background/90 leading-tight">{item.name}</p>
-                    <p className="text-xs text-background/50 uppercase tracking-[0.1em]">Qty: {item.quantity}</p>
+                    <p className="font-medium text-background/90 leading-tight">
+                      {item.name}
+                    </p>
+                    <p className="text-xs text-background/50 uppercase tracking-[0.1em]">
+                      Qty: {item.quantity}
+                    </p>
                   </div>
-                  <span className="font-medium text-accent whitespace-nowrap">₹ {item.price * item.quantity}</span>
+                  <span className="font-medium text-accent whitespace-nowrap">
+                    ₹ {item.price * item.quantity}
+                  </span>
                 </div>
               ))}
             </div>
@@ -378,7 +666,13 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-background/60 font-light">Shipping</p>
-                <p className={shippingCost === 0 ? "text-accent font-medium" : "text-background/90"}>
+                <p
+                  className={
+                    shippingCost === 0
+                      ? "text-accent font-medium"
+                      : "text-background/90"
+                  }
+                >
                   {shippingCost === 0 ? "FREE" : `₹ ${shippingCost}`}
                 </p>
               </div>
@@ -389,33 +683,52 @@ export default function CheckoutPage() {
               )}
               <div className="flex justify-between items-end pt-4 border-t border-background/20">
                 <p className="text-background/60 font-light">Grand Total</p>
-                <p className="text-3xl font-light text-accent">₹ {finalTotal}</p>
+                <p className="text-3xl font-light text-accent">
+                  ₹ {finalTotal}
+                </p>
               </div>
             </div>
 
             <div className="space-y-4 mt-6">
               <label className="flex items-start gap-3 cursor-pointer group">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   className="mt-1 accent-accent rounded border-background/30"
                   checked={marketingConsent}
                   onChange={(e) => setMarketingConsent(e.target.checked)}
                 />
                 <span className="text-[11px] text-background/70 leading-relaxed group-hover:text-background transition-colors">
-                  I agree to receive marketing emails about new rituals and wellness tips.
+                  I agree to receive marketing emails about new rituals and
+                  wellness tips.
                 </span>
               </label>
 
               <p className="text-[10px] text-background/60 leading-relaxed">
-                By placing this order, you agree to Fiveetatv's <Link href="/terms" className="underline hover:text-accent transition-colors">Terms of Service</Link> and <Link href="/privacy-policy" className="underline hover:text-accent transition-colors">Privacy Policy</Link>.
+                By placing this order, you agree to Fiveetatv's{" "}
+                <Link
+                  href="/terms"
+                  className="underline hover:text-accent transition-colors"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="underline hover:text-accent transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                .
               </p>
             </div>
 
-            <button 
-              onClick={handlePayment} 
+            <button
+              onClick={handlePayment}
               className="w-full bg-accent text-background py-6 rounded-full font-bold uppercase tracking-[0.1em] text-xs hover:bg-accent/90 transition-all duration-500 shadow-xl mt-6"
             >
-              {paymentMethod === "cod" ? "Place COD Order" : "Pay with Razorpay"}
+              {paymentMethod === "cod"
+                ? "Place COD Order"
+                : "Pay with Razorpay"}
             </button>
 
             <div className="mt-6 flex items-center justify-center gap-2 text-background/40 text-[10px] uppercase tracking-[0.1em] font-bold">
@@ -424,14 +737,21 @@ export default function CheckoutPage() {
           </div>
 
           <div className="bg-muted p-8 rounded-3xl space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-[0.1em] text-foreground/40">Need Help?</h4>
-            <p className="text-xs text-foreground/60 leading-relaxed">Our practitioners are available for any questions regarding your ritual.</p>
-            <Link href="/contact" className="inline-flex items-center gap-2 text-xs font-bold text-accent hover:text-foreground transition-colors">
+            <h4 className="text-sm font-bold uppercase tracking-[0.1em] text-foreground/40">
+              Need Help?
+            </h4>
+            <p className="text-xs text-foreground/60 leading-relaxed">
+              Our practitioners are available for any questions regarding your
+              ritual.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 text-xs font-bold text-accent hover:text-foreground transition-colors"
+            >
               Contact Support <ChevronRight size={14} />
             </Link>
           </div>
         </aside>
-
       </div>
     </div>
   );
