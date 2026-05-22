@@ -68,7 +68,7 @@ const productsSeed = [
       }
     ],
     images: [
-      "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195351/Picsart_26-04-26_13-17-31-239.jpg_hdjoyf.jpg",
+      "https://res.cloudinary.com/dqk8v040t/image/upload/v1779373548/Ajwain_Ajwain_Saunf_Saunf_Hing_202605211955_aadeci.jpg",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195351/Picsart_26-04-26_13-20-49-621.jpg_fgd5tl.jpg",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195351/1777188300657_rebi6i.png",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195351/1777188683196_lxywjn.png",
@@ -146,7 +146,7 @@ const productsSeed = [
       }
     ],
     images: [
-      "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195353/Picsart_26-04-26_14-27-34-521.jpg_ouovdi.jpg",
+      "https://res.cloudinary.com/dqk8v040t/image/upload/v1779373549/Neem_Karela_Karela_Jamun_Jamun_202605211954_qzetr5.jpg",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195353/1777193733492_toeqjr.png",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195352/Picsart_26-04-26_14-30-55-002.jpg_luyjfr.jpg",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195352/Picsart_26-04-26_14-30-09-357.jpg_ikgqeh.jpg",
@@ -175,7 +175,7 @@ const productsSeed = [
       "Helps Detoxify Body*"
     ],
     featureImages: ["/feature/11.avif", "/feature/12.avif", "/feature/13.avif", "/feature/14.avif"],
-    ingredients: ["Gudmar (Gymnema Sylvestre)", "Karela (Bitter Gourd)", "Jamun (Java Plum)", "Vijaysar (Indian Kino Tree)"],
+    ingredients: ["Neem", "Karela", "Jamun", "Gudmar", "Paneer Dodi", "Vijaysar", "Methi", "Triphala"],
     usage: [
       "Take 1-2 capsules twice daily",
       "Consume 30 minutes before meals with lukewarm water",
@@ -229,7 +229,7 @@ const productsSeed = [
       }
     ],
      images: [
-      "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195353/Picsart_26-04-26_13-53-22-199.jpg_tke21d.jpg",
+      "https://res.cloudinary.com/dqk8v040t/image/upload/v1779373550/Gudmar__Gymnema_Sylvestre__Karela__Bitter_202605211951_rkcxac.jpg",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195352/1777191624646_yrtqkc.png",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195351/1777191660191_n51lsm.png",
       "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195352/Picsart_26-04-26_13-57-40-478.jpg_xwdg0j.jpg",
