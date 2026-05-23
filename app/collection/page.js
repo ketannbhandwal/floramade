@@ -2,20 +2,12 @@ import PageTransition from "@/components/ui/PageTransition";
 import CollectionContent from "./CollectionContent";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
-import { Metadata } from "next";
-import { unstable_cache } from 'next/cache';
 
-const getAllProductsCached = unstable_cache(
-  async () => {
-    await connectDB();
-    return await Product.find({ isVisible: true }).lean();
-  },
-  ['all-products'],
-  { revalidate: 3600, tags: ['products'] }
-);
+export const dynamic = "force-dynamic";
 
 async function getAllProducts() {
-  const products = await getAllProductsCached();
+  await connectDB();
+  const products = await Product.find({ isVisible: true }).lean();
   
   // Reorder products to put MadhuCurex Capsules at the end
   const capsuleProduct = products.find(p => p.name.includes("MadhuCurex Capsules"));

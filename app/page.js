@@ -4,6 +4,8 @@ import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import { seedProductsIfEmpty } from "@/lib/seed";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Fiveetatv | Premium Ayurvedic Wellness Products in Delhi, India",
   description: "Fiveetatv - Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur in Delhi, India. Shop natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
@@ -52,16 +54,34 @@ export const metadata = {
 };
 
 async function getProducts() {
+  console.log("\n========== [HOME PAGE] getProducts() START ==========");
+  
+  console.log("[HOME] Step 1: Connecting to DB...");
   await connectDB();
+  
+  console.log("[HOME] Step 2: Running seed (sync data.js → MongoDB)...");
   await seedProductsIfEmpty();
+  
+  console.log("[HOME] Step 3: Querying products from MongoDB...");
   const products = await Product.find({ isVisible: true }).lean();
+  
+  console.log(`[HOME] Step 4: Found ${products.length} products from MongoDB:`);
+  for (const p of products) {
+    console.log(`[HOME]   📦 ${p.slug}`);
+    console.log(`[HOME]      images[0]: ${p.images?.[0]?.substring(0, 80)}...`);
+    console.log(`[HOME]      images count: ${p.images?.length || 0}`);
+  }
   
   // Reorder products to put MadhuCurex Capsules at the end
   const capsuleProduct = products.find(p => p.name.includes("MadhuCurex Capsules"));
   const otherProducts = products.filter(p => !p.name.includes("MadhuCurex Capsules"));
   const sortedProducts = capsuleProduct ? [...otherProducts, capsuleProduct] : products;
   
-  return JSON.parse(JSON.stringify(sortedProducts));
+  const result = JSON.parse(JSON.stringify(sortedProducts));
+  console.log(`[HOME] Step 5: Returning ${result.length} products to component`);
+  console.log("========== [HOME PAGE] getProducts() END ==========\n");
+  
+  return result;
 }
 
 export default async function Home() {

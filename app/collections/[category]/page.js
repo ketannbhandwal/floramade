@@ -3,20 +3,12 @@ import ProductCard from "@/components/product/ProductCard";
 import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import CollectionContent from "./CollectionContent";
-import { Metadata } from "next";
-import { unstable_cache } from 'next/cache';
 
-const getProductsCached = unstable_cache(
-  async (category) => {
-    await connectDB();
-    return await Product.find({ category, isVisible: true }).lean();
-  },
-  ['collection-products'],
-  { revalidate: 3600, tags: ['products'] }
-);
+export const dynamic = "force-dynamic";
 
 async function getProducts(category) {
-  const products = await getProductsCached(category);
+  await connectDB();
+  const products = await Product.find({ category, isVisible: true }).lean();
   return JSON.parse(JSON.stringify(products));
 }
 
