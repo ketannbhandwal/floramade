@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import MuxPlayer from "@mux/mux-player-react";
+import Image from "next/image";
 
 const FALLBACK_VIDEO_ID = "rSHVqwhmN7h7TcJMz5sV4015UZ5KlXBtVBf6EQ1fs00uA";
 const FALLBACK_IMAGE = "https://res.cloudinary.com/dqk8v040t/image/upload/v1777195353/1777193733492_toeqjr.png";
@@ -69,10 +70,12 @@ export default function VideoSection({ products = [] }) {
             >
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent z-10" />
               
-              <img 
+              <Image 
                 src={imageFallback}
                 alt={`${productName} Video`}
-                className="w-full h-full object-contain bg-gradient-to-br from-gray-100 to-gray-200"
+                fill
+                sizes="(max-width: 1024px) 100vw, 80vw"
+                className="object-contain bg-gradient-to-br from-gray-100 to-gray-200"
               />
               
               <div className="absolute inset-0 flex items-center justify-center z-20">

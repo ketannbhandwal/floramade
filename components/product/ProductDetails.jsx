@@ -600,8 +600,14 @@ export default function ProductDetails({ product, relatedProducts }) {
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <img src="https://res.cloudinary.com/dqk8v040t/image/upload/v1778585412/pg_zs4xez.webp" alt="" className="w-full h-full object-cover rounded-2xl" />
+                <div className="relative w-full aspect-[5/1] overflow-hidden rounded-2xl">
+                  <Image 
+                    src="https://res.cloudinary.com/dqk8v040t/image/upload/v1778585412/pg_zs4xez.webp" 
+                    alt="Payment Gateway Trust Badges" 
+                    fill 
+                    className="object-contain" 
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
                 
                 <div className="grid grid-cols-[64px_1fr] gap-3">

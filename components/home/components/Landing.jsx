@@ -49,6 +49,9 @@ export default function Landing() {
 
   return (
     <section className="relative w-full overflow-hidden bg-background">
+      {/* Visually Hidden H1 for SEO and Screen Readers */}
+      <h1 className="sr-only">Fiveetatv - Premium Ayurvedic Wellness Products | Embrace Natural Wellness</h1>
+      
       <div className="overflow-hidden w-full aspect-[3/4] md:aspect-[2/1]" ref={emblaRef}>
         <div className="flex h-full">
           {slides.map((slide, index) => (

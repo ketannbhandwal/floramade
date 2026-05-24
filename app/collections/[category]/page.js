@@ -13,7 +13,7 @@ async function getProducts(category) {
 }
 
 export async function generateMetadata({ params }) {
-  const { category } = params;
+  const { category } = await params;
   const categoryTitle = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   
   return {
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CollectionPage({ params }) {
-  const { category } = params;
+  const { category } = await params;
   const products = await getProducts(category);
 
   return (

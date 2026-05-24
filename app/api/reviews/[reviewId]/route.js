@@ -7,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 
 export async function DELETE(request, { params }) {
   try {
-    const { reviewId } = params;
+    const { reviewId } = await params;
     const { productId } = await request.json();
 
     const cookieStore = await cookies();
@@ -62,7 +62,7 @@ export async function DELETE(request, { params }) {
 
 export async function PATCH(request, { params }) {
   try {
-    const { reviewId } = params;
+    const { reviewId } = await params;
     const { productId, approved } = await request.json();
 
     const cookieStore = await cookies();

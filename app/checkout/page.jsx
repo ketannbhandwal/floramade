@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import toast from "react-hot-toast";
@@ -18,6 +19,7 @@ import {
 import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const { cartItems, total, clearCart } = useCart();
   const [buyNowItems] = useState(() => {
     if (typeof window === "undefined") return [];
@@ -283,19 +285,20 @@ export default function CheckoutPage() {
             }
           }
 
-          const verify = await fetch("/api/payment/verify", {
+          const verifyRes = await fetch("/api/payment/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ...response, cartItems: selectedItems, amount: finalTotal, address, marketingConsent }),
           });
-          if (verify.ok) {
+          const verifyData = await verifyRes.json();
+          if (verifyRes.ok) {
             toast.success("Order placed successfully");
             localStorage.removeItem("fiveetatv-buy-now-items");
             localStorage.removeItem("fiveetatv-buy-now-address");
             if (!buyNowItems.length) clearCart();
             router.push("/account");
           } else {
-            toast.error("Payment verification failed");
+            toast.error(verifyData.message || "Payment verification failed");
           }
         },
         modal: {

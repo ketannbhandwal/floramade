@@ -7,6 +7,9 @@ export default async function sitemap() {
   
   const baseUrl = "https://fiveetatv.com";
   
+  // Extract unique categories dynamically from products
+  const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+  
   const staticPages = [
     {
       url: baseUrl,
@@ -34,6 +37,13 @@ export default async function sitemap() {
     },
   ];
 
+  const categoryPages = uniqueCategories.map((category) => ({
+    url: `${baseUrl}/collections/${category}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  }));
+
   const productPages = products.map((product) => ({
     url: `${baseUrl}/product/${product.slug}`,
     lastModified: new Date(product.updatedAt || new Date()),
@@ -41,5 +51,5 @@ export default async function sitemap() {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...productPages];
+  return [...staticPages, ...categoryPages, ...productPages];
 }

@@ -19,6 +19,22 @@ export async function POST(req) {
     });
     return NextResponse.json({ order });
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    console.error("Error in create-order route:", error);
+    
+    let errorMessage = "Failed to create order";
+    if (error && typeof error === "object") {
+      if (error.error && error.error.description) {
+        errorMessage = error.error.description;
+        if (errorMessage.toLowerCase().includes("authentication failed")) {
+          errorMessage = "Razorpay Authentication failed. Please verify your RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env.local.";
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      } else if (error.description) {
+        errorMessage = error.description;
+      }
+    }
+    
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }
