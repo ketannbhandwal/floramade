@@ -4,10 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import PageTransition from "@/components/ui/PageTransition";
-import EmptyState from "@/components/ui/EmptyState";
 import CartItem from "@/components/cart/CartItem";
-import { ArrowRight, ShieldCheck, Truck } from "lucide-react";
-import FloatingLeaf from "@/components/ui/FloatingLeaf";
+import { ArrowRight, ShieldCheck, Truck, ShoppingBag } from "lucide-react";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, total } = useCart();
@@ -16,62 +14,64 @@ export default function CartPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20 relative overflow-hidden">
-        {/* Decorative Leaves */}
-        <FloatingLeaf 
-          type="single" 
-          className="w-16 h-16 md:w-24 md:h-24 top-20 right-10 opacity-20 rotate-[30deg]" 
-          delay={0.1} 
-        />
-        <FloatingLeaf 
-          type="double" 
-          className="w-20 h-20 md:w-32 md:h-32 bottom-40 -left-10 opacity-15 rotate-[-15deg]" 
-          delay={0.4} 
-        />
-        
-        <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+      <div className="min-h-[80vh] bg-[#FFF7EB] w-full pt-28 md:pt-36 pb-20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-12 md:mb-16 space-y-4"
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 md:mb-12"
           >
-            <h1 className="text-3xl md:text-4xl font-light tracking-tight">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="h-[1px] w-8 bg-[#872B10]" />
+              <span className="text-[10px] uppercase tracking-[0.08em] text-[#39160D]/50 font-semibold">Shopping Bag</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#39160D]">
               Your Cart
             </h1>
           </motion.div>
 
           {cartItems.length === 0 ? (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="py-16 border border-foreground/10 rounded-2xl bg-muted/50 flex flex-col items-center justify-center text-center space-y-6"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="py-16 sm:py-20 rounded-2xl bg-white border border-[#E8D9C5] flex flex-col items-center justify-center text-center space-y-5"
             >
-              <p className="text-base font-light text-foreground/60 max-w-md">Your cart is empty.</p>
-              <Link 
-                href="/" 
-                className="inline-flex items-center gap-2 h-10 px-6 rounded-full bg-primary text-background hover:bg-primary/80 transition-colors duration-300 font-light uppercase tracking-wider text-xs"
+              <div className="w-16 h-16 rounded-full bg-[#872B10]/8 flex items-center justify-center">
+                <ShoppingBag size={28} className="text-[#872B10]/40" />
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-base font-semibold text-[#39160D]/80 tracking-tight">Your cart is empty</p>
+                <p className="text-sm text-[#39160D]/50 tracking-tight">Explore our Ayurvedic wellness collection</p>
+              </div>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 h-11 px-7 rounded-full bg-[#39160D] text-[#FFF7EB] hover:bg-[#872B10] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
               >
-                Explore Collection <ArrowRight size={14} strokeWidth={1.5} />
+                Shop Now <ArrowRight size={14} strokeWidth={2} />
               </Link>
             </motion.div>
           ) : (
-            <div className="grid lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_450px] gap-16 lg:gap-24">
-              <div className="space-y-8">
-                <div className="hidden md:grid grid-cols-[auto_1fr_auto_auto] gap-8 pb-6 border-b border-foreground/10 text-xs uppercase tracking-[0.1em] text-foreground/50 font-medium">
-                  <span className="w-32">Product</span>
+            <div className="grid lg:grid-cols-[1fr_380px] gap-8 lg:gap-12">
+              {/* Cart Items */}
+              <div>
+                {/* Table Header - Desktop */}
+                <div className="hidden md:grid grid-cols-[auto_1fr_auto_auto] gap-8 pb-4 border-b border-[#E8D9C5] text-[10px] uppercase tracking-[0.08em] text-[#39160D]/40 font-bold">
+                  <span className="w-24">Product</span>
                   <span>Details</span>
-                  <span className="w-32 text-center">Quantity</span>
-                  <span className="w-24 text-right">Total</span>
+                  <span className="w-28 text-center">Quantity</span>
+                  <span className="w-20 text-right">Total</span>
                 </div>
-                <div className="space-y-6">
+
+                <div className="divide-y divide-[#E8D9C5]/60">
                   {cartItems.map((item, i) => (
                     <motion.div
                       key={item.productId}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      transition={{ duration: 0.4, delay: i * 0.08 }}
                     >
                       <CartItem item={item} onUpdateQuantity={updateQuantity} onRemove={removeFromCart} />
                     </motion.div>
@@ -79,48 +79,51 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <motion.aside 
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="h-fit rounded-2xl border border-foreground/10 bg-white/50 p-8 lg:sticky lg:top-32 space-y-6 backdrop-blur-md"
+              {/* Order Summary */}
+              <motion.aside
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="h-fit rounded-2xl border border-[#E8D9C5] bg-white p-6 sm:p-7 lg:sticky lg:top-32 space-y-5"
               >
-                <h2 className="text-xl font-display italic text-accent">Order Summary</h2>
-                
-                <div className="space-y-4 text-foreground/80 font-light">
+                <h2 className="text-lg font-bold tracking-tight text-[#39160D]">Order Summary</h2>
+
+                <div className="space-y-3 text-sm text-[#39160D]/70 tracking-tight">
                   <div className="flex justify-between items-center">
-                    <span>Subtotal</span> 
-                    <span>₹{total}</span>
+                    <span>Subtotal</span>
+                    <span className="font-semibold text-[#39160D]">₹{total.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>Shipping</span> 
-                    <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                    <span>Shipping</span>
+                    <span className={shipping === 0 ? "font-bold text-[#872B10] text-xs uppercase tracking-[0.04em]" : "font-semibold text-[#39160D]"}>
+                      {shipping === 0 ? "Free" : `₹${shipping}`}
+                    </span>
                   </div>
                   {shipping > 0 && (
-                    <p className="text-xs text-accent/80 pt-2">Add ₹{1500 - total} more for free shipping</p>
+                    <p className="text-xs text-[#872B10]/70 tracking-tight">Add ₹{1500 - total} more for free shipping</p>
                   )}
-                  
-                  <div className="flex justify-between items-center pt-6 border-t border-foreground/10 text-xl text-foreground font-medium">
-                    <span>Total</span> 
-                    <span>₹{grandTotal}</span>
+
+                  <div className="flex justify-between items-center pt-4 border-t border-[#E8D9C5]">
+                    <span className="font-bold text-[#39160D] text-base tracking-tight">Total</span>
+                    <span className="font-bold text-[#39160D] text-xl tracking-tight">₹{grandTotal.toLocaleString()}</span>
                   </div>
                 </div>
 
-                <Link 
-                  href="/checkout" 
-                  className="w-full h-11 rounded-full bg-accent text-background flex items-center justify-center gap-3 hover:bg-accent/90 transition-colors duration-300 font-light uppercase tracking-[0.1em] text-xs"
+                <Link
+                  href="/checkout"
+                  className="w-full h-12 rounded-full bg-[#39160D] text-[#FFF7EB] flex items-center justify-center gap-2.5 hover:bg-[#872B10] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
                 >
-                  Checkout <ArrowRight size={14} strokeWidth={1.5} />
+                  Checkout <ArrowRight size={14} strokeWidth={2} />
                 </Link>
 
-                <div className="space-y-4 pt-6 border-t border-foreground/10">
-                  <div className="flex items-center gap-3 text-sm text-foreground/60">
-                    <ShieldCheck size={18} className="text-accent" />
+                <div className="space-y-2.5 pt-4 border-t border-[#E8D9C5]">
+                  <div className="flex items-center gap-2.5 text-xs text-[#39160D]/50 tracking-tight">
+                    <ShieldCheck size={15} className="text-[#872B10]/60 flex-shrink-0" />
                     <span>Secure encrypted checkout</span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground/60">
-                    <Truck size={18} className="text-accent" />
-                    <span>Free shipping over ₹1500</span>
+                  <div className="flex items-center gap-2.5 text-xs text-[#39160D]/50 tracking-tight">
+                    <Truck size={15} className="text-[#872B10]/60 flex-shrink-0" />
+                    <span>Free shipping over ₹1,500</span>
                   </div>
                 </div>
               </motion.aside>

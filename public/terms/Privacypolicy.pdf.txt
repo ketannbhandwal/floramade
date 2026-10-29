@@ -2,7 +2,7 @@
 
 Privacy Policy
 Effective Date: 17-April-2026
-At Fiveetatv, we value your trust and are committed to protecting your personal information. This Privacy Policy 
+At Floramade, we value your trust and are committed to protecting your personal information. This Privacy Policy 
 explains how we collect, use, and safeguard your data when you visit or make a purchase from our website.
 Information We Collect
 When you use our website, we may collect the following information:
@@ -31,7 +31,7 @@ While we follow industry-standard security practices and work with trusted servi
 transmission over the internet or electronic storage can be guaranteed to be completely secure.
 Third-Party Services & Limitation of Liability
 Our website may use third-party services such as payment gateways, hosting providers, and logistics partners. 
-While we work with trusted providers, Fiveetatv shall not be held responsible for any data breaches, losses, or 
+While we work with trusted providers, Floramade shall not be held responsible for any data breaches, losses, or 
 unauthorized access arising from third-party systems or factors beyond our reasonable control.
 
 Cookies

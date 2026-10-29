@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import crypto from "crypto";
 import { cookies } from "next/headers";
@@ -15,8 +14,7 @@ export async function POST(request) {
       );
     }
 
-    await connectDB();
-
+  
     const user = await User.findOne({ email });
     
     // Always return success even if user doesn't exist (security best practice)

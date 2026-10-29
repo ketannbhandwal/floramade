@@ -41,7 +41,7 @@ const fadeUp = {
 
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5EF] pt-24 md:pt-32 relative overflow-hidden">
+    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32 relative overflow-hidden">
       {/* Decorative Leaves */}
       <FloatingLeaf 
         type="branch" 
@@ -57,12 +57,12 @@ export default function PolicyPage() {
       {/* Hero Section */}
       <section className="px-6 py-20 text-center relative overflow-hidden">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#2F3E36]">Our Policies</h1>
-          <p className="text-[#2F3E36]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
+          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Our Policies</h1>
+          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
             Clarity and transparency in every step of your journey.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#7A9E7E]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
       {/* Policies Grid */}
@@ -77,17 +77,17 @@ export default function PolicyPage() {
               transition={{ delay: idx * 0.1 }}
             >
               <Link href={policy.href} className="group block h-full">
-                <div className="p-10 rounded-[2.5rem] bg-white border border-[#2F3E36]/5 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] h-full flex flex-col justify-between hover:-translate-y-2 transition-all duration-500 group-hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)]">
+                <div className="p-10 rounded-[2.5rem] bg-white border border-[#17140f]/5 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] h-full flex flex-col justify-between hover:-translate-y-2 transition-all duration-500 group-hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)]">
                   <div className="space-y-6">
-                    <div className="h-16 w-16 rounded-3xl bg-[#7A9E7E]/10 flex items-center justify-center text-[#7A9E7E] group-hover:bg-[#7A9E7E] group-hover:text-white transition-colors duration-500">
+                    <div className="h-16 w-16 rounded-3xl bg-[#b18a3b]/10 flex items-center justify-center text-[#b18a3b] group-hover:bg-[#b18a3b] group-hover:text-white transition-colors duration-500">
                       <policy.icon size={32} strokeWidth={1.5} />
                     </div>
                     <div className="space-y-4">
-                      <h3 className="text-3xl font-light italic font-display text-[#2F3E36]">{policy.title}</h3>
-                      <p className="text-[#2F3E36]/50 font-light leading-relaxed">{policy.description}</p>
+                      <h3 className="text-3xl font-light italic font-display text-[#17140f]">{policy.title}</h3>
+                      <p className="text-[#17140f]/50 font-light leading-relaxed">{policy.description}</p>
                     </div>
                   </div>
-                  <div className="pt-8 flex items-center gap-2 text-[#7A9E7E] font-medium text-sm uppercase tracking-widest overflow-hidden">
+                  <div className="pt-8 flex items-center gap-2 text-[#b18a3b] font-medium text-sm uppercase tracking-widest overflow-hidden">
                     Read Policy 
                     <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </div>

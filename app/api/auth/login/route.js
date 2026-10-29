@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import { comparePassword, signToken } from "@/lib/auth";
-import { seedDefaultAdmin } from "@/lib/seed";
+import { signToken } from "@/lib/auth";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req) {
   try {
@@ -10,13 +9,10 @@ export async function POST(req) {
     if (!email || !password) {
       return NextResponse.json({ message: "Email and password are required" }, { status: 400 });
     }
-    await connectDB();
-    await seedDefaultAdmin();
-    const user = await User.findOne({ email });
-    if (!user) return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
-
-    const valid = await comparePassword(password, user.password);
-    if (!valid) return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
+      const { data: authData, error: authError } = await getSupabaseAdmin().auth.signInWithPassword({ email: email.toLowerCase(), password });
+    if (authError || !authData.user) return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
+    const user = await User.findById(authData.user.id);
+    if (!user) return NextResponse.json({ message: "Account profile not found" }, { status: 403 });
 
     const token = signToken({ id: user._id, email: user.email, role: user.role, name: user.name });
     const res = NextResponse.json({

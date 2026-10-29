@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import { hashPassword, signToken } from "@/lib/auth";
+import { signToken } from "@/lib/auth";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req) {
   try {
@@ -19,14 +19,22 @@ export async function POST(req) {
       return NextResponse.json({ message: "Phone must be 10 digits" }, { status: 400 });
     }
 
-    await connectDB();
-    const existing = await User.findOne({ email });
+      const existing = await User.findOne({ email });
     if (existing) {
       return NextResponse.json({ message: "User already exists" }, { status: 409 });
     }
 
-    const hashed = await hashPassword(password);
-    const user = await User.create({ name, email, phone, password: hashed, marketingConsent: Boolean(marketingConsent) });
+    const { data: authData, error: authError } = await getSupabaseAdmin().auth.admin.createUser({
+      email: email.toLowerCase(), password, email_confirm: true, user_metadata: { name, phone },
+    });
+    if (authError) return NextResponse.json({ message: authError.message }, { status: 400 });
+    let user;
+    try {
+      user = await User.create({ _id: authData.user.id, name, email: email.toLowerCase(), phone, marketingConsent: Boolean(marketingConsent), role: "user" });
+    } catch (profileError) {
+      await getSupabaseAdmin().auth.admin.deleteUser(authData.user.id);
+      throw profileError;
+    }
     const token = signToken({ id: user._id, email: user.email, role: user.role, name: user.name });
 
     const res = NextResponse.json({ message: "Registered", user: { name: user.name, email, phone: user.phone, role: user.role } });

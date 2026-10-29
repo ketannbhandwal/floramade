@@ -6,9 +6,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import toast from "react-hot-toast";
-import { ShoppingBag, Heart, ArrowUpRight } from "lucide-react";
-
-const BLUR_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k=";
+import { ShoppingBag, Heart, Star } from "lucide-react";
 
 function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -16,92 +14,124 @@ function ProductCard({ product }) {
 
   const handleWishlist = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (isInWishlist(product._id)) {
       removeFromWishlist(product._id);
-      toast.success("Removed");
+      toast.success("Removed from favorites");
     } else {
       addToWishlist(product);
       toast.success("Saved to favorites");
     }
   }, [product._id, isInWishlist, addToWishlist, removeFromWishlist]);
 
-  const handleAddToCart = useCallback(() => {
+  const handleAddToCart = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
     addToCart(product);
     toast.success("Added to Bag");
   }, [product, addToCart]);
 
-  return (
-    <div className="group flex flex-col w-full transition-all duration-500">
-      {/* 1. Image Container - The Visual Hero */}
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-        <Link href={`/product/${product.slug}`} className="block h-full w-full">
-          <Image
-            src={product.images?.[0] || "/placeholder.jpg"}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            quality={95}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMCwsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQCEAwEPwAB//9k="
-            className="object-cover transition-transform duration-1000 group-hover:scale-105"
-          />
-        </Link>
+  const productImage = product.images?.[0]
+    || product.featureImages?.[0]
+    || product.formulaimage
+    || "/placeholder.png";
 
-        {/* Permanent Top Actions */}
-        <div className="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
-          <span className="pointer-events-auto px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-widest font-bold text-black rounded-full shadow-sm">
-            {product.category || "Organic"}
-          </span>
-          
+  const currentPrice = Number(product.discountPrice || product.price || 0);
+  const regularPrice = Number(product.price || currentPrice);
+  const hasDiscount = regularPrice > currentPrice;
+  const savings = hasDiscount ? regularPrice - currentPrice : 0;
+  const rating = Number(product.rating || 4.8).toFixed(1);
+  const reviewsCount = product.reviewsCount || product.reviews?.length || 48;
+
+  return (
+    <div className="group relative flex flex-col h-full bg-transparent rounded-2xl border border-[#E8D9C5] hover:border-[#872B10]/40 transition-all duration-300 overflow-hidden shadow-xs hover:shadow-md">
+      
+      {/* 1. TOP STAGE: Natural Website Background (No White Box, No Tinted BG) */}
+      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-transparent">
+        
+        {/* Top-Right Badges: Discount Tag & Wishlist */}
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+          {hasDiscount && (
+            <span className="bg-[#872B10] text-[#FFF7EB] text-[10px] font-bold uppercase tracking-tight px-2 py-0.5 rounded shadow-xs">
+              SAVE ₹{savings}
+            </span>
+          )}
           <button
+            type="button"
             onClick={handleWishlist}
-            className="pointer-events-auto w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm active:scale-90 transition-transform"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/80 backdrop-blur-sm border border-[#E8D9C5] flex items-center justify-center shadow-xs text-[#39160D] hover:text-[#872B10] hover:scale-105 active:scale-90 transition-all cursor-pointer"
+            aria-label="Save to Wishlist"
           >
             <Heart 
-              size={16} 
-              className={isInWishlist(product._id) ? "fill-red-500 text-red-500" : "text-black/40"} 
+              size={14} 
+              className={isInWishlist(product._id) ? "fill-[#872B10] text-[#872B10]" : "text-[#39160D]/60"} 
             />
           </button>
         </div>
 
-        {/* Permanent Quick Add - Minimalist Floating Pill */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center px-4">
-          <button
-            onClick={handleAddToCart}
-            className="w-full max-w-[160px] py-3 bg-black/90 backdrop-blur-md text-white rounded-full flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all"
-          >
-            <ShoppingBag size={14} strokeWidth={2.5} />
-            <span className="text-[10px] uppercase tracking-[0.15em] font-bold">Quick Add</span>
-          </button>
-        </div>
+        {/* Product Bottle on Natural Website Background */}
+        <Link href={`/product/${product.slug}`} className="relative block w-full h-full">
+          <Image
+            src={productImage}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 280px, (max-width: 1024px) 50vw, 25vw"
+            quality={90}
+            className="object-contain select-none transition-transform duration-500 group-hover:scale-105"
+          />
+        </Link>
       </div>
 
-      {/* 2. Info Section - Editorial Spacing */}
-      <div className="pt-5 pb-2 px-1">
-        <div className="flex justify-between items-start gap-4">
-          <div className="flex-1 space-y-1">
-            <Link href={`/product/${product.slug}`}>
-              <h3 className="text-lg font-serif text-[#1A1A1A] leading-tight group-hover:text-emerald-900 transition-colors">
-                {product.name}
-              </h3>
-            </Link>
-            <div className="flex items-center gap-2">
-              <span className="text-base font-medium text-black">₹{product.discountPrice}</span>
-              {product.price > product.discountPrice && (
-                <span className="text-xs text-black/30 line-through font-light">₹{product.price}</span>
-              )}
+      {/* 2. BOTTOM STAGE: Subtle Background ONLY for Text & Actions */}
+      <div className="flex flex-col flex-1 justify-between bg-white/60 backdrop-blur-sm p-4 sm:p-5 border-t border-[#E8D9C5]/70 space-y-3">
+        <div className="space-y-1.5">
+          {/* Title */}
+          <Link href={`/product/${product.slug}`} className="block">
+            <h3 className="text-sm sm:text-[15px] font-semibold text-[#39160D] group-hover:text-[#872B10] transition-colors line-clamp-2 leading-snug min-h-[40px] tracking-tight">
+              {product.name}
+            </h3>
+          </Link>
+
+          {/* Rating */}
+          <div className="flex items-center gap-1.5 pt-0.5">
+            <div className="flex items-center text-amber-500">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
+              ))}
             </div>
+            <span className="text-xs font-bold text-[#39160D]">{rating}</span>
+            <span className="text-[11px] text-[#39160D]/50">({reviewsCount} ratings)</span>
           </div>
 
-          {/* Luxury Navigation Hint */}
-          <Link 
-            href={`/product/${product.slug}`}
-            className="w-10 h-10 border border-black/5 rounded-full flex items-center justify-center text-black/20 group-hover:text-black group-hover:border-black/20 transition-all"
-          >
-            <ArrowUpRight size={20} strokeWidth={1.5} />
-          </Link>
+          {/* Price */}
+          <div className="flex items-baseline gap-2 pt-0.5">
+            <span className="text-base sm:text-lg font-bold text-[#39160D]">
+              ₹{currentPrice.toLocaleString("en-IN")}
+            </span>
+            {hasDiscount && (
+              <span className="text-xs text-[#39160D]/40 line-through">
+                ₹{regularPrice.toLocaleString("en-IN")}
+              </span>
+            )}
+          </div>
+
+          {/* Shipping / Trust line */}
+          <p className="text-[11px] text-[#39160D]/60 flex items-center gap-1 tracking-tight">
+            <span className="text-emerald-700 font-bold">✓</span> Free Shipping Across India
+          </p>
         </div>
+
+        {/* CTA Button */}
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className="w-full py-2.5 px-4 bg-[#39160D] hover:bg-[#872B10] text-[#FFF7EB] rounded-full flex items-center justify-center gap-2 font-medium text-xs sm:text-sm uppercase tracking-tight active:scale-95 transition-all duration-200 cursor-pointer shadow-xs"
+        >
+          <ShoppingBag size={14} strokeWidth={2.2} />
+          <span>Add to Bag</span>
+        </button>
       </div>
+
     </div>
   );
 }

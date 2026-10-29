@@ -46,7 +46,7 @@ export default function AboutPage() {
           >
             <Image 
               src="/assets/about.jpg" 
-              alt="About Fiveetatv" 
+              alt="About Floramade" 
               fill 
               className="object-cover opacity-60"
               priority
@@ -82,12 +82,12 @@ export default function AboutPage() {
 
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-20 md:py-32 space-y-24">
           
-          {/* --- ABOUT FIVEETATV --- */}
+          {/* --- ABOUT FLORAMADE --- */}
           <motion.section {...fadeUp} className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-light leading-tight">
-                  About Fiveetatv
+                  About Floramade
                 </h2>
                 <div className="flex items-center gap-2 text-sm text-foreground/50">
                   <Globe size={14} />
@@ -96,10 +96,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-6 text-foreground/60 font-light text-base leading-relaxed">
                 <p>
-                  <span className="text-foreground font-medium">Fiveetatv</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Rahul Gour & Suraj Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
+                  <span className="text-foreground font-medium">Floramade</span> is an Ayurvedic wellness brand founded by <span className="text-foreground font-medium">Suresh Gaur</span> in Delhi, India. With a mission to provide natural and effective Ayurvedic products for a healthier lifestyle, we are committed to bringing the ancient wisdom of Ayurveda to modern wellness routines.
                 </p>
                 <p>
-                  At Fiveetatv, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
+                  At Floramade, we focus on quality, purity, and traditional Ayurvedic formulations to ensure the best results for our customers. Our journey is rooted in the principles of the five elements—Akasha, Vayu, Agni, Jala, and Prithvi—striving to harmonize these fundamental forces within the human body.
                 </p>
                 <p>
                   We bridge the gap between traditional Ayurvedic wisdom and modern health needs by combining authentic formulations with rigorous scientific standardization. Every product is crafted with intention, using ethically sourced botanicals and time-tested recipes from classical Ayurvedic texts.
@@ -131,18 +131,17 @@ export default function AboutPage() {
             </div>
           </motion.section>
 
-          {/* --- FOUNDERS --- */}
+          {/* --- FOUNDER --- */}
           <motion.section {...fadeUp} className="space-y-12">
             <div className="text-center space-y-4 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-light">Our Founders</h2>
+              <h2 className="text-3xl md:text-4xl font-light">Our Founder</h2>
               <p className="text-foreground/60 font-light text-base">
-                The visionaries behind Fiveetatv's mission to bring authentic Ayurvedic wellness to the modern world.
+                The visionary behind Floramade's mission to bring authentic Ayurvedic wellness to the modern world.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="max-w-2xl mx-auto">
               {[
-                { name: "Rahul Gour", role: "Co-Founder", desc: "Passionate about bringing traditional Ayurvedic wisdom to modern wellness solutions with a focus on purity and authenticity." },
-                { name: "Suraj Gaur", role: "Co-Founder", desc: "Dedicated to creating high-quality Ayurvedic formulations that bridge ancient knowledge with contemporary health needs." },
+                { name: "Suresh Gaur", role: "Founder", desc: "Dedicated to creating high-quality Ayurvedic formulations that bridge ancient knowledge with contemporary health needs, bringing purity and authentic wellness to every home." },
               ].map((founder, i) => (
                 <motion.div 
                   key={founder.name}
@@ -228,7 +227,7 @@ export default function AboutPage() {
           <motion.section {...fadeUp} className="bg-foreground rounded-2xl p-12 md:p-16 text-background relative overflow-hidden">
             <div className="relative z-10 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-light">Why Choose Fiveetatv?</h2>
+                <h2 className="text-3xl md:text-4xl font-light">Why Choose Floramade?</h2>
                 <p className="text-background/70 text-base font-light leading-relaxed max-w-md">
                   In a world of generic supplements, we offer precision wellness rooted in authenticity.
                 </p>

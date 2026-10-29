@@ -1,34 +1,39 @@
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
+  { href: "/collection", label: "All Products" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
 export const PRODUCT_CATEGORIES = [
   {
-    label: "Diabetes Support",
+    label: "Diabetes Care",
     hasDropdown: true,
+    href: "/collections/diabetes",
     subLinks: [
       {
         label: "MadhuCurex Powder",
-        description: "For Sugar",
+        description: "15-Herb Ayurvedic Blend for Sugar Control",
         href: "/product/madhucurex-powder"
       },
       {
-        label: "MadhuCurex Capsule",
-        description: "For Sugar",
+        label: "MadhuCurex Capsules",
+        description: "Advanced Glucose & Insulin Sensitivity Support",
         href: "/product/madhucurex-capsules"
       }
     ]
   },
   {
     label: "Digestive Health",
-    href: "/product/paachan-sathi-powder"
+    hasDropdown: false,
+    href: "/product/paachan-sathi-powder",
+    description: "Instant relief for gastric & digestive wellness"
   }
 ];
 
 export const SEARCH_PAGES = [
-  { href: "/about", title: "About Fiveetatv", description: "Brand philosophy and our wellness mission." },
+  { href: "/collection", title: "All Products", description: "Explore the entire Floramade Ayurvedic range." },
+  { href: "/about", title: "About Floramade", description: "Brand philosophy, founder, and our wellness mission." },
   { href: "/contact", title: "Contact", description: "Support, wholesale, and order help." },
   { href: "/privacy-policy", title: "Privacy Policy", description: "How we protect user data." },
   { href: "/terms", title: "Terms & Conditions", description: "Order and platform terms." },

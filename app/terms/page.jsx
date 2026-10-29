@@ -13,16 +13,16 @@ const fadeUp = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#F8F5EF] pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32">
       {/* Hero Section */}
       <section className="px-6 py-20 text-center relative overflow-hidden">
         <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#2F3E36]">Terms & Conditions</h1>
-          <p className="text-[#2F3E36]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
+          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Terms & Conditions</h1>
+          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
             Ethical guidelines for a trusted wellness partnership.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#7A9E7E]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
       {/* Intro Section - (Light) */}
@@ -36,9 +36,9 @@ export default function TermsPage() {
               className="space-y-8"
             >
               <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-light italic font-display text-[#2F3E36]">Agreement to Terms</h2>
-                <p className="text-[#2F3E36]/60 font-light leading-relaxed">
-                  By accessing and using the Fiveetatv website, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+                <h2 className="text-4xl md:text-5xl font-light italic font-display text-[#17140f]">Agreement to Terms</h2>
+                <p className="text-[#17140f]/60 font-light leading-relaxed">
+                  By accessing and using the Floramade website, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
                 </p>
               </div>
 
@@ -47,10 +47,10 @@ export default function TermsPage() {
                   { icon: UserCheck, title: "Eligibility", text: "You must be at least 18 years of age or using the site under the supervision of a parent or guardian." },
                   { icon: ShieldAlert, title: "Account Responsibility", text: "Users are responsible for maintaining the confidentiality of their account information and all activities under their account." }
                 ].map((item, idx) => (
-                  <div key={idx} className="p-8 rounded-3xl bg-white border border-[#2F3E36]/5 shadow-sm space-y-4">
-                    <item.icon size={24} className="text-[#7A9E7E]" />
-                    <h4 className="text-xl font-medium text-[#2F3E36]">{item.title}</h4>
-                    <p className="text-sm text-[#2F3E36]/50 font-light leading-relaxed">{item.text}</p>
+                  <div key={idx} className="p-8 rounded-3xl bg-white border border-[#17140f]/5 shadow-sm space-y-4">
+                    <item.icon size={24} className="text-[#b18a3b]" />
+                    <h4 className="text-xl font-medium text-[#17140f]">{item.title}</h4>
+                    <p className="text-sm text-[#17140f]/50 font-light leading-relaxed">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -60,10 +60,10 @@ export default function TermsPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[#2F3E36] p-12 flex items-center justify-center text-center"
+              className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[#17140f] p-12 flex items-center justify-center text-center"
             >
               <div className="space-y-8">
-                <Scale size={100} className="mx-auto text-[#7A9E7E]/30" />
+                <Scale size={100} className="mx-auto text-[#b18a3b]/30" />
                 <div className="space-y-2">
                   <h3 className="text-3xl font-light italic text-white/90">Legal Framework</h3>
                   <p className="text-white/40 font-light text-sm max-w-xs mx-auto uppercase tracking-widest">Governed by the laws of India</p>
@@ -75,7 +75,7 @@ export default function TermsPage() {
       </section>
 
       {/* Product & Pricing - Section (Dark) */}
-      <section className="py-24 px-6 bg-[#2F3E36] text-white">
+      <section className="py-24 px-6 bg-[#17140f] text-white">
         <div className="max-w-6xl mx-auto space-y-20">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-5xl font-light italic font-display">Product & Pricing</h2>
@@ -108,7 +108,7 @@ export default function TermsPage() {
                 transition={{ delay: idx * 0.1 }}
                 className="p-10 rounded-[2.5rem] border border-white/10 bg-white/5 space-y-6 hover:bg-white/10 transition-colors duration-500"
               >
-                <item.icon size={28} className="text-[#7A9E7E]" />
+                <item.icon size={28} className="text-[#b18a3b]" />
                 <h3 className="text-2xl font-light font-display">{item.title}</h3>
                 <p className="text-sm text-white/50 font-light leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -124,15 +124,15 @@ export default function TermsPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="p-12 rounded-[3rem] bg-[#F8F5EF] space-y-8"
+            className="p-12 rounded-[3rem] bg-[#f7f4ed] space-y-8"
           >
-            <div className="h-16 w-16 rounded-3xl bg-[#7A9E7E]/10 flex items-center justify-center text-[#7A9E7E]">
+            <div className="h-16 w-16 rounded-3xl bg-[#b18a3b]/10 flex items-center justify-center text-[#b18a3b]">
               <Landmark size={32} />
             </div>
             <div className="space-y-4">
-              <h3 className="text-3xl font-light italic font-display text-[#2F3E36]">Limitation of Liability</h3>
-              <p className="text-sm text-[#2F3E36]/60 font-light leading-relaxed">
-                Fiveetatv shall not be held liable for any indirect, incidental, or consequential damages resulting from the use or misuse of our products. Users are advised to follow usage guidelines strictly.
+              <h3 className="text-3xl font-light italic font-display text-[#17140f]">Limitation of Liability</h3>
+              <p className="text-sm text-[#17140f]/60 font-light leading-relaxed">
+                Floramade shall not be held liable for any indirect, incidental, or consequential damages resulting from the use or misuse of our products. Users are advised to follow usage guidelines strictly.
               </p>
             </div>
           </motion.div>
@@ -142,9 +142,9 @@ export default function TermsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="p-12 rounded-[3rem] bg-[#2F3E36] text-white space-y-8"
+            className="p-12 rounded-[3rem] bg-[#17140f] text-white space-y-8"
           >
-            <div className="h-16 w-16 rounded-3xl bg-white/10 flex items-center justify-center text-[#7A9E7E]">
+            <div className="h-16 w-16 rounded-3xl bg-white/10 flex items-center justify-center text-[#b18a3b]">
               <Scale size={32} />
             </div>
             <div className="space-y-4">

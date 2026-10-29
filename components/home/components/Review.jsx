@@ -1,183 +1,262 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import FloatingLeaf from '@/components/ui/FloatingLeaf';
+import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { Star, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
 
-const reviews = [
+const REVIEWS = [
   {
+    id: 1,
     name: "Mr. Shivansh",
     role: "Verified Customer",
-    text: "Maine 4 months se Fiveetatv products use kiye hain aur results bahut impressive hain. Mera overall health improve ho gaya hai aur energy level bhi stable hai. Natural formulation pe completely trust karta hoon.",
+    location: "Delhi",
+    rating: 5,
+    tag: "Overall Health",
+    text: "Maine 4 months se Floramade products use kiye hain aur results bahut impressive hain. Mera overall health improve ho gaya hai aur energy level bhi stable hai. Natural formulation pe completely trust karta hoon.",
     img: "/review/16.jpeg",
-    initials: "S"
+    initials: "S",
   },
   {
+    id: 2,
     name: "Mr. Vijay Kumar",
     role: "Verified Customer",
+    location: "Jaipur",
+    rating: 5,
+    tag: "Digestion",
     text: "Excellent products hain. Maine 2 months se use kar raha hoon aur digestion mein bahut improvement dekha. Pure ingredients hain aur koi side effects nahi. Highly recommend karta hoon.",
     img: "/review/1.jpeg",
-    initials: "VK"
+    initials: "VK",
   },
   {
-    name: "Mrs Badama Devi",
+    id: 3,
+    name: "Mrs. Badama Devi",
     role: "Verified Customer",
+    location: "Haryana",
+    rating: 5,
+    tag: "Sugar Balance",
     text: "Bahut acche results mile hain. Sugar control ke liye best hai. Doctor ne bhi recommend kiya tha. Regular use karne se bahut fayda hua hai. Quality outstanding hai.",
     img: "/review/2.jpeg",
-    initials: "BD"
+    initials: "BD",
   },
   {
+    id: 4,
     name: "Mr. Rajneesh",
     role: "Verified Customer",
+    location: "Lucknow",
+    rating: 5,
+    tag: "Gut Health",
     text: "Digestion ke liye excellent hai. Ab bloating nahi hoti! Digestive issues se years se struggle kar raha tha, aur ye products lifesaver nikle. Har meal ke baad lighter aur comfortable feel karta hoon.",
     img: "/review/4.jpeg",
-    initials: "R"
+    initials: "R",
   },
-  { 
-    name: "Mr. Birender Kumar", 
-    role: "Verified Customer", 
-    text: "Main 3 months se Fiveetatv products use kar raha hoon aur mera blood sugar level bahut improve ho gaya hai. Natural ingredients hain toh mind bhi peaceful rehta hai, aur ab mid-day mein energy crash nahi hota. Natural wellness ke liye highly recommend karta hoon.", 
+  {
+    id: 5,
+    name: "Mr. Birender Kumar",
+    role: "Verified Customer",
+    location: "Punjab",
+    rating: 5,
+    tag: "Metabolism",
+    text: "Main 3 months se Floramade products use kar raha hoon aur mera blood sugar level bahut improve ho gaya hai. Natural ingredients hain toh mind bhi peaceful rehta hai, aur ab mid-day mein energy crash nahi hota.",
     img: "/review/15.jpeg",
-    initials: "BK"
+    initials: "BK",
   },
-  { 
-    name: "Mr. Jamuna Bhardwaj", 
-    role: "Verified Customer", 
-    text: "2 weeks ke baad results bahut acche mil rahe hain. Mere sugar cravings kam ho gaye hain aur poora din energetic feel karta hoon. Products use karne mein easy hain aur koi bad taste nahi hai. Continue use karunga main.", 
+  {
+    id: 6,
+    name: "Mr. Jamuna Bhardwaj",
+    role: "Verified Customer",
+    location: "Chandigarh",
+    rating: 5,
+    tag: "Vitality",
+    text: "2 weeks ke baad results bahut acche mil rahe hain. Mere sugar cravings kam ho gaye hain aur poora din energetic feel karta hoon. Products use karne mein easy hain aur koi bad taste nahi hai.",
     img: "/review/14.jpeg",
-    initials: "JB" 
+    initials: "JB",
+  },
+  {
+    id: 7,
+    name: "Mrs. Sunita Sharma",
+    role: "Verified Customer",
+    location: "Indore",
+    rating: 5,
+    tag: "Sugar Control",
+    text: "MadhuCurex powder use karne ke baad fasting sugar readings me constant stability aayi hai. Ayurvedic jadibootiyan bilkul authentic hain aur packaging bhi premium hai. Bahut satisfied hoon.",
+    img: "/review/3.jpeg",
+    initials: "SS",
+  },
+  {
+    id: 8,
+    name: "Mr. Amit Patel",
+    role: "Verified Customer",
+    location: "Ahmedabad",
+    rating: 5,
+    tag: "Piles Relief",
+    text: "Pilecurex powder se 1 week me hi jalan aur pain me rahat mil gayi. Surgery se darr lag raha tha par is natural formula ne kamaal ka kaam kiya. Thank you Floramade!",
+    img: "/review/5.jpeg",
+    initials: "AP",
   },
 ];
 
-const Review = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState(0);
+export default function Review({ pretitle, title, subtitle, testimonials }) {
+  const items = Array.isArray(testimonials) && testimonials.length > 0 ? testimonials : REVIEWS;
+  const pre = pretitle || "Kind Words From Our Community";
+  const mainTitle = title || "Wellness stories, shared.";
+  const sub = subtitle || "Real experiences from people who made Floramade a part of their daily wellness journey.";
 
-  const itemsPerPage = 3;
-  const totalPages = Math.ceil(reviews.length / itemsPerPage);
-
-  const paginate = (newDirection) => {
-    setDirection(newDirection);
-    setCurrentPage((prev) => (prev + newDirection + totalPages) % totalPages);
-  };
-
-  const variants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 20 : -20,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { 
+      loop: items.length > 2, 
+      align: "start", 
+      skipSnaps: false,
+      slidesToScroll: 1,
     },
-    exit: (direction) => ({
-      zIndex: 0,
-      x: direction < 0 ? 20 : -20,
-      opacity: 0,
-    })
-  };
+    [Autoplay({ delay: 4500, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState([]);
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-6 px-6 overflow-hidden relative">
-      {/* Subtle Light Blue/Purple background accents */}
-      <div className="absolute -top-24 -right-24 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[120px] -z-10" />
-      <div className="absolute -bottom-24 -left-24 w-[600px] h-[600px] bg-purple-50/50 rounded-full blur-[120px] -z-10" />
-
-      {/* Decorative Leaves */}
-      <FloatingLeaf 
-        type="single" 
-        className="w-16 h-16 md:w-24 md:h-24 top-20 left-[8%] opacity-45 rotate-[-25deg]" 
-        delay={0.2} 
-        parallaxSpeed={40} 
-      />
-      <FloatingLeaf 
-        type="branch" 
-        className="w-48 h-48 md:w-64 md:h-64 bottom-10 -right-16 opacity-25 rotate-[100deg]" 
-        delay={0.5} 
-        parallaxSpeed={-50} 
-        blur
-      />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-12">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-6xl uppercase font-bold tracking-tighter text-slate-900 leading-[0.85]">
-              Trusted by <br /> <span className="text-black">Visionary Leaders.</span>
+    <section className="relative overflow-hidden border-t border-[#39160D]/10 bg-[#F5EADB]/45 px-4 py-14 sm:px-6 sm:py-18 lg:py-20">
+      <div className="mx-auto max-w-[1360px]">
+        {/* Header Section - Pure Sans, Tracking Tight, No Italic, No Serif */}
+        <div className="mb-8 sm:mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <span className="inline-block mb-2 text-xs font-bold uppercase tracking-tight text-[#872B10]">
+              {pre}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold tracking-tight text-[#39160D] leading-tight">
+              {mainTitle}
             </h2>
+            <p className="mt-2 text-xs sm:text-sm md:text-base text-[#39160D]/75 tracking-tight font-normal">
+              {sub}
+            </p>
           </div>
-          
-          <div className="flex gap-4">
-            <button onClick={() => paginate(-1)} className="group w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center bg-white transition-all duration-300">
-              <ChevronLeft size={20} className="text-slate-400  transition-colors" />
+
+          {/* Carousel Arrows */}
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={scrollPrev}
+              aria-label="Previous testimonial"
+              className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#39160D]/20 bg-[#FFF7EB] text-[#39160D] transition-all hover:bg-[#39160D] hover:text-[#FFF7EB] hover:scale-105 active:scale-95 shadow-sm"
+            >
+              <ChevronLeft size={18} />
             </button>
-            <button onClick={() => paginate(1)} className="group w-14 h-14 rounded-full border border-slate-200 flex items-center justify-center bg-white transition-all duration-300">
-              <ChevronRight size={20} className="text-slate-400   transition-colors" />
+            <button
+              type="button"
+              onClick={scrollNext}
+              aria-label="Next testimonial"
+              className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#39160D]/20 bg-[#FFF7EB] text-[#39160D] transition-all hover:bg-[#39160D] hover:text-[#FFF7EB] hover:scale-105 active:scale-95 shadow-sm"
+            >
+              <ChevronRight size={18} />
             </button>
           </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="relative">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={currentPage}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            >
-              {reviews.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage).map((rev, index) => (
-                <div
-                  key={index}
-                  className="group relative p-10 rounded-[2rem] bg-white border border-slate-100 flex flex-col h-full transition-all duration-500 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)] hover:-translate-y-2"
-                >
+        {/* Embla Smooth Slider */}
+        <div className="overflow-hidden cursor-grab active:cursor-grabbing -mx-4 px-4 sm:mx-0 sm:px-0" ref={emblaRef}>
+          <div className="flex -ml-4 sm:-ml-5">
+            {items.map((rev, idx) => (
+              <div
+                key={rev.id || idx}
+                className="min-w-0 flex-[0_0_88%] xs:flex-[0_0_80%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 sm:pl-5"
+              >
+                <div className="h-full flex flex-col justify-between rounded-3xl border border-[#39160D]/10 bg-[#FFF7EB] p-6 sm:p-7 shadow-[0_6px_24px_rgba(57,22,13,0.06)] hover:shadow-[0_12px_32px_rgba(57,22,13,0.12)] hover:-translate-y-1 transition-all duration-300">
+                  {/* Top Bar: Stars + Tag */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1">
+                        {[...Array(rev.rating)].map((_, i) => (
+                          <Star key={i} size={15} fill="#872B10" className="text-[#872B10]" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-bold text-[#872B10] uppercase tracking-tight bg-[#872B10]/10 px-2.5 py-0.5 rounded-full">
+                        {rev.tag}
+                      </span>
+                    </div>
 
-                  <div className="flex gap-1 mb-8">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={14} fill="#f59e0b" className="text-amber-500" />
-                    ))}
+                    {/* Review Body - Clean Sans, Tracking Tight, No Italic */}
+                    <p className="text-xs sm:text-sm leading-relaxed text-[#39160D]/85 tracking-tight font-normal mb-6">
+                      "{rev.text}"
+                    </p>
                   </div>
 
-                  <p className="text-lg text-slate-600 leading-relaxed mb-12 flex-grow font-medium">
-                    "{rev.text}"
-                  </p>
-
-                  <div className="flex items-center gap-4 pt-8 border-t border-slate-50">
-                    <div className="relative flex-shrink-0">
-                        {rev.img ? (
-                          <img 
-                            src={rev.img} 
-                            alt={rev.name} 
-                            className="w-14 h-14 rounded-full object-cover object-top shadow-lg border-2 border-white"
-                          />
-                        ) : (
-                          <div className="w-14 h-14 rounded-full bg-gradient-to-br  flex items-center justify-center text-white font-bold text-sm shadow-md">
-                            {rev.initials}
-                          </div>
-                        )}
+                  {/* Customer Info Footer */}
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#39160D]/10">
+                    <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0 bg-[#39160D]/10">
+                      {rev.img ? (
+                        <Image
+                          src={rev.img}
+                          alt={rev.name}
+                          fill
+                          unoptimized
+                          className="object-cover object-top"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-bold text-xs text-[#39160D]">
+                          {rev.initials}
+                        </div>
+                      )}
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900 text-md">{rev.name}</h4>
-                      <p className="text-[10px] text-slate-900 font-black uppercase tracking-widest mt-0.5">
-                        {rev.role}
-                      </p>
+
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="text-xs sm:text-sm font-bold text-[#39160D] tracking-tight truncate">
+                          {rev.name}
+                        </h3>
+                        <CheckCircle2 size={13} className="text-[#2E6930] flex-shrink-0" />
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-[#39160D]/60 tracking-tight font-medium">
+                        <span>{rev.role}</span>
+                        <span>•</span>
+                        <span>{rev.location}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Carousel Pagination Dots */}
+        <div className="mt-8 sm:mt-10 flex items-center justify-center gap-2">
+          {scrollSnaps.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => scrollTo(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                selectedIndex === idx
+                  ? "w-8 bg-[#39160D]"
+                  : "w-2 bg-[#39160D]/25 hover:bg-[#39160D]/50"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Review;
+}

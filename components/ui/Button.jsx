@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 
 const variants = {
   primary:
-    "bg-foreground text-background hover:bg-primary transition-colors duration-[0.6s]",
+    "bg-foreground text-background hover:bg-primary hover:text-[#17140f] transition-colors duration-[0.35s]",
   secondary: 
-    "bg-primary text-background hover:bg-foreground transition-colors duration-[0.6s]",
+    "bg-primary text-[#17140f] hover:bg-highlight transition-colors duration-[0.35s]",
   outline: 
-    "border border-foreground/10 bg-transparent text-foreground hover:border-foreground/30 transition-colors duration-[0.6s]",
+    "border border-accent/40 bg-transparent text-foreground hover:border-accent hover:bg-accent/10 transition-colors duration-[0.35s]",
   danger: 
     "bg-red-500/90 text-white hover:bg-red-600 transition-colors duration-[0.6s]",
 };

@@ -154,9 +154,9 @@ export default function ResetPasswordPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", duration: 0.5 }}
-                className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center"
+                className="w-16 h-16 mx-auto bg-amber-100 rounded-full flex items-center justify-center"
               >
-                <CheckCircle size={32} className="text-green-600" />
+                <CheckCircle size={32} className="text-amber-700" />
               </motion.div>
               <div>
                 <h2 className="font-display text-2xl text-[#3f2c22] mb-2">Password Reset!</h2>

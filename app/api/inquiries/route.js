@@ -1,14 +1,13 @@
-import { connectDB } from "@/lib/db";
 import Inquiry from "@/models/Inquiry";
 import { NextResponse } from "next/server";
 import { validateFormData, sanitizeInput, detectSpam, validatePhone, validateEmail } from "@/lib/validation";
+import { getCurrentUser } from "@/lib/auth";
 
 const inquirySession = new Map();
 
 export async function POST(req) {
   try {
-    await connectDB();
-    const body = await req.json();
+      const body = await req.json();
     const { name, phone, email, message, type, productSlug } = body;
 
     const sanitizedName = sanitizeInput(name);
@@ -64,8 +63,8 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    await connectDB();
-    // This should ideally be protected by admin middleware
+    const user = await getCurrentUser();
+    if (!user || user.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     const inquiries = await Inquiry.find().sort({ createdAt: -1 });
     return NextResponse.json(inquiries);
   } catch (error) {

@@ -1,7 +1,6 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { connectDB } from "@/lib/db";
 import Order from "@/models/Order";
 
 export async function POST(req) {
@@ -11,12 +10,13 @@ export async function POST(req) {
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, cartItems, amount, address } = await req.json();
     
-    if (!process.env.RAZORPAY_KEY_SECRET) {
+    const secret = process.env.RAZORPAY_KEY_SECRET?.trim();
+    if (!secret) {
       return NextResponse.json({ message: "Razorpay API key secret is missing in environment variables" }, { status: 500 });
     }
 
     const expected = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", secret)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
@@ -24,7 +24,6 @@ export async function POST(req) {
       return NextResponse.json({ message: "Invalid payment signature" }, { status: 400 });
     }
 
-    await connectDB();
     const order = await Order.create({
       user: user.id,
       items: cartItems,

@@ -10,7 +10,7 @@ const reviews = [
   {
     name: "Mr. Shivansh",
     role: "Verified Customer",
-    text: "Maine 4 months se Fiveetatv products use kiye hain aur results bahut impressive hain. Mera overall health improve ho gaya hai aur energy level bhi stable hai. Natural formulation pe completely trust karta hoon.",
+    text: "Maine 4 months se Floramade products use kiye hain aur results bahut impressive hain. Mera overall health improve ho gaya hai aur energy level bhi stable hai. Natural formulation pe completely trust karta hoon.",
     img: "/review/16.jpeg"
   },
   {
@@ -34,7 +34,7 @@ const reviews = [
   { 
     name: "Mr. Birender Kumar", 
     role: "Verified Customer", 
-    text: "Main 3 months se Fiveetatv products use kar raha hoon aur mera blood sugar level bahut improve ho gaya hai. Natural ingredients hain toh mind bhi peaceful rehta hai, aur ab mid-day mein energy crash nahi hota. Natural wellness ke liye highly recommend karta hoon.", 
+    text: "Main 3 months se Floramade products use kar raha hoon aur mera blood sugar level bahut improve ho gaya hai. Natural ingredients hain toh mind bhi peaceful rehta hai, aur ab mid-day mein energy crash nahi hota. Natural wellness ke liye highly recommend karta hoon.", 
     img: "/review/15.jpeg"
   },
   { 
@@ -82,7 +82,7 @@ const reviews = [
   { 
     name: "Mrs. Sarita Devi", 
     role: "Verified Customer", 
-    text: "Amazing results! Pehle bahut Ayurvedic products try kiye, lekin Fiveetatv standout hai. Quality exceptional hai aur results khud bolte hain. Meri family aur main ab regular customers hain.", 
+    text: "Amazing results! Pehle bahut Ayurvedic products try kiye, lekin Floramade standout hai. Quality exceptional hai aur results khud bolte hain. Meri family aur main ab regular customers hain.", 
     img: "/review/6.jpeg"
   },
   { 
@@ -100,7 +100,7 @@ const reviews = [
   {
     name: "Mrs Jaykumari",
     role: "Verified Customer",
-    text: "Fiveetatv products ne meri life badal di hai. Natural aur effective solution dhundhne walo ke liye ye best choice hai. Highly recommended!",
+    text: "Floramade products ne meri life badal di hai. Natural aur effective solution dhundhne walo ke liye ye best choice hai. Highly recommended!",
     img: "/review/17.jpeg"
   }
 ];
@@ -110,7 +110,7 @@ export default function ReviewsPage() {
     <PageTransition>
       <div className="min-h-screen bg-background pt-24 pb-20 relative overflow-hidden">
         {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-50/50 rounded-full blur-[100px] -z-10" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-50/50 rounded-full blur-[100px] -z-10" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-50/50 rounded-full blur-[100px] -z-10" />
         
         <FloatingLeaf 
@@ -125,7 +125,7 @@ export default function ReviewsPage() {
               What Our <span className="font-display italic text-accent">Community</span> Says
             </h1>
             <p className="text-lg text-slate-500 font-light">
-              Real stories from real people who have transformed their wellness journey with Fiveetatv.
+              Real stories from real people who have transformed their wellness journey with Floramade.
             </p>
           </div>
 
@@ -137,11 +137,11 @@ export default function ReviewsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: (index % 3) * 0.1 }}
-                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col h-full hover:shadow-2xl hover:shadow-green-900/5 transition-all duration-500"
+                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col h-full hover:shadow-2xl hover:shadow-amber-900/5 transition-all duration-500"
               >
                 <div className="flex gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} fill="#658518" className="text-[#658518]" />
+                    <Star key={i} size={14} fill="#b18a3b" className="text-[#b18a3b]" />
                   ))}
                 </div>
 
@@ -159,7 +159,7 @@ export default function ReviewsPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900">{rev.name}</h4>
-                    <p className="text-[10px] text-[#658518] font-black uppercase tracking-widest mt-0.5">
+                    <p className="text-[10px] text-[#b18a3b] font-black uppercase tracking-widest mt-0.5">
                       {rev.role}
                     </p>
                   </div>
@@ -168,14 +168,14 @@ export default function ReviewsPage() {
             ))}
           </div>
 
-          <div className="mt-20 p-12 rounded-[3rem] bg-[#1b3a27] text-white text-center space-y-8 relative overflow-hidden">
+          <div className="mt-20 p-12 rounded-[3rem] bg-[#17140f] text-white text-center space-y-8 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-[80px] rounded-full" />
              <div className="relative z-10 space-y-6">
                 <h2 className="text-3xl md:text-4xl font-light">Have a Story to <span className="italic font-display">Share?</span></h2>
                 <p className="text-white/70 max-w-xl mx-auto font-light">
                   We love hearing from our community. Your feedback helps us grow and inspires others on their wellness journey.
                 </p>
-                <button className="bg-white text-[#1b3a27] px-10 py-4 rounded-full font-bold hover:bg-white/90 transition-all active:scale-95">
+                <button className="bg-white text-[#17140f] px-10 py-4 rounded-full font-bold hover:bg-white/90 transition-all active:scale-95">
                   Write a Review
                 </button>
              </div>

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import { getCurrentUser } from "@/lib/auth";
 
@@ -8,8 +7,7 @@ export async function GET() {
     const user = await getCurrentUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    await connectDB();
-
+  
     const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(
@@ -42,8 +40,7 @@ export async function POST(request) {
       );
     }
 
-    await connectDB();
-
+  
     const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(

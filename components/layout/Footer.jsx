@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import Image from "next/image";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-white text-slate-900 overflow-hidden pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 mt-16 md:mt-24 lg:mt-32 border-t border-slate-100">
+    <footer className="relative bg-[#39160D] text-[#FFF7EB] overflow-hidden pt-16 md:pt-20 lg:pt-24 pb-12 md:pb-16 mt-16 md:mt-24 lg:mt-32 border-t border-[#4A1E13]">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
         
         {/* Top Section */}
@@ -12,94 +13,116 @@ export default function Footer() {
           
           <div className="md:col-span-5 space-y-6 md:space-y-8">
             <div className="flex items-center justify-start">
-              <Image src="/assets/logo.png" alt="Fiveetatv Logo" width={150} height={38} className={`w-[120px] md:w-[150px] lg:w-[192px] h-auto`} />
+              <Link href="/" className="inline-block group focus:outline-none">
+                <Image 
+                  src="/logo.png" 
+                  alt="Floramade Logo" 
+                  width={140} 
+                  height={140} 
+                  className="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+                />
+              </Link>
             </div>
-            <p className="text-xs sm:text-sm text-slate-500 font-light leading-relaxed max-w-md">
-              Premium Ayurvedic wellness inspired by the five natural elements. Crafted with intention for balanced living.
+            <p className="text-xs sm:text-sm text-[#FFF7EB]/70 font-light leading-relaxed max-w-md">
+              Premium Ayurvedic wellness inspired by the five natural elements. Formulated with authentic botanical extracts for balanced health and vitality.
             </p>
-            <div className="flex gap-2 md:gap-3 pt-2">
-              <a href="https://www.instagram.com/fiveetatvofficial?igsh=MTl4Y3p2MHJqZTRiOA==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
+            <div className="flex gap-2.5 md:gap-3 pt-2">
+              <a 
+                href="https://www.instagram.com/floramadeofficial/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-[#FFF7EB]/20 flex items-center justify-center hover:bg-[#FFF7EB] hover:text-[#39160D] hover:border-[#FFF7EB] transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={15} />
               </a>
-              <a href="#" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
+              <a 
+                href="https://www.facebook.com/share/1HuEXx3gQh/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-[#FFF7EB]/20 flex items-center justify-center hover:bg-[#FFF7EB] hover:text-[#39160D] hover:border-[#FFF7EB] transition-all duration-300"
+                aria-label="Facebook"
+              >
+                <FaFacebookF size={13} />
               </a>
-              <a href="#" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                </svg>
+              <a 
+                href="https://wa.me/919220251059" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-[#FFF7EB]/20 flex items-center justify-center hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp size={16} />
               </a>
-              <a href="mailto:fiveetatv@gmail.com" className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-slate-200 flex items-center justify-center hover:bg-accent hover:text-white hover:border-accent transition-all duration-500 group">
-                <Mail size={14} strokeWidth={1.5} />
+              <a 
+                href="mailto:floramade517@gmail.com" 
+                className="h-10 w-10 md:h-11 md:w-11 rounded-full border border-[#FFF7EB]/20 flex items-center justify-center hover:bg-[#FFF7EB] hover:text-[#39160D] hover:border-[#FFF7EB] transition-all duration-300"
+                aria-label="Email"
+              >
+                <Mail size={15} strokeWidth={1.75} />
               </a>
             </div>
           </div>
 
           <div className="md:col-span-2 space-y-4 md:space-y-6">
-            <p className="text-[10px] uppercase tracking-[0.1em] font-light text-slate-400">Explore</p>
-            <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-slate-500">
-              <li><Link href="/" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Home</Link></li>
-              <li><Link href="/#products" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Collection</Link></li>
-              <li><Link href="/about" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Our Story</Link></li>
-              <li><Link href="/contact" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Contact</Link></li>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#DFC77F]">Explore</p>
+            <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-[#FFF7EB]/75">
+              <li><Link href="/" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Home</Link></li>
+              <li><Link href="/collection" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>All Products</Link></li>
+              <li><Link href="/collections/diabetes" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Diabetes Care</Link></li>
+              <li><Link href="/product/paachan-sathi-powder" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Digestive Health</Link></li>
+              <li><Link href="/about" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>About Our Founder</Link></li>
+              <li><Link href="/contact" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Contact Us</Link></li>
             </ul>
           </div>
 
           <div className="md:col-span-2 space-y-4 md:space-y-6">
-            <p className="text-[10px] uppercase tracking-[0.1em] font-light text-slate-400">Legal</p>
-            <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-slate-500">
-              <li><Link href="/terms" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Terms</Link></li>
-              <li><Link href="/privacy-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Privacy</Link></li>
-              <li><Link href="/refund-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Refund Policy</Link></li>
-              <li><Link href="/shipping-policy" className="hover:text-accent transition-colors duration-500 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-accent transition-all duration-300"></span>Shipping</Link></li>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#DFC77F]">Policies</p>
+            <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-[#FFF7EB]/75">
+              <li><Link href="/terms" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Terms & Conditions</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Privacy Policy</Link></li>
+              <li><Link href="/refund-policy" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Refund Policy</Link></li>
+              <li><Link href="/shipping-policy" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Shipping Policy</Link></li>
             </ul>
           </div>
 
           <div className="md:col-span-3 space-y-4 md:space-y-6">
-            <p className="text-[10px] uppercase tracking-[0.1em] font-light text-slate-400">Contact</p>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#DFC77F]">Customer Help</p>
             <div className="space-y-3 md:space-y-4">
               <div>
-                <p className="text-xs sm:text-sm font-medium text-slate-900 mb-1">Email</p>
-                <a href="mailto:fiveetatv@gmail.com" className="text-xs sm:text-sm text-slate-500 font-light hover:text-accent transition-colors duration-500">fiveetatv@gmail.com</a>
+                <p className="text-xs sm:text-sm font-medium text-[#FFF7EB] mb-1">Email</p>
+                <a href="mailto:floramade517@gmail.com" className="text-xs sm:text-sm text-[#FFF7EB]/75 font-light hover:text-[#DFC77F] transition-colors duration-300">floramade517@gmail.com</a>
               </div>
               <div>
-                <p className="text-xs sm:text-sm font-medium text-slate-900 mb-1">Phone</p>
-                <a href="tel:9318445297" className="text-xs sm:text-sm text-slate-500 font-light hover:text-accent transition-colors duration-500">9318445297</a>
+                <p className="text-xs sm:text-sm font-medium text-[#FFF7EB] mb-1">Phone Helpline</p>
+                <a href="tel:+919220251059" className="text-xs sm:text-sm text-[#FFF7EB]/75 font-light hover:text-[#DFC77F] transition-colors duration-300">+91 9220251059</a>
               </div>
               <div>
-                <p className="text-xs sm:text-sm font-medium text-slate-900 mb-1">Address</p>
-                <p className="text-xs sm:text-sm text-slate-500 font-light">Fiveetatv</p>
-                <p className="text-xs sm:text-sm text-slate-500 font-light">Delhi, India</p>
+                <p className="text-xs sm:text-sm font-medium text-[#FFF7EB] mb-1">Location</p>
+                <p className="text-xs sm:text-sm text-[#FFF7EB]/75 font-light">Floramade, Delhi, India</p>
               </div>
-              <div className="pt-2">
-                <p className="text-xs sm:text-sm font-medium text-slate-900 mb-1">Timing</p>
-                <p className="text-[10px] sm:text-xs text-slate-400 font-light uppercase tracking-wider">Monday - Saturday</p>
-                <p className="text-[10px] sm:text-xs text-slate-400 font-light uppercase tracking-wider">10:00 AM - 06:00 PM</p>
+              <div className="pt-1">
+                <p className="text-xs sm:text-sm font-medium text-[#FFF7EB] mb-1">Timings</p>
+                <p className="text-[10px] sm:text-xs text-[#FFF7EB]/60 font-light uppercase tracking-wider">Mon - Sat: 10:00 AM - 06:00 PM</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-slate-100">
-          <p className="text-xs text-slate-400 font-light">
-            © {new Date().getFullYear()} Fiveetatv Ayurveda. All rights reserved.
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-[#FFF7EB]/15">
+          <p className="text-xs text-[#FFF7EB]/60 font-light">
+            © {new Date().getFullYear()} Floramade Ayurveda. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
-            <div className="h-[1px] w-8 bg-slate-100" />
-            <p className="text-xs text-slate-400 font-light uppercase tracking-[0.1em]">
+            <div className="h-[1px] w-8 bg-[#FFF7EB]/20" />
+            <p className="text-xs text-[#DFC77F] font-light uppercase tracking-[0.12em]">
               Balanced Health, Limitless Living
             </p>
-            <div className="h-[1px] w-8 bg-slate-100" />
+            <div className="h-[1px] w-8 bg-[#FFF7EB]/20" />
           </div>
-          <p className="text-xs text-slate-400 font-light">
-            Fiveetatv
+          <p className="text-xs text-[#FFF7EB]/60 font-light">
+            Pure Ayurvedic Formulations
           </p>
         </div>
         

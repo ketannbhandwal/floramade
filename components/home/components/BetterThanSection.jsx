@@ -1,68 +1,57 @@
 "use client";
 
-import React from 'react';
-import { Leaf, Award, ShieldCheck, Truck } from 'lucide-react';
-import { motion } from 'framer-motion';
-import FloatingLeaf from '@/components/ui/FloatingLeaf';
+import { Award, ShieldCheck, Headphones, Truck, CheckCircle2 } from "lucide-react";
 
-const features = [
-  {
-    icon: Leaf,
-    title: "100% Natural",
-    description: "Pure & Safe Ingredients"
-  },
-  {
-    icon: Award,
-    title: "Ayurvedic Process",
-    description: "Ancient Wisdom, Modern Care"
-  },
-  {
-    icon: ShieldCheck,
-    title: "Boosts Immunity",
-    description: "Stronger You, Every Day"
-  },
-  {
-    icon: Truck,
-    title: "Fast & Safe Delivery",
-    description: "At Your Doorstep"
-  }
+const MortarIcon = ({ className = "w-4 h-4 shrink-0" }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M4 11a8 8 0 0 0 16 0H4Z" />
+    <path d="m8 11 3.5-8 3 1.5-2.5 6.5" />
+    <path d="M7 19h10" />
+  </svg>
+);
+
+const MARQUEE_ITEMS = [
+  { icon: MortarIcon, text: "100% Ayurvedic" },
+  { icon: Award, text: "Certified & Trusted" },
+  { icon: ShieldCheck, text: "Safe Payment" },
+  { icon: Headphones, text: "Online Support" },
+  { icon: Truck, text: "Free Express Shipping" },
+  { icon: CheckCircle2, text: "Lab Tested & Pure" },
 ];
 
 export default function BetterThanSection() {
+  // Duplicate list 4 times to guarantee a seamless, infinite loop on any screen width
+  const displayItems = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
+
   return (
-      <div className="relative w-full bg-[#EBF1E4] py-7 md:py-8 overflow-hidden">
-      <FloatingLeaf 
-        type="single" 
-        className="w-12 h-12 top-2 right-[20%] opacity-40 rotate-[45deg]" 
-        delay={0.1} 
-        parallaxSpeed={30} 
-      />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {features.map((feature, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="flex items-center gap-3 md:gap-4"
+    <section 
+      aria-label="Store benefits marquee" 
+      className="relative w-full overflow-hidden bg-[#39160D] text-[#FFF7EB] border-y border-[#39160D]/20 py-3 sm:py-3.5 select-none"
+    >
+      <div className="flex w-max animate-marquee items-center gap-8 sm:gap-12 lg:gap-16">
+        {displayItems.map((item, idx) => {
+          const Icon = item.icon;
+          return (
+            <div 
+              key={idx} 
+              className="flex items-center gap-2.5 text-xs sm:text-sm font-medium tracking-tight text-[#FFF7EB]/90 hover:text-[#FFF7EB] transition-colors shrink-0"
             >
-              <div className="flex-shrink-0">
-                <feature.icon className="w-6 h-6 md:w-8 md:h-8 text-[#748E3E]" strokeWidth={1.5} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs md:text-sm font-bold text-slate-800 leading-tight">
-                  {feature.title}
-                </span>
-                <span className="text-[10px] md:text-xs text-slate-600 mt-0.5">
-                  {feature.description}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              <span className="text-[#DFC77F] flex items-center justify-center">
+                <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" />
+              </span>
+              <span>{item.text}</span>
+            </div>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,7 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import FloatingLeaf from '@/components/ui/FloatingLeaf';
 
 const certificates = [
   { id: 1, title: 'Gluten Free', name: 'Gluten Free' },
@@ -12,17 +10,17 @@ const certificates = [
 
 function CertificateSlider() {
   return (
-    <section className="py-20 overflow-hidden relative bg-muted/30">
+    <section className="py-20 overflow-hidden relative bg-[#F5EADB]/40">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
-        <h2 className="text-center text-3xl md:text-4xl font-light text-[#1b3a27] mb-16 tracking-tight">
-          Certified by <span className="font-medium italic">Years of Trust</span>
+        <h2 className="text-center text-3xl md:text-4xl font-light text-[#39160D] mb-16 tracking-tight">
+          Certified by <span className="font-medium italic text-[#872B10]">Years of Trust</span>
         </h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
           {certificates.map((cert) => (
             <div
               key={cert.id}
-              className="group flex flex-col items-center gap-6 p-8 bg-white border border-[#1b3a27]/5 rounded-3xl hover:border-[#1b3a27]/20 transition-all duration-500 hover:shadow-xl hover:shadow-[#1b3a27]/5"
+              className="group flex flex-col items-center gap-6 p-8 bg-[#FFF7EB] border border-[#39160D]/10 rounded-3xl hover:border-[#39160D]/30 transition-all duration-500 hover:shadow-xl hover:shadow-[#39160D]/5"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 relative grayscale group-hover:grayscale-0 transition-all duration-500">
                 <Image 
@@ -33,10 +31,10 @@ function CertificateSlider() {
                 />
               </div>
               <div className="text-center space-y-1">
-                <span className="block text-[#1b3a27] font-medium text-lg tracking-tight">
+                <span className="block text-[#39160D] font-semibold text-lg tracking-tight">
                   {cert.title}
                 </span>
-                <span className="block text-[10px] uppercase tracking-widest text-[#1b3a27]/40 font-bold">
+                <span className="block text-[10px] uppercase tracking-widest text-[#39160D]/50 font-bold">
                   {cert.name}
                 </span>
               </div>

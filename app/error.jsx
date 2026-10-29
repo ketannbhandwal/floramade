@@ -34,14 +34,14 @@ export default function Error({ error, reset }) {
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
           <button 
             onClick={() => reset()} 
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#2A3B32] text-white rounded-full font-medium hover:bg-black transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#17140f] text-white rounded-full font-medium hover:bg-black transition-colors"
           >
             Try Again
           </button>
           
           <Link 
             href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#2A3B32] text-[#2A3B32] rounded-full font-medium hover:bg-[#2A3B32] hover:text-white transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#17140f] text-[#17140f] rounded-full font-medium hover:bg-[#17140f] hover:text-white transition-colors"
           >
             Go to Home
           </Link>
@@ -50,7 +50,7 @@ export default function Error({ error, reset }) {
         <div className="pt-8 border-t border-slate-200">
           <p className="text-sm text-slate-500 mb-3">Need immediate help?</p>
           <a 
-            href="https://wa.me/919318445297"
+            href="https://wa.me/919220251059"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-[#25D366] font-medium hover:underline"

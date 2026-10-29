@@ -1,4 +1,4 @@
-# Fiveetatv Ayurvedic Wellness - Robots.txt
+# Floramade Ayurvedic Wellness - Robots.txt
 # https://fiveetatv.com
 
 User-agent: *

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
@@ -28,8 +27,7 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    await connectDB();
-
+  
     const product = await Product.findById(productId);
     if (!product) {
       return NextResponse.json(
@@ -83,8 +81,7 @@ export async function PATCH(request, { params }) {
       );
     }
 
-    await connectDB();
-
+  
     const product = await Product.findById(productId);
     if (!product) {
       return NextResponse.json(

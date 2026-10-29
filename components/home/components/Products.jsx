@@ -1,103 +1,76 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import SectionHeader from '@/components/ui/SectionHeader';
-import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import ProductCard from '@/components/product/ProductCard';
-import ProductSkeleton from '@/components/product/ProductSkeleton';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useLenis } from '@studio-freight/react-lenis';
-import FloatingLeaf from '@/components/ui/FloatingLeaf';
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Leaf } from "lucide-react";
+import { motion } from "framer-motion";
+import ProductCard from "@/components/product/ProductCard";
 
-function Products({ products = [] }) {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
-    }
-  }, [products]);
+export default function Products({ products = [], heading = "Featured Best Products" }) {
+  const visibleProducts = products.slice(0, 4);
 
   return (
-    <section id="products" className="py-16 md:py-20 lg:py-24 px-4 sm:px-6 relative overflow-hidden">
-      <FloatingLeaf 
-        type="branch" 
-        className="w-48 h-48 md:w-64 md:h-64 -top-10 -right-20 md:-top-16 md:-right-24 opacity-35 rotate-[135deg]" 
-        delay={0.2} 
-        parallaxSpeed={80}
-        blur 
-      />
-      <FloatingLeaf 
-        type="double" 
-        className="w-24 h-24 md:w-32 md:h-32 top-[40%] -left-10 md:-left-12 opacity-55 rotate-[-45deg]" 
-        delay={0.5} 
-        parallaxSpeed={-40}
-      />
-      
-      <div className="max-w-7xl mx-auto space-y-10 md:space-y-14 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col"
-        >
-          <SectionHeader
-            title="Shop Now"
-            description="Balance Your Elements, Naturally."
-          />
-        </motion.div>
-
-        <div className="grid gap-8 md:gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {isLoading ? (
-            <>
-              <ProductSkeleton />
-              <ProductSkeleton />
-              <ProductSkeleton />
-            </>
-          ) : products.length > 0 ? (
-            products.slice(0, 3).map((p, i) => (
-              <motion.div 
-                key={p._id || i} 
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="group"
-              >
-                <div className="relative">
-                  <ProductCard product={p} />
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            <p className="text-foreground/30 col-span-full text-center py-16 md:py-24 font-light italic text-sm sm:text-base">
-              New arrivals coming soon.
-            </p>
-          )}
+    <section id="products" className="relative overflow-hidden py-14 sm:py-16 lg:py-20 bg-background">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
+        {/* Clean Heading - Sans Bold, Tracking Tight, No Subtitle */}
+        <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-[32px] font-bold tracking-tight text-[#39160D]">
+            {heading}
+          </h2>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex justify-center pt-4"
-        >
-          <Link 
-            href="/collection" 
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#658518] text-white rounded-lg font-medium text-sm hover:bg-[#546e14] transition-all shadow-lg shadow-green-900/10 active:scale-95 group"
-          >
-            View All Products
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+        {/* Product Cards Layout: Centered when 1 or 2 items, 4-col grid when 4 items */}
+        {visibleProducts.length > 0 ? (
+          <div>
+            <div
+              className={`w-full ${visibleProducts.length === 1
+                ? "max-w-[320px] mx-auto"
+                : visibleProducts.length === 2
+                  ? "max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6"
+                  : visibleProducts.length === 3
+                    ? "max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+                    : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+                }`}
+            >
+              {visibleProducts.map((product, index) => (
+                <motion.div
+                  key={product._id || product.id || index}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.4, delay: index * 0.06 }}
+                  className="h-full"
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Bottom "View Complete Collection" CTA */}
+            <div className="mt-9 sm:mt-12 flex justify-center">
+              <Link
+                href="/collection"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#39160D]/20 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#39160D] tracking-tight transition-all hover:bg-[#39160D] hover:text-[#FFF7EB] hover:border-[#39160D] cursor-pointer"
+              >
+                View Complete Collection
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid overflow-hidden rounded-3xl border border-[#39160D]/15 bg-[#F5EADB] md:grid-cols-[.8fr_1.2fr]">
+            <div className="relative min-h-52 md:min-h-64">
+              <Image src="/assets/about.jpg" alt="Traditional herbs and ingredients" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#39160D]/40 to-transparent" />
+            </div>
+            <div className="flex flex-col items-start justify-center p-7 sm:p-10 lg:p-14">
+              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#39160D]/10 text-[#39160D]"><Leaf size={20} /></span>
+              <h3 className="text-2xl font-medium text-[#39160D] sm:text-3xl">A thoughtful collection is taking shape.</h3>
+              <p className="mt-3 max-w-lg text-sm leading-6 text-[#39160D]/65 sm:text-base">Our products will appear here as soon as they’re added to the Floramade catalogue.</p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-export default Products;

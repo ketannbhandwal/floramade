@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { comparePassword, getCurrentUser, hashPassword } from "@/lib/auth";
-import { connectDB } from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth";
 import User from "@/models/User";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function PUT(req) {
   const tokenUser = await getCurrentUser();
@@ -12,15 +12,13 @@ export async function PUT(req) {
     return NextResponse.json({ message: "Invalid password input" }, { status: 400 });
   }
 
-  await connectDB();
   const user = await User.findById(tokenUser.id);
   if (!user) return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-  const valid = await comparePassword(currentPassword, user.password);
-  if (!valid) return NextResponse.json({ message: "Current password is incorrect" }, { status: 400 });
-
-  user.password = await hashPassword(newPassword);
-  await user.save();
+  const { error: signInError } = await getSupabaseAdmin().auth.signInWithPassword({ email: user.email, password: currentPassword });
+  if (signInError) return NextResponse.json({ message: "Current password is incorrect" }, { status: 400 });
+  const { error } = await getSupabaseAdmin().auth.admin.updateUserById(user.id, { password: newPassword });
+  if (error) return NextResponse.json({ message: error.message }, { status: 500 });
 
   return NextResponse.json({ message: "Password updated" });
 }

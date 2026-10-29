@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 export default function Sidebar({ items, activeKey, onChange, className }) {
   return (
-    <aside className={clsx("h-fit rounded-2xl border border-[#dbe8bf] bg-white p-3 shadow-[0_16px_34px_-28px_rgba(62,93,49,0.65)]", className)}>
+    <aside className={clsx("h-fit rounded-2xl border border-[#e5dcc7] bg-white p-3 shadow-[0_16px_34px_-28px_rgba(126,94,40,0.25)]", className)}>
       {items.map((item) => {
         const active = item.key === activeKey;
         const Icon = item.icon;
@@ -13,7 +13,7 @@ export default function Sidebar({ items, activeKey, onChange, className }) {
             onClick={() => onChange(item.key)}
             className={clsx(
               "mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm transition",
-              active ? "bg-[#eef5d7] text-[#35512d]" : "text-[#607759] hover:bg-[#f6fae8]"
+              active ? "bg-[#f4eddd] text-[#55421f]" : "text-[#756342] hover:bg-[#faf7ef]"
             )}
           >
             {Icon ? <Icon className="h-4 w-4" /> : null}

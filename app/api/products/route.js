@@ -1,17 +1,16 @@
 import { revalidateTag } from 'next/cache';
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
-import { seedProductsIfEmpty } from "@/lib/seed";
 import { getCurrentUser } from "@/lib/auth";
 
 export async function GET(req) {
-  await connectDB();
-  await seedProductsIfEmpty();
-
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
   const includeAll = searchParams.get("includeAll") === "true";
+  if (includeAll) {
+    const user = await getCurrentUser();
+    if (!user || user.role !== "admin") return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   
   if (slug) {
     const product = await Product.findOne({ slug });
@@ -31,11 +30,12 @@ export async function POST(req) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  await connectDB();
   const payload = await req.json();
-  if (!payload.name || !payload.slug) {
+  if (!payload.name) {
     return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
   }
+  const cleanSlug = (text) => (text || "").toString().toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+  payload.slug = payload.slug ? cleanSlug(payload.slug) : cleanSlug(payload.name);
   const product = await Product.create(payload);
   revalidateTag('products');
   return NextResponse.json({ product }, { status: 201 });

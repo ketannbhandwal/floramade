@@ -3,21 +3,24 @@ import Razorpay from "razorpay";
 
 export async function POST(req) {
   try {
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const key_id = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID)?.trim();
+    const key_secret = process.env.RAZORPAY_KEY_SECRET?.trim();
+
+    if (!key_id || !key_secret) {
       throw new Error("Razorpay API keys are missing in environment variables. Please restart your server if you just added them.");
     }
     
     const { amount } = await req.json();
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id,
+      key_secret,
     });
     const order = await razorpay.orders.create({
       amount: Math.round(amount * 100),
       currency: "INR",
       receipt: `rcpt_${Date.now()}`,
     });
-    return NextResponse.json({ order });
+    return NextResponse.json({ order, key: key_id });
   } catch (error) {
     console.error("Error in create-order route:", error);
     

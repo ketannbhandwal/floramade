@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import { getCurrentUser } from "@/lib/auth";
 
@@ -10,8 +9,7 @@ export async function PATCH(request, { params }) {
 
     const { addressId } = await params;
 
-    await connectDB();
-
+  
     const userData = await User.findById(user.id);
     if (!userData) {
       return NextResponse.json(

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 
 export async function PUT(req) {
@@ -12,7 +11,6 @@ export async function PUT(req) {
     return NextResponse.json({ message: "Name and phone are required" }, { status: 400 });
   }
 
-  await connectDB();
   const user = await User.findByIdAndUpdate(
     tokenUser.id,
     { name, phone },

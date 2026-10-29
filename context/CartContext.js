@@ -24,21 +24,31 @@ export function CartProvider({ children }) {
     }
   }, [cartItems]);
 
-  function addToCart(product) {
+  function addToCart(product, pack = null, amount = 1) {
+    const productId = product._id || product.id;
+    const packId = pack?.id || "single";
+    const cartItemKey = `${productId}:${packId}`;
+    const price = Number(pack?.price ?? product.discountPrice ?? product.price ?? 0);
     setCartItems((prev) => {
-      const found = prev.find((item) => item.productId === product._id);
+      const found = prev.find((item) => (item.cartItemKey || `${item.productId}:single`) === cartItemKey);
       if (found) {
         return prev.map((item) =>
-          item.productId === product._id ? { ...item, quantity: item.quantity + 1 } : item
+          (item.cartItemKey || `${item.productId}:single`) === cartItemKey ? { ...item, quantity: item.quantity + amount } : item
         );
       }
       return [
         ...prev,
         {
-          productId: product._id,
+          productId,
+          cartItemKey,
           name: product.name,
-          price: product.discountPrice,
-          quantity: 1,
+          price,
+          compareAtPrice: Number(pack?.mrp ?? product.price ?? price),
+          packId: pack?.id || null,
+          packName: pack?.label || "",
+          packContents: pack?.contents || "",
+          packCount: Number(pack?.packCount || 1),
+          quantity: amount,
           image: product.images?.[0],
           slug: product.slug,
         },
@@ -46,14 +56,14 @@ export function CartProvider({ children }) {
     });
   }
 
-  function removeFromCart(productId) {
-    setCartItems((prev) => prev.filter((item) => item.productId !== productId));
+  function removeFromCart(cartItemKey) {
+    setCartItems((prev) => prev.filter((item) => (item.cartItemKey || item.productId) !== cartItemKey));
   }
 
-  function updateQuantity(productId, quantity) {
+  function updateQuantity(cartItemKey, quantity) {
     if (quantity < 1) return;
     setCartItems((prev) =>
-      prev.map((item) => (item.productId === productId ? { ...item, quantity } : item))
+      prev.map((item) => (item.cartItemKey || item.productId) === cartItemKey ? { ...item, quantity } : item)
     );
   }
 

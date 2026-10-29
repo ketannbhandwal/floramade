@@ -11,18 +11,14 @@ import { FaWhatsapp } from "react-icons/fa";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Fiveetatv",
+  "name": "Floramade",
   "url": "https://fiveetatv.com",
-  "logo": "https://fiveetatv.com/assets/logo.png",
-  "description": "Fiveetatv - Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
+  "logo": "https://fiveetatv.com/floramade-logo.png",
+  "description": "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
   "founders": [
     {
       "@type": "Person",
-      "name": "Rahul Gour"
-    },
-    {
-      "@type": "Person",
-      "name": "Suraj Gaur"
+      "name": "Suresh Gaur"
     }
   ],
   "address": {
@@ -32,12 +28,13 @@ const organizationSchema = {
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "fiveetatv@gmail.com",
+    "telephone": "+91-9220251059",
+    "email": "floramade517@gmail.com",
     "contactType": "customer service"
   },
   "sameAs": [
-    "https://www.instagram.com/fiveetatv",
-    "https://www.facebook.com/fiveetatv",
+    "https://www.instagram.com/floramadeofficial/",
+    "https://www.facebook.com/share/1HuEXx3gQh/",
     "https://twitter.com/fiveetatv"
   ]
 };
@@ -45,12 +42,12 @@ const organizationSchema = {
 export const metadata = {
   metadataBase: new URL("https://fiveetatv.com"),
   title: {
-    default: "Fiveetatv | Premium Ayurvedic Wellness Products in Delhi, India",
-    template: "%s | Fiveetatv",
+    default: "Floramade | Premium Ayurvedic Wellness Products in Delhi, India",
+    template: "%s | Floramade",
   },
-  description: "Fiveetatv - Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
+  description: "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
   keywords: [
-    "Fiveetatv",
+    "Floramade",
     "Ayurvedic products",
     "Ayurveda India",
     "herbal supplements",
@@ -59,8 +56,7 @@ export const metadata = {
     "sugar balance",
     "digestive health",
     "Ayurvedic wellness Delhi",
-    "Rahul Gour",
-    "Suraj Gaur",
+    "Suresh Gaur",
     "traditional Ayurveda",
     "herbal remedies",
     "Ayurvedic formulations",
@@ -70,9 +66,9 @@ export const metadata = {
     "Ayurvedic supplements",
     "wellness products"
   ],
-  authors: [{ name: "Rahul Gour", url: "https://fiveetatv.com" }, { name: "Suraj Gaur", url: "https://fiveetatv.com" }],
-  creator: "Fiveetatv",
-  publisher: "Fiveetatv",
+  authors: [{ name: "Suresh Gaur", url: "https://fiveetatv.com" }],
+  creator: "Floramade",
+  publisher: "Floramade",
   formatDetection: {
     email: false,
     address: false,
@@ -82,24 +78,23 @@ export const metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://fiveetatv.com",
-    siteName: "Fiveetatv",
-    title: "Fiveetatv | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    siteName: "Floramade",
+    title: "Floramade | Premium Ayurvedic Wellness Products",
+    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: [
       {
-        url: "/assets/logo.png",
+        url: "/floramade-logo.png",
         width: 1200,
         height: 630,
-        alt: "Fiveetatv - Premium Ayurvedic Wellness",
+        alt: "Floramade - Premium Ayurvedic Wellness",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fiveetatv | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Rahul Gour & Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
-    images: ["/assets/logo.png"],
-    creator: "@fiveetatv",
+    title: "Floramade | Premium Ayurvedic Wellness Products",
+    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    images: ["/floramade-logo.png"],
   },
   robots: {
     index: true,
@@ -122,11 +117,14 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#658518" />
+        <link rel="icon" href="/floramade-icon.png" type="image/png" />
+        <meta name="theme-color" content="#39160D" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Fiveetatv" />
-        <link rel="apple-touch-icon" href="/assets/logo.png" />
+        <meta name="apple-mobile-web-app-title" content="Floramade" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="apple-touch-icon" href="/floramade-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -137,13 +135,13 @@ export default function RootLayout({ children }) {
         <Providers>
           <LenisProvider>
             <Navbar />
-            <main className="w-full flex-1 flex flex-col lg:pt-[92px] relative z-10">{children}</main>
+            <main className="w-full flex-1 flex flex-col pt-[124px] sm:pt-[130px] lg:pt-[136px] relative z-10">{children}</main>
             <Footer />
             <CookieConsent />
             
             {/* Floating WhatsApp Button */}
             <a 
-              href="https://wa.me/919318445297" 
+              href="https://wa.me/919220251059" 
               target="_blank" 
               rel="noopener noreferrer"
               className="fixed bottom-8 right-8 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 active:scale-95 group"
@@ -159,7 +157,7 @@ export default function RootLayout({ children }) {
         <Toaster
           position="top-right"
           toastOptions={{
-            style: { border: "1px solid #dbe8bf", background: "#ffffff", color: "#3f5b35" },
+            style: { border: "1px solid #E8D9C5", background: "#FFF7EB", color: "#39160D" },
           }}
         />
       </body>

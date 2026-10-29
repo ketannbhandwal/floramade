@@ -17,7 +17,8 @@ module.exports = {
         border: "var(--border)",
       },
       fontFamily: {
-        sans: ["var(--font-funnel)", "sans-serif"],
+        sans: ["var(--font-dm-sans)", '"DM Sans"', "sans-serif"],
+        display: ["var(--font-dm-sans)", '"DM Sans"', "sans-serif"],
       },
     },
   },

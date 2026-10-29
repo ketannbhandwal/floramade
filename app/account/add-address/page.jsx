@@ -68,6 +68,7 @@ export default function AddAddressPage() {
               />
               <Input 
                 label="Phone Number" 
+                placeholder="e.g. 9220251059" 
                 value={addressForm.phone} 
                 onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
                 required

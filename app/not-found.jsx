@@ -23,7 +23,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
             href="/"
-            className="inline-flex items-center gap-3 h-12 px-6 rounded-full bg-[#2A3B32] text-white hover:bg-black transition-colors duration-300 font-medium text-sm"
+            className="inline-flex items-center gap-3 h-12 px-6 rounded-full bg-[#17140f] text-white hover:bg-black transition-colors duration-300 font-medium text-sm"
           >
             <Home size={18} />
             Return Home
@@ -31,7 +31,7 @@ export default function NotFound() {
           
           <Link 
             href="/collection"
-            className="inline-flex items-center gap-3 h-12 px-6 rounded-full border-2 border-[#2A3B32] text-[#2A3B32] hover:bg-[#2A3B32] hover:text-white transition-colors duration-300 font-medium text-sm"
+            className="inline-flex items-center gap-3 h-12 px-6 rounded-full border-2 border-[#17140f] text-[#17140f] hover:bg-[#17140f] hover:text-white transition-colors duration-300 font-medium text-sm"
           >
             <Search size={18} />
             Browse Products

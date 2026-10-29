@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import bcrypt from "bcryptjs";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 export async function POST(request) {
   try {
@@ -21,8 +20,7 @@ export async function POST(request) {
       );
     }
 
-    await connectDB();
-
+  
     const user = await User.findOne({
       resetToken: token,
       resetTokenExpiry: { $gt: Date.now() }
@@ -35,11 +33,8 @@ export async function POST(request) {
       );
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Update password and clear reset token
-    user.password = hashedPassword;
+    const { error: authError } = await getSupabaseAdmin().auth.admin.updateUserById(user.id, { password });
+    if (authError) return NextResponse.json({ error: "Failed to update password" }, { status: 500 });
     user.resetToken = undefined;
     user.resetTokenExpiry = undefined;
     await user.save();

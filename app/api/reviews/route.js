@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
@@ -10,15 +9,15 @@ const reviewSession = new Map();
 
 export async function POST(request) {
   try {
-    const { productId, rating, comment, name, image } = await request.json();
+    const { productId, rating, comment, name, image, title } = await request.json();
 
     const validation = validateFormData(
       { productId, rating, comment, name },
       {
         productId: { required: true },
         rating: { required: true },
-        comment: { required: true, minLength: 10, maxLength: 1000, spamCheck: true },
-        name: { required: true, minLength: 2, maxLength: 50 },
+        comment: { required: true, minLength: 3, maxLength: 2000, spamCheck: true },
+        name: { required: true, minLength: 2, maxLength: 60 },
       }
     );
 
@@ -36,42 +35,33 @@ export async function POST(request) {
       );
     }
 
-    if (rating < 1 || rating > 5) {
+    const numRating = Number(rating);
+    if (isNaN(numRating) || numRating < 1 || numRating > 5) {
       return NextResponse.json(
         { error: "Rating must be between 1 and 5" },
         { status: 400 }
       );
     }
 
+    // Rate limit per IP: at most 1 review per 5 seconds
     const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
     const lastReview = reviewSession.get(clientIp);
-    if (lastReview && Date.now() - lastReview < 30000) {
+    if (lastReview && Date.now() - lastReview < 5000) {
       return NextResponse.json(
-        { error: "Please wait before submitting another review" },
+        { error: "Please wait a moment before submitting another review" },
         { status: 429 }
       );
     }
     reviewSession.set(clientIp, Date.now());
 
+    // Optional token: support both logged-in users and guest reviews
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-    
-    if (!token) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      );
+    let userId = "guest";
+    if (token) {
+      const user = verifyToken(token);
+      if (user?.id) userId = user.id;
     }
-
-    const user = verifyToken(token);
-    if (!user) {
-      return NextResponse.json(
-        { error: "Invalid token" },
-        { status: 401 }
-      );
-    }
-
-    await connectDB();
 
     const product = await Product.findById(productId);
     if (!product) {
@@ -81,29 +71,52 @@ export async function POST(request) {
       );
     }
 
-    // Add new review
-    product.reviews.push({
-      userId: user.id,
-      name,
-      image: image || "", // Use provided image URL if any
-      rating,
-      comment,
+    // Ensure reviews is initialized as an array
+    if (!Array.isArray(product.reviews)) {
+      product.reviews = [];
+    }
+
+    // Create review object
+    const newReview = {
+      _id: globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : String(Date.now()),
+      userId,
+      name: sanitizeInput(name),
+      title: title ? sanitizeInput(title) : "",
+      image: image || "",
+      rating: numRating,
+      comment: sanitizeInput(comment),
       approved: true, // Auto-approve reviews
-      createdAt: new Date(),
-    });
+      createdAt: new Date().toISOString(),
+    };
+
+    product.reviews.push(newReview);
+
+    // Update product rating and reviewsCount
+    const validRatings = product.reviews
+      .filter((r) => r && typeof r.rating === "number" && !isNaN(r.rating))
+      .map((r) => Number(r.rating));
+
+    if (validRatings.length > 0) {
+      const avg = validRatings.reduce((sum, r) => sum + r, 0) / validRatings.length;
+      product.rating = Number(avg.toFixed(1));
+      product.reviewsCount = validRatings.length;
+    } else {
+      product.rating = numRating;
+      product.reviewsCount = 1;
+    }
 
     await product.save();
 
     revalidateTag('products');
 
     return NextResponse.json(
-      { message: "Review submitted successfully." },
+      { message: "Review submitted successfully!", review: newReview },
       { status: 201 }
     );
   } catch (error) {
     console.error("Error submitting review:", error);
     return NextResponse.json(
-      { error: "Failed to submit review" },
+      { error: error?.message || "Failed to submit review" },
       { status: 500 }
     );
   }

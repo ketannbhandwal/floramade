@@ -39,7 +39,7 @@ export default function CollectionContent({ products }) {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} index={i} />
               </motion.div>
             ))}
           </div>

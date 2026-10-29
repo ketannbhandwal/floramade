@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone } from "lucide-react";
+import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
+import BannerConcernManager from "@/components/admin/BannerConcernManager";
+import { slugify } from "@/lib/utils";
 
 const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
@@ -20,10 +22,38 @@ const XAxis = dynamic(() => import("recharts").then(mod => mod.XAxis), { ssr: fa
 const YAxis = dynamic(() => import("recharts").then(mod => mod.YAxis), { ssr: false });
 const Tooltip = dynamic(() => import("recharts").then(mod => mod.Tooltip), { ssr: false });
 
+export const FEATURE_ICONS = [
+  { id: "gut", name: "Gut & Digestion", icon: "/feature/1.svg", defaultText: "Promotes Healthy Digestion" },
+  { id: "fast", name: "Fast Acting Relief", icon: "/feature/2.svg", defaultText: "Fast-Acting Relief" },
+  { id: "discomfort", name: "Discomfort Relief", icon: "/feature/3.svg", defaultText: "Relief from Discomfort" },
+  { id: "shield", name: "Gut Shield & Healing", icon: "/feature/4.svg", defaultText: "Protects & Heals Gut" },
+  { id: "balance", name: "Balance & Metabolism", icon: "/feature/5svg.svg", defaultText: "Balances Metabolism & Sugar" },
+  { id: "insulin", name: "Insulin & Detox", icon: "/feature/6.svg", defaultText: "Enhances Insulin Sensitivity" },
+  { id: "immunity", name: "Cellular Immunity", icon: "/feature/7.svg", defaultText: "Boosts Natural Immunity" },
+  { id: "heart", name: "Heart & Vitality", icon: "/feature/8.svg", defaultText: "Improves Heart & Vitality" },
+];
+
+const defaultKeyBenefits = [
+  { text: "Relief from Discomfort", image: "/feature/3.svg" },
+  { text: "Better Results", image: "/feature/4.svg" },
+  { text: "Fast-Acting Relief", image: "/feature/2.svg" },
+  { text: "Promotes Healthy Digestion", image: "/feature/1.svg" },
+];
+
+const defaultTrustBadges = [
+  { label: "Lab Tested", image: "/certificate/3.svg" },
+  { label: "100% Natural", image: "/certificate/2.svg" },
+  { label: "Expert Formula", image: "/certificate/1.svg" },
+  { label: "Certified", image: "/certificate/4.svg" },
+];
+
 const empty = {
   name: "", slug: "", category: "Ayurvedic", price: 0, discountPrice: 0, stock: 0,
   isVisible: true, description: "", benefits: "", ingredients: "",
-  usage: "", images: [], formulaimage: "", videoUrl: "", trustQuality: {},
+  usage: "", images: [], ingredientImages: {}, usageImages: [], packs: [], formulaimage: "", trustQuality: {},
+  trustBadges: defaultTrustBadges,
+  keyBenefits: defaultKeyBenefits,
+  benefitImages: defaultKeyBenefits.map(b => b.image),
   rating: 4.5, reviewsCount: 0, deliveryDays: 5,
 };
 
@@ -42,6 +72,7 @@ export default function AdminPage() {
   const [inquiries, setInquiries] = useState([]);
   const [form, setForm] = useState(empty);
   const [editingSlug, setEditingSlug] = useState("");
+  const [editingId, setEditingId] = useState("");
   const [activeTab, setActiveTab] = useState("dashboard");
   const [chartsReady] = useState(() => typeof window !== "undefined");
   const [uploading, setUploading] = useState(false);
@@ -114,7 +145,7 @@ export default function AdminPage() {
       });
       
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      if (!res.ok) throw new Error(data.error || data.message || `Upload failed (${res.status})`);
       return data.url;
     } catch (error) {
       console.error("Upload error:", error);
@@ -125,10 +156,6 @@ export default function AdminPage() {
 
   async function handleImageUpload(file) {
     return handleFileUpload(file, 'image');
-  }
-
-  async function handleVideoUpload(file) {
-    return handleFileUpload(file, 'video');
   }
 
   async function fileToBase64(file) {
@@ -144,28 +171,61 @@ export default function AdminPage() {
     e.preventDefault();
     setUploading(true);
     
+    const sanitizedKeyBenefits = (form.keyBenefits || [])
+      .map(b => ({
+        text: (b?.text || "").trim(),
+        image: b?.image || "/feature/1.svg",
+      }))
+      .filter(b => b.text.length > 0);
+
+    const benefitsArray = sanitizedKeyBenefits.length > 0
+      ? sanitizedKeyBenefits.map(b => b.text)
+      : (form.benefits ? form.benefits.split(",").map((x) => x.trim()).filter(Boolean) : []);
+
+    const benefitImagesArray = sanitizedKeyBenefits.length > 0
+      ? sanitizedKeyBenefits.map(b => b.image)
+      : (form.benefitImages && form.benefitImages.length > 0 ? form.benefitImages : []);
+
     const payload = {
       name: form.name,
-      slug: form.slug,
+      slug: form.slug ? slugify(form.slug) : slugify(form.name),
       category: form.category || "Ayurvedic",
       price: Number(form.price) || 0,
       discountPrice: Number(form.discountPrice) || 0,
       stock: Number(form.stock) || 0,
       isVisible: form.isVisible,
       description: form.description || "",
-      benefits: form.benefits ? form.benefits.split(",").map((x) => x.trim()).filter(Boolean) : [],
+      keyBenefits: sanitizedKeyBenefits,
+      benefits: benefitsArray,
+      benefitImages: benefitImagesArray,
       ingredients: form.ingredients ? form.ingredients.split(",").map((x) => x.trim()).filter(Boolean) : [],
       usage: form.usage ? form.usage.split(",").map((x) => x.trim()).filter(Boolean) : [],
+      ingredientImages: form.ingredientImages || {},
+      usageImages: form.usageImages || [],
+      packs: (form.packs || []).map((pack) => ({
+        label: pack.label || "",
+        packCount: Number(pack.packCount) || 1,
+        sachets: pack.sachets || "",
+        price: Number(pack.price) || 0,
+        mrp: Number(pack.mrp) || 0,
+        image: pack.image || "",
+        mostPopular: Boolean(pack.mostPopular),
+      })),
+      images: form.images || [],
       featureImages: form.images || [],
       formulaimage: form.formulaimage || "",
-      videoUrl: form.videoUrl || "",
       trustQuality: form.trustQuality || {},
+      trustBadges: (form.trustBadges || []).map((b) => ({
+        label: b.label || "",
+        image: b.image || "",
+      })),
       rating: Number(form.rating) || 4.5,
       reviewsCount: Number(form.reviewsCount) || 0,
       deliveryDays: Number(form.deliveryDays) || 5,
     };
 
-    const url = editingSlug ? `/api/products/${editingSlug}` : "/api/products";
+    const url = editingSlug ? `/api/products/${encodeURIComponent(editingSlug)}` : "/api/products";
+    if (editingSlug) payload.productId = editingId;
 
     try {
       const res = await fetch(url, {
@@ -185,6 +245,7 @@ export default function AdminPage() {
       toast.success(editingSlug ? "Product updated" : "Product created");
       setForm(empty);
       setEditingSlug("");
+      setEditingId("");
       setImageUrlInput("");
       setUploading(false);
       
@@ -249,7 +310,7 @@ export default function AdminPage() {
     const res = await fetch(`/api/products/${product.slug}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isVisible: !product.isVisible }),
+      body: JSON.stringify({ productId: product._id, isVisible: !product.isVisible }),
     });
     if (!res.ok) return toast.error("Visibility update failed");
     toast.success(`Product ${product.isVisible ? "hidden" : "unhidden"}`);
@@ -270,7 +331,30 @@ export default function AdminPage() {
   function startEdit(product) {
     setActiveTab("products");
     setEditingSlug(product.slug);
+    setEditingId(product._id);
     const images = product.featureImages || product.images || [];
+
+    let keyBenefits = [];
+    if (Array.isArray(product.keyBenefits) && product.keyBenefits.length > 0) {
+      keyBenefits = product.keyBenefits.map((b, idx) => ({
+        text: typeof b === "string" ? b : (b?.text || ""),
+        image: b?.image || `/feature/${(idx % 8) + 1}.svg`,
+      }));
+    } else if (Array.isArray(product.benefits) && product.benefits.length > 0) {
+      keyBenefits = product.benefits.map((text, idx) => {
+        let img = (Array.isArray(product.benefitImages) && product.benefitImages[idx])
+          ? product.benefitImages[idx]
+          : null;
+        if (!img || img.includes("pilecurex") || img.includes("floramade") || img.includes("/upload/v")) {
+          const defaults = ["/feature/3.svg", "/feature/4.svg", "/feature/1.svg", "/feature/2.svg"];
+          img = defaults[idx % defaults.length] || `/feature/${(idx % 8) + 1}.svg`;
+        }
+        return { text, image: img };
+      });
+    } else {
+      keyBenefits = defaultKeyBenefits;
+    }
+
     setForm({
       name: product.name || "",
       slug: product.slug || "",
@@ -280,13 +364,20 @@ export default function AdminPage() {
       stock: product.stock || 0,
       isVisible: product.isVisible ?? true,
       description: product.description || "",
-      benefits: (product.benefits || []).join(", "),
+      benefits: keyBenefits.map(b => b.text).join(", "),
+      keyBenefits: keyBenefits,
+      benefitImages: keyBenefits.map(b => b.image),
       ingredients: (product.ingredients || []).join(", "),
       usage: (product.usage || []).join(", "),
+      ingredientImages: product.ingredientImages || {},
+      usageImages: product.usageImages || [],
+      packs: Array.isArray(product.packs) ? product.packs : [],
       images: images,
       formulaimage: product.formulaimage || "",
-      videoUrl: product.videoUrl || "",
       trustQuality: product.trustQuality || {},
+      trustBadges: Array.isArray(product.trustBadges) && product.trustBadges.length > 0
+        ? product.trustBadges
+        : defaultTrustBadges,
       rating: product.rating || 4.5,
       reviewsCount: product.reviewsCount || 0,
       deliveryDays: product.deliveryDays || 5,
@@ -296,9 +387,32 @@ export default function AdminPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  const moveImage = (index, direction) => {
+    const images = form.images || [];
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= images.length) return;
+    const newImages = [...images];
+    const [moved] = newImages.splice(index, 1);
+    newImages.splice(targetIndex, 0, moved);
+    setForm((f) => ({ ...f, images: newImages }));
+    setImageUrlInput(newImages.join(", "));
+  };
+
+  const setAsMainImage = (index) => {
+    const images = form.images || [];
+    if (index === 0 || index >= images.length) return;
+    const newImages = [...images];
+    const [moved] = newImages.splice(index, 1);
+    newImages.unshift(moved);
+    setForm((f) => ({ ...f, images: newImages }));
+    setImageUrlInput(newImages.join(", "));
+    toast.success("Set as front cover image");
+  };
+
   const TABS = [
     { key: "dashboard", label: "Overview", icon: LayoutDashboard },
     { key: "products", label: "Inventory", icon: Package },
+    { key: "customizer", label: "Store Customizer", icon: Sparkles },
     { key: "orders", label: "Transactions", icon: ReceiptText },
     { key: "reviews", label: "Reviews", icon: MessageSquare },
     { key: "inquiries", label: "Inquiries", icon: Phone },
@@ -306,36 +420,37 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background w-full pt-20 md:pt-24 lg:pt-32 pb-16 md:pb-20 lg:pb-24">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 grid gap-6 md:gap-8 lg:grid-cols-[240px_1fr]">
+    <div className="min-h-screen w-full bg-background pb-12 pt-16 md:pb-16 md:pt-20 lg:pt-20">
+      <div className="mx-auto grid max-w-[1600px] gap-5 px-4 sm:px-6 md:gap-8 lg:grid-cols-[230px_minmax(0,1fr)]">
         
         {/* SIDEBAR */}
         <motion.aside 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="space-y-4 md:space-y-6"
+          className="space-y-3 md:space-y-5"
         >
-          <div className="pt-4 md:pt-6 pb-6 md:pb-8">
-            <h1 className="text-2xl md:text-3xl font-display italic text-secondary tracking-[0.01em]">Dashboard</h1>
-            <p className="text-xs md:text-sm text-foreground/50 mt-2">Manage your premium store</p>
+          <div className="pb-2 pt-1 lg:pb-4">
+            <span className="text-[10px] font-semibold uppercase tracking-tight text-accent">Floramade Admin</span>
+            <h1 className="mt-2 text-2xl font-display text-foreground md:text-3xl">Dashboard</h1>
+            <p className="mt-1 text-xs text-foreground/50 md:text-sm">Manage your store</p>
           </div>
           
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2 lg:flex-col">
             {TABS.map((tab) => (
               <button 
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all duration-300 ${activeTab === tab.key ? "bg-foreground text-background shadow-lg shadow-foreground/10" : "hover:bg-white/50 text-foreground/70"}`}
+                className={`flex min-w-[calc(50%-0.25rem)] flex-1 items-center gap-2 rounded-xl px-3 py-3 text-left transition-all duration-200 sm:min-w-0 sm:flex-initial sm:px-4 lg:w-full lg:flex-none lg:gap-3 lg:px-4 lg:py-3 ${activeTab === tab.key ? "bg-[#211b13] text-[#f8f3e8] shadow-md shadow-[#211b13]/10" : "border border-transparent text-foreground/65 hover:border-[#b18a3b]/20 hover:bg-white/70 hover:text-foreground"}`}
               >
-                <tab.icon size={14} className="md:size-18" /> 
-                <span className="text-[11px] md:text-sm uppercase tracking-[0.05em] font-medium">{tab.label}</span>
+                <tab.icon size={17} className={activeTab === tab.key ? "text-[#d8bb70]" : "text-accent"} />
+                <span className="text-[10px] font-semibold uppercase tracking-tight lg:text-xs">{tab.label}</span>
               </button>
             ))}
           </div>
         </motion.aside>
 
         {/* CONTENT */}
-        <div className="min-h-[80vh] pt-6">
+        <div className="min-h-[70vh] min-w-0 pt-0">
           <AnimatePresence mode="wait">
             
             {/* DASHBOARD TAB */}
@@ -345,59 +460,70 @@ export default function AdminPage() {
                 {/* Stats */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                   {[
-                    { label: "Total Revenue", value: `₹${totalSales}`, icon: DollarSign, trend: "+12%" },
-                    { label: "Total Orders", value: orders.length, icon: Activity, trend: "+5%" },
-                    { label: "Avg Order Value", value: `₹${averageOrderValue}`, icon: TrendingUp, trend: "+2%" },
-                    { label: "Total Customers", value: users.length, icon: Users, trend: "+18%" }
+                    { label: "Total Revenue", value: `₹${totalSales}`, icon: DollarSign },
+                    { label: "Total Orders", value: orders.length, icon: Activity },
+                    { label: "Avg Order Value", value: `₹${averageOrderValue}`, icon: TrendingUp },
+                    { label: "Total Customers", value: users.length, icon: Users }
                   ].map((stat, i) => (
                     <motion.div 
                       key={stat.label}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2rem] p-6 shadow-sm"
+                      className="rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-5 shadow-[0_10px_30px_-24px_rgba(33,27,19,.35)] sm:p-6"
                     >
                       <div className="flex justify-between items-start mb-4">
-                        <div className="h-10 w-10 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#b18a3b]/12 text-[#98742e]">
                           <stat.icon size={20} />
                         </div>
-                        <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">{stat.trend}</span>
                       </div>
-                      <p className="text-sm text-foreground/50 uppercase tracking-[0.1em] mb-1">{stat.label}</p>
-                      <p className="text-3xl font-light text-foreground">{stat.value}</p>
+                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-tight text-foreground/50">{stat.label}</p>
+                      <p className="text-2xl font-medium tabular-nums text-foreground sm:text-3xl">{stat.value}</p>
                     </motion.div>
                   ))}
                 </div>
 
                 {/* Charts */}
                 <div className="grid gap-6 lg:grid-cols-2">
-                  <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2rem] p-8 shadow-sm">
-                    <h3 className="text-xl font-display italic text-secondary mb-6">Revenue Trend</h3>
-                    <div className="h-[300px] w-full">
-                      {chartsReady && (
+                  <div className="rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-5 shadow-sm sm:p-7">
+                    <h3 className="mb-6 text-lg font-medium text-foreground sm:text-xl">Revenue trend</h3>
+                    <div className={`${chartData.length ? "h-[300px]" : "min-h-[190px]"} w-full`}>
+                      {!chartData.length ? (
+                        <div className="flex h-full min-h-[190px] flex-col items-center justify-center rounded-xl border border-dashed border-[#e6dcc8] bg-[#f7f4ed] px-5 text-center">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#b18a3b]/10 text-accent"><BarChart3 size={19} /></span>
+                          <p className="mt-3 text-sm font-medium text-foreground/75">Your revenue chart is ready</p>
+                          <p className="mt-1 text-xs text-foreground/50">It will fill in when your first order arrives.</p>
+                        </div>
+                      ) : chartsReady && (
                         <ResponsiveContainer width="100%" height="100%">
                           <AreaChart data={chartData}>
                             <defs>
                               <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#3B5339" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#3B5339" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#a98235" stopOpacity={0.28}/>
+                                <stop offset="95%" stopColor="#a98235" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e5e5" />
-                            <XAxis dataKey="index" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} />
-                            <YAxis axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} tickFormatter={(v) => `₹${v}`} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6dcc8" />
+                            <XAxis dataKey="index" axisLine={false} tickLine={false} tick={{fill: '#8a8171', fontSize: 12}} />
+                            <YAxis axisLine={false} tickLine={false} tick={{fill: '#8a8171', fontSize: 12}} tickFormatter={(v) => `₹${v}`} />
                             <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
-                            <Area type="monotone" dataKey="revenue" stroke="#3B5339" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
+                            <Area type="monotone" dataKey="revenue" stroke="#a98235" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       )}
                     </div>
                   </div>
 
-                  <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2rem] p-8 shadow-sm">
-                    <h3 className="text-xl font-display italic text-secondary mb-6">Top Products</h3>
-                    <div className="h-[300px] w-full">
-                      {chartsReady && (
+                  <div className="rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-5 shadow-sm sm:p-7">
+                    <h3 className="mb-6 text-lg font-medium text-foreground sm:text-xl">Top products</h3>
+                    <div className={`${topProductsData.length ? "h-[300px]" : "min-h-[190px]"} w-full`}>
+                      {!topProductsData.length ? (
+                        <div className="flex h-full min-h-[190px] flex-col items-center justify-center rounded-xl border border-dashed border-[#e6dcc8] bg-[#f7f4ed] px-5 text-center">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#b18a3b]/10 text-accent"><Package size={19} /></span>
+                          <p className="mt-3 text-sm font-medium text-foreground/75">No product activity yet</p>
+                          <p className="mt-1 text-xs text-foreground/50">This chart will update when orders come in.</p>
+                        </div>
+                      ) : chartsReady && (
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={topProductsData} layout="vertical" margin={{ left: 50 }}>
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e5e5" />
@@ -417,21 +543,51 @@ export default function AdminPage() {
             {/* PRODUCTS TAB */}
             {activeTab === "products" && (
               <motion.div key="products" {...fadeAnim} className="space-y-8">
-                <form onSubmit={saveProduct} className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] p-6 md:p-8 lg:p-10 shadow-sm space-y-6 md:space-y-8">
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-display italic text-secondary mb-2">{editingSlug ? "Edit Formulation" : "Add Formulation"}</h2>
-                    <p className="text-xs md:text-sm text-foreground/50">Manage your product catalog.</p>
+                <form onSubmit={saveProduct} className="space-y-7 rounded-3xl border border-[#e6dcc8] bg-[#fffdf8] p-5 shadow-[0_16px_45px_-35px_rgba(33,27,19,.45)] sm:p-7 lg:p-9">
+                  <div className="flex flex-col gap-4 border-b border-[#e6dcc8] pb-6 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <span className="text-[10px] font-semibold uppercase tracking-tight text-accent">Inventory · Product details</span>
+                      <h2 className="mt-2 text-2xl font-medium tracking-tight text-foreground md:text-3xl">{editingSlug ? "Edit formulation" : "Add a formulation"}</h2>
+                      <p className="mt-1 text-sm text-foreground/55">Add the details customers need to discover and order this product.</p>
+                    </div>
+                    <span className={`w-fit rounded-full px-3 py-1.5 text-xs font-medium ${form.isVisible ? "bg-[#edf2e8] text-[#465d38]" : "bg-muted text-foreground/60"}`}>
+                      {form.isVisible ? "Visible in store" : "Hidden from store"}
+                    </span>
                   </div>
                   
                   <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    <Input label="Name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
-                    <Input label="Slug" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} />
+                    <Input 
+                      label="Name" 
+                      value={form.name} 
+                      onChange={(e) => {
+                        const newName = e.target.value;
+                        setForm((f) => {
+                          const oldSlugFromName = slugify(f.name);
+                          const isAuto = !f.slug || f.slug === oldSlugFromName;
+                          return {
+                            ...f,
+                            name: newName,
+                            slug: isAuto ? slugify(newName) : f.slug
+                          };
+                        });
+                      }} 
+                    />
+                    <div>
+                      <Input 
+                        label="Slug (URL handle)" 
+                        value={form.slug} 
+                        onChange={(e) => setForm((f) => ({ ...f, slug: slugify(e.target.value) }))} 
+                      />
+                      <p className="mt-1 text-[10px] text-foreground/50 tracking-tight font-mono">
+                        URL: /product/{form.slug || slugify(form.name) || "..."}
+                      </p>
+                    </div>
                     <div className="space-y-2">
-                      <label className="block text-xs uppercase tracking-[0.05em] text-foreground/70 font-medium">Category</label>
+                        <label className="ml-0.5 block text-[11px] font-semibold uppercase tracking-tight text-foreground/60">Category</label>
                       <select
                         value={form.category || "Ayurvedic"}
                         onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                        className="w-full h-12 rounded-2xl border border-foreground/10 px-4 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 transition-all"
+                        className="h-12 w-full rounded-xl border border-border bg-white px-4 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
                       >
                         <option value="Ayurvedic">Ayurvedic</option>
                         <option value="Wellness">Wellness</option>
@@ -449,68 +605,497 @@ export default function AdminPage() {
                     <Input label="Delivery Days" type="number" value={form.deliveryDays || 5} onChange={(e) => setForm((f) => ({ ...f, deliveryDays: Number(e.target.value) }))} placeholder="e.g., 5" />
                   </div>
 
-                  <div className="space-y-4 md:space-y-6">
-                    <textarea className="w-full min-h-[100px] md:min-h-[120px] rounded-xl md:rounded-2xl border border-foreground/10 p-3 md:p-4 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white/50 resize-none transition-all" placeholder="Detailed Description..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <label htmlFor="product-description" className="ml-0.5 block text-[11px] font-semibold uppercase tracking-tight text-foreground/60">Product description</label>
+                      <textarea id="product-description" className="min-h-[130px] w-full resize-y rounded-xl border border-border bg-white p-4 text-sm leading-6 text-foreground outline-none transition placeholder:text-foreground/35 focus:border-primary focus:ring-2 focus:ring-primary/15" placeholder="Describe the formulation, its intended use, and what makes it special..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+                    </div>
                     
                     <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2">
-                      <Input label="Benefits (comma separated)" value={form.benefits} onChange={(e) => setForm((f) => ({ ...f, benefits: e.target.value }))} />
                       <Input label="Ingredients (comma separated)" value={form.ingredients} onChange={(e) => setForm((f) => ({ ...f, ingredients: e.target.value }))} />
-                      <Input label="Usage Steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
+                      <Input label="How to use steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
                     </div>
 
-                    {/* Video Upload Section */}
-                    <div className="space-y-4">
-                      <label className="block text-sm font-medium uppercase tracking-[0.05em] text-foreground/70">Product Video</label>
-                      <div className="border-2 border-dashed border-foreground/20 rounded-2xl p-6 text-center hover:border-primary transition-colors">
-                        <input
-                          type="file"
-                          accept="video/*"
-                          onChange={async (e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            
-                            setUploading(true);
-                            const url = await handleVideoUpload(file);
-                            if (url) {
-                              setForm((f) => ({ ...f, videoUrl: url }));
-                              toast.success("Video uploaded");
-                            }
-                            setUploading(false);
-                          }}
-                          className="hidden"
-                          id="video-upload"
-                        />
-                        <label htmlFor="video-upload" className="cursor-pointer">
-                          <div className="space-y-2">
-                            <p className="text-sm font-medium text-foreground">Click to upload video</p>
-                            <p className="text-xs text-foreground/50">MP4, MOV up to 20MB</p>
+                    <div className="grid gap-6 lg:grid-cols-2">
+                      <section className="space-y-3 rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-4 sm:p-5">
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground">Ingredient images</h3>
+                          <p className="mt-1 text-xs text-foreground/50">Upload an image for each ingredient listed above.</p>
+                        </div>
+                        <div className="space-y-2">
+                          {form.ingredients.split(",").map((name) => name.trim()).filter(Boolean).map((name, index) => (
+                            <div key={`${name}-${index}`} className="flex items-center gap-3 rounded-xl border border-foreground/5 bg-white p-2.5">
+                              {form.ingredientImages?.[name] ? (
+                                <img src={form.ingredientImages[name]} alt={name} className="h-11 w-11 rounded-lg object-cover" />
+                              ) : (
+                                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#f7f4ed] text-sm font-medium text-accent">{name.slice(0, 1)}</div>
+                              )}
+                              <span className="min-w-0 flex-1 truncate text-sm text-foreground">{name}</span>
+                              <label className="cursor-pointer rounded-full border border-foreground/10 px-3 py-2 text-xs font-medium text-foreground/70 hover:border-accent hover:text-accent">
+                                {form.ingredientImages?.[name] ? "Replace" : "Upload"}
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                                  className="sr-only"
+                                  onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    setUploading(true);
+                                    const url = await handleImageUpload(file);
+                                    if (url) setForm((f) => ({ ...f, ingredientImages: { ...f.ingredientImages, [name]: url } }));
+                                    setUploading(false);
+                                    e.target.value = "";
+                                  }}
+                                />
+                              </label>
+                              {form.ingredientImages?.[name] && (
+                                <button type="button" onClick={() => setForm((f) => { const ingredientImages = { ...f.ingredientImages }; delete ingredientImages[name]; return { ...f, ingredientImages }; })} className="px-1 text-lg text-foreground/40 hover:text-red-600" aria-label={`Remove ${name} image`}>×</button>
+                              )}
+                            </div>
+                          ))}
+                          {!form.ingredients.trim() && <p className="rounded-xl bg-[#f7f4ed] p-3 text-xs text-foreground/50">Add ingredients above to upload their images.</p>}
+                        </div>
+                      </section>
+
+                      <section className="space-y-3 rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-4 sm:p-5">
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground">How to use images</h3>
+                          <p className="mt-1 text-xs text-foreground/50">Each image is saved with its matching step.</p>
+                        </div>
+                        <div className="space-y-2">
+                          {form.usage.split(",").map((step) => step.trim()).filter(Boolean).map((step, index) => (
+                            <div key={`${step}-${index}`} className="flex items-center gap-3 rounded-xl border border-foreground/5 bg-white p-2.5">
+                              {form.usageImages?.[index] ? (
+                                <img src={form.usageImages[index]} alt={`Step ${index + 1}`} className="h-11 w-11 rounded-lg object-cover" />
+                              ) : (
+                                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#f7f4ed] text-sm font-medium text-accent">{String(index + 1).padStart(2, "0")}</div>
+                              )}
+                              <span className="min-w-0 flex-1 truncate text-sm text-foreground"><span className="mr-2 text-xs text-foreground/40">{String(index + 1).padStart(2, "0")}</span>{step}</span>
+                              <label className="cursor-pointer rounded-full border border-foreground/10 px-3 py-2 text-xs font-medium text-foreground/70 hover:border-accent hover:text-accent">
+                                {form.usageImages?.[index] ? "Replace" : "Upload"}
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                                  className="sr-only"
+                                  onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    setUploading(true);
+                                    const url = await handleImageUpload(file);
+                                    if (url) setForm((f) => { const usageImages = [...(f.usageImages || [])]; usageImages[index] = url; return { ...f, usageImages }; });
+                                    setUploading(false);
+                                    e.target.value = "";
+                                  }}
+                                />
+                              </label>
+                              {form.usageImages?.[index] && (
+                                <button type="button" onClick={() => setForm((f) => { const usageImages = [...(f.usageImages || [])]; usageImages[index] = ""; return { ...f, usageImages }; })} className="px-1 text-lg text-foreground/40 hover:text-red-600" aria-label={`Remove step ${index + 1} image`}>×</button>
+                              )}
+                            </div>
+                          ))}
+                          {!form.usage.trim() && <p className="rounded-xl bg-[#f7f4ed] p-3 text-xs text-foreground/50">Add usage steps above to upload their images.</p>}
+                        </div>
+                      </section>
+                    </div>
+
+                    {/* Pack Management Section */}
+                    <section className="space-y-4 rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-4 sm:p-5">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground">Product Packs</h3>
+                          <p className="mt-1 text-xs text-foreground/50">Add pack variants (e.g., 1 Month, 2 Months, 3 Months) with pricing.</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setForm((f) => ({
+                            ...f,
+                            packs: [...(f.packs || []), { label: "", packCount: 1, sachets: "", price: 0, mrp: 0, image: "", mostPopular: false }],
+                          }))}
+                          className="rounded-full bg-accent/10 px-4 py-2 text-xs font-semibold text-accent hover:bg-accent/20 transition-colors"
+                        >
+                          + Add Pack
+                        </button>
+                      </div>
+                      <div className="space-y-3">
+                        {(form.packs || []).map((pack, idx) => (
+                          <div key={idx} className="rounded-xl border border-foreground/10 bg-white p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-foreground/50 uppercase tracking-tight">Pack {idx + 1}</span>
+                              <button
+                                type="button"
+                                onClick={() => setForm((f) => ({ ...f, packs: f.packs.filter((_, i) => i !== idx) }))}
+                                className="text-red-400 hover:text-red-600 text-xs font-medium transition-colors"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                            <div className="grid gap-3 grid-cols-2 md:grid-cols-3">
+                              <Input
+                                label="Label"
+                                placeholder="e.g., 1 Month"
+                                value={pack.label}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], label: e.target.value };
+                                  return { ...f, packs };
+                                })}
+                              />
+                              <Input
+                                label="Pack Count"
+                                type="number"
+                                value={pack.packCount}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], packCount: Number(e.target.value) };
+                                  return { ...f, packs };
+                                })}
+                              />
+                              <Input
+                                label="Sachets / Units"
+                                placeholder="e.g., 60 Sachets"
+                                value={pack.sachets || ""}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], sachets: e.target.value };
+                                  return { ...f, packs };
+                                })}
+                              />
+                              <Input
+                                label="Sale Price (₹)"
+                                type="number"
+                                value={pack.price}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], price: Number(e.target.value) };
+                                  return { ...f, packs };
+                                })}
+                              />
+                              <Input
+                                label="MRP (₹)"
+                                type="number"
+                                value={pack.mrp}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], mrp: Number(e.target.value) };
+                                  return { ...f, packs };
+                                })}
+                              />
+                              <Input
+                                label="Pack Image URL"
+                                placeholder="https://..."
+                                value={pack.image || ""}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = [...f.packs];
+                                  packs[idx] = { ...packs[idx], image: e.target.value };
+                                  return { ...f, packs };
+                                })}
+                              />
+                            </div>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={pack.mostPopular || false}
+                                onChange={(e) => setForm((f) => {
+                                  const packs = f.packs.map((p, i) => ({
+                                    ...p,
+                                    mostPopular: i === idx ? e.target.checked : false,
+                                  }));
+                                  return { ...f, packs };
+                                })}
+                                className="rounded border-foreground/20"
+                              />
+                              <span className="text-xs font-medium text-foreground/70">Mark as Most Popular</span>
+                            </label>
                           </div>
-                        </label>
+                        ))}
+                        {(!form.packs || form.packs.length === 0) && (
+                          <p className="rounded-xl bg-[#f7f4ed] p-3 text-xs text-foreground/50">
+                            No packs added. Click &quot;+ Add Pack&quot; to create pack variants (e.g., 1 Month ₹900, 2 Months ₹1650).
+                          </p>
+                        )}
+                      </div>
+                    </section>
+
+                    {/* KEY BENEFITS & FEATURE ICONS SECTION */}
+                    <section className="space-y-5 rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-4 sm:p-6 shadow-sm">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#e6dcc8]/70 pb-4">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full bg-[#a98235]" />
+                            <h3 className="text-base font-bold text-foreground">
+                              Key Benefits & Feature Icons
+                            </h3>
+                            <span className="rounded-full bg-[#a98235]/15 px-2.5 py-0.5 text-[11px] font-bold text-[#8e6b28] uppercase tracking-tight">
+                              Store Highlights
+                            </span>
+                          </div>
+                          <p className="mt-1 text-xs text-foreground/60 max-w-2xl leading-relaxed">
+                            These benefits appear directly beneath the product title with gold circular badges. Admin can select from pre-defined feature icons (without needing to upload) or upload custom icons, and edit the benefit text.
+                          </p>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setForm((f) => ({
+                            ...f,
+                            keyBenefits: [
+                              ...(f.keyBenefits || []),
+                              { text: "", image: FEATURE_ICONS[0].icon }
+                            ]
+                          }))}
+                          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#3d2e1a] px-4 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-[#2a1f10] transition-colors shrink-0"
+                        >
+                          <Plus size={14} />
+                          <span>Add Key Benefit</span>
+                        </button>
                       </div>
 
-                      {form.videoUrl && (
-                        <div className="relative aspect-video rounded-xl overflow-hidden border border-foreground/10 max-w-sm">
-                          <video src={form.videoUrl} className="w-full h-full object-cover" controls />
-                          <button
-                            type="button"
-                            onClick={() => setForm((f) => ({ ...f, videoUrl: "" }))}
-                            className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
-                          >
-                            ×
-                          </button>
+                      {/* Quick Add Presets Bar */}
+                      <div className="rounded-xl bg-[#f7f4ed] p-3 border border-[#e6dcc8]/60 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-bold uppercase tracking-tight text-[#8e6b28] flex items-center gap-1.5">
+                            <Sparkles size={13} className="text-[#a98235]" />
+                            Quick-Add Pre-defined Feature:
+                          </span>
+                          <span className="text-[10px] text-foreground/50">Click any feature to add with 1 click</span>
                         </div>
-                      )}
-                      
-                      <Input label="Or Video URL" value={form.videoUrl} onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))} />
-                    </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {FEATURE_ICONS.map((feat) => (
+                            <button
+                              key={feat.id}
+                              type="button"
+                              onClick={() => setForm((f) => ({
+                                ...f,
+                                keyBenefits: [
+                                  ...(f.keyBenefits || []),
+                                  { text: feat.defaultText, image: feat.icon }
+                                ]
+                              }))}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#dfc77f]/70 bg-white hover:bg-[#fbf9f4] hover:border-[#a98235] text-[11px] font-medium text-[#3d2e1a] shadow-xs transition-all group"
+                              title={`Click to add "${feat.name}"`}
+                            >
+                              <img src={feat.icon} alt={feat.name} className="h-4 w-4 object-contain group-hover:scale-110 transition-transform" />
+                              <span>+ {feat.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Benefit Cards List */}
+                      <div className="space-y-4">
+                        {(form.keyBenefits || []).map((item, idx) => {
+                          const activeIcon = FEATURE_ICONS.find(f => f.icon === item.image);
+
+                          return (
+                            <div 
+                              key={idx}
+                              className="rounded-xl border border-[#e6dcc8] bg-white p-4 shadow-xs space-y-4 transition-all hover:border-[#a98235]/60"
+                            >
+                              <div className="flex items-center justify-between border-b border-foreground/5 pb-2.5">
+                                <div className="flex items-center gap-2">
+                                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f0ebe1] text-xs font-bold text-[#8e6b28]">
+                                    {idx + 1}
+                                  </span>
+                                  <span className="text-xs font-bold uppercase tracking-tight text-foreground/70">
+                                    Benefit #{idx + 1}
+                                  </span>
+                                  {activeIcon && (
+                                    <span className="rounded-md bg-[#edf2e8] px-2 py-0.5 text-[10px] font-semibold text-[#465d38]">
+                                      {activeIcon.name}
+                                    </span>
+                                  )}
+                                </div>
+
+                                <div className="flex items-center gap-1">
+                                  {idx > 0 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => setForm((f) => {
+                                        const list = [...f.keyBenefits];
+                                        const temp = list[idx - 1];
+                                        list[idx - 1] = list[idx];
+                                        list[idx] = temp;
+                                        return { ...f, keyBenefits: list };
+                                      })}
+                                      className="rounded p-1 text-foreground/40 hover:bg-foreground/5 hover:text-foreground transition-colors"
+                                      title="Move Up"
+                                    >
+                                      <ChevronUp size={15} />
+                                    </button>
+                                  )}
+                                  {idx < (form.keyBenefits.length - 1) && (
+                                    <button
+                                      type="button"
+                                      onClick={() => setForm((f) => {
+                                        const list = [...f.keyBenefits];
+                                        const temp = list[idx + 1];
+                                        list[idx + 1] = list[idx];
+                                        list[idx] = temp;
+                                        return { ...f, keyBenefits: list };
+                                      })}
+                                      className="rounded p-1 text-foreground/40 hover:bg-foreground/5 hover:text-foreground transition-colors"
+                                      title="Move Down"
+                                    >
+                                      <ChevronDown size={15} />
+                                    </button>
+                                  )}
+                                  <button
+                                    type="button"
+                                    onClick={() => setForm((f) => ({
+                                      ...f,
+                                      keyBenefits: f.keyBenefits.filter((_, i) => i !== idx)
+                                    }))}
+                                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-50 transition-colors ml-2"
+                                  >
+                                    <Trash2 size={13} />
+                                    <span>Remove</span>
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div className="grid gap-4 md:grid-cols-[1fr_auto]">
+                                {/* Left: Text Input & Icon Selector */}
+                                <div className="space-y-3">
+                                  <Input
+                                    label="Benefit Text (Headline in badge)"
+                                    placeholder="e.g. Relief from Discomfort, Better Results, Promotes Digestion"
+                                    value={item.text || ""}
+                                    onChange={(e) => setForm((f) => {
+                                      const list = [...f.keyBenefits];
+                                      list[idx] = { ...list[idx], text: e.target.value };
+                                      return { ...f, keyBenefits: list };
+                                    })}
+                                  />
+
+                                  {/* Pre-defined Feature Icons selector with names */}
+                                  <div className="space-y-1.5 pt-1">
+                                    <div className="flex items-center justify-between">
+                                      <label className="text-[11px] font-bold uppercase tracking-tight text-foreground/70">
+                                        Select Feature Icon (Pre-defined from /feature/):
+                                      </label>
+                                      <span className="text-[10px] text-foreground/50">
+                                        Click any icon to assign without upload
+                                      </span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                      {FEATURE_ICONS.map((feat) => {
+                                        const isSelected = item.image === feat.icon;
+                                        return (
+                                          <button
+                                            key={feat.id}
+                                            type="button"
+                                            onClick={() => setForm((f) => {
+                                              const list = [...f.keyBenefits];
+                                              list[idx] = {
+                                                ...list[idx],
+                                                image: feat.icon,
+                                                text: list[idx].text ? list[idx].text : feat.defaultText,
+                                              };
+                                              return { ...f, keyBenefits: list };
+                                            })}
+                                            className={`flex items-center gap-2 p-2 rounded-xl border text-left transition-all ${
+                                              isSelected
+                                                ? "border-[#a98235] bg-[#faf6ef] shadow-sm ring-1 ring-[#a98235]"
+                                                : "border-foreground/10 bg-white hover:border-[#a98235]/40 hover:bg-[#fbf9f4]"
+                                            }`}
+                                          >
+                                            <div className="h-8 w-8 rounded-full bg-white border border-[#e6dcc8] p-1 flex items-center justify-center shrink-0">
+                                              <img src={feat.icon} alt={feat.name} className="h-full w-full object-contain" />
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                              <p className={`text-xs font-semibold leading-tight truncate ${isSelected ? "text-[#3d2e1a]" : "text-foreground/80"}`}>
+                                                {feat.name}
+                                              </p>
+                                              <span className="text-[9px] text-foreground/50 truncate block">
+                                                {feat.id}
+                                              </span>
+                                            </div>
+                                            {isSelected && (
+                                              <div className="h-4 w-4 rounded-full bg-[#3d2e1a] text-white flex items-center justify-center shrink-0">
+                                                <Check size={10} strokeWidth={3} />
+                                              </div>
+                                            )}
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+
+                                  {/* Custom Image Upload / URL (Optional) */}
+                                  <div className="pt-2 border-t border-foreground/5 flex flex-col sm:flex-row sm:items-center gap-2">
+                                    <span className="text-[11px] font-semibold text-foreground/60 shrink-0">Or Custom Image:</span>
+                                    <input
+                                      type="text"
+                                      placeholder="Paste custom icon URL"
+                                      value={item.image && !item.image.startsWith("/feature/") ? item.image : ""}
+                                      onChange={(e) => setForm((f) => {
+                                        const list = [...f.keyBenefits];
+                                        list[idx] = { ...list[idx], image: e.target.value };
+                                        return { ...f, keyBenefits: list };
+                                      })}
+                                      className="flex-1 rounded-lg border border-foreground/20 px-3 py-1.5 text-xs bg-white text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+                                    />
+                                    <label className="cursor-pointer rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent hover:bg-accent/20 transition-colors flex items-center justify-center shrink-0">
+                                      <Upload size={12} className="mr-1.5" />
+                                      Upload
+                                      <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={async (e) => {
+                                          const file = e.target.files?.[0];
+                                          if (!file) return;
+                                          setUploading(true);
+                                          const url = await handleImageUpload(file);
+                                          if (url) {
+                                            setForm((f) => {
+                                              const list = [...f.keyBenefits];
+                                              list[idx] = { ...list[idx], image: url };
+                                              return { ...f, keyBenefits: list };
+                                            });
+                                          }
+                                          setUploading(false);
+                                          e.target.value = "";
+                                        }}
+                                      />
+                                    </label>
+                                  </div>
+                                </div>
+
+                                {/* Right: Live Preview of this badge */}
+                                <div className="flex flex-col items-center justify-center p-3.5 bg-[#faf6ef] rounded-xl border border-[#e3dac8] w-full md:w-48 text-center shrink-0">
+                                  <span className="text-[9px] font-bold uppercase tracking-tight text-[#8e6b28] mb-2">Live Store Look</span>
+                                  <div className="relative h-12 w-12 rounded-full bg-gradient-to-br from-[#dfc77f] via-[#c9a84c] to-[#8e6b28] p-[1.5px] shadow-sm flex items-center justify-center">
+                                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                      <img src={item.image || "/feature/1.svg"} alt={item.text || "Benefit"} className="h-full w-full object-contain" />
+                                    </div>
+                                  </div>
+                                  <p className="mt-2 text-xs font-bold text-[#3d2e1a] line-clamp-2 px-1">
+                                    {item.text || <span className="italic text-foreground/40 font-normal">Enter text...</span>}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+
+                        {(!form.keyBenefits || form.keyBenefits.length === 0) && (
+                          <div className="rounded-xl bg-[#f7f4ed] p-6 text-center border border-dashed border-[#c9b989]">
+                            <p className="text-sm font-semibold text-foreground/70">No Key Benefits added yet</p>
+                            <p className="text-xs text-foreground/50 mt-1">Click &quot;Add Key Benefit&quot; or choose from the Quick-Add presets above to add benefits.</p>
+                          </div>
+                        )}
+                      </div>
+                    </section>
 
                     {/* Image Upload Section */}
                     <div className="space-y-4">
-                      <label className="block text-sm font-medium uppercase tracking-[0.05em] text-foreground/70">Product Images</label>
-                      <div className="border-2 border-dashed border-foreground/20 rounded-2xl p-6 text-center hover:border-primary transition-colors">
+                      <label className="block text-[11px] font-semibold uppercase tracking-tight text-foreground/60">Product images</label>
+                      <div className="rounded-2xl border border-dashed border-[#c9b989] bg-[#f7f4ed]/70 p-6 text-center transition-colors hover:border-primary hover:bg-[#f3edde]">
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
                           multiple
                           onChange={async (e) => {
                             const files = Array.from(e.target.files);
@@ -521,10 +1106,14 @@ export default function AdminPage() {
                             const urls = await Promise.all(uploadPromises);
                             const validUrls = urls.filter(url => url !== null);
                             
-                            setForm((f) => ({ 
-                              ...f, 
-                              images: [...(f.images || []), ...validUrls] 
-                            }));
+                            setForm((f) => {
+                              const newImgs = [...(f.images || []), ...validUrls];
+                              setImageUrlInput(newImgs.join(", "));
+                              return {
+                                ...f,
+                                images: newImgs,
+                              };
+                            });
                             setUploading(false);
                             
                             if (validUrls.length > 0) {
@@ -537,31 +1126,116 @@ export default function AdminPage() {
                         <label htmlFor="image-upload" className="cursor-pointer">
                           <div className="space-y-2">
                             <p className="text-sm font-medium text-foreground">Click to upload images</p>
-                            <p className="text-xs text-foreground/50">PNG, JPG up to 10MB (Cloudinary)</p>
+                            <p className="text-xs text-foreground/50">JPG, PNG, WebP, AVIF, or GIF · up to 5 MB · stored in Supabase</p>
                           </div>
                         </label>
                       </div>
 
-                      {/* Image Previews */}
+                      {/* Image Previews with Reordering & Cover Selection */}
                       {form.images && form.images.length > 0 && (
-                        <div className="grid grid-cols-4 gap-4">
-                          {form.images.map((img, idx) => (
-                            <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-foreground/10">
-                              <img src={img} alt={`Product ${idx + 1}`} className="w-full h-full object-cover" />
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setForm((f) => ({
-                                    ...f,
-                                    images: f.images.filter((_, i) => i !== idx)
-                                  }));
-                                }}
-                                className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
-                              >
-                                ×
-                              </button>
+                        <div className="space-y-3">
+                          <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+                            <div>
+                              <span className="text-xs font-semibold text-foreground">
+                                Product Images ({form.images.length})
+                              </span>
+                              <p className="text-[11px] text-foreground/60">
+                                #1 is the front cover. Use arrows or &quot;Make Front&quot; to arrange order.
+                              </p>
                             </div>
-                          ))}
+                            <span className="text-[11px] font-medium text-[#872B10] bg-[#872B10]/10 px-2.5 py-1 rounded-full">
+                              Cover: Image #1
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            {form.images.map((img, idx) => (
+                              <div
+                                key={idx}
+                                className={`group relative flex flex-col rounded-2xl overflow-hidden border transition-all ${
+                                  idx === 0
+                                    ? "border-[#39160D] ring-2 ring-[#39160D]/20 shadow-md bg-[#FFF7EB]"
+                                    : "border-foreground/15 bg-[#FFF7EB] hover:border-foreground/30 shadow-sm"
+                                }`}
+                              >
+                                {/* Image display container - clean background for transparent PNGs */}
+                                <div className="relative aspect-square w-full p-2.5 flex items-center justify-center bg-transparent">
+                                  <img
+                                    src={img}
+                                    alt={`Product ${idx + 1}`}
+                                    className="w-full h-full object-contain select-none transition-transform group-hover:scale-105"
+                                  />
+
+                                  {/* Top header badge & Delete button */}
+                                  <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-none">
+                                    {idx === 0 ? (
+                                      <span className="pointer-events-auto inline-flex items-center gap-1 bg-[#39160D] text-[#FFF7EB] text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                                        <Star size={10} className="fill-amber-400 text-amber-400" /> FRONT COVER
+                                      </span>
+                                    ) : (
+                                      <span className="pointer-events-auto bg-[#39160D]/80 text-[#FFF7EB] text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                                        #{idx + 1}
+                                      </span>
+                                    )}
+
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const newImgs = form.images.filter((_, i) => i !== idx);
+                                        setForm((f) => ({ ...f, images: newImgs }));
+                                        setImageUrlInput(newImgs.join(", "));
+                                      }}
+                                      className="pointer-events-auto w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs shadow transition-colors"
+                                      title="Remove image"
+                                    >
+                                      ×
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {/* Reorder Controls Footer */}
+                                <div className="border-t border-[#39160D]/10 bg-white/80 backdrop-blur-sm p-1.5 flex items-center justify-between gap-1">
+                                  {/* Move Left / Earlier */}
+                                  <button
+                                    type="button"
+                                    disabled={idx === 0}
+                                    onClick={() => moveImage(idx, -1)}
+                                    className="p-1 rounded-lg text-[#39160D] hover:bg-[#39160D]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                                    title="Move left (earlier)"
+                                  >
+                                    <ChevronLeft size={16} />
+                                  </button>
+
+                                  {/* Center action: Set as front or cover label */}
+                                  {idx === 0 ? (
+                                    <span className="text-[10px] font-bold uppercase tracking-tight text-[#39160D] px-1">
+                                      Main Cover
+                                    </span>
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      onClick={() => setAsMainImage(idx)}
+                                      className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold text-[#872B10] bg-[#872B10]/10 hover:bg-[#872B10]/20 transition-colors"
+                                      title="Make this the front cover"
+                                    >
+                                      <Star size={11} className="fill-[#872B10]" /> Make Front
+                                    </button>
+                                  )}
+
+                                  {/* Move Right / Later */}
+                                  <button
+                                    type="button"
+                                    disabled={idx === form.images.length - 1}
+                                    onClick={() => moveImage(idx, 1)}
+                                    className="p-1 rounded-lg text-[#39160D] hover:bg-[#39160D]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                                    title="Move right (later)"
+                                  >
+                                    <ChevronRight size={16} />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
 
@@ -586,31 +1260,32 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-foreground/5">
+                  <div className="flex flex-col gap-4 border-t border-[#e6dcc8] pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <label className="flex items-center gap-3 cursor-pointer">
-                      <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${form.isVisible ? 'bg-primary' : 'bg-foreground/20'}`}>
+                      <div className={`w-11 h-6 rounded-full p-1 transition-colors duration-300 ${form.isVisible ? 'bg-[#a98235]' : 'bg-foreground/20'}`}>
                         <div className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 ${form.isVisible ? 'translate-x-6' : 'translate-x-0'}`} />
                       </div>
                       <input type="checkbox" className="hidden" checked={form.isVisible} onChange={(e) => setForm((f) => ({ ...f, isVisible: e.target.checked }))} />
-                      <span className="text-sm font-medium uppercase tracking-[0.05em] text-foreground/70">Visible in Store</span>
+                      <span className="text-sm font-medium text-foreground/75">Show this product in the store</span>
                     </label>
 
-                    <div className="flex gap-4">
+                    <div className="flex flex-wrap justify-end gap-3">
                       {editingSlug && (
-                        <button type="button" onClick={() => { setEditingSlug(""); setForm(empty); }} className="px-6 py-3 rounded-full text-sm uppercase tracking-[0.05em] font-medium text-foreground/60 hover:bg-foreground/5 transition-colors">
+                        <button type="button" onClick={() => { setEditingSlug(""); setForm(empty); }} className="rounded-full px-5 py-3 text-sm font-medium text-foreground/60 transition-colors hover:bg-muted">
                           Cancel
                         </button>
                       )}
-                      <button type="submit" className="px-8 py-3 rounded-full bg-foreground text-background text-sm uppercase tracking-[0.05em] font-medium hover:bg-secondary transition-colors shadow-lg">
-                        {editingSlug ? "Save Changes" : "Create Product"}
+                      <button type="submit" disabled={uploading} className="rounded-full bg-[#211b13] px-7 py-3 text-sm font-semibold text-[#f8f3e8] shadow-md shadow-[#211b13]/10 transition hover:bg-[#8e6b28] disabled:cursor-wait disabled:opacity-60">
+                        {uploading ? "Saving..." : editingSlug ? "Save changes" : "Create product"}
                       </button>
                     </div>
                   </div>
                 </form>
 
-                <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
-                  <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.1em] text-foreground/50">
+                <div className="overflow-hidden rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] shadow-sm">
+                  <div className="overflow-x-auto">
+                  <table className="w-full min-w-[720px] text-left">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
                         <th className="px-8 py-6 font-medium">Product</th>
                         <th className="px-8 py-6 font-medium">Status</th>
@@ -634,7 +1309,7 @@ export default function AdminPage() {
                             </div>
                           </td>
                           <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${p.isVisible ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
+                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${p.isVisible ? 'bg-amber-100 text-amber-800' : 'bg-orange-100 text-orange-700'}`}>
                               {p.isVisible ? "Active" : "Hidden"}
                             </span>
                           </td>
@@ -642,16 +1317,31 @@ export default function AdminPage() {
                           <td className="px-8 py-6 font-light text-foreground/50 line-through">₹{p.price}</td>
                           <td className="px-8 py-6">
                             <div className="flex justify-end gap-3">
-                              <button onClick={() => startEdit(p)} className="text-xs uppercase tracking-[0.05em] font-medium text-accent hover:text-secondary transition-colors">Edit</button>
-                              <button onClick={() => toggleVisibility(p)} className="text-xs uppercase tracking-[0.05em] font-medium text-foreground/50 hover:text-foreground transition-colors">{p.isVisible ? "Hide" : "Show"}</button>
-                              <button onClick={() => deleteProduct(p.slug)} className="text-xs uppercase tracking-[0.05em] font-medium text-red-400 hover:text-red-600 transition-colors">Delete</button>
+                              <button onClick={() => startEdit(p)} className="text-xs uppercase tracking-tight font-medium text-accent hover:text-secondary transition-colors">Edit</button>
+                              <button onClick={() => toggleVisibility(p)} className="text-xs uppercase tracking-tight font-medium text-foreground/50 hover:text-foreground transition-colors">{p.isVisible ? "Hide" : "Show"}</button>
+                              <button onClick={() => deleteProduct(p.slug)} className="text-xs uppercase tracking-tight font-medium text-red-400 hover:text-red-600 transition-colors">Delete</button>
                             </div>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                  </div>
+                  {products.length === 0 && (
+                    <div className="border-t border-[#e6dcc8] px-6 py-10 text-center sm:py-12">
+                      <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#b18a3b]/10 text-accent"><Package size={21} /></span>
+                      <h3 className="mt-4 text-base font-semibold text-foreground">Your inventory is empty</h3>
+                      <p className="mt-1 text-sm text-foreground/55">Add a formulation above to start building your catalogue.</p>
+                    </div>
+                  )}
                 </div>
+              </motion.div>
+            )}
+
+                        {/* BANNERS & CONCERNS TAB */}
+            {activeTab === "customizer" && (
+              <motion.div key="customizer" {...fadeAnim} className="space-y-8">
+                <BannerConcernManager />
               </motion.div>
             )}
 
@@ -663,7 +1353,7 @@ export default function AdminPage() {
                     <h2 className="text-3xl font-display italic text-secondary">Recent Transactions</h2>
                   </div>
                   <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.1em] text-foreground/50">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
                         <th className="px-8 py-6 font-medium">Customer</th>
                         <th className="px-8 py-6 font-medium">Method</th>
@@ -680,7 +1370,7 @@ export default function AdminPage() {
                             <p className="text-xs text-foreground/50">{o.address?.phone || o.user?.phone || "-"}</p>
                           </td>
                           <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${o.paymentMethod === 'cod' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
+                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${o.paymentMethod === 'cod' ? 'bg-yellow-100 text-yellow-700' : 'bg-amber-100 text-amber-800'}`}>
                               {o.paymentMethod || "Online"}
                             </span>
                           </td>
@@ -689,7 +1379,7 @@ export default function AdminPage() {
                             <select
                               value={o.status}
                               onChange={(e) => updateOrderStatus(o._id, e.target.value)}
-                              className="bg-transparent border border-foreground/20 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-[0.05em] focus:outline-none focus:border-accent cursor-pointer hover:bg-white/50 transition-colors"
+                              className="bg-transparent border border-foreground/20 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-tight focus:outline-none focus:border-accent cursor-pointer hover:bg-white/50 transition-colors"
                             >
                               {["placed", "processing", "shipped", "delivered", "cancelled"].map((status) => (
                                 <option key={status} value={status}>{status}</option>
@@ -697,7 +1387,7 @@ export default function AdminPage() {
                             </select>
                           </td>
                           <td className="px-8 py-6 text-right">
-                            <Link href={`/admin/orders/${o._id}`} className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.05em] font-medium text-accent hover:text-secondary transition-colors">
+                            <Link href={`/admin/orders/${o._id}`} className="inline-flex items-center gap-1 text-xs uppercase tracking-tight font-medium text-accent hover:text-secondary transition-colors">
                               View <ArrowUpRight size={14} />
                             </Link>
                           </td>
@@ -714,10 +1404,10 @@ export default function AdminPage() {
               <motion.div key="reviews" {...fadeAnim} className="space-y-8">
                 <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
                   <div className="p-8 border-b border-foreground/5">
-                    <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Manage Reviews</h2>
+                    <h2 className="text-3xl font-display italic text-secondary tracking-tight">Manage Reviews</h2>
                   </div>
                   <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.05em] text-foreground/50">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
                         <th className="px-8 py-6 font-medium">Product</th>
                         <th className="px-8 py-6 font-medium">Customer</th>
@@ -749,7 +1439,7 @@ export default function AdminPage() {
                               <p className="text-sm text-foreground/70 line-clamp-2">{review.comment}</p>
                             </td>
                             <td className="px-8 py-6">
-                              <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${review.approved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                              <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${review.approved ? 'bg-amber-100 text-amber-800' : 'bg-yellow-100 text-yellow-700'}`}>
                                 {review.approved ? 'Approved' : 'Pending'}
                               </span>
                             </td>
@@ -757,7 +1447,7 @@ export default function AdminPage() {
                               <div className="flex justify-end gap-2">
                                 <button
                                   onClick={() => approveReview(p._id, review._id || idx, !review.approved)}
-                                  className="p-2 rounded-lg hover:bg-green-100 text-green-600 transition-colors"
+                                  className="p-2 rounded-lg hover:bg-amber-100 text-amber-700 transition-colors"
                                   title={review.approved ? "Unapprove" : "Approve"}
                                 >
                                   {review.approved ? <X size={16} /> : <Check size={16} />}
@@ -785,10 +1475,10 @@ export default function AdminPage() {
               <motion.div key="inquiries" {...fadeAnim} className="space-y-8">
                 <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
                   <div className="p-8 border-b border-foreground/5">
-                    <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Inquiries & Consultations</h2>
+                    <h2 className="text-3xl font-display italic text-secondary tracking-tight">Inquiries & Consultations</h2>
                   </div>
                   <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.05em] text-foreground/50">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
                         <th className="px-8 py-6 font-medium">Customer</th>
                         <th className="px-8 py-6 font-medium">Type</th>
@@ -805,7 +1495,7 @@ export default function AdminPage() {
                             <p className="text-sm text-accent font-bold">{inq.phone}</p>
                           </td>
                           <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${inq.type === 'consultation' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${inq.type === 'consultation' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-700'}`}>
                               {inq.type}
                             </span>
                           </td>
@@ -818,7 +1508,7 @@ export default function AdminPage() {
                             <p className="text-xs text-foreground/50">{new Date(inq.createdAt).toLocaleDateString()}</p>
                           </td>
                           <td className="px-8 py-6 text-right">
-                            <a href={`tel:${inq.phone}`} className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.05em] font-medium text-accent hover:text-secondary transition-colors">
+                            <a href={`tel:${inq.phone}`} className="inline-flex items-center gap-1 text-xs uppercase tracking-tight font-medium text-accent hover:text-secondary transition-colors">
                               Call Now <Phone size={14} />
                             </a>
                           </td>
@@ -835,10 +1525,10 @@ export default function AdminPage() {
               <motion.div key="users" {...fadeAnim} className="space-y-8">
                 <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
                   <div className="p-8 border-b border-foreground/5">
-                    <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em]">Customer Directory</h2>
+                    <h2 className="text-3xl font-display italic text-secondary tracking-tight">Customer Directory</h2>
                   </div>
                   <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-[0.05em] text-foreground/50">
+                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
                         <th className="px-8 py-6 font-medium">Customer</th>
                         <th className="px-8 py-6 font-medium">Contact</th>
@@ -861,7 +1551,7 @@ export default function AdminPage() {
                             <p className="text-xs text-foreground/50">{u.phone || "No phone"}</p>
                           </td>
                           <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.05em] font-bold ${u.role === 'admin' ? 'bg-accent/20 text-accent' : 'bg-foreground/5 text-foreground/60'}`}>
+                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${u.role === 'admin' ? 'bg-accent/20 text-accent' : 'bg-foreground/5 text-foreground/60'}`}>
                               {u.role}
                             </span>
                           </td>
@@ -877,30 +1567,30 @@ export default function AdminPage() {
             {activeTab === "analytics" && (
               <motion.div key="analytics" {...fadeAnim} className="space-y-8">
                 <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] p-8 shadow-sm">
-                  <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em] mb-8">Analytics Overview</h2>
+                  <h2 className="text-3xl font-display italic text-secondary tracking-tight mb-8">Analytics Overview</h2>
                   <div className="grid gap-6 lg:grid-cols-2">
                     <div className="bg-muted/30 rounded-2xl p-6 space-y-4">
-                      <h3 className="text-lg font-light tracking-[0.01em]">Sales Trend</h3>
+                      <h3 className="text-lg font-light tracking-tight">Sales Trend</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
                           <AreaChart data={chartData}>
                             <defs>
                               <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#7a8f7a" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#7a8f7a" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#b18a3b" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#b18a3b" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6dfd3" />
                             <XAxis dataKey="index" stroke="#2b2b2b" fontSize={12} />
                             <YAxis stroke="#2b2b2b" fontSize={12} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="revenue" stroke="#7a8f7a" fillOpacity={1} fill="url(#colorRevenue)" />
+                            <Area type="monotone" dataKey="revenue" stroke="#b18a3b" fillOpacity={1} fill="url(#colorRevenue)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       )}
                     </div>
                     <div className="bg-muted/30 rounded-2xl p-6 space-y-4">
-                      <h3 className="text-lg font-light tracking-[0.01em]">Payment Methods</h3>
+                      <h3 className="text-lg font-light tracking-tight">Payment Methods</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
                           <PieChart>
@@ -915,7 +1605,7 @@ export default function AdminPage() {
                       )}
                     </div>
                     <div className="bg-muted/30 rounded-2xl p-6 space-y-4 lg:col-span-2">
-                      <h3 className="text-lg font-light tracking-[0.01em]">Top Products</h3>
+                      <h3 className="text-lg font-light tracking-tight">Top Products</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
                           <BarChart data={topProducts}>
@@ -923,7 +1613,7 @@ export default function AdminPage() {
                             <XAxis dataKey="name" stroke="#2b2b2b" fontSize={12} />
                             <YAxis stroke="#2b2b2b" fontSize={12} />
                             <Tooltip />
-                            <Bar dataKey="quantity" fill="#7a8f7a" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="quantity" fill="#b18a3b" radius={[4, 4, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
                       )}
@@ -937,32 +1627,32 @@ export default function AdminPage() {
             {activeTab === "settings" && (
               <motion.div key="settings" {...fadeAnim} className="space-y-8">
                 <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] p-8 shadow-sm">
-                  <h2 className="text-3xl font-display italic text-secondary tracking-[0.01em] mb-8">Settings</h2>
+                  <h2 className="text-3xl font-display italic text-secondary tracking-tight mb-8">Settings</h2>
                   <div className="space-y-6">
                     <div className="flex items-center justify-between p-6 bg-muted/30 rounded-2xl">
                       <div>
-                        <h3 className="text-lg font-medium tracking-[0.01em]">Store Status</h3>
+                        <h3 className="text-lg font-medium tracking-tight">Store Status</h3>
                         <p className="text-sm text-foreground/50">Enable or disable the store for maintenance</p>
                       </div>
-                      <button className="px-6 py-3 rounded-full bg-accent text-background font-light uppercase tracking-[0.05em] text-xs hover:bg-accent/90 transition-colors">
+                      <button className="px-6 py-3 rounded-full bg-accent text-background font-light uppercase tracking-tight text-xs hover:bg-accent/90 transition-colors">
                         Active
                       </button>
                     </div>
                     <div className="flex items-center justify-between p-6 bg-muted/30 rounded-2xl">
                       <div>
-                        <h3 className="text-lg font-medium tracking-[0.01em]">Email Notifications</h3>
+                        <h3 className="text-lg font-medium tracking-tight">Email Notifications</h3>
                         <p className="text-sm text-foreground/50">Receive order notifications</p>
                       </div>
-                      <button className="px-6 py-3 rounded-full bg-foreground text-background font-light uppercase tracking-[0.05em] text-xs hover:bg-secondary transition-colors">
+                      <button className="px-6 py-3 rounded-full bg-foreground text-background font-light uppercase tracking-tight text-xs hover:bg-secondary transition-colors">
                         Enabled
                       </button>
                     </div>
                     <div className="flex items-center justify-between p-6 bg-muted/30 rounded-2xl">
                       <div>
-                        <h3 className="text-lg font-medium tracking-[0.01em]">Low Stock Alert</h3>
+                        <h3 className="text-lg font-medium tracking-tight">Low Stock Alert</h3>
                         <p className="text-sm text-foreground/50">Alert when products have low stock</p>
                       </div>
-                      <button className="px-6 py-3 rounded-full bg-foreground text-background font-light uppercase tracking-[0.05em] text-xs hover:bg-secondary transition-colors">
+                      <button className="px-6 py-3 rounded-full bg-foreground text-background font-light uppercase tracking-tight text-xs hover:bg-secondary transition-colors">
                         Enabled
                       </button>
                     </div>

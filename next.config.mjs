@@ -11,6 +11,7 @@ const nextConfig = {
       { protocol: "https", hostname: "image.mux.com" },
       { protocol: "https", hostname: "stream.mux.com" },
       { protocol: "https", hostname: "player.mux.com" },
+      { protocol: "https", hostname: "gcxfqnqewpfypocphmml.supabase.co" },
     ],
     localPatterns: [
       {

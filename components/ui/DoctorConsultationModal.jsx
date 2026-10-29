@@ -75,7 +75,7 @@ export default function DoctorConsultationModal({ isOpen, onClose, productSlug }
             <div className="p-8 sm:p-10">
               {success ? (
                 <div className="py-12 flex flex-col items-center text-center space-y-6">
-                  <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                  <div className="w-20 h-20 rounded-full bg-amber-50 flex items-center justify-center text-amber-700">
                     <CheckCircle2 size={48} />
                   </div>
                   <div className="space-y-2">
@@ -87,7 +87,7 @@ export default function DoctorConsultationModal({ isOpen, onClose, productSlug }
                 <>
                   <div className="text-center space-y-4 mb-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
-                      Congratulations! You have been selected for <span className="text-[#658518]">FREE DOCTOR CONSULTATION</span>
+                      Congratulations! You have been selected for <span className="text-[#b18a3b]">FREE DOCTOR CONSULTATION</span>
                     </h2>
                     <p className="text-sm text-slate-500">
                       Submit your mobile number. Doctor will contact you shortly.
@@ -97,11 +97,11 @@ export default function DoctorConsultationModal({ isOpen, onClose, productSlug }
                   <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-8 border border-slate-100 shadow-inner bg-slate-50">
                     {/* Placeholder for the image in user's screenshot */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <div className="bg-[#658518] text-white px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
+                        <div className="bg-[#b18a3b] text-[#17140f] px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
                             Special Offer
                         </div>
                         <p className="text-lg font-bold text-slate-800 mb-1">Apply for Free Doctor Consultancy</p>
-                        <p className="text-2xl font-black text-[#658518]">Get 10% Extra Discount</p>
+                        <p className="text-2xl font-black text-[#b18a3b]">Get 10% Extra Discount</p>
                         <p className="text-xs text-slate-400 mt-2 font-medium italic">On your first personalized treatment</p>
                     </div>
                   </div>
@@ -115,7 +115,7 @@ export default function DoctorConsultationModal({ isOpen, onClose, productSlug }
                         placeholder="Your Name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:border-[#658518] focus:bg-white transition-all outline-none text-slate-900"
+                        className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:border-[#b18a3b] focus:bg-white transition-all outline-none text-slate-900"
                       />
                     </div>
 
@@ -127,14 +127,14 @@ export default function DoctorConsultationModal({ isOpen, onClose, productSlug }
                         placeholder="Phone Number"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:border-[#658518] focus:bg-white transition-all outline-none text-slate-900"
+                        className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:border-[#b18a3b] focus:bg-white transition-all outline-none text-slate-900"
                       />
                     </div>
 
                     <button
                       disabled={loading}
                       type="submit"
-                      className="w-full bg-[#1b3a27] hover:bg-[#254d35] text-white py-4 rounded-2xl font-bold transition-all shadow-lg shadow-green-900/20 active:scale-95 disabled:opacity-70 disabled:scale-100 flex items-center justify-center gap-3"
+                      className="w-full bg-[#17140f] hover:bg-[#352817] text-white py-4 rounded-2xl font-bold transition-all shadow-lg shadow-amber-900/20 active:scale-95 disabled:opacity-70 disabled:scale-100 flex items-center justify-center gap-3"
                     >
                       {loading ? (
                         <Loader2 className="animate-spin" size={20} />

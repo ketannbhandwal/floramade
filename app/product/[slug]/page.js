@@ -1,15 +1,38 @@
 import { notFound } from "next/navigation";
 import PageTransition from "@/components/ui/PageTransition";
 import ProductDetails from "@/components/product/ProductDetails";
-import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 
 export const dynamic = "force-dynamic";
 
 async function getProduct(slug) {
-  await connectDB();
-  const product = await Product.findOne({ slug, isVisible: true }).lean();
-  return product ? JSON.parse(JSON.stringify(product)) : null;
+  let normalizedSlug = slug;
+  try {
+    normalizedSlug = decodeURIComponent(slug);
+  } catch {
+    // Keep the original value if the segment contains a malformed escape.
+  }
+  let product = await Product.findOne({ slug: normalizedSlug }).lean();
+  if (!product) {
+    const slugified = normalizedSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+    product = await Product.findOne({ slug: slugified }).lean();
+  }
+  if (!product && (normalizedSlug.toLowerCase().includes("relief") || normalizedSlug.toLowerCase().includes("madhu"))) {
+    product = await Product.findOne({ slug: "madhu-diabetes-pro" }).lean();
+  }
+  if (!product) return null;
+
+  // Older catalog rows store their gallery under `featureImages` rather than
+  // `images`; ProductDetails and its metadata use `images` as the gallery.
+  const images = Array.isArray(product.images) && product.images.length
+    ? product.images
+    : Array.isArray(product.featureImages)
+      ? product.featureImages
+      : product.formulaimage
+        ? [product.formulaimage]
+        : [];
+
+  return JSON.parse(JSON.stringify({ ...product, images }));
 }
 
 async function getRelated(currentSlug) {
@@ -23,23 +46,22 @@ export async function generateMetadata({ params }) {
   
   if (!product) {
     return {
-      title: "Product Not Found | Fiveetatv",
+      title: "Product Not Found | Floramade",
     };
   }
 
   return {
-    title: `${product.name} | Fiveetatv`,
-    description: `${product.description} - Natural Ayurvedic product by Fiveetatv. ${product.benefits?.join(', ')}. 100% natural, lab-tested formulation.`,
+    title: `${product.name} | Floramade`,
+    description: `${product.description} - Natural Ayurvedic product by Floramade. ${product.benefits?.join(', ')}. 100% natural, lab-tested formulation.`,
     keywords: [
       product.name,
-      "Fiveetatv",
+      "Floramade",
       "Ayurvedic products",
       "herbal supplements",
       "natural wellness",
       product.category || "Ayurvedic medicine",
       "Ayurvedic wellness Delhi",
-      "Rahul Gour",
-      "Suraj Gaur",
+      "Suresh Gaur",
       ...product.ingredients || [],
     ],
     openGraph: {

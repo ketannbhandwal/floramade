@@ -78,15 +78,15 @@ export default function SearchOverlay({ open, onClose }) {
           >
             {/* Search Input */}
             <div className="flex items-center gap-3 border-b border-[#e7efd2] px-6 py-5">
-              <Search className="h-6 w-6 text-[#3e5c32]" />
+              <Search className="h-6 w-6 text-[#705520]" />
               <input
                 autoFocus
                 placeholder="Search products..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 bg-transparent text-lg outline-none placeholder:text-[#a3b398] text-[#3e5c32]"
+                className="flex-1 bg-transparent text-lg outline-none placeholder:text-[#aaa08f] text-[#705520]"
               />
-              <button onClick={closeSearch} className="text-[#506746] hover:text-[#3e5c32]"><X size={20} /></button>
+              <button onClick={closeSearch} className="text-[#756342] hover:text-[#705520]"><X size={20} /></button>
             </div>
 
             {/* Results */}
@@ -95,9 +95,9 @@ export default function SearchOverlay({ open, onClose }) {
                 
                 {/* Product Results */}
                 <div>
-                  <h3 className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#506746]/50">Products</h3>
+                  <h3 className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#756342]/50">Products</h3>
                   {loading ? (
-                    <div className="px-2 text-sm text-[#506746]">Searching...</div>
+                    <div className="px-2 text-sm text-[#756342]">Searching...</div>
                   ) : products.length > 0 ? (
                     <div className="space-y-2">
                       {products.map((product) => (
@@ -106,7 +106,7 @@ export default function SearchOverlay({ open, onClose }) {
                             <Image src={product.images?.[0] || ""} alt={product.name} fill className="object-cover" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-semibold text-[#35512d]">{product.name}</p>
+                            <p className="text-sm font-semibold text-[#55421f]">{product.name}</p>
                             <p className="text-xs text-[#68825d]">Rs. {product.discountPrice}</p>
                           </div>
                         </Link>
@@ -119,11 +119,11 @@ export default function SearchOverlay({ open, onClose }) {
 
                 {/* Quick Links */}
                 <div>
-                  <h3 className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#506746]/50">Quick Links</h3>
+                  <h3 className="mb-3 px-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#756342]/50">Quick Links</h3>
                   <div className="space-y-1">
                     {matchedPages.map((page) => (
                       <Link key={page.href} href={page.href} onClick={closeSearch} className="block rounded-xl px-3 py-2 hover:bg-[#f8f7ef] transition-colors">
-                        <p className="text-sm font-medium text-[#35512d]">{page.title}</p>
+                        <p className="text-sm font-medium text-[#55421f]">{page.title}</p>
                       </Link>
                     ))}
                   </div>

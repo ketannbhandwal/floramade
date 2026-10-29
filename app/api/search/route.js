@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 
 export async function GET(request) {
@@ -13,8 +12,7 @@ export async function GET(request) {
 
     const sanitizedQuery = query.replace(/[<>]/g, "").slice(0, 100);
 
-    await connectDB();
-
+  
     const products = await Product.find({
       isVisible: true,
       $or: [
