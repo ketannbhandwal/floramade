@@ -34,8 +34,23 @@ export async function POST(req) {
   if (!payload.name) {
     return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
   }
+
+  // Ensure no existing IDs are passed to prevent duplicate key or collision errors
+  delete payload._id;
+  delete payload.id;
+  delete payload.productId;
+  delete payload.createdAt;
+  delete payload.updatedAt;
+
   const cleanSlug = (text) => (text || "").toString().toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
   payload.slug = payload.slug ? cleanSlug(payload.slug) : cleanSlug(payload.name);
+
+  // If slug already exists, make it uniquely appended to avoid duplicate slug error
+  const existing = await Product.findOne({ slug: payload.slug });
+  if (existing) {
+    payload.slug = `${payload.slug}-${Date.now().toString().slice(-4)}`;
+  }
+
   const product = await Product.create(payload);
   revalidateTag('products');
   return NextResponse.json({ product }, { status: 201 });

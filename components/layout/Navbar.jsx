@@ -586,11 +586,11 @@ export default function Navbar() {
 
                   {/* Email */}
                   <a 
-                    href="mailto:care@floramade.in" 
+                    href="mailto:floramade517@gmail.com" 
                     className="flex items-center gap-3 py-2.5 px-5 text-xs text-[#FFF7EB]/85 hover:text-[#DFC77F] transition-colors"
                   >
                     <Mail size={15} className="text-[#DFC77F] shrink-0" />
-                    <span>care@floramade.in</span>
+                    <span>floramade517@gmail.com</span>
                   </a>
 
                   {/* Phone */}

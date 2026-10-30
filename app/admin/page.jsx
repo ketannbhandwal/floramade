@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload } from "lucide-react";
+import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload, Copy } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import BannerConcernManager from "@/components/admin/BannerConcernManager";
@@ -385,6 +385,90 @@ export default function AdminPage() {
     setImageUrlInput(images.join(", "));
     // Scroll to form
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function duplicateProduct(product) {
+    setActiveTab("products");
+    // Ensure no existing IDs or editingSlug are set so this is treated as a clean NEW product
+    setEditingSlug("");
+    setEditingId("");
+
+    const baseName = (product.name || "").replace(/\s*\(Copy.*?\)\s*/gi, "").trim();
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const newName = `${baseName} (Copy)`;
+    const baseSlug = (product.slug || slugify(baseName) || "product").replace(/-copy(-\d+)?$/gi, "").trim();
+    const newSlug = `${baseSlug}-copy-${randomSuffix}`;
+
+    const images = Array.isArray(product.featureImages) && product.featureImages.length > 0 
+      ? [...product.featureImages] 
+      : Array.isArray(product.images) && product.images.length > 0 
+        ? [...product.images] 
+        : [];
+
+    let keyBenefits = [];
+    if (Array.isArray(product.keyBenefits) && product.keyBenefits.length > 0) {
+      keyBenefits = product.keyBenefits.map((b, idx) => ({
+        text: typeof b === "string" ? b : (b?.text || ""),
+        image: b?.image || `/feature/${(idx % 8) + 1}.svg`,
+      }));
+    } else if (Array.isArray(product.benefits) && product.benefits.length > 0) {
+      keyBenefits = product.benefits.map((text, idx) => {
+        let img = (Array.isArray(product.benefitImages) && product.benefitImages[idx])
+          ? product.benefitImages[idx]
+          : null;
+        if (!img || img.includes("pilecurex") || img.includes("floramade") || img.includes("/upload/v")) {
+          const defaults = ["/feature/3.svg", "/feature/4.svg", "/feature/1.svg", "/feature/2.svg"];
+          img = defaults[idx % defaults.length] || `/feature/${(idx % 8) + 1}.svg`;
+        }
+        return { text, image: img };
+      });
+    } else {
+      keyBenefits = defaultKeyBenefits;
+    }
+
+    // Strip any IDs from sub-arrays to avoid subdoc ID collisions
+    const cleanPacks = Array.isArray(product.packs) 
+      ? product.packs.map(pk => {
+          const { _id, id, ...rest } = pk || {};
+          return rest;
+        })
+      : [];
+
+    const cleanTrustBadges = Array.isArray(product.trustBadges) && product.trustBadges.length > 0
+      ? product.trustBadges.map(tb => {
+          const { _id, id, ...rest } = tb || {};
+          return rest;
+        })
+      : defaultTrustBadges;
+
+    setForm({
+      name: newName,
+      slug: newSlug,
+      category: product.category || "Ayurvedic",
+      price: product.price || 0,
+      discountPrice: product.discountPrice || 0,
+      stock: product.stock || 100,
+      isVisible: true,
+      description: product.description || "",
+      benefits: keyBenefits.map(b => b.text).join(", "),
+      keyBenefits: keyBenefits,
+      benefitImages: keyBenefits.map(b => b.image),
+      ingredients: Array.isArray(product.ingredients) ? product.ingredients.join(", ") : (product.ingredients || ""),
+      usage: Array.isArray(product.usage) ? product.usage.join(", ") : (product.usage || ""),
+      ingredientImages: product.ingredientImages ? { ...product.ingredientImages } : {},
+      usageImages: Array.isArray(product.usageImages) ? [...product.usageImages] : [],
+      packs: cleanPacks,
+      images: images,
+      formulaimage: product.formulaimage || "",
+      trustQuality: product.trustQuality ? { ...product.trustQuality } : {},
+      trustBadges: cleanTrustBadges,
+      rating: product.rating || 4.5,
+      reviewsCount: 0,
+      deliveryDays: product.deliveryDays || 5,
+    });
+    setImageUrlInput(images.join(", "));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    toast.success(`Duplicated "${baseName}" into formulation form without any old IDs! Review details and click "Create product".`);
   }
 
   const moveImage = (index, direction) => {
@@ -1271,9 +1355,19 @@ export default function AdminPage() {
 
                     <div className="flex flex-wrap justify-end gap-3">
                       {editingSlug && (
-                        <button type="button" onClick={() => { setEditingSlug(""); setForm(empty); }} className="rounded-full px-5 py-3 text-sm font-medium text-foreground/60 transition-colors hover:bg-muted">
-                          Cancel
-                        </button>
+                        <>
+                          <button 
+                            type="button" 
+                            onClick={() => duplicateProduct({ ...form, slug: editingSlug })} 
+                            className="inline-flex items-center gap-1.5 rounded-full border border-amber-800/25 bg-amber-50 px-5 py-3 text-sm font-semibold text-amber-900 transition-colors hover:bg-amber-100"
+                            title="Clone this formulation as a new formulation without existing IDs"
+                          >
+                            <Copy size={14} /> Duplicate as New
+                          </button>
+                          <button type="button" onClick={() => { setEditingSlug(""); setForm(empty); }} className="rounded-full px-5 py-3 text-sm font-medium text-foreground/60 transition-colors hover:bg-muted">
+                            Cancel
+                          </button>
+                        </>
                       )}
                       <button type="submit" disabled={uploading} className="rounded-full bg-[#211b13] px-7 py-3 text-sm font-semibold text-[#f8f3e8] shadow-md shadow-[#211b13]/10 transition hover:bg-[#8e6b28] disabled:cursor-wait disabled:opacity-60">
                         {uploading ? "Saving..." : editingSlug ? "Save changes" : "Create product"}
@@ -1316,7 +1410,16 @@ export default function AdminPage() {
                           <td className="px-8 py-6 font-light">₹{p.discountPrice || p.price}</td>
                           <td className="px-8 py-6 font-light text-foreground/50 line-through">₹{p.price}</td>
                           <td className="px-8 py-6">
-                            <div className="flex justify-end gap-3">
+                            <div className="flex justify-end items-center gap-3">
+                              <button 
+                                type="button"
+                                onClick={() => duplicateProduct(p)} 
+                                className="inline-flex items-center gap-1 text-xs uppercase tracking-tight font-semibold text-amber-700 hover:text-amber-900 transition-colors"
+                                title="Duplicate formulation without existing IDs"
+                              >
+                                <Copy size={13} />
+                                <span>Duplicate</span>
+                              </button>
                               <button onClick={() => startEdit(p)} className="text-xs uppercase tracking-tight font-medium text-accent hover:text-secondary transition-colors">Edit</button>
                               <button onClick={() => toggleVisibility(p)} className="text-xs uppercase tracking-tight font-medium text-foreground/50 hover:text-foreground transition-colors">{p.isVisible ? "Hide" : "Show"}</button>
                               <button onClick={() => deleteProduct(p.slug)} className="text-xs uppercase tracking-tight font-medium text-red-400 hover:text-red-600 transition-colors">Delete</button>
