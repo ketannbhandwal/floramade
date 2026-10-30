@@ -15,40 +15,51 @@ export default function FlagshipProducts({
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
-      loop: items.length > 3, 
-      align: "center", 
-      containScroll: false,
+      loop: items.length >= 8, 
+      align: "start", 
+      containScroll: "trimSnaps",
       skipSnaps: false,
       slidesToScroll: 1,
       breakpoints: {
-        "(min-width: 1024px)": { align: "start" },
+        "(min-width: 1024px)": { 
+          align: "start",
+          containScroll: "trimSnaps",
+          watchDrag: items.length > 4,
+        },
       },
     },
-    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
+    items.length > 4
+      ? [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
+      : []
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
   const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
 
-  const onSelect = useCallback(() => {
+  const updateScrollState = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
+    setScrollSnaps(emblaApi.scrollSnapList());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
   }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+    updateScrollState();
+    emblaApi.on("select", updateScrollState);
+    emblaApi.on("reInit", updateScrollState);
     return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
+      emblaApi.off("select", updateScrollState);
+      emblaApi.off("reInit", updateScrollState);
     };
-  }, [emblaApi, onSelect]);
+  }, [emblaApi, updateScrollState]);
 
   if (items.length === 0) return null;
 
@@ -75,29 +86,44 @@ export default function FlagshipProducts({
         {/* Carousel Container */}
         <div className="relative group/carousel">
           
-          {/* Left Arrow Button */}
-          <button
-            type="button"
-            onClick={scrollPrev}
-            aria-label="Previous Products"
-            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
-          >
-            <ChevronLeft size={20} />
-          </button>
+          {/* Navigation Arrows (Only shown when content actually overflows and can scroll) */}
+          {scrollSnaps.length > 1 && (
+            <>
+              {/* Left Arrow Button */}
+              <button
+                type="button"
+                onClick={scrollPrev}
+                disabled={!canScrollPrev}
+                aria-label="Previous Products"
+                className={`absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] text-[#171717] border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
+                  canScrollPrev
+                    ? "hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
+                    : "opacity-30 cursor-not-allowed pointer-events-none"
+                }`}
+              >
+                <ChevronLeft size={20} />
+              </button>
 
-          {/* Right Arrow Button */}
-          <button
-            type="button"
-            onClick={scrollNext}
-            aria-label="Next Products"
-            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
-          >
-            <ChevronRight size={20} />
-          </button>
+              {/* Right Arrow Button */}
+              <button
+                type="button"
+                onClick={scrollNext}
+                disabled={!canScrollNext}
+                aria-label="Next Products"
+                className={`absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] text-[#171717] border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
+                  canScrollNext
+                    ? "hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
+                    : "opacity-30 cursor-not-allowed pointer-events-none"
+                }`}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </>
+          )}
 
           {/* Embla Viewport */}
           <div ref={emblaRef} className="overflow-hidden py-2">
-            <div className="flex -mx-2 sm:-mx-2.5 md:-mx-3">
+            <div className={`flex -mx-2 sm:-mx-2.5 md:-mx-3 ${items.length < 4 ? "lg:justify-center" : ""}`}>
               {items.map((product, index) => (
                 <div
                   key={product._id || product.id || index}
@@ -113,7 +139,7 @@ export default function FlagshipProducts({
 
         </div>
 
-        {/* Pagination Dots */}
+        {/* Pagination Dots (Only shown when multiple scroll snaps exist) */}
         {scrollSnaps.length > 1 && (
           <div className="mt-8 flex justify-center items-center gap-2">
             {scrollSnaps.map((_, dotIdx) => (
@@ -136,4 +162,3 @@ export default function FlagshipProducts({
     </section>
   );
 }
-
