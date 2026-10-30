@@ -1378,7 +1378,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 type="text"
                 value={testimonialsPretitle}
                 onChange={e => setTestimonialsPretitle(e.target.value)}
-                placeholder="KIND WORDS FROM OUR COMMUNITY"
+                placeholder="REAL STORIES & REVIEWS"
                 className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs font-bold text-[#872B10] uppercase tracking-tight"
               />
             </div>
@@ -1390,7 +1390,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 type="text"
                 value={testimonialsTitle}
                 onChange={e => setTestimonialsTitle(e.target.value)}
-                placeholder="Wellness stories, shared."
+                placeholder="What Our Customers Are Saying"
                 className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs font-bold text-[#39160D] tracking-tight"
               />
             </div>
@@ -1402,7 +1402,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 type="text"
                 value={testimonialsSubtitle}
                 onChange={e => setTestimonialsSubtitle(e.target.value)}
-                placeholder="Real experiences from people who made Floramade a part of their daily wellness journey."
+                placeholder="Customer satisfaction is our #1 priority"
                 className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs text-[#39160D] tracking-tight"
               />
             </div>

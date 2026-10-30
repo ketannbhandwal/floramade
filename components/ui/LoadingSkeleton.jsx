@@ -179,45 +179,38 @@ export function WhyChooseSkeleton() {
 // 8. TESTIMONIALS SKELETON
 export function TestimonialsSkeleton() {
   return (
-    <section className="py-14 sm:py-18 lg:py-20 bg-[#F5EADB]/45 border-t border-[#39160D]/10 overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 bg-[#FAF6EE] border-t border-[#E8D9C5]/60 overflow-hidden">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6">
-        <div className="mb-8 sm:mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div className="space-y-2">
-            <div className="h-3 w-36 rounded shimmer-luxury" />
-            <div className="h-7 sm:h-9 w-64 sm:w-80 rounded-lg shimmer-luxury" />
-            <div className="h-4 w-72 sm:w-96 rounded shimmer-luxury-subtle" />
-          </div>
-          <div className="flex gap-2">
-            <div className="w-10 h-10 rounded-full shimmer-luxury" />
-            <div className="w-10 h-10 rounded-full shimmer-luxury" />
-          </div>
+        <div className="mb-10 sm:mb-14 flex flex-col items-center text-center max-w-2xl mx-auto space-y-2.5">
+          <div className="h-5 w-40 rounded-full shimmer-luxury" />
+          <div className="h-8 sm:h-10 w-72 sm:w-96 rounded-lg shimmer-luxury" />
+          <div className="h-4 w-60 sm:w-80 rounded shimmer-luxury-subtle" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="bg-[#FFF7EB] border border-[#39160D]/10 rounded-3xl p-6 shadow-sm space-y-4 flex flex-col justify-between"
+              className="bg-white/95 border border-[#E8D9C5] rounded-3xl p-7 sm:p-8 shadow-sm flex flex-col items-center text-center justify-between space-y-5"
             >
-              <div className="space-y-3">
+              <div className="flex flex-col items-center w-full space-y-3">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full shimmer-luxury border-2 border-white" />
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <div key={s} className="w-3.5 h-3.5 rounded-full shimmer-luxury" />
                   ))}
                 </div>
-                <div className="space-y-1.5">
-                  <div className="h-3 w-full rounded shimmer-luxury-subtle" />
-                  <div className="h-3 w-full rounded shimmer-luxury-subtle" />
-                  <div className="h-3 w-4/5 rounded shimmer-luxury-subtle" />
-                </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-3 border-t border-[#39160D]/10">
-                <div className="w-11 h-11 rounded-full shimmer-luxury border border-[#39160D]/15" />
-                <div className="space-y-1">
-                  <div className="h-3.5 w-24 rounded shimmer-luxury" />
-                  <div className="h-2.5 w-16 rounded shimmer-luxury-subtle" />
-                </div>
+              <div className="space-y-2 w-full">
+                <div className="h-3 w-full rounded shimmer-luxury-subtle mx-auto" />
+                <div className="h-3 w-5/6 rounded shimmer-luxury-subtle mx-auto" />
+                <div className="h-3 w-4/6 rounded shimmer-luxury-subtle mx-auto" />
+              </div>
+
+              <div className="pt-4 border-t border-[#39160D]/10 w-full flex flex-col items-center space-y-1.5">
+                <div className="h-4 w-28 rounded shimmer-luxury" />
+                <div className="h-3 w-20 rounded shimmer-luxury-subtle" />
               </div>
             </div>
           ))}
