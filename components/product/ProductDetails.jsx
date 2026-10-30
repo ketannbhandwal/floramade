@@ -30,6 +30,7 @@ import {
   Share2
 } from "lucide-react";
 import { FaWhatsapp, FaFacebookF } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/product/ProductCard";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
@@ -127,6 +128,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
 
   const toggleAccordion = (key) => {
     setAccordionOpen(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  // FAQ accordion state
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(prev => prev === index ? null : index);
   };
 
   // Review states
@@ -826,7 +833,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
             )}
 
-            {/* ACCORDIONS (Description, How to Use, Ingredients - Clean Text, NO IMAGES) */}
+            {/* ACCORDIONS (Description, How to Use, Ingredients - Smooth Animated Accordions) */}
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
@@ -834,16 +841,27 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors cursor-pointer select-none"
                 >
                   <span>Description</span>
-                  <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.description ? "rotate-45" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.description ? "rotate-45 text-[#872B10]" : ""}`} />
                 </button>
-                {accordionOpen.description && (
-                  <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50">
-                    <p>{cleanDescription}</p>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {accordionOpen.description && (
+                    <motion.div
+                      key="desc-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50">
+                        <p>{cleanDescription}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
@@ -851,21 +869,32 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors cursor-pointer select-none"
                 >
                   <span>How to Use</span>
-                  <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.howToUse ? "rotate-45" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.howToUse ? "rotate-45 text-[#872B10]" : ""}`} />
                 </button>
-                {accordionOpen.howToUse && (
-                  <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50 space-y-2">
-                    <p className="font-semibold text-[#872B10]">🌿 Recommended Daily Ritual:</p>
-                    <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#39160D]/80">
-                      <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
-                      <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
-                      <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
-                    </ul>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {accordionOpen.howToUse && (
+                    <motion.div
+                      key="use-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50 space-y-2">
+                        <p className="font-semibold text-[#872B10]">🌿 Recommended Daily Ritual:</p>
+                        <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#39160D]/80">
+                          <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
+                          <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
+                          <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
+                        </ul>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
@@ -873,35 +902,46 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors cursor-pointer select-none"
                 >
                   <span>Ingredients</span>
-                  <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.ingredients ? "rotate-45" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#872B10]" : ""}`} />
                 </button>
-                {accordionOpen.ingredients && (
-                  <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50 space-y-2.5">
-                    <p className="font-semibold text-[#872B10]">🌿 100% Pure Botanical Ingredients:</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {(product.ingredients && product.ingredients.length > 0 
-                        ? product.ingredients 
-                        : ["Ashwagandha", "Safed Musli", "Shatavari", "Gokshura", "Kaunch Beej", "Amla", "Vidarikand", "Gudmar", "Jamun", "Karela"]
-                      ).map((ing, idx) => {
-                        const name = typeof ing === "string" ? ing : ing?.name || "";
-                        return (
-                          <span 
-                            key={idx}
-                            className="inline-block px-2.5 py-1 rounded-full bg-[#FFF7EB] border border-[#E8D9C5] text-xs font-semibold text-[#39160D] capitalize tracking-tight"
-                          >
-                            {name}
-                          </span>
-                        );
-                      })}
-                    </div>
-                    <p className="text-[11px] sm:text-xs text-[#39160D]/65 leading-relaxed pt-1 border-t border-[#E8D9C5]/50">
-                      Ethically sourced pure extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
-                    </p>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {accordionOpen.ingredients && (
+                    <motion.div
+                      key="ing-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50 space-y-2.5">
+                        <p className="font-semibold text-[#872B10]">🌿 100% Pure Botanical Ingredients:</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(product.ingredients && product.ingredients.length > 0 
+                            ? product.ingredients 
+                            : ["Ashwagandha", "Safed Musli", "Shatavari", "Gokshura", "Kaunch Beej", "Amla", "Vidarikand", "Gudmar", "Jamun", "Karela"]
+                          ).map((ing, idx) => {
+                            const name = typeof ing === "string" ? ing : ing?.name || "";
+                            return (
+                              <span 
+                                key={idx}
+                                className="inline-block px-2.5 py-1 rounded-full bg-[#FFF7EB] border border-[#E8D9C5] text-xs font-semibold text-[#39160D] capitalize tracking-tight"
+                              >
+                                {name}
+                              </span>
+                            );
+                          })}
+                        </div>
+                        <p className="text-[11px] sm:text-xs text-[#39160D]/65 leading-relaxed pt-1 border-t border-[#E8D9C5]/50">
+                          Ethically sourced pure extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
             </div>
@@ -983,23 +1023,43 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               { question: "Are there any side effects?", answer: "Our products are made from 100% natural ingredients and are generally safe for consumption. However, if you have any specific health conditions or are pregnant/nursing, please consult your healthcare provider before use." },
               { question: "How long does it take to see results?", answer: "Ayurvedic remedies work holistically and results may vary from person to person. Typically, consistent use for 4-6 weeks shows noticeable improvements in overall well-being." },
               { question: "Does this product provide long-lasting support?", answer: "Yes, with regular and consistent use, our Ayurvedic formulations are designed to provide sustained, long-lasting wellness benefits." }
-            ]).map((faq, i) => (
-              <details 
-                key={i}
-                className="group bg-[#FAF6EE] rounded-2xl border border-[#E8D9C5] overflow-hidden shadow-xs [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex items-center gap-3 p-4 sm:p-5 cursor-pointer text-xs sm:text-sm font-bold text-[#39160D]">
-                  <span className="text-[#872B10] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="flex-1">{faq.question}</span>
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#39160D] flex items-center justify-center text-white transition-transform group-open:rotate-45">
-                    <Plus size={13} />
-                  </div>
-                </summary>
-                <div className="px-5 pb-5 pl-[52px] text-[#39160D]/80 font-normal leading-relaxed text-xs sm:text-sm border-t border-[#E8D9C5]/50 pt-2">
-                  {faq.answer}
+            ]).map((faq, i) => {
+              const isOpen = openFaqIndex === i;
+              return (
+                <div 
+                  key={i}
+                  className="bg-[#FAF6EE] rounded-2xl border border-[#E8D9C5] overflow-hidden shadow-xs transition-colors hover:border-[#872B10]/40"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(i)}
+                    className="w-full flex items-center gap-3 p-4 sm:p-5 cursor-pointer text-left text-xs sm:text-sm font-bold text-[#39160D] hover:bg-[#F3E8D8]/40 transition-colors select-none"
+                  >
+                    <span className="text-[#872B10] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="flex-1">{faq.question}</span>
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-full bg-[#39160D] flex items-center justify-center text-white transition-all duration-300 ease-in-out ${isOpen ? "rotate-45 bg-[#872B10]" : ""}`}>
+                      <Plus size={13} />
+                    </div>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key={`faq-anim-${i}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pl-[52px] text-[#39160D]/80 font-normal leading-relaxed text-xs sm:text-sm border-t border-[#E8D9C5]/50 pt-2.5">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </details>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
