@@ -2,6 +2,7 @@ import { revalidateTag } from 'next/cache';
 import { NextResponse } from "next/server";
 import Product from "@/models/Product";
 import { getCurrentUser } from "@/lib/auth";
+import { sortProducts } from "@/lib/utils";
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
@@ -18,7 +19,8 @@ export async function GET(req) {
   }
   
   const query = includeAll ? {} : { isVisible: true };
-  const products = await Product.find(query).sort({ createdAt: -1 }).lean();
+  const rawProducts = await Product.find(query).lean();
+  const products = sortProducts(rawProducts);
   
   // No cache for admin
   return NextResponse.json({ products });

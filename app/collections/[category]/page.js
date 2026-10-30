@@ -1,13 +1,15 @@
 import PageTransition from "@/components/ui/PageTransition";
 import ProductCard from "@/components/product/ProductCard";
 import Product from "@/models/Product";
+import { sortProducts } from "@/lib/utils";
 import CollectionContent from "./CollectionContent";
 
 export const dynamic = "force-dynamic";
 
 async function getProducts(category) {
   const products = await Product.find({ category, isVisible: true }).lean();
-  return JSON.parse(JSON.stringify(products));
+  const sortedProducts = sortProducts(products);
+  return JSON.parse(JSON.stringify(sortedProducts));
 }
 
 export async function generateMetadata({ params }) {

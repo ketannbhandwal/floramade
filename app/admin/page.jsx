@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload, Copy } from "lucide-react";
+import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload, Copy, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import BannerConcernManager from "@/components/admin/BannerConcernManager";
@@ -54,7 +54,7 @@ const empty = {
   trustBadges: defaultTrustBadges,
   keyBenefits: defaultKeyBenefits,
   benefitImages: defaultKeyBenefits.map(b => b.image),
-  rating: 4.5, reviewsCount: 0, deliveryDays: 5,
+  rating: 4.5, reviewsCount: 0, deliveryDays: 5, sortOrder: 0,
 };
 
 const fadeAnim = {
@@ -77,6 +77,81 @@ export default function AdminPage() {
   const [chartsReady] = useState(() => typeof window !== "undefined");
   const [uploading, setUploading] = useState(false);
   const [imageUrlInput, setImageUrlInput] = useState("");
+  const [reordering, setReordering] = useState(false);
+  const [draggedIdx, setDraggedIdx] = useState(null);
+
+  async function moveProduct(index, direction) {
+    if (reordering) return;
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= products.length) return;
+
+    const itemToMove = products[index];
+    const newProducts = [...products];
+    newProducts[index] = newProducts[newIndex];
+    newProducts[newIndex] = itemToMove;
+
+    setProducts(newProducts);
+    setReordering(true);
+
+    try {
+      const orderedIds = newProducts.map((p) => p._id || p.id);
+      const res = await fetch("/api/products/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderedIds }),
+      });
+
+      if (!res.ok) throw new Error("Failed to save reordered products");
+      toast.success(`Position #${newIndex + 1}: "${itemToMove.name}" updated!`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update product order");
+      await loadData();
+    } finally {
+      setReordering(false);
+    }
+  }
+
+  function handleDragStart(e, idx) {
+    setDraggedIdx(idx);
+    e.dataTransfer.setData("text/plain", String(idx));
+    e.dataTransfer.effectAllowed = "move";
+  }
+
+  async function handleDrop(e, targetIdx) {
+    e.preventDefault();
+    if (draggedIdx === null || draggedIdx === targetIdx) {
+      setDraggedIdx(null);
+      return;
+    }
+
+    const newProducts = [...products];
+    const [movedItem] = newProducts.splice(draggedIdx, 1);
+    newProducts.splice(targetIdx, 0, movedItem);
+
+    setDraggedIdx(null);
+    setProducts(newProducts);
+    setReordering(true);
+
+    try {
+      const orderedIds = newProducts.map((p) => p._id || p.id);
+      const res = await fetch("/api/products/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderedIds }),
+      });
+
+      if (!res.ok) throw new Error("Failed to save reordered products");
+      toast.success(`Position #${targetIdx + 1}: "${movedItem.name}" updated!`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update product order");
+      await loadData();
+    } finally {
+      setReordering(false);
+    }
+  }
+
 
   const totalSales = useMemo(() => orders.reduce((s, o) => s + o.amount, 0), [orders]);
   const averageOrderValue = useMemo(() => (orders.length ? Math.round(totalSales / orders.length) : 0), [orders, totalSales]);
@@ -222,6 +297,7 @@ export default function AdminPage() {
       rating: Number(form.rating) || 4.5,
       reviewsCount: Number(form.reviewsCount) || 0,
       deliveryDays: Number(form.deliveryDays) || 5,
+      sortOrder: Number(form.sortOrder) || 0,
     };
 
     const url = editingSlug ? `/api/products/${encodeURIComponent(editingSlug)}` : "/api/products";
@@ -381,6 +457,7 @@ export default function AdminPage() {
       rating: product.rating || 4.5,
       reviewsCount: product.reviewsCount || 0,
       deliveryDays: product.deliveryDays || 5,
+      sortOrder: product.sortOrder ?? product.order ?? 0,
     });
     setImageUrlInput(images.join(", "));
     // Scroll to form
@@ -465,6 +542,7 @@ export default function AdminPage() {
       rating: product.rating || 4.5,
       reviewsCount: 0,
       deliveryDays: product.deliveryDays || 5,
+      sortOrder: (product.sortOrder ?? product.order ?? 0) + 1,
     });
     setImageUrlInput(images.join(", "));
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -687,6 +765,7 @@ export default function AdminPage() {
                     <Input label="Regular Price (₹)" type="number" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} />
                     <Input label="Sale Price (₹)" type="number" value={form.discountPrice} onChange={(e) => setForm((f) => ({ ...f, discountPrice: Number(e.target.value) }))} />
                     <Input label="Delivery Days" type="number" value={form.deliveryDays || 5} onChange={(e) => setForm((f) => ({ ...f, deliveryDays: Number(e.target.value) }))} placeholder="e.g., 5" />
+                    <Input label="Display Order (Sequence)" type="number" value={form.sortOrder ?? 0} onChange={(e) => setForm((f) => ({ ...f, sortOrder: Number(e.target.value) }))} placeholder="0 = First" />
                   </div>
 
                   <div className="space-y-6">
@@ -1295,21 +1374,79 @@ export default function AdminPage() {
                 </form>
 
                 <div className="overflow-hidden rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] shadow-sm">
+                  <div className="p-6 border-b border-[#e6dcc8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <h2 className="text-xl font-bold text-foreground">Catalogue Inventory & Sequence</h2>
+                      <p className="text-xs text-foreground/55 mt-0.5">
+                        Products ko aage ya niche lagane ke liye Up/Down arrows use karein ya row ko drag & drop karein.
+                      </p>
+                    </div>
+                    {reordering && (
+                      <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold animate-pulse self-start sm:self-auto">
+                        Saving order...
+                      </span>
+                    )}
+                  </div>
                   <div className="overflow-x-auto">
-                  <table className="w-full min-w-[720px] text-left">
+                  <table className="w-full min-w-[760px] text-left">
                     <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
                       <tr>
-                        <th className="px-8 py-6 font-medium">Product</th>
-                        <th className="px-8 py-6 font-medium">Status</th>
-                        <th className="px-8 py-6 font-medium">Price</th>
-                        <th className="px-8 py-6 font-medium">MRP</th>
-                        <th className="px-8 py-6 font-medium text-right">Actions</th>
+                        <th className="px-5 py-5 font-medium text-center w-28">Order</th>
+                        <th className="px-6 py-5 font-medium">Product</th>
+                        <th className="px-6 py-5 font-medium">Status</th>
+                        <th className="px-6 py-5 font-medium">Price</th>
+                        <th className="px-6 py-5 font-medium">MRP</th>
+                        <th className="px-6 py-5 font-medium text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-foreground/5">
-                      {products.map((p) => (
-                        <tr key={p._id} className="hover:bg-white/40 transition-colors">
-                          <td className="px-8 py-6">
+                      {products.map((p, idx) => (
+                        <tr 
+                          key={p._id || p.id} 
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, idx)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={(e) => handleDrop(e, idx)}
+                          className={`hover:bg-white/60 transition-colors ${
+                            draggedIdx === idx ? "opacity-40 bg-amber-50" : ""
+                          }`}
+                        >
+                          <td className="px-5 py-5">
+                            <div className="flex items-center justify-center gap-1.5">
+                              <span 
+                                title="Drag to reorder" 
+                                className="cursor-grab active:cursor-grabbing text-foreground/35 hover:text-foreground/80 p-0.5 select-none"
+                              >
+                                <GripVertical size={16} />
+                              </span>
+                              <span className="w-7 h-7 rounded-lg bg-foreground/5 text-foreground/85 text-xs font-bold flex items-center justify-center border border-foreground/10 select-none">
+                                #{idx + 1}
+                              </span>
+                              <div className="flex flex-col gap-0.5">
+                                <button
+                                  type="button"
+                                  onClick={() => moveProduct(idx, -1)}
+                                  disabled={idx === 0 || reordering}
+                                  title={idx === 0 ? "First product" : "Aage lagao (Move Up)"}
+                                  className="p-1 rounded hover:bg-foreground/10 text-foreground/70 hover:text-foreground disabled:opacity-20 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-all"
+                                  aria-label={`Move ${p.name} Up`}
+                                >
+                                  <ChevronUp size={15} strokeWidth={2.4} />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => moveProduct(idx, 1)}
+                                  disabled={idx === products.length - 1 || reordering}
+                                  title={idx === products.length - 1 ? "Last product" : "Niche lagao (Move Down)"}
+                                  className="p-1 rounded hover:bg-foreground/10 text-foreground/70 hover:text-foreground disabled:opacity-20 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-all"
+                                  aria-label={`Move ${p.name} Down`}
+                                >
+                                  <ChevronDown size={15} strokeWidth={2.4} />
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-5">
                             <div className="flex items-center gap-4">
                               {p.featureImages?.[0] && (
                                 <img src={p.featureImages[0]} alt={p.name} className="w-12 h-12 rounded-lg object-cover" />
@@ -1320,15 +1457,35 @@ export default function AdminPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-8 py-6">
+                          <td className="px-6 py-5">
                             <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${p.isVisible ? 'bg-amber-100 text-amber-800' : 'bg-orange-100 text-orange-700'}`}>
                               {p.isVisible ? "Active" : "Hidden"}
                             </span>
                           </td>
-                          <td className="px-8 py-6 font-light">₹{p.discountPrice || p.price}</td>
-                          <td className="px-8 py-6 font-light text-foreground/50 line-through">₹{p.price}</td>
-                          <td className="px-8 py-6">
-                            <div className="flex justify-end items-center gap-3">
+                          <td className="px-6 py-5 font-light">₹{p.discountPrice || p.price}</td>
+                          <td className="px-6 py-5 font-light text-foreground/50 line-through">₹{p.price}</td>
+                          <td className="px-6 py-5">
+                            <div className="flex justify-end items-center gap-2.5 sm:gap-3 flex-wrap">
+                              <button
+                                type="button"
+                                onClick={() => moveProduct(idx, -1)}
+                                disabled={idx === 0 || reordering}
+                                title="Aage lagao"
+                                className="inline-flex items-center gap-0.5 text-xs uppercase tracking-tight font-semibold text-emerald-700 hover:text-emerald-900 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              >
+                                <ArrowUp size={13} />
+                                <span>Up</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => moveProduct(idx, 1)}
+                                disabled={idx === products.length - 1 || reordering}
+                                title="Niche lagao"
+                                className="inline-flex items-center gap-0.5 text-xs uppercase tracking-tight font-semibold text-emerald-700 hover:text-emerald-900 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                              >
+                                <ArrowDown size={13} />
+                                <span>Down</span>
+                              </button>
                               <button 
                                 type="button"
                                 onClick={() => duplicateProduct(p)} 

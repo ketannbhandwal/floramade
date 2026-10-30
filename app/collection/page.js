@@ -1,17 +1,13 @@
 import PageTransition from "@/components/ui/PageTransition";
 import CollectionContent from "./CollectionContent";
 import Product from "@/models/Product";
+import { sortProducts } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 async function getAllProducts() {
   const products = await Product.find({ isVisible: true }).lean();
-  
-  // Reorder products to put MadhuCurex Capsules at the end
-  const capsuleProduct = products.find(p => p.name.includes("MadhuCurex Capsules"));
-  const otherProducts = products.filter(p => !p.name.includes("MadhuCurex Capsules"));
-  const sortedProducts = capsuleProduct ? [...otherProducts, capsuleProduct] : products;
-  
+  const sortedProducts = sortProducts(products);
   return JSON.parse(JSON.stringify(sortedProducts));
 }
 

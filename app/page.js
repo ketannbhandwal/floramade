@@ -2,6 +2,7 @@ import HomeSections from "@/components/home/HomeSections";
 import PageTransition from "@/components/ui/PageTransition";
 import Product from "@/models/Product";
 import { getSiteSettings } from "@/lib/settings";
+import { sortProducts } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -53,14 +54,8 @@ export const metadata = {
 
 async function getProducts() {
   const products = await Product.find({ isVisible: true }).lean();
-  
-  // Reorder products to put MadhuCurex Capsules at the end
-  const capsuleProduct = products.find(p => p.name.includes("MadhuCurex Capsules"));
-  const otherProducts = products.filter(p => !p.name.includes("MadhuCurex Capsules"));
-  const sortedProducts = capsuleProduct ? [...otherProducts, capsuleProduct] : products;
-  
-  const result = JSON.parse(JSON.stringify(sortedProducts));
-  return result;
+  const sortedProducts = sortProducts(products);
+  return JSON.parse(JSON.stringify(sortedProducts));
 }
 
 export default async function Home() {
