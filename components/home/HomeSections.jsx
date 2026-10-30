@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Landing from "./components/Landing";
 import BetterThanSection from "./components/BetterThanSection";
-import ShopByConcern from "./components/ShopByConcern";
 import BenefitsSection from "./components/BenefitsSection";
 import WhyChooseFloramade from "./components/WhyChooseFloramade";
 
@@ -28,7 +27,6 @@ export default function HomeSections({
     <div className="bg-background text-foreground w-full">
       <Landing banners={banners} />
       <BetterThanSection />
-      <ShopByConcern concerns={concerns} />
       <Products 
         products={products} 
         heading={productHeading} 

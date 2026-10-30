@@ -50,36 +50,9 @@ export function MarqueeTickerSkeleton() {
   );
 }
 
-// 3. SHOP BY CONCERN SKELETON (6 ARCH DOMES)
+// 3. SHOP BY CONCERN SKELETON (DEPRECATED / REMOVED)
 export function ShopByConcernSkeleton() {
-  return (
-    <section className="py-12 sm:py-16 md:py-20 bg-background overflow-hidden border-b border-[#E8D9C5]/40">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-        {/* Section Heading */}
-        <div className="text-center mb-8 sm:mb-12 max-w-xl mx-auto space-y-2">
-          <div className="h-3 w-28 mx-auto rounded-full shimmer-luxury" />
-          <div className="h-7 sm:h-8 w-56 sm:w-72 mx-auto rounded-lg shimmer-luxury" />
-        </div>
-
-        {/* 6 Arch Dome Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="group relative flex flex-col items-center p-3 sm:p-4 rounded-t-[54px] rounded-b-2xl border border-[#E8D9C5]/60 bg-[#FFF7EB] shadow-xs space-y-3"
-            >
-              {/* Arch Dome Top Image Area */}
-              <div className="w-full aspect-[4/5] rounded-t-[44px] rounded-b-xl shimmer-luxury-subtle flex items-center justify-center p-2 border border-[#E8D9C5]/40">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shimmer-luxury" />
-              </div>
-              {/* Card Label */}
-              <div className="w-20 sm:w-24 h-3.5 rounded shimmer-luxury" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 }
 
 // 4. PRODUCT CARD SKELETON (Exact 1:1 Match to ProductCard.jsx)
@@ -260,7 +233,6 @@ export default function LoadingSkeleton() {
     <div className="w-full bg-[#FFF7EB] min-h-screen text-[#39160D]">
       <HeroBannerSkeleton />
       <MarqueeTickerSkeleton />
-      <ShopByConcernSkeleton />
       <ProductGridSkeleton count={4} />
       <BenefitsSkeleton />
       <WhyChooseSkeleton />
