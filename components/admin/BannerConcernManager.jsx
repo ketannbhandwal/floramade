@@ -99,6 +99,8 @@ export default function BannerConcernManager() {
   const [testimonialsTitle, setTestimonialsTitle] = useState(DEFAULT_TESTIMONIALS_TITLE);
   const [testimonialsSubtitle, setTestimonialsSubtitle] = useState(DEFAULT_TESTIMONIALS_SUBTITLE);
   const [testimonials, setTestimonials] = useState([]);
+  const [spotlightProductId, setSpotlightProductId] = useState("");
+  const [availableProducts, setAvailableProducts] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -109,7 +111,11 @@ export default function BannerConcernManager() {
     async function loadSettings() {
       try {
         setLoading(true);
-        const res = await fetch("/api/settings");
+        const [res, prodRes] = await Promise.all([
+          fetch("/api/settings"),
+          fetch("/api/products")
+        ]);
+
         if (res.ok) {
           const data = await res.json();
           setAnnouncement(data.announcement || DEFAULT_ANNOUNCEMENT);
@@ -127,6 +133,7 @@ export default function BannerConcernManager() {
           setTestimonialsTitle(data.testimonialsTitle || DEFAULT_TESTIMONIALS_TITLE);
           setTestimonialsSubtitle(data.testimonialsSubtitle || DEFAULT_TESTIMONIALS_SUBTITLE);
           setTestimonials(Array.isArray(data.testimonials) && data.testimonials.length > 0 ? data.testimonials : DEFAULT_TESTIMONIALS);
+          setSpotlightProductId(data.spotlightProductId || "");
         } else {
           setAnnouncement(DEFAULT_ANNOUNCEMENT);
           setBanners(DEFAULT_BANNERS);
@@ -134,6 +141,12 @@ export default function BannerConcernManager() {
           setBenefits(DEFAULT_BENEFITS);
           setNavLinks(DEFAULT_NAV_LINKS);
           setTestimonials(DEFAULT_TESTIMONIALS);
+          setSpotlightProductId("");
+        }
+
+        if (prodRes.ok) {
+          const pData = await prodRes.json();
+          if (Array.isArray(pData)) setAvailableProducts(pData);
         }
       } catch (err) {
         console.error("Failed to load settings:", err);
@@ -143,6 +156,7 @@ export default function BannerConcernManager() {
         setBenefits(DEFAULT_BENEFITS);
         setNavLinks(DEFAULT_NAV_LINKS);
         setTestimonials(DEFAULT_TESTIMONIALS);
+        setSpotlightProductId("");
       } finally {
         setLoading(false);
       }
@@ -202,6 +216,7 @@ export default function BannerConcernManager() {
         testimonialsTitle,
         testimonialsSubtitle,
         testimonials,
+        spotlightProductId,
       };
 
       const res = await fetch("/api/settings", {
@@ -559,6 +574,7 @@ export default function BannerConcernManager() {
       <div className="flex items-center gap-2 border-b border-[#211b13]/10 pb-2 overflow-x-auto no-scrollbar">
         {[
           { key: "banners", label: "Hero Banners", icon: ImageIcon, count: banners.length },
+          { key: "spotlight", label: "Product Spotlight", icon: Star, count: spotlightProductId ? "1 Set" : "Auto" },
           { key: "benefits", label: "Benefits Section", icon: ShieldCheck, count: benefits.length },
           { key: "navLinks", label: "Navbar Links", icon: Navigation, count: navLinks.length },
           { key: "announcement", label: "Announcement Bar", icon: Sparkles, count: announcement?.enabled !== false ? "Active" : "Off" },
@@ -583,6 +599,80 @@ export default function BannerConcernManager() {
           </button>
         ))}
       </div>
+
+      {/* =====================================================================
+          TAB: PRODUCT SPOTLIGHT (FEATURED SPOTLIGHT SECTION)
+          ===================================================================== */}
+      {subTab === "spotlight" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-[#39160D] tracking-tight">
+                Featured Product Spotlight Section
+              </h3>
+              <p className="text-xs text-foreground/60 tracking-tight">
+                Select which flagship product is displayed in the large showcase section above 'Why Choose Floramade'.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-[#211b13]/10 p-6 md:p-8 shadow-sm space-y-6">
+            <div className="max-w-xl space-y-3">
+              <label className="block text-xs font-bold text-[#39160D] uppercase tracking-tight">
+                Select Spotlight Product
+              </label>
+              <select
+                value={spotlightProductId}
+                onChange={e => setSpotlightProductId(e.target.value)}
+                className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-4 py-3 text-sm font-semibold text-[#39160D] tracking-tight focus:border-[#872B10] focus:outline-none cursor-pointer"
+              >
+                <option value="">-- Auto (First Product in Catalogue) --</option>
+                {availableProducts.map(p => (
+                  <option key={p._id || p.id} value={p._id || p.id}>
+                    {p.name} — ₹{p.discountPrice || p.price || 0}
+                  </option>
+                ))}
+              </select>
+              <p className="text-[11px] text-[#39160D]/60 tracking-tight">
+                The selected product will appear with its full image gallery, pricing, stock status, and direct 1-click checkout buttons on the homepage.
+              </p>
+            </div>
+
+            {/* Live Preview Card */}
+            {(() => {
+              const selectedProduct = availableProducts.find(
+                p => String(p._id || p.id) === String(spotlightProductId) || p.slug === spotlightProductId
+              ) || availableProducts[0];
+
+              if (!selectedProduct) return null;
+
+              const img = selectedProduct.images?.[0] || selectedProduct.formulaimage || "/placeholder.png";
+
+              return (
+                <div className="rounded-2xl border border-[#E8D9C5] bg-[#FAF6EE] p-5 flex flex-col sm:flex-row items-center gap-5 max-w-xl">
+                  <div className="relative w-24 h-24 rounded-xl bg-white border border-[#E8D9C5] overflow-hidden flex-shrink-0 flex items-center justify-center">
+                    <Image src={img} alt={selectedProduct.name} fill className="object-contain p-1" />
+                  </div>
+                  <div className="space-y-1 text-center sm:text-left flex-1">
+                    <span className="text-[10px] font-bold uppercase tracking-tight text-[#872B10] bg-[#872B10]/10 px-2 py-0.5 rounded-full">
+                      Active Spotlight
+                    </span>
+                    <h4 className="text-base font-bold text-[#39160D] tracking-tight">
+                      {selectedProduct.name}
+                    </h4>
+                    <p className="text-xs font-semibold text-[#872B10]">
+                      Price: ₹{selectedProduct.discountPrice || selectedProduct.price}
+                    </p>
+                    <p className="text-[11px] text-[#39160D]/60">
+                      Slug: /product/{selectedProduct.slug}
+                    </p>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
 
 
 

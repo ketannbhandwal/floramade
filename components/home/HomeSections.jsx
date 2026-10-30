@@ -7,6 +7,7 @@ import BetterThanSection from "./components/BetterThanSection";
 import BrandStory from "./components/BrandStory";
 import BenefitsSection from "./components/BenefitsSection";
 import FlagshipProducts from "./components/FlagshipProducts";
+import ProductSpotlight from "./components/ProductSpotlight";
 import WhyChooseFloramade from "./components/WhyChooseFloramade";
 
 const Products = dynamic(() => import("./components/Products"), { ssr: true });
@@ -23,7 +24,8 @@ export default function HomeSections({
   testimonialsPretitle,
   testimonialsTitle,
   testimonialsSubtitle,
-  testimonials
+  testimonials,
+  spotlightProductId
 }) {
   return (
     <div className="bg-background text-foreground w-full">
@@ -40,6 +42,7 @@ export default function HomeSections({
         benefits={benefits}
       />
       <FlagshipProducts products={products} />
+      <ProductSpotlight products={products} selectedId={spotlightProductId} />
       <WhyChooseFloramade />
       <Suspense fallback={null}>
         <Review 

@@ -83,6 +83,7 @@ export default async function Home() {
         testimonialsTitle={settings?.testimonialsTitle}
         testimonialsSubtitle={settings?.testimonialsSubtitle}
         testimonials={settings?.testimonials}
+        spotlightProductId={settings?.spotlightProductId}
       />
     </PageTransition>
   );
