@@ -6,42 +6,44 @@ import { ArrowRight, Leaf } from "lucide-react";
 import { motion } from "framer-motion";
 import ProductCard from "@/components/product/ProductCard";
 
-export default function Products({ products = [], heading = "Featured Best Products" }) {
-  const visibleProducts = products.slice(0, 4);
+export default function Products({ 
+  products = [], 
+  heading = "ORGANIC REMEDIES FOR HOLISTIC HEALING",
+  subheading = "Browse complete range of 100% organic & approved products."
+}) {
+  // Show up to 8 products in a clean 4-col (desktop) / 2-col (mobile) grid like Vedabay
+  const visibleProducts = products.slice(0, 8);
 
   return (
-    <section id="products" className="relative overflow-hidden py-14 sm:py-16 lg:py-20 bg-background">
+    <section id="products" className="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-background">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
-        {/* Clean Heading - Sans Bold, Tracking Tight, No Subtitle */}
-        <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-[32px] font-bold tracking-tight text-[#39160D]">
+        
+        {/* Header - Vedabay style uppercase letter-spaced with subtitle */}
+        <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto space-y-1.5 px-4">
+          <h2 className="text-xl sm:text-2xl md:text-[28px] font-bold tracking-[0.06em] uppercase text-[#872B10]">
             {heading}
           </h2>
+          {subheading && (
+            <p className="text-xs sm:text-sm md:text-[15px] text-[#39160D]/70 font-normal">
+              {subheading}
+            </p>
+          )}
         </div>
 
-        {/* Product Cards Layout: Centered when 1 or 2 items, 4-col grid when 4 items */}
+        {/* Product Cards Layout: 2 cols on mobile, 4 cols on desktop */}
         {visibleProducts.length > 0 ? (
           <div>
-            <div
-              className={`w-full ${visibleProducts.length === 1
-                ? "max-w-[320px] mx-auto"
-                : visibleProducts.length === 2
-                  ? "max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6"
-                  : visibleProducts.length === 3
-                    ? "max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-                    : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
-                }`}
-            >
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
               {visibleProducts.map((product, index) => (
                 <motion.div
                   key={product._id || product.id || index}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: index * 0.06 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
                   className="h-full"
                 >
-                  <ProductCard product={product} />
+                  <ProductCard product={product} index={index} />
                 </motion.div>
               ))}
             </div>

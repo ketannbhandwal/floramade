@@ -14,37 +14,38 @@ const fadeUp = {
 export default function CollectionContent({ products }) {
   return (
     <div className="min-h-screen bg-background text-foreground w-full pt-24 md:pt-32 pb-20">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 md:mb-16 space-y-4"
+          className="mb-10 md:mb-14 text-center max-w-2xl mx-auto space-y-2"
         >
-          <h1 className="text-4xl md:text-5xl font-light tracking-tight">
-            Our Collection
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-[0.06em] uppercase text-[#872B10]">
+            Our Ayurvedic Collection
           </h1>
-          <p className="text-base text-foreground/60 font-light max-w-md">
-            Meticulously crafted formulations for balanced living.
+          <p className="text-xs sm:text-sm md:text-base text-[#39160D]/70 font-normal">
+            Meticulously crafted 100% natural formulations for holistic healing and balanced living.
           </p>
         </motion.div>
 
         {products && products.length > 0 ? (
-          <div className="grid gap-8 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
             {products.map((product, i) => (
               <motion.div
                 key={product._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
               >
                 <ProductCard product={product} index={i} />
               </motion.div>
             ))}
           </div>
         ) : (
-          <ProductGridSkeleton count={6} />
+          <ProductGridSkeleton count={8} />
         )}
       </div>
     </div>

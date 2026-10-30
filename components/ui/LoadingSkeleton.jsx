@@ -85,68 +85,61 @@ export function ShopByConcernSkeleton() {
 // 4. PRODUCT CARD SKELETON (Exact 1:1 Match to ProductCard.jsx)
 export function ProductCardSkeleton() {
   return (
-    <div className="flex flex-col h-full bg-transparent rounded-2xl border border-[#E8D9C5] overflow-hidden shadow-xs">
-      {/* 1. TOP STAGE: Natural Background + Bottle Area */}
-      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-transparent">
-        {/* Top-Right Badges: Discount Tag & Wishlist Circle */}
-        <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
-          <div className="w-16 h-5 rounded shimmer-luxury" />
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full shimmer-luxury border border-[#E8D9C5]" />
-        </div>
+    <div className="flex flex-col h-full bg-white rounded-2xl border border-[#E8D9C5]/90 overflow-hidden shadow-xs">
+      {/* 1. TOP STAGE: Rich Muted Ayurvedic Container Shimmer */}
+      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-[#2C4436]/15">
+        {/* Top-Left Pill Shimmer */}
+        <div className="absolute top-3 left-3 z-10 w-24 h-4 rounded-full shimmer-luxury-subtle" />
 
         {/* Bottle Image Shimmer */}
-        <div className="w-3/5 h-4/5 rounded-2xl shimmer-luxury-subtle" />
+        <div className="w-1/2 h-3/4 rounded-xl shimmer-luxury-subtle" />
       </div>
 
-      {/* 2. BOTTOM STAGE: Text & Action Area */}
-      <div className="flex flex-col flex-1 justify-between bg-white/60 backdrop-blur-sm p-4 sm:p-5 border-t border-[#E8D9C5]/70 space-y-3">
-        <div className="space-y-2">
-          {/* Title Lines */}
-          <div className="h-4 sm:h-4.5 w-4/5 rounded shimmer-luxury" />
-          <div className="h-4 w-3/5 rounded shimmer-luxury" />
+      {/* 2. BOTTOM STAGE: Centered Text & Info Shimmer */}
+      <div className="flex flex-col flex-1 items-center justify-between bg-white p-3.5 sm:p-4 text-center">
+        <div className="w-full flex flex-col items-center space-y-2">
+          {/* Centered Title */}
+          <div className="h-4 w-3/4 rounded shimmer-luxury" />
 
-          {/* Star Rating Line */}
-          <div className="flex items-center gap-1.5 pt-1">
+          {/* Centered Star Rating */}
+          <div className="flex items-center justify-center gap-1">
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((s) => (
-                <div key={s} className="w-3 h-3 rounded-full shimmer-luxury" />
+                <div key={s} className="w-2.5 h-2.5 rounded-full shimmer-luxury" />
               ))}
             </div>
-            <div className="w-6 h-3 rounded shimmer-luxury" />
-            <div className="w-16 h-3 rounded shimmer-luxury" />
+            <div className="w-14 h-3 rounded shimmer-luxury" />
           </div>
 
-          {/* Price Line */}
-          <div className="flex items-baseline gap-2 pt-1">
-            <div className="w-16 sm:w-20 h-5 sm:h-6 rounded shimmer-luxury" />
+          {/* Centered Price */}
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-16 h-4.5 rounded shimmer-luxury" />
             <div className="w-12 h-3.5 rounded shimmer-luxury opacity-60" />
           </div>
 
-          {/* Trust Line */}
-          <div className="w-36 h-3 rounded shimmer-luxury opacity-70" />
+          {/* Centered EMI Pill */}
+          <div className="w-32 h-5 rounded-full shimmer-luxury opacity-70" />
         </div>
-
-        {/* Rounded Add to Bag Button */}
-        <div className="w-full h-10 sm:h-11 rounded-full shimmer-luxury" />
       </div>
     </div>
   );
 }
 
 // 5. PRODUCT GRID SKELETON
-export function ProductGridSkeleton({ count = 4, heading = true }) {
+export function ProductGridSkeleton({ count = 8, heading = true }) {
   return (
-    <section className="py-14 sm:py-16 lg:py-20 bg-background overflow-hidden">
+    <section className="py-12 sm:py-16 lg:py-20 bg-background overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section Heading */}
         {heading && (
           <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto space-y-2">
             <div className="h-7 sm:h-8 w-64 sm:w-80 mx-auto rounded-lg shimmer-luxury" />
+            <div className="h-4 w-48 sm:w-64 mx-auto rounded shimmer-luxury opacity-70" />
           </div>
         )}
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        {/* Grid: 2 cols mobile, 4 cols desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6">
           {Array.from({ length: count }).map((_, i) => (
             <ProductCardSkeleton key={i} />
           ))}
