@@ -8,23 +8,23 @@ import ProductCard from "@/components/product/ProductCard";
 
 export default function Products({ 
   products = [], 
-  heading = "ORGANIC REMEDIES FOR HOLISTIC HEALING",
+  heading = "Featured Best Products",
   subheading = "Browse complete range of 100% organic & approved products."
 }) {
-  // Show up to 8 products in a clean 4-col (desktop) / 2-col (mobile) grid like Vedabay
+  // Show up to 8 products in a clean 4-col (desktop) / 2-col (mobile) grid
   const visibleProducts = products.slice(0, 8);
 
   return (
     <section id="products" className="relative overflow-hidden py-12 sm:py-16 lg:py-20 bg-background">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         
-        {/* Header - Vedabay style uppercase letter-spaced with subtitle */}
+        {/* Header - Bold, Tight Tracking, Authentic Brown */}
         <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto space-y-1.5 px-4">
-          <h2 className="text-xl sm:text-2xl md:text-[28px] font-bold tracking-[0.06em] uppercase text-[#872B10]">
+          <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold tracking-tight text-[#39160D]">
             {heading}
           </h2>
           {subheading && (
-            <p className="text-xs sm:text-sm md:text-[15px] text-[#39160D]/70 font-normal">
+            <p className="text-xs sm:text-sm md:text-[15px] text-[#39160D]/70 font-normal tracking-tight">
               {subheading}
             </p>
           )}
@@ -67,8 +67,8 @@ export default function Products({
             </div>
             <div className="flex flex-col items-start justify-center p-7 sm:p-10 lg:p-14">
               <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#39160D]/10 text-[#39160D]"><Leaf size={20} /></span>
-              <h3 className="text-2xl font-medium text-[#39160D] sm:text-3xl">A thoughtful collection is taking shape.</h3>
-              <p className="mt-3 max-w-lg text-sm leading-6 text-[#39160D]/65 sm:text-base">Our products will appear here as soon as they’re added to the Floramade catalogue.</p>
+              <h3 className="text-2xl font-medium text-[#39160D] sm:text-3xl tracking-tight">A thoughtful collection is taking shape.</h3>
+              <p className="mt-3 max-w-lg text-sm leading-6 text-[#39160D]/65 sm:text-base tracking-tight">Our products will appear here as soon as they’re added to the Floramade catalogue.</p>
             </div>
           </div>
         )}

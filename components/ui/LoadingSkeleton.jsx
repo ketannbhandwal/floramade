@@ -86,8 +86,8 @@ export function ShopByConcernSkeleton() {
 export function ProductCardSkeleton() {
   return (
     <div className="flex flex-col h-full bg-white rounded-2xl border border-[#E8D9C5]/90 overflow-hidden shadow-xs">
-      {/* 1. TOP STAGE: Rich Muted Ayurvedic Container Shimmer */}
-      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-[#2C4436]/15">
+      {/* 1. TOP STAGE: Warm Luxury Ivory Container Shimmer */}
+      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-[#FAF6EE]">
         {/* Top-Left Pill Shimmer */}
         <div className="absolute top-3 left-3 z-10 w-24 h-4 rounded-full shimmer-luxury-subtle" />
 
@@ -119,6 +119,11 @@ export function ProductCardSkeleton() {
 
           {/* Centered EMI Pill */}
           <div className="w-32 h-5 rounded-full shimmer-luxury opacity-70" />
+        </div>
+
+        {/* Add to Bag Button Shimmer */}
+        <div className="pt-3 w-full">
+          <div className="w-full h-8 sm:h-9 rounded-full shimmer-luxury" />
         </div>
       </div>
     </div>
