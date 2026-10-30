@@ -80,8 +80,8 @@ const BENEFIT_ICON_OPTIONS = [
   { value: "holistic", label: "Holistic Health (Lotus & Hands)", icon: Flower2 },
 ];
 
-export default function BannerConcernManager() {
-  const [subTab, setSubTab] = useState("banners"); // "banners" | "benefits" | "navLinks" | "announcement" | "testimonials"
+export default function BannerConcernManager({ products: initialProducts = [] }) {
+  const [subTab, setSubTab] = useState("banners"); // "banners" | "spotlight" | "benefits" | "navLinks" | "announcement" | "testimonials"
   
   // Data states
   const [announcement, setAnnouncement] = useState(DEFAULT_ANNOUNCEMENT);
@@ -100,7 +100,13 @@ export default function BannerConcernManager() {
   const [testimonialsSubtitle, setTestimonialsSubtitle] = useState(DEFAULT_TESTIMONIALS_SUBTITLE);
   const [testimonials, setTestimonials] = useState([]);
   const [spotlightProductId, setSpotlightProductId] = useState("");
-  const [availableProducts, setAvailableProducts] = useState([]);
+  const [availableProducts, setAvailableProducts] = useState(Array.isArray(initialProducts) ? initialProducts : []);
+
+  useEffect(() => {
+    if (Array.isArray(initialProducts) && initialProducts.length > 0) {
+      setAvailableProducts(initialProducts);
+    }
+  }, [initialProducts]);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -146,7 +152,14 @@ export default function BannerConcernManager() {
 
         if (prodRes.ok) {
           const pData = await prodRes.json();
-          if (Array.isArray(pData)) setAvailableProducts(pData);
+          const prods = Array.isArray(pData?.products) 
+            ? pData.products 
+            : Array.isArray(pData) 
+              ? pData 
+              : [];
+          if (prods.length > 0) {
+            setAvailableProducts(prods);
+          }
         }
       } catch (err) {
         console.error("Failed to load settings:", err);
@@ -627,16 +640,63 @@ export default function BannerConcernManager() {
                 className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-4 py-3 text-sm font-semibold text-[#39160D] tracking-tight focus:border-[#872B10] focus:outline-none cursor-pointer"
               >
                 <option value="">-- Auto (First Product in Catalogue) --</option>
-                {availableProducts.map(p => (
-                  <option key={p._id || p.id} value={p._id || p.id}>
-                    {p.name} — ₹{p.discountPrice || p.price || 0}
-                  </option>
-                ))}
+                {availableProducts.map(p => {
+                  const pid = String(p._id || p.id || p.slug);
+                  return (
+                    <option key={pid} value={pid}>
+                      {p.name} — ₹{p.discountPrice || p.price || 0}
+                    </option>
+                  );
+                })}
               </select>
               <p className="text-[11px] text-[#39160D]/60 tracking-tight">
-                The selected product will appear with its full image gallery, pricing, stock status, and direct 1-click checkout buttons on the homepage.
+                Choose the product to showcase on the homepage, or click any card below to select it directly. Remember to click &apos;Save Changes&apos; above.
               </p>
             </div>
+
+            {/* Visual Product Selector Grid */}
+            {availableProducts.length > 0 && (
+              <div className="space-y-3 pt-2">
+                <label className="block text-xs font-bold text-[#39160D] uppercase tracking-tight">
+                  Or Click A Product Below To Select:
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
+                  {availableProducts.map(p => {
+                    const pid = String(p._id || p.id || p.slug);
+                    const isSelected = spotlightProductId === pid || (!spotlightProductId && p === availableProducts[0]);
+                    const pImg = p.images?.[0] || p.formulaimage || "/placeholder.png";
+
+                    return (
+                      <button
+                        key={pid}
+                        type="button"
+                        onClick={() => setSpotlightProductId(pid)}
+                        className={`text-left p-3 rounded-2xl border-2 transition-all flex flex-col items-center cursor-pointer relative ${
+                          isSelected
+                            ? "border-[#872B10] bg-[#FFF7EB] shadow-md scale-102 ring-2 ring-[#872B10]/20"
+                            : "border-[#E8D9C5] bg-white hover:border-[#872B10]/40 hover:bg-[#FAF6EE]"
+                        }`}
+                      >
+                        {isSelected && (
+                          <div className="absolute top-2 right-2 bg-[#872B10] text-[#FFF7EB] rounded-full p-1">
+                            <Check size={11} strokeWidth={3} />
+                          </div>
+                        )}
+                        <div className="relative w-16 h-16 rounded-xl bg-white border border-[#E8D9C5] overflow-hidden mb-2">
+                          <Image src={pImg} alt={p.name} fill className="object-contain p-1" />
+                        </div>
+                        <h5 className="text-xs font-bold text-[#39160D] tracking-tight text-center line-clamp-2 w-full">
+                          {p.name}
+                        </h5>
+                        <span className="text-[11px] font-bold text-[#872B10] mt-1">
+                          ₹{p.discountPrice || p.price || 0}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Live Preview Card */}
             {(() => {
@@ -655,7 +715,7 @@ export default function BannerConcernManager() {
                   </div>
                   <div className="space-y-1 text-center sm:text-left flex-1">
                     <span className="text-[10px] font-bold uppercase tracking-tight text-[#872B10] bg-[#872B10]/10 px-2 py-0.5 rounded-full">
-                      Active Spotlight
+                      Active Spotlight Preview
                     </span>
                     <h4 className="text-base font-bold text-[#39160D] tracking-tight">
                       {selectedProduct.name}

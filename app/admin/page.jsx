@@ -1444,7 +1444,7 @@ export default function AdminPage() {
                         {/* BANNERS & CONCERNS TAB */}
             {activeTab === "customizer" && (
               <motion.div key="customizer" {...fadeAnim} className="space-y-8">
-                <BannerConcernManager />
+                <BannerConcernManager products={products} />
               </motion.div>
             )}
 

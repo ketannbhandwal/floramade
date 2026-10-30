@@ -15,7 +15,9 @@ import {
   Share2, 
   Minus, 
   Plus, 
-  Sparkles 
+  Sparkles,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { FaWhatsapp, FaFacebookF } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -32,17 +34,25 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  // Touch swipe support (Hand slider)
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
   if (!product) return null;
 
-  // Collect all gallery images
-  const allImages = [
-    ...(product.images || []),
-    ...(product.featureImages || []),
+  // Collect all gallery images and strictly DEDUPLICATE them by URL string
+  const rawImages = [
+    ...(Array.isArray(product.images) ? product.images : []),
+    ...(Array.isArray(product.featureImages) ? product.featureImages : []),
     product.formulaimage
   ].filter(Boolean);
 
-  const images = allImages.length > 0 ? allImages : ["/placeholder.png"];
-  const currentImage = images[activeImageIndex] || images[0];
+  const images = Array.from(new Set(rawImages));
+  if (images.length === 0) images.push("/placeholder.png");
+
+  // Keep index within bounds if images change
+  const safeIndex = activeImageIndex >= images.length ? 0 : activeImageIndex;
+  const currentImage = images[safeIndex] || images[0];
 
   const currentPrice = Number(product.discountPrice || product.price || 0);
   const regularPrice = Number(product.price || currentPrice);
@@ -55,6 +65,38 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const cleanName = (product.name || "")
     .replace(/\s*\((?:Copy|\d+|copy)[^)]*\)/gi, "")
     .trim();
+
+  const handlePrevImage = (e) => {
+    if (e) e.stopPropagation();
+    setActiveImageIndex(prev => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleNextImage = (e) => {
+    if (e) e.stopPropagation();
+    setActiveImageIndex(prev => (prev + 1) % images.length);
+  };
+
+  // Touch Swipe Handlers for mobile & tablet
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 45) {
+      // Swiped Left -> Next image
+      handleNextImage();
+    } else if (distance < -45) {
+      // Swiped Right -> Previous image
+      handlePrevImage();
+    }
+  };
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -79,11 +121,16 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
         {/* Spotlight Showcase Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center max-w-6xl mx-auto">
           
-          {/* LEFT: Main Product Image & Thumbnail Strip */}
+          {/* LEFT: Main Product Image Stage & Hand Slider */}
           <div className="space-y-4">
             
-            {/* Main Stage */}
-            <div className="relative aspect-square w-full rounded-3xl bg-[#FAF6EE] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-sm">
+            {/* Main Stage with Left/Right Navigation Arrows & Touch Swipe */}
+            <div 
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className="relative aspect-square w-full rounded-3xl bg-[#FAF6EE] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-sm group select-none"
+            >
               
               {/* Delicate Top-Left Watermark */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
@@ -101,40 +148,73 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                 </div>
               )}
 
+              {/* Left Arrow Button */}
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handlePrevImage}
+                  aria-label="Previous Image"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+              )}
+
+              {/* Right Arrow Button */}
+              {images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handleNextImage}
+                  aria-label="Next Image"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              )}
+
+              {/* Image Counter Pill */}
+              {images.length > 1 && (
+                <div className="absolute bottom-4 right-4 z-10 pointer-events-none">
+                  <span className="inline-flex items-center bg-[#39160D]/60 backdrop-blur-xs text-[#FFF7EB] text-[10px] font-bold tracking-tight px-2.5 py-0.5 rounded-full shadow-xs">
+                    {safeIndex + 1} / {images.length}
+                  </span>
+                </div>
+              )}
+
               {/* Main Image */}
               <Link href={`/product/${product.slug}`} className="relative block w-full h-full cursor-pointer">
                 <Image
                   src={currentImage}
-                  alt={cleanName}
+                  alt={`${cleanName} view ${safeIndex + 1}`}
                   fill
                   sizes="(max-width: 640px) 320px, (max-width: 1024px) 500px, 600px"
                   quality={90}
-                  className="object-contain select-none transition-transform duration-500 ease-out hover:scale-105"
+                  className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
                   priority
                 />
               </Link>
             </div>
 
-            {/* Thumbnail Strip (if more than 1 image) */}
+            {/* Thumbnail Strip (Unique, Non-Duplicate Images) */}
             {images.length > 1 && (
-              <div className="flex items-center gap-2.5 overflow-x-auto pb-1 no-scrollbar">
-                {images.slice(0, 6).map((img, idx) => (
+              <div className="flex items-center justify-center gap-2.5 overflow-x-auto pb-1 no-scrollbar">
+                {images.map((img, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => setActiveImageIndex(idx)}
                     className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 bg-[#FAF6EE] transition-all cursor-pointer flex-shrink-0 ${
-                      activeImageIndex === idx
+                      safeIndex === idx
                         ? "border-[#872B10] shadow-sm ring-2 ring-[#872B10]/20 scale-102"
                         : "border-[#E8D9C5]/80 opacity-70 hover:opacity-100"
                     }`}
                   >
                     <Image
                       src={img}
-                      alt={`${cleanName} view ${idx + 1}`}
+                      alt={`${cleanName} thumbnail ${idx + 1}`}
                       fill
                       sizes="80px"
-                      className="object-contain p-1"
+                      className="object-contain"
                     />
                   </button>
                 ))}
@@ -142,7 +222,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
             )}
           </div>
 
-          {/* RIGHT: Product Details & Purchase Actions */}
+          {/* RIGHT: Product Details & Authentic Ayurvedic Actions */}
           <div className="space-y-4 sm:space-y-5">
             
             {/* Category / Super-title */}
@@ -169,8 +249,8 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               <span className="text-[#39160D]/60 font-medium">({reviewsCount} verified customer ratings)</span>
             </div>
 
-            {/* Price Box */}
-            <div className="rounded-2xl border border-[#E8D9C5] bg-white p-5 sm:p-6 shadow-xs space-y-3">
+            {/* Luxury Price Box - Pure Floramade Theme (#FAF6EE + #E8D9C5 + #39160D + #872B10) */}
+            <div className="rounded-2xl border border-[#E8D9C5] bg-[#FAF6EE] p-5 sm:p-6 shadow-xs space-y-3">
               <div className="flex items-baseline gap-3 flex-wrap">
                 <span className="text-3xl sm:text-4xl font-extrabold text-[#872B10] tracking-tight">
                   ₹{currentPrice.toLocaleString("en-IN")}
@@ -181,25 +261,28 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   </span>
                 )}
                 {hasDiscount && (
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full tracking-tight">
+                  <span className="text-xs font-bold text-[#872B10] bg-[#872B10]/10 px-2.5 py-0.5 rounded-full tracking-tight">
                     Save ₹{savings.toLocaleString("en-IN")}
                   </span>
                 )}
               </div>
 
-              <div className="pt-2 border-t border-[#E8D9C5]/60 flex items-center gap-2 text-xs font-semibold tracking-tight">
+              {/* Decorative Subtle Accent Divider */}
+              <div className="h-[1px] w-full bg-gradient-to-r from-[#DFC77F]/60 via-[#E8D9C5] to-transparent pt-0.5" />
+
+              <div className="flex items-center gap-2 text-xs font-semibold tracking-tight">
                 <span className="text-emerald-700 flex items-center gap-1">
                   <CheckCircle2 size={13} /> In Stock
                 </span>
                 <span className="text-[#39160D]/40">|</span>
-                <span className="text-[#39160D]/70">Inclusive of all taxes</span>
+                <span className="text-[#39160D]/70">Free Express Delivery Across India</span>
               </div>
             </div>
 
             {/* Quantity Selector & Primary Actions */}
             <div className="space-y-3 pt-1">
               <div className="flex items-center gap-3">
-                <div className="inline-flex items-center rounded-full border border-[#E8D9C5] bg-white p-1">
+                <div className="inline-flex items-center rounded-full border border-[#E8D9C5] bg-white p-1 shadow-xs">
                   <button
                     type="button"
                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
@@ -224,7 +307,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3 px-5 rounded-full bg-[#872B10] hover:bg-[#39160D] text-[#FFF7EB] font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                  className="flex-1 py-3.5 px-5 rounded-full bg-[#872B10] hover:bg-[#39160D] text-[#FFF7EB] font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
                 >
                   <ShoppingBag size={15} strokeWidth={2.2} />
                   <span>Add to Bag</span>
@@ -311,4 +394,3 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
     </section>
   );
 }
-
