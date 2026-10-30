@@ -36,7 +36,8 @@ export async function POST(req) {
       testimonialsTitle,
       testimonialsSubtitle,
       testimonials,
-      spotlightProductId
+      spotlightProductId,
+      coupons
     } = body;
 
     const saved = await saveSiteSettings({ 
@@ -52,7 +53,8 @@ export async function POST(req) {
       testimonialsTitle,
       testimonialsSubtitle,
       testimonials,
-      spotlightProductId
+      spotlightProductId,
+      coupons
     });
     
     // Revalidate home page cache

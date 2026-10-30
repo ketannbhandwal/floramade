@@ -161,10 +161,51 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     }
   }, [product._id, packs]);
 
-  // 6 Benefit Badges for the Hero Grid (Authentic Ayurvedic Benefits, No Fake/Dummy Claims)
+  // 6 Benefit Badges for the Hero Grid (Supports Admin Images & Pre-defined SVGs)
   const benefitBadges = useMemo(() => {
     const defaultIcons = [Sparkles, Zap, Leaf, Flame, Activity, ShieldCheck];
 
+    // Priority 1: Admin configured keyBenefits array of objects { text, image }
+    if (Array.isArray(product.keyBenefits) && product.keyBenefits.length > 0) {
+      const valid = product.keyBenefits
+        .filter(b => b && (b.text || b.image))
+        .map((b, idx) => ({
+          text: (b.text || "").trim(),
+          image: b.image || null,
+          icon: defaultIcons[idx % defaultIcons.length],
+        }))
+        .filter(b => {
+          const lower = b.text.toLowerCase();
+          return !lower.includes("better results") && 
+                 !lower.includes("relief from discomfort");
+        });
+
+      if (valid.length >= 6) {
+        return valid.slice(0, 6);
+      }
+      if (valid.length > 0) {
+        return valid.slice(0, 6);
+      }
+    }
+
+    // Priority 2: Admin configured benefits + benefitImages
+    if (Array.isArray(product.benefits) && product.benefits.length > 0) {
+      const valid = product.benefits.map((b, idx) => {
+        const text = (typeof b === "string" ? b : b?.text || "").trim();
+        const image = (Array.isArray(product.benefitImages) && product.benefitImages[idx]) || (typeof b === "object" && b?.image) || null;
+        return { text, image, icon: defaultIcons[idx % defaultIcons.length] };
+      }).filter(b => {
+        if (!b.text) return false;
+        const lower = b.text.toLowerCase();
+        return !lower.includes("better results") && 
+               !lower.includes("relief from discomfort") &&
+               lower !== "better" && lower !== "results";
+      });
+
+      if (valid.length >= 6) return valid.slice(0, 6);
+    }
+
+    // Category authentic defaults with crisp SVGs
     const isDiabetes = product.category === "diabetes" || 
       product.slug?.includes("madhu") || 
       product.name?.toLowerCase().includes("diabetes") ||
@@ -175,63 +216,81 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       product.name?.toLowerCase().includes("paachan") ||
       product.name?.toLowerCase().includes("digest");
 
-    const authenticDefaults = isDiabetes ? [
-      { text: "Balances Fasting Sugar", icon: Sparkles },
-      { text: "Enhances Insulin Response", icon: Zap },
-      { text: "Curbs Sugar Cravings", icon: Leaf },
-      { text: "Supports Healthy Metabolism", icon: Flame },
-      { text: "Boosts Daily Energy", icon: Activity },
-      { text: "Supports Pancreas Health", icon: ShieldCheck },
-    ] : isDigestion ? [
-      { text: "Relieves Acidity & Gas", icon: Sparkles },
-      { text: "Boosts Digestive Fire", icon: Zap },
-      { text: "Smooth Bowel Movement", icon: Leaf },
-      { text: "Eases Stomach Heaviness", icon: Flame },
-      { text: "Improves Gut Health", icon: Activity },
-      { text: "Detoxifies Gut System", icon: ShieldCheck },
-    ] : [
-      { text: "Reduces Stress & Fatigue", icon: Sparkles },
-      { text: "Improves Daily Energy", icon: Zap },
-      { text: "Relaxes Mind & Body", icon: Leaf },
-      { text: "Enhances Natural Vitality", icon: Flame },
-      { text: "Balances Natural Doshas", icon: Activity },
-      { text: "Supports Immune Health", icon: ShieldCheck },
-    ];
-
-    // Filter out dummy/fake placeholder strings like "better results", "relief from discomfort"
-    const cleanedProductBenefits = Array.isArray(product.benefits)
-      ? product.benefits
-          .map(b => (typeof b === "string" ? b : b?.text || "").trim())
-          .filter(text => {
-            if (!text) return false;
-            const lower = text.toLowerCase();
-            return !lower.includes("better results") && 
-                   !lower.includes("relief from discomfort") && 
-                   lower !== "better" && 
-                   lower !== "results";
-          })
-      : [];
-
-    if (cleanedProductBenefits.length >= 6) {
-      return cleanedProductBenefits.slice(0, 6).map((text, idx) => ({
-        text,
-        icon: defaultIcons[idx % defaultIcons.length],
-      }));
-    }
-
-    if (cleanedProductBenefits.length > 0) {
-      const merged = [
-        ...cleanedProductBenefits.map((text, idx) => ({
-          text,
-          icon: defaultIcons[idx % defaultIcons.length],
-        })),
-        ...authenticDefaults.slice(cleanedProductBenefits.length),
+    if (isDiabetes) {
+      return [
+        { text: "Balances Metabolism & Sugar", image: "/feature/5svg.svg", icon: Sparkles },
+        { text: "Enhances Insulin Sensitivity", image: "/feature/6.svg", icon: Zap },
+        { text: "Boosts Natural Immunity", image: "/feature/7.svg", icon: Leaf },
+        { text: "Improves Heart & Vitality", image: "/feature/8.svg", icon: Flame },
+        { text: "Boosts Daily Energy", image: "/feature/1.svg", icon: Activity },
+        { text: "Supports Pancreas Health", image: "/feature/2.svg", icon: ShieldCheck },
       ];
-      return merged.slice(0, 6);
     }
 
-    return authenticDefaults;
+    if (isDigestion) {
+      return [
+        { text: "Relieves Acidity & Gas", image: "/feature/1.svg", icon: Sparkles },
+        { text: "Boosts Digestive Fire", image: "/feature/2.svg", icon: Zap },
+        { text: "Smooth Bowel Movement", image: "/feature/3.svg", icon: Leaf },
+        { text: "Eases Stomach Heaviness", image: "/feature/4.svg", icon: Flame },
+        { text: "Improves Gut Health", image: "/feature/7.svg", icon: Activity },
+        { text: "Detoxifies Gut System", image: "/feature/6.svg", icon: ShieldCheck },
+      ];
+    }
+
+    return [
+      { text: "Reduces Stress & Fatigue", image: "/feature/3.svg", icon: Sparkles },
+      { text: "Improves Daily Energy", image: "/feature/1.svg", icon: Zap },
+      { text: "Relaxes Mind & Body", image: "/feature/2.svg", icon: Leaf },
+      { text: "Enhances Natural Vitality", image: "/feature/8.svg", icon: Flame },
+      { text: "Balances Natural Doshas", image: "/feature/5svg.svg", icon: Activity },
+      { text: "Supports Immune Health", image: "/feature/7.svg", icon: ShieldCheck },
+    ];
   }, [product]);
+
+  // Dynamic coupons managed by admin
+  const [coupons, setCoupons] = useState([
+    {
+      code: "FLAT05",
+      badge: "FIRST ORDER",
+      title: "Flat 5% OFF",
+      description: "Get flat 5% OFF on your first order. Applicable on all products.",
+      showOnProductPage: true,
+      isActive: true,
+    },
+    {
+      code: "FLAT10",
+      badge: "BEST VALUE",
+      title: "Flat 10% OFF",
+      description: "Get flat 10% OFF on orders above ₹3,000. Applicable on all products.",
+      showOnProductPage: true,
+      isActive: true,
+    },
+  ]);
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data?.coupons) && data.coupons.length > 0) {
+          const activeCoupons = data.coupons.filter(c => c.isActive !== false && c.showOnProductPage !== false);
+          if (activeCoupons.length > 0) {
+            setCoupons(activeCoupons);
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const applyAndCopyCoupon = (coupon) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(coupon.code);
+    }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("floramade-applied-coupon", JSON.stringify(coupon));
+    }
+    toast.success(`Coupon "${coupon.code}" applied! It will be used at checkout.`);
+  };
 
   // Clean description without generic placeholder
   const cleanDescription = useMemo(() => {
@@ -608,19 +667,27 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </span>
             </div>
 
-            {/* KEY BENEFIT BADGES GRID (2x3 or 3x2, Warm Darker Beige Background) */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
+            {/* KEY BENEFIT BADGES GRID (Compact width, admin image support, smaller tight text) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 pt-1 max-w-[460px]">
               {benefitBadges.map((badge, idx) => {
                 const IconComp = badge.icon;
                 return (
                   <div
                     key={idx}
-                    className="p-3 sm:p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/50 transition-colors"
+                    className="p-2 sm:p-2.5 rounded-xl bg-[#F3E8D8] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-1.5 hover:border-[#872B10]/50 transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0">
-                      <IconComp size={16} />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0 p-1 overflow-hidden">
+                      {badge.image ? (
+                        <img 
+                          src={badge.image} 
+                          alt={badge.text} 
+                          className="w-full h-full object-contain" 
+                        />
+                      ) : (
+                        <IconComp size={14} />
+                      )}
                     </div>
-                    <span className="text-[11.5px] sm:text-xs font-semibold text-[#39160D] leading-tight tracking-tight">
+                    <span className="text-[10px] sm:text-[10.5px] font-semibold text-[#39160D] leading-tight tracking-tight line-clamp-2">
                       {badge.text}
                     </span>
                   </div>
@@ -724,58 +791,53 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </button>
             </div>
 
-            {/* OFFERS FOR YOU (matching reference Image 2) */}
-            <div className="space-y-2.5 pt-2">
-              <h3 className="text-xs sm:text-sm font-bold text-[#39160D] uppercase tracking-tight">Offers for You</h3>
-              
-              <div className="p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#872B10] px-2 py-0.5 rounded-md uppercase tracking-tight">
-                      FIRST ORDER
-                    </span>
-                    <span className="text-xs sm:text-sm font-bold text-[#39160D] tracking-tight">
-                      Flat 5% OFF
-                    </span>
-                  </div>
-                  <p className="text-[11px] sm:text-xs text-[#39160D]/75 tracking-tight">
-                    Get flat 5% OFF on your first order. Applicable on all products.
-                  </p>
+            {/* OFFERS FOR YOU (Admin Managed Live Coupons) */}
+            {coupons.length > 0 && (
+              <div className="space-y-2.5 pt-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs sm:text-sm font-bold text-[#39160D] uppercase tracking-tight">Offers for You</h3>
+                  <span className="text-[10px] text-[#872B10] font-semibold">Click to apply coupon</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => copyCoupon("FLAT05")}
-                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FFF7EB] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
-                >
-                  <span>FLAT05</span>
-                  <Copy size={13} />
-                </button>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#39160D] px-2 py-0.5 rounded-md uppercase tracking-tight">
-                      BEST VALUE
-                    </span>
-                    <span className="text-xs sm:text-sm font-bold text-[#39160D] tracking-tight">
-                      Flat 10% OFF
-                    </span>
-                  </div>
-                  <p className="text-[11px] sm:text-xs text-[#39160D]/75 tracking-tight">
-                    Get flat 10% OFF on orders above ₹3,000. Applicable on all products.
-                  </p>
+                
+                <div className="space-y-2">
+                  {coupons.map((coupon, idx) => (
+                    <div 
+                      key={coupon.id || idx}
+                      onClick={() => applyAndCopyCoupon(coupon)}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] hover:border-[#872B10]/50 flex items-center justify-between gap-3 shadow-xs cursor-pointer transition-all hover:scale-[1.01]"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          {coupon.badge && (
+                            <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#872B10] px-2 py-0.5 rounded-md uppercase tracking-tight">
+                              {coupon.badge}
+                            </span>
+                          )}
+                          <span className="text-xs sm:text-sm font-bold text-[#39160D] tracking-tight">
+                            {coupon.title || coupon.code}
+                          </span>
+                        </div>
+                        <p className="text-[11px] sm:text-xs text-[#39160D]/75 tracking-tight">
+                          {coupon.description || `Use coupon ${coupon.code} on your order.`}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          applyAndCopyCoupon(coupon);
+                        }}
+                        className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FFF7EB] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+                        title="Copy and Apply Coupon"
+                      >
+                        <span>{coupon.code}</span>
+                        <Copy size={13} />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => copyCoupon("FLAT10")}
-                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FFF7EB] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
-                >
-                  <span>FLAT10</span>
-                  <Copy size={13} />
-                </button>
               </div>
-            </div>
+            )}
 
             {/* ACCORDIONS (Description, How to Use, Ingredients - Clean Text, NO IMAGES) */}
             <div className="space-y-2.5 pt-2">

@@ -15,6 +15,7 @@ import {
   ChevronRight,
   MapPin,
   Plus,
+  Tag,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -130,11 +131,116 @@ export default function CheckoutPage() {
       selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [selectedItems],
   );
+
+  // Coupon state
+  const [couponCodeInput, setCouponCodeInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState("");
+  const [availableCoupons, setAvailableCoupons] = useState([]);
+
+  // Fetch available coupons and check localStorage for applied coupon
+  useEffect(() => {
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data?.coupons)) {
+          setAvailableCoupons(data.coupons);
+        }
+      })
+      .catch(() => {});
+
+    try {
+      const savedCoupon = localStorage.getItem("floramade-applied-coupon");
+      if (savedCoupon) {
+        const parsed = JSON.parse(savedCoupon);
+        if (parsed?.code) {
+          setAppliedCoupon(parsed);
+          setCouponCodeInput(parsed.code);
+        }
+      }
+    } catch {
+      const rawCode = localStorage.getItem("floramade-applied-coupon");
+      if (rawCode) {
+        setCouponCodeInput(rawCode);
+      }
+    }
+  }, []);
+
+  // Calculate discount
+  const couponDiscount = useMemo(() => {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon.minOrderAmount && subtotal < appliedCoupon.minOrderAmount) {
+      return 0;
+    }
+    if (appliedCoupon.discountType === "percentage") {
+      return Math.round((subtotal * (Number(appliedCoupon.discountValue) || 0)) / 100);
+    }
+    return Math.min(subtotal, Number(appliedCoupon.discountValue) || 0);
+  }, [appliedCoupon, subtotal]);
+
   const shippingCost = useMemo(() => (subtotal >= 600 ? 0 : 50), [subtotal]);
   const finalTotal = useMemo(
-    () => subtotal + shippingCost,
-    [subtotal, shippingCost],
+    () => Math.max(0, subtotal - couponDiscount + shippingCost),
+    [subtotal, couponDiscount, shippingCost],
   );
+
+  const applyCouponCode = async (codeToApply) => {
+    const code = (codeToApply || couponCodeInput).trim().toUpperCase();
+    if (!code) {
+      toast.error("Please enter a coupon code");
+      return;
+    }
+    setCouponError("");
+
+    let match = availableCoupons.find(c => c.code?.toUpperCase() === code && c.isActive !== false);
+    
+    // If not found in memory, try fetching settings fresh
+    if (!match) {
+      try {
+        const res = await fetch("/api/settings");
+        const data = await res.json();
+        if (Array.isArray(data?.coupons)) {
+          match = data.coupons.find(c => c.code?.toUpperCase() === code && c.isActive !== false);
+          setAvailableCoupons(data.coupons);
+        }
+      } catch (e) {}
+    }
+
+    // Default fallbacks if backend settings hasn't initialized
+    if (!match) {
+      if (code === "FLAT05") {
+        match = { code: "FLAT05", discountType: "percentage", discountValue: 5, minOrderAmount: 0 };
+      } else if (code === "FLAT10") {
+        match = { code: "FLAT10", discountType: "percentage", discountValue: 10, minOrderAmount: 3000 };
+      }
+    }
+
+    if (!match) {
+      const err = "Invalid or expired coupon code";
+      setCouponError(err);
+      toast.error(err);
+      return;
+    }
+
+    if (match.minOrderAmount && subtotal < match.minOrderAmount) {
+      const msg = `Minimum order amount for ${match.code} is ₹${match.minOrderAmount}`;
+      setCouponError(msg);
+      toast.error(msg);
+      return;
+    }
+
+    setAppliedCoupon(match);
+    localStorage.setItem("floramade-applied-coupon", JSON.stringify(match));
+    toast.success(`Coupon ${match.code} applied successfully!`);
+  };
+
+  const removeAppliedCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCodeInput("");
+    setCouponError("");
+    localStorage.removeItem("floramade-applied-coupon");
+    toast.success("Coupon removed");
+  };
 
   async function placeCodOrder() {
     // Save address to profile if checkbox is checked
@@ -182,6 +288,7 @@ export default function CheckoutPage() {
     toast.success("COD order placed successfully");
     localStorage.removeItem("fiveetatv-buy-now-items");
     localStorage.removeItem("fiveetatv-buy-now-address");
+    localStorage.removeItem("floramade-applied-coupon");
     if (!buyNowItems.length) clearCart();
     router.push("/account");
   }
@@ -295,6 +402,7 @@ export default function CheckoutPage() {
             toast.success("Order placed successfully");
             localStorage.removeItem("fiveetatv-buy-now-items");
             localStorage.removeItem("fiveetatv-buy-now-address");
+            localStorage.removeItem("floramade-applied-coupon");
             if (!buyNowItems.length) clearCart();
             router.push("/account");
           } else {
@@ -615,14 +723,87 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <div className="mt-6 pt-5 border-t border-[#FFF7EB]/15 space-y-3 text-sm">
+              {/* Coupon Redemption Section */}
+              <div className="mt-5 pt-4 border-t border-[#FFF7EB]/15">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-[#FFF7EB]/90 flex items-center gap-1.5 tracking-tight">
+                    <Tag size={13} className="text-[#DFC77F]" /> Have a coupon code?
+                  </span>
+                  {appliedCoupon && (
+                    <button
+                      type="button"
+                      onClick={removeAppliedCoupon}
+                      className="text-[11px] font-semibold text-[#DFC77F] hover:underline cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#FFF7EB]/10 border border-[#DFC77F]/40 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-[#DFC77F]/20 text-[#DFC77F] flex items-center justify-center font-bold text-[10px]">
+                        ✓
+                      </span>
+                      <div>
+                        <span className="font-bold text-[#DFC77F] tracking-wide uppercase">{appliedCoupon.code}</span>
+                        <p className="text-[10px] text-[#FFF7EB]/60">
+                          {appliedCoupon.discountType === "percentage"
+                            ? `${appliedCoupon.discountValue}% OFF applied`
+                            : `₹${appliedCoupon.discountValue} FLAT OFF applied`}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="font-bold text-[#DFC77F]">-₹{couponDiscount.toLocaleString()}</span>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={couponCodeInput}
+                        onChange={(e) => setCouponCodeInput(e.target.value.toUpperCase())}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            applyCouponCode();
+                          }
+                        }}
+                        placeholder="Enter coupon code"
+                        className="flex-1 bg-[#FFF7EB]/10 border border-[#FFF7EB]/20 rounded-xl px-3 py-2 text-xs text-[#FFF7EB] placeholder-[#FFF7EB]/40 focus:outline-none focus:border-[#DFC77F] uppercase tracking-wider font-semibold"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => applyCouponCode()}
+                        className="px-4 py-2 bg-[#DFC77F] hover:bg-[#DFC77F]/90 text-[#39160D] text-xs font-bold rounded-xl transition-colors tracking-tight cursor-pointer"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && (
+                      <p className="text-[11px] text-red-300 tracking-tight">{couponError}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-5 pt-4 border-t border-[#FFF7EB]/15 space-y-2.5 text-sm">
                 <div className="flex justify-between items-center">
                   <p className="text-[#FFF7EB]/50 tracking-tight">Subtotal</p>
                   <p className="text-[#FFF7EB]/90 font-semibold tracking-tight">₹{subtotal.toLocaleString()}</p>
                 </div>
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between items-center text-[#DFC77F]">
+                    <p className="tracking-tight text-xs flex items-center gap-1">
+                      Coupon Discount ({appliedCoupon?.code})
+                    </p>
+                    <p className="font-bold tracking-tight text-xs">-₹{couponDiscount.toLocaleString()}</p>
+                  </div>
+                )}
                 <div className="flex justify-between items-center">
                   <p className="text-[#FFF7EB]/50 tracking-tight">Shipping</p>
-                  <p className={shippingCost === 0 ? "font-bold text-[#872B10] text-xs uppercase tracking-[0.04em]" : "text-[#FFF7EB]/90 font-semibold tracking-tight"}>
+                  <p className={shippingCost === 0 ? "font-bold text-[#DFC77F] text-xs uppercase tracking-[0.04em]" : "text-[#FFF7EB]/90 font-semibold tracking-tight"}>
                     {shippingCost === 0 ? "FREE" : `₹${shippingCost}`}
                   </p>
                 </div>
