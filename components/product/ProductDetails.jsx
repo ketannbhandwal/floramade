@@ -157,6 +157,13 @@ export default function ProductDetails({ product, relatedProducts }) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
 
+  // Always ensure the page starts at the top when viewing product details
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [product?.slug]);
+
   // Pack system
   const packs = useMemo(() => {
     if (product.packs && product.packs.length > 0) {
