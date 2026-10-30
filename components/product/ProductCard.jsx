@@ -42,7 +42,6 @@ function ProductCard({ product, index = 0 }) {
   const savings = hasDiscount ? regularPrice - currentPrice : 0;
   const rating = Number(product.rating || 4.8).toFixed(1);
   const reviewsCount = product.reviewsCount || product.reviews?.length || 48;
-  const emiAmount = Math.max(100, Math.round(currentPrice / 3));
 
   // Clean title by stripping any "(Copy)" artifact from duplicated products
   const cleanName = (product.name || "")
@@ -52,8 +51,8 @@ function ProductCard({ product, index = 0 }) {
   return (
     <div className="group relative flex flex-col h-full bg-white rounded-2xl border border-[#E8D9C5] hover:border-[#872B10]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(57,22,13,0.04)] hover:shadow-[0_12px_28px_rgba(57,22,13,0.10)] hover:-translate-y-1">
       
-      {/* 1. TOP STAGE: Warm Luxury Ivory Background (Seamlessly blends transparent cutouts & white graphic images) */}
-      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-gradient-to-b from-[#FAF6EE] to-[#F5ECE0]/50 overflow-hidden border-b border-[#E8D9C5]/50">
+      {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container */}
+      <div className="relative aspect-square w-full flex items-center justify-center bg-[#FAF6EE] overflow-hidden border-b border-[#E8D9C5]/50">
         
         {/* Top-Left: Sleek Terracotta Discount Pill */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 pointer-events-none">
@@ -81,10 +80,10 @@ function ProductCard({ product, index = 0 }) {
           />
         </button>
 
-        {/* Product Bottle */}
+        {/* Product Image: Edge to Edge (No Outer Padding) */}
         <Link 
           href={`/product/${product.slug}`} 
-          className="relative block w-full h-full p-2 sm:p-3 flex items-center justify-center cursor-pointer"
+          className="relative block w-full h-full cursor-pointer"
         >
           <Image
             src={productImage}
@@ -92,7 +91,7 @@ function ProductCard({ product, index = 0 }) {
             fill
             sizes="(max-width: 640px) 180px, (max-width: 1024px) 300px, 25vw"
             quality={90}
-            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105 drop-shadow-[0_8px_18px_rgba(57,22,13,0.12)]"
+            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
       </div>
@@ -132,14 +131,6 @@ function ProductCard({ product, index = 0 }) {
                 ₹{regularPrice.toLocaleString("en-IN")}
               </span>
             )}
-          </div>
-
-          {/* EMI Pill (Centered, Tight Tracking) */}
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-[#E8D9C5] bg-[#FFF7EB] text-[10px] sm:text-[11px] font-medium text-[#39160D] tracking-tight">
-            <span>or ₹{emiAmount.toLocaleString("en-IN")}/mo</span>
-            <span className="bg-[#39160D] text-[#FFF7EB] text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-tight">
-              Buy on EMI
-            </span>
           </div>
 
         </div>

@@ -86,13 +86,13 @@ export function ShopByConcernSkeleton() {
 export function ProductCardSkeleton() {
   return (
     <div className="flex flex-col h-full bg-white rounded-2xl border border-[#E8D9C5]/90 overflow-hidden shadow-xs">
-      {/* 1. TOP STAGE: Warm Luxury Ivory Container Shimmer */}
-      <div className="relative aspect-square w-full p-4 sm:p-5 flex items-center justify-center bg-[#FAF6EE]">
+      {/* 1. TOP STAGE: Warm Luxury Ivory Container Shimmer (Zero Padding) */}
+      <div className="relative aspect-square w-full flex items-center justify-center bg-[#FAF6EE]">
         {/* Top-Left Pill Shimmer */}
         <div className="absolute top-3 left-3 z-10 w-24 h-4 rounded-full shimmer-luxury-subtle" />
 
         {/* Bottle Image Shimmer */}
-        <div className="w-1/2 h-3/4 rounded-xl shimmer-luxury-subtle" />
+        <div className="w-full h-full shimmer-luxury-subtle" />
       </div>
 
       {/* 2. BOTTOM STAGE: Centered Text & Info Shimmer */}
@@ -116,9 +116,6 @@ export function ProductCardSkeleton() {
             <div className="w-16 h-4.5 rounded shimmer-luxury" />
             <div className="w-12 h-3.5 rounded shimmer-luxury opacity-60" />
           </div>
-
-          {/* Centered EMI Pill */}
-          <div className="w-32 h-5 rounded-full shimmer-luxury opacity-70" />
         </div>
 
         {/* Add to Bag Button Shimmer */}
