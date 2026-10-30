@@ -139,7 +139,7 @@ export default function Navbar() {
   };
 
   const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -168,14 +168,15 @@ export default function Navbar() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
-          setScrolled(currentScrollY > 15);
+          const prevScrollY = lastScrollYRef.current;
 
-          if (currentScrollY > lastScrollY && currentScrollY > 140) {
-            setVisible(false);
-          } else {
-            setVisible(true);
-          }
-          setLastScrollY(currentScrollY);
+          const isScrolled = currentScrollY > 15;
+          setScrolled(prev => (prev !== isScrolled ? isScrolled : prev));
+
+          const isVisible = !(currentScrollY > prevScrollY && currentScrollY > 140);
+          setVisible(prev => (prev !== isVisible ? isVisible : prev));
+
+          lastScrollYRef.current = currentScrollY;
           ticking = false;
         });
         ticking = true;
@@ -184,7 +185,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     if (openMenu) {

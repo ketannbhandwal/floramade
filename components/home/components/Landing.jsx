@@ -75,18 +75,44 @@ export default function Landing({ banners }) {
                   className="block relative h-full w-full cursor-pointer focus:outline-none"
                   tabIndex={activeSlide === index ? 0 : -1}
                 >
-                  <picture className="absolute inset-0 block h-full w-full">
-                    {slide.mobile && <source srcSet={slide.mobile} media="(max-width: 767px)" />}
-                    <Image 
-                      src={slide.desktop || slide.mobile} 
-                      alt={slide.alt || "Floramade banner"} 
-                      fill 
-                      unoptimized
-                      priority={index === 0} 
-                      sizes="100vw" 
-                      className="object-cover object-center w-full h-full" 
-                    />
-                  </picture>
+                  <div className="absolute inset-0 block h-full w-full">
+                    {slide.mobile ? (
+                      <>
+                        <div className="relative md:hidden w-full h-full">
+                          <Image 
+                            src={slide.mobile} 
+                            alt={slide.alt || "Floramade banner"} 
+                            fill 
+                            priority={index === 0} 
+                            quality={80}
+                            sizes="100vw" 
+                            className="object-cover object-center w-full h-full" 
+                          />
+                        </div>
+                        <div className="relative hidden md:block w-full h-full">
+                          <Image 
+                            src={slide.desktop || slide.mobile} 
+                            alt={slide.alt || "Floramade banner"} 
+                            fill 
+                            priority={index === 0} 
+                            quality={85}
+                            sizes="100vw" 
+                            className="object-cover object-center w-full h-full" 
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <Image 
+                        src={slide.desktop} 
+                        alt={slide.alt || "Floramade banner"} 
+                        fill 
+                        priority={index === 0} 
+                        quality={85}
+                        sizes="100vw" 
+                        className="object-cover object-center w-full h-full" 
+                      />
+                    )}
+                  </div>
                 </Link>
               </div>
             ))}

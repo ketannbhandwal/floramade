@@ -89,8 +89,8 @@ function ProductCard({ product, index = 0 }) {
             src={productImage}
             alt={cleanName}
             fill
-            sizes="(max-width: 640px) 180px, (max-width: 1024px) 300px, 25vw"
-            quality={90}
+            sizes="(max-width: 640px) 240px, (max-width: 1024px) 300px, 25vw"
+            quality={80}
             className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>

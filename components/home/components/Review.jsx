@@ -106,9 +106,13 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: items.length > 2, 
-      align: "start", 
+      align: "center", 
+      containScroll: false,
       skipSnaps: false,
       slidesToScroll: 1,
+      breakpoints: {
+        "(min-width: 1024px)": { align: "start" },
+      },
     },
     [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
@@ -165,12 +169,12 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
           </button>
 
           {/* Embla Smooth Slider */}
-          <div className="overflow-hidden cursor-grab active:cursor-grabbing -mx-4 px-4 sm:mx-0 sm:px-0" ref={emblaRef}>
-            <div className="flex -ml-4 sm:-ml-5">
+          <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+            <div className="flex -mx-2.5 sm:-mx-3">
               {items.map((rev, idx) => (
                 <div
                   key={rev.id || idx}
-                  className="min-w-0 flex-[0_0_88%] xs:flex-[0_0_80%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 sm:pl-5"
+                  className="min-w-0 flex-[0_0_84%] xs:flex-[0_0_80%] sm:flex-[0_0_55%] lg:flex-[0_0_33.333%] px-2.5 sm:px-3"
                 >
                   {/* Testimonial Card - Centered Avatar at Top, Centered Text, Centered Signature */}
                   <div className="h-full flex flex-col justify-between items-center text-center rounded-3xl border border-[#E8D9C5] bg-white/95 p-7 sm:p-8 shadow-[0_4px_20px_rgba(57,22,13,0.04)] hover:shadow-[0_14px_36px_rgba(57,22,13,0.10)] hover:-translate-y-1 transition-all duration-300">
@@ -183,7 +187,8 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                             src={rev.img}
                             alt={rev.name}
                             fill
-                            unoptimized
+                            sizes="80px"
+                            quality={80}
                             className="object-cover object-top"
                           />
                         ) : (

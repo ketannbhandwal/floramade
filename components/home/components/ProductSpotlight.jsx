@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -34,9 +34,9 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Touch swipe support (Hand slider)
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
+  // Touch swipe support (Hand slider) with zero re-renders during drag
+  const touchStartXRef = useRef(null);
+  const touchEndXRef = useRef(null);
 
   if (!product) return null;
 
@@ -76,19 +76,19 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
     setActiveImageIndex(prev => (prev + 1) % images.length);
   };
 
-  // Touch Swipe Handlers for mobile & tablet
+  // Touch Swipe Handlers for mobile & tablet (Zero Re-renders during movement)
   const handleTouchStart = (e) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
+    touchEndXRef.current = null;
+    touchStartXRef.current = e.targetTouches[0].clientX;
   };
 
   const handleTouchMove = (e) => {
-    setTouchEndX(e.targetTouches[0].clientX);
+    touchEndXRef.current = e.targetTouches[0].clientX;
   };
 
   const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
+    if (touchStartXRef.current === null || touchEndXRef.current === null) return;
+    const distance = touchStartXRef.current - touchEndXRef.current;
     if (distance > 45) {
       // Swiped Left -> Next image
       handleNextImage();
@@ -96,6 +96,8 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
       // Swiped Right -> Previous image
       handlePrevImage();
     }
+    touchStartXRef.current = null;
+    touchEndXRef.current = null;
   };
 
   const handleAddToCart = () => {

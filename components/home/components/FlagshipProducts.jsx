@@ -16,9 +16,13 @@ export default function FlagshipProducts({
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: items.length > 3, 
-      align: "start", 
+      align: "center", 
+      containScroll: false,
       skipSnaps: false,
       slidesToScroll: 1,
+      breakpoints: {
+        "(min-width: 1024px)": { align: "start" },
+      },
     },
     [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
@@ -92,12 +96,12 @@ export default function FlagshipProducts({
           </button>
 
           {/* Embla Viewport */}
-          <div ref={emblaRef} className="overflow-hidden py-2 px-1">
-            <div className="flex -ml-3.5 sm:-ml-5 md:-ml-6">
+          <div ref={emblaRef} className="overflow-hidden py-2">
+            <div className="flex -mx-2 sm:-mx-2.5 md:-mx-3">
               {items.map((product, index) => (
                 <div
                   key={product._id || product.id || index}
-                  className="min-w-0 flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] pl-3.5 sm:pl-5 md:pl-6"
+                  className="min-w-0 flex-[0_0_80%] xs:flex-[0_0_75%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%] px-2 sm:px-2.5 md:px-3"
                 >
                   <div className="h-full">
                     <ProductCard product={product} index={index} />

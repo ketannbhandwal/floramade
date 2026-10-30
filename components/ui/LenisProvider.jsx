@@ -7,21 +7,15 @@ export default function LenisProvider({ children }) {
     <ReactLenis 
       root 
       options={{ 
-        lerp: 0.06,
-        duration: 1.2,
+        lerp: 0.1,
+        duration: 0.8,
         smoothWheel: true,
-        wheelMultiplier: 0.8,
-        touchMultiplier: 1.5,
-        smoothTouch: true,
-        touchLerp: 0.08,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 0,
+        smoothTouch: false,
         infinite: false,
         orientation: "vertical",
         gestureOrientation: "vertical",
-        smoothWheel: true,
-      }}
-      rootOptions={{
-        frame: 1,
-        sync: true,
       }}
     >
       {children}

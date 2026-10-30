@@ -4,6 +4,7 @@ const nextConfig = {
     optimizePackageImports: ['framer-motion', 'lucide-react', '@mux/mux-node'],
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
