@@ -57,13 +57,30 @@ export function CartProvider({ children }) {
   }
 
   function removeFromCart(cartItemKey) {
-    setCartItems((prev) => prev.filter((item) => (item.cartItemKey || item.productId) !== cartItemKey));
+    setCartItems((prev) =>
+      prev.filter(
+        (item) =>
+          item.cartItemKey !== cartItemKey &&
+          item.productId !== cartItemKey &&
+          (item.cartItemKey || item.productId) !== cartItemKey
+      )
+    );
   }
 
   function updateQuantity(cartItemKey, quantity) {
-    if (quantity < 1) return;
+    const nextQty = Number(quantity);
+    if (nextQty < 1) {
+      removeFromCart(cartItemKey);
+      return;
+    }
     setCartItems((prev) =>
-      prev.map((item) => (item.cartItemKey || item.productId) === cartItemKey ? { ...item, quantity } : item)
+      prev.map((item) => {
+        const matches =
+          item.cartItemKey === cartItemKey ||
+          item.productId === cartItemKey ||
+          (item.cartItemKey || item.productId) === cartItemKey;
+        return matches ? { ...item, quantity: nextQty } : item;
+      })
     );
   }
 

@@ -68,7 +68,7 @@ export default function CartPage() {
                 <div className="divide-y divide-[#E8D9C5]/60">
                   {cartItems.map((item, i) => (
                     <motion.div
-                      key={item.productId}
+                      key={item.cartItemKey || `${item.productId}-${item.packId || i}`}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: i * 0.08 }}
