@@ -135,12 +135,12 @@ function ProductCard({ product, index = 0 }) {
 
         </div>
 
-        {/* Slim, Elegant Add to Bag Pill Button */}
+        {/* Modern Elegant Add to Bag Button with Crisp Subtle Radius */}
         <div className="pt-3 w-full">
           <button
             type="button"
             onClick={handleAddToCart}
-            className="w-full py-2 sm:py-2.5 px-3 bg-[#D4AF55] hover:bg-[#C49B3D] text-white rounded-full flex items-center justify-center gap-1.5 font-bold text-xs sm:text-[13px] tracking-tight uppercase active:scale-95 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md"
+            className="w-full py-2 sm:py-2.5 px-3 bg-[#D4AF55] hover:bg-[#C49B3D] text-white rounded-lg flex items-center justify-center gap-1.5 font-bold text-xs sm:text-[13px] tracking-tight uppercase active:scale-95 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md"
           >
             <ShoppingBag size={13} strokeWidth={2.2} />
             <span>Add to Bag</span>

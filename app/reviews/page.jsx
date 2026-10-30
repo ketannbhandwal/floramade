@@ -175,7 +175,7 @@ export default function ReviewsPage() {
                 <p className="text-white/70 max-w-xl mx-auto font-light">
                   We love hearing from our community. Your feedback helps us grow and inspires others on their wellness journey.
                 </p>
-                <button className="bg-[#D4AF55] text-white hover:bg-[#C49B3D] px-10 py-4 rounded-full font-bold hover:bg-white/90 transition-all active:scale-95">
+                <button className="bg-[#D4AF55] text-white hover:bg-[#C49B3D] px-10 py-4 rounded-lg font-bold hover:bg-white/90 transition-all active:scale-95">
                   Write a Review
                 </button>
              </div>

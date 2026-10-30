@@ -770,7 +770,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="h-12 sm:h-13 rounded-2xl bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#0A2A1A] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm hover:shadow-md cursor-pointer"
+                className="h-12 sm:h-13 rounded-lg bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#0A2A1A] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm hover:shadow-md cursor-pointer"
               >
                 <ShoppingBag size={17} />
                 <span>Add to Bag</span>
@@ -778,7 +778,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={() => setBuyNowOpen(true)}
-                className="h-12 sm:h-13 rounded-2xl bg-[#D4AF55] text-white flex items-center justify-center gap-2 hover:bg-[#C49B3D] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-md shadow-[#D4AF55]/25 cursor-pointer"
+                className="h-12 sm:h-13 rounded-lg bg-[#D4AF55] text-white flex items-center justify-center gap-2 hover:bg-[#C49B3D] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-md shadow-[#D4AF55]/25 cursor-pointer"
               >
                 <Zap size={17} fill="currentColor" />
                 <span>Buy It Now</span>
@@ -1113,7 +1113,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div>
               <button 
                 onClick={() => setReviewOpen(true)}
-                className="px-6 py-3 bg-[#101D17] text-white rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
+                className="px-6 py-3 bg-[#101D17] text-white rounded-lg font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
               >
                 Write a review
               </button>
@@ -1306,7 +1306,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             type="button"
             onClick={handleSubmitReview}
             disabled={uploading || !reviewData.name.trim() || !reviewData.comment.trim()}
-            className="w-full h-11 rounded-full bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-11 rounded-lg bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
           >
             {uploading ? (
               <span>Submitting Review...</span>
@@ -1352,7 +1352,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           <button 
             type="button"
             onClick={buyNow}
-            className="w-full h-11 rounded-full bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
+            className="w-full h-11 rounded-lg bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
           >
             Continue to Payment
           </button>

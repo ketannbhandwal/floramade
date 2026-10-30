@@ -848,7 +848,7 @@ export default function CheckoutPage() {
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-[#101D17] text-white py-3.5 rounded-full font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#101D17]/90 transition-all duration-300 mt-5"
+                className="w-full bg-[#101D17] text-white py-3.5 rounded-lg font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#101D17]/90 transition-all duration-300 mt-5"
               >
                 {paymentMethod === "cod"
                   ? "Place COD Order"

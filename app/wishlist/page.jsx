@@ -97,7 +97,7 @@ export default function WishlistPage() {
 
                 <Link 
                   href="/cart" 
-                  className="w-full h-11 rounded-full bg-accent text-background flex items-center justify-center gap-3 hover:bg-accent/90 transition-colors duration-300 font-light uppercase tracking-[0.1em] text-xs"
+                  className="w-full h-11 rounded-lg bg-accent text-background flex items-center justify-center gap-3 hover:bg-accent/90 transition-colors duration-300 font-light uppercase tracking-[0.1em] text-xs"
                 >
                   View Cart <ArrowRight size={14} strokeWidth={1.5} />
                 </Link>
