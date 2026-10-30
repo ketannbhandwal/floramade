@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Landing from "./components/Landing";
 import BetterThanSection from "./components/BetterThanSection";
+import BrandStory from "./components/BrandStory";
 import BenefitsSection from "./components/BenefitsSection";
 import WhyChooseFloramade from "./components/WhyChooseFloramade";
 
@@ -32,6 +33,7 @@ export default function HomeSections({
         heading={productHeading} 
         subheading={productSubheading} 
       />
+      <BrandStory />
       <BenefitsSection 
         heading={benefitsHeading}
         benefits={benefits}
