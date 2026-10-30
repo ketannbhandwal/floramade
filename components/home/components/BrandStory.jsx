@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 
 export default function BrandStory() {
   return (
-    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-24 bg-gradient-to-b from-background via-[#FAF4E8]/60 to-background border-t border-[#DCE8E8]/50">
+    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-24 bg-gradient-to-b from-background via-[#F8F4E9] to-background border-t border-[#E0D9C8]/50">
       
       {/* Delicate background decorative elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none overflow-hidden opacity-40">
-        <div className="absolute -top-24 left-1/4 w-96 h-96 bg-[#FF8900]/15 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 right-1/4 w-96 h-96 bg-[#126768]/10 rounded-full blur-3xl" />
+        <div className="absolute -top-24 left-1/4 w-96 h-96 bg-[#D4AF55]/15 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 right-1/4 w-96 h-96 bg-[#123D2B]/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
@@ -22,9 +22,9 @@ export default function BrandStory() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#126768]/5 border border-[#126768]/10 text-[#126768] text-[11px] sm:text-xs font-semibold tracking-tight uppercase mb-4 sm:mb-5"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#123D2B]/5 border border-[#123D2B]/10 text-[#123D2B] text-[11px] sm:text-xs font-semibold tracking-tight uppercase mb-4 sm:mb-5"
         >
-          <Sparkles size={12} className="text-[#126768]" />
+          <Sparkles size={12} className="text-[#123D2B]" />
           <span>The Essence of Pure Ayurveda</span>
         </motion.div>
 
@@ -34,7 +34,7 @@ export default function BrandStory() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#123838] uppercase leading-tight max-w-3xl mx-auto"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#171717] uppercase leading-tight max-w-3xl mx-auto"
         >
           Floramade: Nurturing Wellness, Naturally
         </motion.h2>
@@ -47,9 +47,9 @@ export default function BrandStory() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex items-center justify-center gap-3 my-5 sm:my-6"
         >
-          <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-r from-transparent to-[#DFC77F]" />
-          <span className="w-1.5 h-1.5 rounded-full bg-[#126768]" />
-          <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-l from-transparent to-[#DFC77F]" />
+          <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-r from-transparent to-[#D4AF55]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#123D2B]" />
+          <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-l from-transparent to-[#D4AF55]" />
         </motion.div>
 
         {/* Brand Narrative Body */}
@@ -58,18 +58,18 @@ export default function BrandStory() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-[16.5px] leading-relaxed text-[#123838]/80 font-normal tracking-tight max-w-3xl mx-auto"
+          className="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-[16.5px] leading-relaxed text-[#171717]/80 font-normal tracking-tight max-w-3xl mx-auto"
         >
           <p>
-            Welcome to <strong className="font-semibold text-[#123838]">Floramade</strong>, your trusted partner on the journey to holistic well-being. Born out of a deep reverence for harnessing the ancient wisdom of Ayurveda and the restorative potency of authentic herbal supplements, Floramade stands tall as a beacon of purity, authenticity, and sustained health.
+            Welcome to <strong className="font-semibold text-[#171717]">Floramade</strong>, your trusted partner on the journey to holistic well-being. Born out of a deep reverence for harnessing the ancient wisdom of Ayurveda and the restorative potency of authentic herbal supplements, Floramade stands tall as a beacon of purity, authenticity, and sustained health.
           </p>
 
           <p>
-            At <strong className="font-semibold text-[#123838]">Floramade</strong>, we believe the foundation of a healthy, vibrant life lies in the absolute purity of what we consume. Every product in our expansive range is a testament to our unwavering commitment to genuine formulations. Our Ayurvedic and herbal remedies are 100% natural, lab-tested, and ethically sourced from the lap of nature, crafted with profound care.
+            At <strong className="font-semibold text-[#171717]">Floramade</strong>, we believe the foundation of a healthy, vibrant life lies in the absolute purity of what we consume. Every product in our expansive range is a testament to our unwavering commitment to genuine formulations. Our Ayurvedic and herbal remedies are 100% natural, lab-tested, and ethically sourced from the lap of nature, crafted with profound care.
           </p>
 
-          <p className="text-[#123838]/90 font-medium">
-            Choose <strong className="font-semibold text-[#126768]">Floramade</strong>—where nature meets nurture, and well-being becomes an effortless way of life. Embark on your personal journey to vitality with certified organic and Ayurvedic excellence.
+          <p className="text-[#171717]/90 font-medium">
+            Choose <strong className="font-semibold text-[#123D2B]">Floramade</strong>—where nature meets nurture, and well-being becomes an effortless way of life. Embark on your personal journey to vitality with certified organic and Ayurvedic excellence.
           </p>
         </motion.div>
 
@@ -81,20 +81,20 @@ export default function BrandStory() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 my-8 sm:my-10 max-w-2xl mx-auto"
         >
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#DCE8E8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#123838] tracking-tight">
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
             <Leaf size={14} className="text-[#2C4436]" />
             <span>100% Pure Herbs</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#DCE8E8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#123838] tracking-tight">
-            <ShieldCheck size={14} className="text-[#126768]" />
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+            <ShieldCheck size={14} className="text-[#123D2B]" />
             <span>Lab Tested</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#DCE8E8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#123838] tracking-tight">
-            <Sparkles size={14} className="text-[#FF8900]" />
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+            <Sparkles size={14} className="text-[#D4AF55]" />
             <span>Zero Chemicals</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#DCE8E8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#123838] tracking-tight">
-            <HeartHandshake size={14} className="text-[#123838]" />
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/70 border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+            <HeartHandshake size={14} className="text-[#171717]" />
             <span>Made in India</span>
           </div>
         </motion.div>
@@ -109,7 +109,7 @@ export default function BrandStory() {
         >
           <Link
             href="/collection"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-[#126768] hover:bg-[#126768] text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-tight shadow-md hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-[#123D2B] hover:bg-[#0A2A1A] text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-tight shadow-md hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer"
           >
             <span>Browse Products</span>
             <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />

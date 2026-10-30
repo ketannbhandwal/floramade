@@ -100,22 +100,22 @@ export default function ContactPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F4F8F8] text-[#123838] font-sans pb-20 selection:bg-[#126768] selection:text-white">
+      <div className="min-h-screen bg-[#F8F4E9] text-[#171717] font-sans pb-20 selection:bg-[#123D2B] selection:text-white">
         
         {/* --- 1. HERO HEADER --- */}
         <section className="px-4 sm:px-6 pt-6 pb-8 md:pt-10 md:pb-12 text-center max-w-4xl mx-auto space-y-4">
           <motion.div {...fadeUp} className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#126768]/10 text-[#126768] text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
               <Sparkles size={13} />
               <span>We&apos;re Here to Support You</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#123838] leading-[1.15]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#171717] leading-[1.15]">
               Connect with Our <br className="hidden sm:inline" />
-              <span className="font-serif italic text-[#126768] font-normal">Wellness Practitioners</span>
+              <span className="font-serif italic text-[#123D2B] font-normal">Wellness Practitioners</span>
             </h1>
 
-            <p className="text-xs sm:text-base text-[#123838]/75 max-w-2xl mx-auto leading-relaxed font-normal">
+            <p className="text-xs sm:text-base text-[#171717]/75 max-w-2xl mx-auto leading-relaxed font-normal">
               Have questions regarding our formulations, order dispatch, or personalized Ayurvedic guidance? Our team in Delhi is always ready to assist you.
             </p>
           </motion.div>
@@ -131,19 +131,19 @@ export default function ContactPage() {
               href="tel:+919220251059"
               {...fadeUp}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl bg-white border border-[#DCE8E8] shadow-2xs hover:border-[#126768]/40 transition-all duration-300 flex flex-col justify-between group"
+              className="p-6 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs hover:border-[#123D2B]/40 transition-all duration-300 flex flex-col justify-between group"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-[#126768]/10 text-[#126768] flex items-center justify-center transition-colors group-hover:bg-[#126768] group-hover:text-white">
+                <div className="w-12 h-12 rounded-xl bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center transition-colors group-hover:bg-[#123D2B] group-hover:text-white">
                   <Phone size={22} />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#126768]">Helpline Phone</span>
-                  <h3 className="text-lg font-bold text-[#123838] tracking-tight pt-0.5">+91 9220251059</h3>
-                  <p className="text-xs text-[#123838]/65 pt-1">Mon–Sat: 10:00 AM – 7:00 PM IST</p>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#123D2B]">Helpline Phone</span>
+                  <h3 className="text-lg font-bold text-[#171717] tracking-tight pt-0.5">+91 9220251059</h3>
+                  <p className="text-xs text-[#171717]/65 pt-1">Mon–Sat: 10:00 AM – 7:00 PM IST</p>
                 </div>
               </div>
-              <div className="pt-4 mt-4 border-t border-[#DCE8E8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#126768] group-hover:gap-2.5 transition-all">
+              <div className="pt-4 mt-4 border-t border-[#E0D9C8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#123D2B] group-hover:gap-2.5 transition-all">
                 <span>Call Now</span>
                 <ArrowRight size={14} />
               </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
               {...fadeUp}
               transition={{ delay: 0.1, duration: 0.5 }}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl bg-white border border-[#DCE8E8] shadow-2xs hover:border-[#25D366]/60 transition-all duration-300 flex flex-col justify-between group"
+              className="p-6 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs hover:border-[#25D366]/60 transition-all duration-300 flex flex-col justify-between group"
             >
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center transition-colors group-hover:bg-[#25D366] group-hover:text-white">
@@ -165,11 +165,11 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#25D366]">Instant Chat</span>
-                  <h3 className="text-lg font-bold text-[#123838] tracking-tight pt-0.5">WhatsApp Support</h3>
-                  <p className="text-xs text-[#123838]/65 pt-1">Quick responses within 15 mins</p>
+                  <h3 className="text-lg font-bold text-[#171717] tracking-tight pt-0.5">WhatsApp Support</h3>
+                  <p className="text-xs text-[#171717]/65 pt-1">Quick responses within 15 mins</p>
                 </div>
               </div>
-              <div className="pt-4 mt-4 border-t border-[#DCE8E8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#25D366] group-hover:gap-2.5 transition-all">
+              <div className="pt-4 mt-4 border-t border-[#E0D9C8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#25D366] group-hover:gap-2.5 transition-all">
                 <span>Start WhatsApp Chat</span>
                 <ArrowRight size={14} />
               </div>
@@ -181,19 +181,19 @@ export default function ContactPage() {
               {...fadeUp}
               transition={{ delay: 0.2, duration: 0.5 }}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl bg-white border border-[#DCE8E8] shadow-2xs hover:border-[#126768]/40 transition-all duration-300 flex flex-col justify-between group"
+              className="p-6 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs hover:border-[#123D2B]/40 transition-all duration-300 flex flex-col justify-between group"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-[#126768]/10 text-[#126768] flex items-center justify-center transition-colors group-hover:bg-[#126768] group-hover:text-white">
+                <div className="w-12 h-12 rounded-xl bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center transition-colors group-hover:bg-[#123D2B] group-hover:text-white">
                   <Mail size={22} />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#126768]">Email Inquiries</span>
-                  <h3 className="text-base font-bold text-[#123838] tracking-tight pt-0.5 truncate">floramade517@gmail.com</h3>
-                  <p className="text-xs text-[#123838]/65 pt-1">Response within 24 hours</p>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#123D2B]">Email Inquiries</span>
+                  <h3 className="text-base font-bold text-[#171717] tracking-tight pt-0.5 truncate">floramade517@gmail.com</h3>
+                  <p className="text-xs text-[#171717]/65 pt-1">Response within 24 hours</p>
                 </div>
               </div>
-              <div className="pt-4 mt-4 border-t border-[#DCE8E8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#126768] group-hover:gap-2.5 transition-all">
+              <div className="pt-4 mt-4 border-t border-[#E0D9C8]/50 flex items-center gap-1.5 text-xs font-semibold text-[#123D2B] group-hover:gap-2.5 transition-all">
                 <span>Send Email</span>
                 <ArrowRight size={14} />
               </div>
@@ -208,14 +208,14 @@ export default function ContactPage() {
             {/* Left: Interactive Inquiry Form */}
             <motion.div 
               {...fadeUp}
-              className="lg:col-span-7 bg-white rounded-3xl border border-[#DCE8E8] shadow-xs p-6 sm:p-10 space-y-6"
+              className="lg:col-span-7 bg-white rounded-3xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 space-y-6"
             >
               <div className="space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#126768]">Direct Message</span>
-                <h2 className="text-2xl sm:text-3xl font-light text-[#123838] tracking-tight">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#123D2B]">Direct Message</span>
+                <h2 className="text-2xl sm:text-3xl font-light text-[#171717] tracking-tight">
                   Send Us an Inquiry
                 </h2>
-                <p className="text-xs text-[#123838]/70 font-normal">
+                <p className="text-xs text-[#171717]/70 font-normal">
                   Fill in your details and our Ayurvedic advisors will get back to you with personalized assistance.
                 </p>
               </div>
@@ -226,13 +226,13 @@ export default function ContactPage() {
                     <CheckCircle2 size={24} />
                   </div>
                   <h3 className="text-base font-bold text-[#2E7D32]">Thank You!</h3>
-                  <p className="text-xs text-[#123838]/80 leading-relaxed max-w-md mx-auto">
+                  <p className="text-xs text-[#171717]/80 leading-relaxed max-w-md mx-auto">
                     Your inquiry has been successfully registered. One of our counselors will contact you via WhatsApp or phone.
                   </p>
                   <button
                     type="button"
                     onClick={() => setSubmitted(false)}
-                    className="text-xs font-semibold text-[#126768] underline pt-2"
+                    className="text-xs font-semibold text-[#123D2B] underline pt-2"
                   >
                     Send another inquiry
                   </button>
@@ -241,8 +241,8 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#123838]">
-                        Your Full Name <span className="text-[#126768]">*</span>
+                      <label className="text-xs font-semibold text-[#171717]">
+                        Your Full Name <span className="text-[#123D2B]">*</span>
                       </label>
                       <input
                         type="text"
@@ -251,13 +251,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         placeholder="e.g. Ramesh Kumar"
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#DCE8E8] bg-[#F4F8F8]/50 text-xs text-[#123838] placeholder:text-[#123838]/40 focus:outline-none focus:border-[#126768] focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#E0D9C8] bg-[#F8F4E9]/50 text-xs text-[#171717] placeholder:text-[#171717]/40 focus:outline-none focus:border-[#123D2B] focus:bg-white transition-all"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#123838]">
-                        Phone / WhatsApp <span className="text-[#126768]">*</span>
+                      <label className="text-xs font-semibold text-[#171717]">
+                        Phone / WhatsApp <span className="text-[#123D2B]">*</span>
                       </label>
                       <input
                         type="tel"
@@ -266,15 +266,15 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         placeholder="e.g. 9876543210"
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#DCE8E8] bg-[#F4F8F8]/50 text-xs text-[#123838] placeholder:text-[#123838]/40 focus:outline-none focus:border-[#126768] focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#E0D9C8] bg-[#F8F4E9]/50 text-xs text-[#171717] placeholder:text-[#171717]/40 focus:outline-none focus:border-[#123D2B] focus:bg-white transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#123838]">
-                        Email Address <span className="text-[#123838]/40 text-[11px] font-normal">(Optional)</span>
+                      <label className="text-xs font-semibold text-[#171717]">
+                        Email Address <span className="text-[#171717]/40 text-[11px] font-normal">(Optional)</span>
                       </label>
                       <input
                         type="email"
@@ -282,19 +282,19 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="e.g. ramesh@example.com"
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#DCE8E8] bg-[#F4F8F8]/50 text-xs text-[#123838] placeholder:text-[#123838]/40 focus:outline-none focus:border-[#126768] focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#E0D9C8] bg-[#F8F4E9]/50 text-xs text-[#171717] placeholder:text-[#171717]/40 focus:outline-none focus:border-[#123D2B] focus:bg-white transition-all"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#123838]">
+                      <label className="text-xs font-semibold text-[#171717]">
                         Topic / Category
                       </label>
                       <select
                         name="type"
                         value={formData.type}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#DCE8E8] bg-[#F4F8F8]/50 text-xs text-[#123838] focus:outline-none focus:border-[#126768] focus:bg-white transition-all"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#E0D9C8] bg-[#F8F4E9]/50 text-xs text-[#171717] focus:outline-none focus:border-[#123D2B] focus:bg-white transition-all"
                       >
                         <option value="general">Product Inquiry</option>
                         <option value="consultation">Ayurvedic Health Consultation</option>
@@ -305,7 +305,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#123838]">
+                    <label className="text-xs font-semibold text-[#171717]">
                       Your Message or Health Concern
                     </label>
                     <textarea
@@ -314,14 +314,14 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell us about your questions or requirements..."
-                      className="w-full px-4 py-3 rounded-xl border border-[#DCE8E8] bg-[#F4F8F8]/50 text-xs text-[#123838] placeholder:text-[#123838]/40 focus:outline-none focus:border-[#126768] focus:bg-white transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E0D9C8] bg-[#F8F4E9]/50 text-xs text-[#171717] placeholder:text-[#171717]/40 focus:outline-none focus:border-[#123D2B] focus:bg-white transition-all resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#126768] hover:bg-[#0A4142] text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#123D2B] hover:bg-[#071E12] text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
                   >
                     {loading ? (
                       <>
@@ -344,34 +344,34 @@ export default function ContactPage() {
             <motion.div {...fadeUp} className="lg:col-span-5 space-y-6">
               
               {/* Registered Office & Dispatch Center Card */}
-              <div className="rounded-3xl bg-white border border-[#DCE8E8] shadow-xs p-6 sm:p-8 space-y-5">
+              <div className="rounded-3xl bg-white border border-[#E0D9C8] shadow-xs p-6 sm:p-8 space-y-5">
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#126768]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#123D2B]">
                     Registered Office & Dispatch
                   </span>
-                  <h3 className="text-lg font-bold text-[#123838] tracking-tight flex items-center gap-2">
-                    <Building2 size={18} className="text-[#126768]" />
+                  <h3 className="text-lg font-bold text-[#171717] tracking-tight flex items-center gap-2">
+                    <Building2 size={18} className="text-[#123D2B]" />
                     <span>Floramade Healthcare Pvt. Ltd.</span>
                   </h3>
                 </div>
 
-                <div className="space-y-3 text-xs text-[#123838]/80">
+                <div className="space-y-3 text-xs text-[#171717]/80">
                   <div className="flex items-start gap-2.5">
-                    <MapPin size={16} className="text-[#126768] shrink-0 mt-0.5" />
+                    <MapPin size={16} className="text-[#123D2B] shrink-0 mt-0.5" />
                     <span>Rohini Sector 21, New Delhi - 110086, India</span>
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <Clock size={16} className="text-[#126768] shrink-0 mt-0.5" />
+                    <Clock size={16} className="text-[#123D2B] shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-[#123838]">Operating Hours:</p>
-                      <p className="text-[#123838]/70">Monday to Saturday: 10:00 AM – 7:00 PM IST</p>
-                      <p className="text-[#123838]/50 text-[11px]">(Closed on Sundays & National Holidays)</p>
+                      <p className="font-semibold text-[#171717]">Operating Hours:</p>
+                      <p className="text-[#171717]/70">Monday to Saturday: 10:00 AM – 7:00 PM IST</p>
+                      <p className="text-[#171717]/50 text-[11px]">(Closed on Sundays & National Holidays)</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <ShieldCheck size={16} className="text-[#126768] shrink-0 mt-0.5" />
+                    <ShieldCheck size={16} className="text-[#123D2B] shrink-0 mt-0.5" />
                     <span>Ayurvedic Formulations & Dispatch Center</span>
                   </div>
                 </div>
@@ -379,9 +379,9 @@ export default function ContactPage() {
 
 
               {/* Doctor Consultation Banner Card */}
-              <div className="rounded-3xl bg-[#126768] text-white p-6 sm:p-8 space-y-4 shadow-lg relative overflow-hidden">
+              <div className="rounded-3xl bg-[#123D2B] text-white p-6 sm:p-8 space-y-4 shadow-lg relative overflow-hidden">
                 <div className="space-y-2 relative z-10">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#FF8900] text-[10px] font-bold uppercase tracking-wider">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#D4AF55] text-[10px] font-bold uppercase tracking-wider">
                     <Sparkles size={11} />
                     <span>Free Health Guidance</span>
                   </div>
@@ -397,7 +397,7 @@ export default function ContactPage() {
                   <button
                     type="button"
                     onClick={() => setConsultationOpen(true)}
-                    className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#FF8900] hover:bg-[#E67A00] text-[#123838] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#D4AF55] hover:bg-[#B8923A] text-[#171717] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Book Consultation</span>
                     <ArrowRight size={14} />
@@ -407,19 +407,19 @@ export default function ContactPage() {
 
 
               {/* Trust Micro-Points */}
-              <div className="p-4 rounded-2xl bg-[#F4F8F8] border border-[#DCE8E8] space-y-2 text-xs">
-                <p className="font-bold text-[#123838] text-xs">Our Commitment to You:</p>
-                <div className="space-y-1.5 text-[11px] text-[#123838]/75">
+              <div className="p-4 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-2 text-xs">
+                <p className="font-bold text-[#171717] text-xs">Our Commitment to You:</p>
+                <div className="space-y-1.5 text-[11px] text-[#171717]/75">
                   <div className="flex items-center gap-2">
-                    <Check size={13} className="text-[#126768]" />
+                    <Check size={13} className="text-[#123D2B]" />
                     <span>100% confidential and secure medical privacy</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Check size={13} className="text-[#126768]" />
+                    <Check size={13} className="text-[#123D2B]" />
                     <span>Genuine, lab-tested classical Ayurvedic advice</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Check size={13} className="text-[#126768]" />
+                    <Check size={13} className="text-[#123D2B]" />
                     <span>Zero spam, zero unwanted promotional calls</span>
                   </div>
                 </div>

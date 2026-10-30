@@ -479,33 +479,33 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
   }
 
   return (
-    <div className="w-full bg-[#F4F8F8] text-[#123838] pt-4 sm:pt-6 pb-12 sm:pb-16 font-sans">
+    <div className="w-full bg-[#F8F4E9] text-[#171717] pt-4 sm:pt-6 pb-12 sm:pb-16 font-sans">
       <ProductStructuredData product={product} />
 
       {/* TOP CONTAINER & BREADCRUMBS BAR */}
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12 mb-4 sm:mb-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#123838]/70 py-2.5 border-b border-[#DCE8E8]">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#171717]/70 py-2.5 border-b border-[#E0D9C8]">
           <div className="flex items-center gap-1.5 overflow-hidden">
-            <Link href="/" className="hover:text-[#126768] transition-colors flex items-center gap-1">
+            <Link href="/" className="hover:text-[#123D2B] transition-colors flex items-center gap-1">
               <Home size={13} />
               <span>Home</span>
             </Link>
             <span>›</span>
-            <Link href="/collection" className="hover:text-[#126768] transition-colors">
+            <Link href="/collection" className="hover:text-[#123D2B] transition-colors">
               <span>Products</span>
             </Link>
             <span>›</span>
-            <span className="text-[#123838] font-bold truncate max-w-[200px] sm:max-w-md">{product.name}</span>
+            <span className="text-[#171717] font-bold truncate max-w-[200px] sm:max-w-md">{product.name}</span>
           </div>
 
           <div className="flex items-center gap-2.5">
-            <span className="text-[11px] font-semibold text-[#123838]/60 flex items-center gap-1">
+            <span className="text-[11px] font-semibold text-[#171717]/60 flex items-center gap-1">
               <Share2 size={12} /> Share:
             </span>
             <button 
               type="button" 
               onClick={() => shareProduct("facebook")} 
-              className="w-6 h-6 rounded-full bg-[#F4F8F8] border border-[#DCE8E8] hover:bg-[#126768] hover:text-white flex items-center justify-center transition-all text-[#123838] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#123D2B] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
               title="Share on Facebook"
             >
               <FaFacebookF size={10} />
@@ -513,7 +513,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("whatsapp")} 
-              className="w-6 h-6 rounded-full bg-[#F4F8F8] border border-[#DCE8E8] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all text-[#123838] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
               title="Share on WhatsApp"
             >
               <FaWhatsapp size={11} />
@@ -521,7 +521,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("copy")} 
-              className="w-6 h-6 rounded-full bg-[#F4F8F8] border border-[#DCE8E8] hover:bg-[#126768] hover:text-white flex items-center justify-center transition-all text-[#123838] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#123D2B] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
               title="Copy Link"
             >
               <Copy size={11} />
@@ -539,10 +539,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
             {/* Main Stage Image (Slightly Darker Warm Beige Background for Definition) */}
-            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#F4F8F8] border border-[#DCE8E8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#F8F4E9] border border-[#E0D9C8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Left Brand Tag */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                <span className="text-[#123838]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
+                <span className="text-[#171717]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
                   Floramade
                 </span>
               </div>
@@ -551,12 +551,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#F4F8F8]/90 hover:bg-[#F4F8F8] border border-[#DCE8E8] text-[#123838]/60 hover:text-[#126768] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#123D2B] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
                   size={16} 
-                  className={isInWishlist(product._id) ? "fill-[#872B10] text-[#126768]" : "text-[#123838]/60"} 
+                  className={isInWishlist(product._id) ? "fill-[#872B10] text-[#123D2B]" : "text-[#171717]/60"} 
                 />
               </button>
 
@@ -580,7 +580,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length)}
                     aria-label="Previous Image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F4F8F8]/95 hover:bg-[#126768] text-[#123838] hover:text-white border border-[#DCE8E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronLeft size={18} />
                   </button>
@@ -588,7 +588,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev + 1) % productImages.length)}
                     aria-label="Next Image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F4F8F8]/95 hover:bg-[#126768] text-[#123838] hover:text-white border border-[#DCE8E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronRight size={18} />
                   </button>
@@ -605,10 +605,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#F4F8F8] flex-shrink-0 transition-all p-1 ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#F8F4E9] flex-shrink-0 transition-all p-1 ${
                       activeIdx === idx
-                        ? "border-[#126768] shadow-sm scale-105"
-                        : "border-[#DCE8E8] opacity-75 hover:opacity-100 hover:border-[#126768]/50"
+                        ? "border-[#123D2B] shadow-sm scale-105"
+                        : "border-[#E0D9C8] opacity-75 hover:opacity-100 hover:border-[#123D2B]/50"
                     }`}
                   >
                     <Image
@@ -633,14 +633,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* Title & Category Tag */}
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-bold text-[#126768] uppercase tracking-tight bg-[#126768]/10 px-2.5 py-0.5 rounded-full border border-[#126768]/15">
+                <span className="text-[10px] font-bold text-[#123D2B] uppercase tracking-tight bg-[#123D2B]/10 px-2.5 py-0.5 rounded-full border border-[#123D2B]/15">
                   🌿 {product.category || "Ayurvedic Formulation"}
                 </span>
-                <span className="text-[10px] font-semibold text-[#123838]/60 uppercase tracking-tight">
+                <span className="text-[10px] font-semibold text-[#171717]/60 uppercase tracking-tight">
                   100% Organic & Lab-Tested
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-bold text-[#123838] tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-bold text-[#171717] tracking-tight leading-tight">
                 {product.name}
               </h1>
             </div>
@@ -652,11 +652,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   <Star
                     key={i}
                     size={14}
-                    className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#DCE8E8]"}
+                    className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"}
                   />
                 ))}
               </div>
-              <span className="text-xs font-bold text-[#123838] tracking-tight">
+              <span className="text-xs font-bold text-[#171717] tracking-tight">
                 {Number(product.rating || 4.8).toFixed(1)} ({totalReviews} ratings)
               </span>
             </div>
@@ -668,9 +668,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 return (
                   <div
                     key={idx}
-                    className="p-2.5 sm:p-3 rounded-2xl bg-[#F4F8F8] border border-[#DCE8E8] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#126768]/50 transition-colors"
+                    className="p-2.5 sm:p-3 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#123D2B]/50 transition-colors"
                   >
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white border border-[#DCE8E8] text-[#FF8900] flex items-center justify-center shrink-0 p-1.5 overflow-hidden shadow-xs">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white border border-[#E0D9C8] text-[#D4AF55] flex items-center justify-center shrink-0 p-1.5 overflow-hidden shadow-xs">
                       {badge.image ? (
                         <img 
                           src={badge.image} 
@@ -678,10 +678,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                           className="w-full h-full object-contain transition-transform duration-300 hover:scale-105" 
                         />
                       ) : (
-                        <IconComp size={24} className="text-[#FF8900]" />
+                        <IconComp size={24} className="text-[#D4AF55]" />
                       )}
                     </div>
-                    <span className="text-[10.5px] sm:text-[11px] font-semibold text-[#123838] leading-tight tracking-tight line-clamp-2">
+                    <span className="text-[10.5px] sm:text-[11px] font-semibold text-[#171717] leading-tight tracking-tight line-clamp-2">
                       {badge.text}
                     </span>
                   </div>
@@ -692,16 +692,16 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* PRICE & STOCK STATUS */}
             <div className="space-y-1 pt-1">
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[#123838]">
+                <span className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171717]">
                   ₹{currentPrice.toLocaleString("en-IN")}
                 </span>
                 {currentMRP > currentPrice && (
-                  <span className="text-base sm:text-lg text-[#123838]/40 line-through">
+                  <span className="text-base sm:text-lg text-[#171717]/40 line-through">
                     ₹{currentMRP.toLocaleString("en-IN")}
                   </span>
                 )}
                 {savings > 0 && (
-                  <span className="text-xs font-bold text-[#FF8900] bg-[#FF8900]/10 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
+                  <span className="text-xs font-bold text-[#D4AF55] bg-[#D4AF55]/10 px-2.5 py-0.5 rounded-full uppercase tracking-tight">
                     Save ₹{savings.toLocaleString("en-IN")}
                   </span>
                 )}
@@ -715,7 +715,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* PACK SELECTION (if multiple packs configured) */}
             {packs.length > 1 && (
               <div className="space-y-2 pt-1">
-                <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">Select Pack</label>
+                <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">Select Pack</label>
                 <div className="grid gap-2.5" style={{ gridTemplateColumns: `repeat(${Math.min(packs.length, 3)}, 1fr)` }}>
                   {packs.map((pack, idx) => {
                     const isSelected = selectedPack === pack;
@@ -726,12 +726,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         onClick={() => setSelectedPack(pack)}
                         className={`p-3 rounded-2xl border-2 text-left transition-all ${
                           isSelected
-                            ? "border-[#126768] bg-white ring-2 ring-[#39160D]/10 shadow-xs"
-                            : "border-[#DCE8E8] bg-[#F4F8F8] hover:border-[#126768]/40"
+                            ? "border-[#123D2B] bg-white ring-2 ring-[#39160D]/10 shadow-xs"
+                            : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#123D2B]/40"
                         }`}
                       >
-                        <span className="block text-xs font-bold text-[#123838] tracking-tight">{pack.label}</span>
-                        <span className="block text-sm font-bold text-[#126768] mt-0.5">₹{pack.price}</span>
+                        <span className="block text-xs font-bold text-[#171717] tracking-tight">{pack.label}</span>
+                        <span className="block text-sm font-bold text-[#123D2B] mt-0.5">₹{pack.price}</span>
                       </button>
                     );
                   })}
@@ -741,23 +741,23 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
 
             {/* QUANTITY SELECTOR */}
             <div className="flex items-center gap-4 pt-1">
-              <span className="text-xs font-bold text-[#123838] uppercase tracking-tight">Quantity</span>
-              <div className="flex items-center border border-[#DCE8E8] rounded-xl bg-[#F4F8F8]">
+              <span className="text-xs font-bold text-[#171717] uppercase tracking-tight">Quantity</span>
+              <div className="flex items-center border border-[#E0D9C8] rounded-xl bg-[#F8F4E9]">
                 <button
                   type="button"
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="w-9 h-9 flex items-center justify-center text-[#123838] hover:bg-[#F4F8F8] rounded-l-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#171717] hover:bg-[#F8F4E9] rounded-l-xl transition-colors active:scale-90"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={14} />
                 </button>
-                <span className="w-10 text-center text-sm font-bold text-[#123838]">
+                <span className="w-10 text-center text-sm font-bold text-[#171717]">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={() => setQuantity(q => q + 1)}
-                  className="w-9 h-9 flex items-center justify-center text-[#123838] hover:bg-[#F4F8F8] rounded-r-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#171717] hover:bg-[#F8F4E9] rounded-r-xl transition-colors active:scale-90"
                   aria-label="Increase quantity"
                 >
                   <Plus size={14} />
@@ -770,7 +770,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="h-12 sm:h-13 rounded-2xl bg-white border-2 border-[#126768] text-[#123838] flex items-center justify-center gap-2 hover:bg-[#126768]/5 transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-xs cursor-pointer"
+                className="h-12 sm:h-13 rounded-2xl bg-[#123D2B] text-white flex items-center justify-center gap-2 hover:bg-[#0A2A1A] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm hover:shadow-md cursor-pointer"
               >
                 <ShoppingBag size={17} />
                 <span>Add to Bag</span>
@@ -778,7 +778,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={() => setBuyNowOpen(true)}
-                className="h-12 sm:h-13 rounded-2xl bg-[#126768] text-white flex items-center justify-center gap-2 hover:bg-[#0D5253] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-md shadow-[#39160D]/20 cursor-pointer"
+                className="h-12 sm:h-13 rounded-2xl bg-[#D4AF55] text-white flex items-center justify-center gap-2 hover:bg-[#C49B3D] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-md shadow-[#D4AF55]/25 cursor-pointer"
               >
                 <Zap size={17} fill="currentColor" />
                 <span>Buy It Now</span>
@@ -789,8 +789,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {coupons.length > 0 && (
               <div className="space-y-2.5 pt-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs sm:text-sm font-bold text-[#123838] uppercase tracking-tight">Offers for You</h3>
-                  <span className="text-[10px] text-[#126768] font-semibold">Click to apply coupon</span>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#171717] uppercase tracking-tight">Offers for You</h3>
+                  <span className="text-[10px] text-[#123D2B] font-semibold">Click to apply coupon</span>
                 </div>
                 
                 <div className="space-y-2">
@@ -798,20 +798,20 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     <div 
                       key={coupon.id || idx}
                       onClick={() => applyAndCopyCoupon(coupon)}
-                      className="p-3 sm:p-3.5 rounded-2xl bg-[#F4F8F8] border border-[#DCE8E8] hover:border-[#126768]/50 flex items-center justify-between gap-3 shadow-xs cursor-pointer transition-all hover:scale-[1.01]"
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] hover:border-[#123D2B]/50 flex items-center justify-between gap-3 shadow-xs cursor-pointer transition-all hover:scale-[1.01]"
                     >
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           {coupon.badge && (
-                            <span className="text-[10px] font-bold text-white bg-[#126768] px-2 py-0.5 rounded-md uppercase tracking-tight">
+                            <span className="text-[10px] font-bold text-white bg-[#123D2B] px-2 py-0.5 rounded-md uppercase tracking-tight">
                               {coupon.badge}
                             </span>
                           )}
-                          <span className="text-xs sm:text-sm font-bold text-[#123838] tracking-tight">
+                          <span className="text-xs sm:text-sm font-bold text-[#171717] tracking-tight">
                             {coupon.title || coupon.code}
                           </span>
                         </div>
-                        <p className="text-[11px] sm:text-xs text-[#123838]/75 tracking-tight">
+                        <p className="text-[11px] sm:text-xs text-[#171717]/75 tracking-tight">
                           {coupon.description || `Use coupon ${coupon.code} on your order.`}
                         </p>
                       </div>
@@ -821,7 +821,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                           e.stopPropagation();
                           applyAndCopyCoupon(coupon);
                         }}
-                        className="px-3 py-1.5 rounded-xl border border-[#126768]/20 bg-white hover:bg-[#126768] hover:text-white text-[#123838] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl border border-[#123D2B]/20 bg-white hover:bg-[#123D2B] hover:text-white text-[#171717] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
                         title="Copy and Apply Coupon"
                       >
                         <span>{coupon.code}</span>
@@ -837,14 +837,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
-              <div className="border border-[#DCE8E8] rounded-2xl overflow-hidden bg-[#F4F8F8] shadow-xs">
+              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#123838] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
                 >
                   <span>Description</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.description ? "rotate-45 text-[#126768]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.description ? "rotate-45 text-[#123D2B]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.description && (
@@ -856,7 +856,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#123838]/85 leading-relaxed border-t border-[#DCE8E8]/50">
+                      <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#171717]/85 leading-relaxed border-t border-[#E0D9C8]/50">
                         <p>{cleanDescription}</p>
                       </div>
                     </motion.div>
@@ -865,14 +865,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
-              <div className="border border-[#DCE8E8] rounded-2xl overflow-hidden bg-[#F4F8F8] shadow-xs">
+              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#123838] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
                 >
                   <span>How to Use</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.howToUse ? "rotate-45 text-[#126768]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.howToUse ? "rotate-45 text-[#123D2B]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.howToUse && (
@@ -884,9 +884,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#123838]/85 leading-relaxed border-t border-[#DCE8E8]/50 space-y-2">
-                        <p className="font-semibold text-[#126768]">🌿 Recommended Daily Ritual:</p>
-                        <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#123838]/80">
+                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#171717]/85 leading-relaxed border-t border-[#E0D9C8]/50 space-y-2">
+                        <p className="font-semibold text-[#123D2B]">🌿 Recommended Daily Ritual:</p>
+                        <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#171717]/80">
                           <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
                           <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
                           <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
@@ -898,14 +898,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
-              <div className="border border-[#DCE8E8] rounded-2xl overflow-hidden bg-[#F4F8F8] shadow-xs">
+              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#123838] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
                 >
                   <span>Ingredients</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#126768]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#123D2B]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.ingredients && (
@@ -917,8 +917,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#123838]/85 leading-relaxed border-t border-[#DCE8E8]/50 space-y-2.5">
-                        <p className="font-semibold text-[#126768]">🌿 100% Pure Botanical Ingredients:</p>
+                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#171717]/85 leading-relaxed border-t border-[#E0D9C8]/50 space-y-2.5">
+                        <p className="font-semibold text-[#123D2B]">🌿 100% Pure Botanical Ingredients:</p>
                         <div className="flex flex-wrap gap-1.5">
                           {(product.ingredients && product.ingredients.length > 0 
                             ? product.ingredients 
@@ -928,14 +928,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                             return (
                               <span 
                                 key={idx}
-                                className="inline-block px-2.5 py-1 rounded-full bg-white border border-[#DCE8E8] text-xs font-semibold text-[#123838] capitalize tracking-tight"
+                                className="inline-block px-2.5 py-1 rounded-full bg-white border border-[#E0D9C8] text-xs font-semibold text-[#171717] capitalize tracking-tight"
                               >
                                 {name}
                               </span>
                             );
                           })}
                         </div>
-                        <p className="text-[11px] sm:text-xs text-[#123838]/65 leading-relaxed pt-1 border-t border-[#DCE8E8]/50">
+                        <p className="text-[11px] sm:text-xs text-[#171717]/65 leading-relaxed pt-1 border-t border-[#E0D9C8]/50">
                           Ethically sourced pure extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
                         </p>
                       </div>
@@ -951,10 +951,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       </section>
 
       {/* CERTIFIED NATURAL GOODNESS (4 Trust Badges - Identical to Why Choose Floramade, Crisp & Warm) */}
-      <section className="py-12 sm:py-16 bg-[#F4F8F8] border-t border-[#DCE8E8]/80">
+      <section className="py-12 sm:py-16 bg-[#F8F4E9] border-t border-[#E0D9C8]/80">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#123838] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#171717] tracking-tight">
               Certified Natural Goodness For You
             </h2>
           </div>
@@ -984,13 +984,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
 
       {/* FREQUENTLY BOUGHT TOGETHER (4 Product Cards matching reference Image 3) */}
       {relatedProducts && relatedProducts.length > 0 && (
-        <section className="py-14 sm:py-18 bg-[#F4F8F8] border-t border-[#DCE8E8]/80">
+        <section className="py-14 sm:py-18 bg-[#F8F4E9] border-t border-[#E0D9C8]/80">
           <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#123838] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#171717] tracking-tight">
                 Frequently Bought Together
               </h2>
-              <p className="text-xs sm:text-sm text-[#123838]/70 font-normal tracking-tight mt-1.5">
+              <p className="text-xs sm:text-sm text-[#171717]/70 font-normal tracking-tight mt-1.5">
                 Pair with these complementary Ayurvedic formulations for faster holistic results.
               </p>
             </div>
@@ -1006,13 +1006,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       )}
 
       {/* FREQUENTLY ASKED QUESTIONS (Unified warm theme, NO white bands) */}
-      <section className="py-14 sm:py-18 bg-[#F4F8F8] border-t border-[#DCE8E8]/80">
+      <section className="py-14 sm:py-18 bg-[#F8F4E9] border-t border-[#E0D9C8]/80">
         <div className="max-w-[840px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#126768]/10 text-[#126768] text-[11px] font-bold uppercase tracking-tight">
+            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-tight">
               Got Questions?
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#123838] tracking-tight mt-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#171717] tracking-tight mt-2">
               Frequently Asked Questions
             </h2>
           </div>
@@ -1028,16 +1028,16 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               return (
                 <div 
                   key={i}
-                  className="bg-[#F4F8F8] rounded-2xl border border-[#DCE8E8] overflow-hidden shadow-xs transition-colors hover:border-[#126768]/40"
+                  className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] overflow-hidden shadow-xs transition-colors hover:border-[#123D2B]/40"
                 >
                   <button
                     type="button"
                     onClick={() => toggleFaq(i)}
-                    className="w-full flex items-center gap-3 p-4 sm:p-5 cursor-pointer text-left text-xs sm:text-sm font-bold text-[#123838] hover:bg-[#F4F8F8]/40 transition-colors select-none"
+                    className="w-full flex items-center gap-3 p-4 sm:p-5 cursor-pointer text-left text-xs sm:text-sm font-bold text-[#171717] hover:bg-[#F8F4E9]/40 transition-colors select-none"
                   >
-                    <span className="text-[#126768] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[#123D2B] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
                     <span className="flex-1">{faq.question}</span>
-                    <div className={`flex-shrink-0 w-6 h-6 rounded-full bg-[#126768] flex items-center justify-center text-white transition-all duration-300 ease-in-out ${isOpen ? "rotate-45 bg-[#126768]" : ""}`}>
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-full bg-[#123D2B] flex items-center justify-center text-white transition-all duration-300 ease-in-out ${isOpen ? "rotate-45 bg-[#123D2B]" : ""}`}>
                       <Plus size={13} />
                     </div>
                   </button>
@@ -1051,7 +1051,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-5 pl-[52px] text-[#123838]/80 font-normal leading-relaxed text-xs sm:text-sm border-t border-[#DCE8E8]/50 pt-2.5">
+                        <div className="px-5 pb-5 pl-[52px] text-[#171717]/80 font-normal leading-relaxed text-xs sm:text-sm border-t border-[#E0D9C8]/50 pt-2.5">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -1065,24 +1065,24 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       </section>
 
       {/* CUSTOMER REVIEWS SECTION (Unified warm theme) */}
-      <section id="reviews-section" className="py-14 sm:py-18 bg-[#F4F8F8] border-t border-[#DCE8E8]/80">
+      <section id="reviews-section" className="py-14 sm:py-18 bg-[#F8F4E9] border-t border-[#E0D9C8]/80">
         <div className="max-w-[900px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#123838] tracking-tight">Customer Reviews</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#171717] tracking-tight">Customer Reviews</h2>
           </div>
 
           {/* Rating Summary Card */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#F4F8F8] rounded-3xl border border-[#DCE8E8] shadow-xs">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#F8F4E9] rounded-3xl border border-[#E0D9C8] shadow-xs">
             <div className="flex flex-col items-center gap-1.5">
-              <span className="text-4xl sm:text-5xl font-bold text-[#123838] tracking-tight">
+              <span className="text-4xl sm:text-5xl font-bold text-[#171717] tracking-tight">
                 {Number(product.rating || 4.8).toFixed(1)}
               </span>
               <div className="flex text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={18} className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#DCE8E8]"} />
+                  <Star key={i} size={18} className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"} />
                 ))}
               </div>
-              <span className="text-xs text-[#123838]/60 font-medium">
+              <span className="text-xs text-[#171717]/60 font-medium">
                 Based on {totalReviews} reviews
               </span>
             </div>
@@ -1095,16 +1095,16 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   <div key={stars} className="flex items-center gap-2">
                     <div className="flex text-amber-400 w-20">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={12} className={i < stars ? "fill-amber-400 text-amber-400" : "text-[#DCE8E8]"} />
+                        <Star key={i} size={12} className={i < stars ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"} />
                       ))}
                     </div>
-                    <div className="flex-1 h-2 bg-[#126768]/10 rounded-full overflow-hidden">
+                    <div className="flex-1 h-2 bg-[#123D2B]/10 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-[#126768] rounded-full transition-all duration-500" 
+                        className="h-full bg-[#123D2B] rounded-full transition-all duration-500" 
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="text-xs text-[#123838]/60 w-6 text-right font-medium">{count}</span>
+                    <span className="text-xs text-[#171717]/60 w-6 text-right font-medium">{count}</span>
                   </div>
                 );
               })}
@@ -1113,7 +1113,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div>
               <button 
                 onClick={() => setReviewOpen(true)}
-                className="px-6 py-3 bg-[#126768] text-white rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#0D5253] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
+                className="px-6 py-3 bg-[#123D2B] text-white rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
               >
                 Write a review
               </button>
@@ -1122,13 +1122,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
 
           {/* Sort Dropdown */}
           <div className="flex items-center justify-between mb-6">
-            <span className="text-xs font-bold text-[#123838]/60 uppercase tracking-tight">
+            <span className="text-xs font-bold text-[#171717]/60 uppercase tracking-tight">
               Customer Feedback
             </span>
             <select
               value={reviewSort}
               onChange={(e) => setReviewSort(e.target.value)}
-              className="text-xs sm:text-sm border border-[#DCE8E8] rounded-full px-3.5 py-1.5 bg-[#F4F8F8] text-[#123838] outline-none shadow-xs font-medium cursor-pointer"
+              className="text-xs sm:text-sm border border-[#E0D9C8] rounded-full px-3.5 py-1.5 bg-[#F8F4E9] text-[#171717] outline-none shadow-xs font-medium cursor-pointer"
             >
               <option value="recent">Most Recent</option>
               <option value="highest">Highest Rating</option>
@@ -1141,42 +1141,42 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {sortedReviews.map((review, i) => (
               <div 
                 key={i}
-                className="p-5 bg-[#F4F8F8] rounded-2xl border border-[#DCE8E8] shadow-xs"
+                className="p-5 bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] shadow-xs"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex text-amber-400">
                     {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star key={idx} size={14} className={idx < (review.rating || 5) ? "fill-amber-400 text-amber-400" : "text-[#DCE8E8]"} />
+                      <Star key={idx} size={14} className={idx < (review.rating || 5) ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"} />
                     ))}
                   </div>
                   {review.createdAt && (
-                    <span className="text-xs text-[#123838]/50 font-medium">
+                    <span className="text-xs text-[#171717]/50 font-medium">
                       {new Date(review.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })}
                     </span>
                   )}
                 </div>
 
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#126768] font-bold text-xs border border-[#DCE8E8]">
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#123D2B] font-bold text-xs border border-[#E0D9C8]">
                     {review.name?.charAt(0) || "U"}
                   </div>
-                  <span className="text-sm font-bold text-[#123838] capitalize">{review.name}</span>
-                  <span className="px-2 py-0.5 bg-[#126768]/10 text-[#126768] border border-[#126768]/20 text-[10px] font-bold rounded-full">
+                  <span className="text-sm font-bold text-[#171717] capitalize">{review.name}</span>
+                  <span className="px-2 py-0.5 bg-[#123D2B]/10 text-[#123D2B] border border-[#123D2B]/20 text-[10px] font-bold rounded-full">
                     ✓ Verified Buyer
                   </span>
                 </div>
 
                 {review.title && (
-                  <h4 className="font-bold text-sm text-[#123838] mb-1">{review.title}</h4>
+                  <h4 className="font-bold text-sm text-[#171717] mb-1">{review.title}</h4>
                 )}
-                <p className="text-xs sm:text-sm text-[#123838]/80 leading-relaxed font-normal">{review.comment}</p>
+                <p className="text-xs sm:text-sm text-[#171717]/80 leading-relaxed font-normal">{review.comment}</p>
               </div>
             ))}
           </div>
 
           {sortedReviews.length === 0 && (
             <div className="text-center py-10">
-              <p className="text-[#123838]/60 text-sm">No reviews yet. Be the first to review this product!</p>
+              <p className="text-[#171717]/60 text-sm">No reviews yet. Be the first to review this product!</p>
             </div>
           )}
         </div>
@@ -1192,14 +1192,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         <div className="space-y-4">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                 Your Rating <span className="text-red-500">*</span>
               </label>
-              <span className="text-xs font-semibold text-[#126768]">
+              <span className="text-xs font-semibold text-[#123D2B]">
                 {ratingLabels[hoverRating || reviewData.rating]}
               </span>
             </div>
-            <div className="flex items-center gap-2 p-3 bg-[#F4F8F8] rounded-xl border border-[#DCE8E8]">
+            <div className="flex items-center gap-2 p-3 bg-[#F8F4E9] rounded-xl border border-[#E0D9C8]">
               {[1, 2, 3, 4, 5].map((star) => {
                 const active = (hoverRating || reviewData.rating) >= star;
                 return (
@@ -1215,7 +1215,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     <Star 
                       size={26} 
                       fill={active ? "#F59E0B" : "none"} 
-                      className={active ? "text-amber-400" : "text-[#DCE8E8]"} 
+                      className={active ? "text-amber-400" : "text-[#E0D9C8]"} 
                     />
                   </button>
                 );
@@ -1225,7 +1225,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                 Your Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -1233,35 +1233,35 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 placeholder="e.g. Ramesh Kumar"
                 value={reviewData.name}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, name: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#DCE8E8] bg-[#F4F8F8] px-3.5 text-sm text-[#123838] outline-none transition placeholder:text-[#123838]/35 focus:border-[#126768]"
+                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#123D2B]"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
-                Review Title <span className="text-[#123838]/40 font-normal">(Optional)</span>
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
+                Review Title <span className="text-[#171717]/40 font-normal">(Optional)</span>
               </label>
               <input
                 type="text"
                 placeholder="e.g. Excellent Ayurvedic remedy!"
                 value={reviewData.title}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, title: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#DCE8E8] bg-[#F4F8F8] px-3.5 text-sm text-[#123838] outline-none transition placeholder:text-[#123838]/35 focus:border-[#126768]"
+                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#123D2B]"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
-                Your Photo <span className="text-[#123838]/40 font-normal">(Optional)</span>
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
+                Your Photo <span className="text-[#171717]/40 font-normal">(Optional)</span>
               </label>
               
               {imagePreview ? (
-                <div className="relative flex items-center gap-3 p-3 rounded-xl bg-[#F4F8F8] border border-[#DCE8E8]">
-                  <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#DCE8E8]">
+                <div className="relative flex items-center gap-3 p-3 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8]">
+                  <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#E0D9C8]">
                     <Image src={imagePreview} alt="Review attachment" fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-[#123838] truncate">
+                    <p className="text-xs font-semibold text-[#171717] truncate">
                       {reviewData.imageFile?.name || "Photo selected"}
                     </p>
                   </div>
@@ -1275,27 +1275,27 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   </button>
                 </div>
               ) : (
-                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#DCE8E8] hover:border-[#126768]/40 bg-[#F4F8F8] cursor-pointer transition-all">
+                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#E0D9C8] hover:border-[#123D2B]/40 bg-[#F8F4E9] cursor-pointer transition-all">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleImageSelect(e.target.files?.[0])}
                     className="hidden"
                   />
-                  <Camera size={16} className="text-[#126768]" />
-                  <span className="text-xs font-semibold text-[#123838]">Click to upload a photo (Optional)</span>
+                  <Camera size={16} className="text-[#123D2B]" />
+                  <span className="text-xs font-semibold text-[#171717]">Click to upload a photo (Optional)</span>
                 </label>
               )}
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                 Your Review <span className="text-red-500">*</span>
               </label>
               <textarea
                 value={reviewData.comment}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, comment: e.target.value }))}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#DCE8E8] focus:outline-none focus:border-[#126768] min-h-[100px] bg-[#F4F8F8] text-sm text-[#123838] placeholder:text-[#123838]/35 resize-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E0D9C8] focus:outline-none focus:border-[#123D2B] min-h-[100px] bg-[#F8F4E9] text-sm text-[#171717] placeholder:text-[#171717]/35 resize-none transition-all"
                 placeholder="Share your experience with this product..."
                 rows={3}
               />
@@ -1306,7 +1306,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             type="button"
             onClick={handleSubmitReview}
             disabled={uploading || !reviewData.name.trim() || !reviewData.comment.trim()}
-            className="w-full h-11 rounded-full bg-[#126768] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#0D5253] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-11 rounded-full bg-[#123D2B] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
           >
             {uploading ? (
               <span>Submitting Review...</span>
@@ -1324,17 +1324,17 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       <Modal open={buyNowOpen} title="Quick Checkout" subtitle="Complete your order details" onClose={() => setBuyNowOpen(false)}>
         <div className="space-y-4">
           {selectedPack && (
-            <div className="flex items-center gap-3 p-3 bg-[#F4F8F8] rounded-xl border border-[#DCE8E8]">
+            <div className="flex items-center gap-3 p-3 bg-[#F8F4E9] rounded-xl border border-[#E0D9C8]">
               {product.images?.[0] && (
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#DCE8E8]">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#E0D9C8]">
                   <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-[#123838] truncate">{product.name}</p>
-                <p className="text-[11px] text-[#123838]/60">{selectedPack.label || `Pack of ${selectedPack.packCount}`} × {quantity}</p>
+                <p className="text-xs font-bold text-[#171717] truncate">{product.name}</p>
+                <p className="text-[11px] text-[#171717]/60">{selectedPack.label || `Pack of ${selectedPack.packCount}`} × {quantity}</p>
               </div>
-              <p className="text-sm font-bold text-[#123838]">₹{currentPrice * quantity}</p>
+              <p className="text-sm font-bold text-[#171717]">₹{currentPrice * quantity}</p>
             </div>
           )}
           
@@ -1352,7 +1352,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           <button 
             type="button"
             onClick={buyNow}
-            className="w-full h-11 rounded-full bg-[#126768] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#0D5253] shadow-md transition-all cursor-pointer"
+            className="w-full h-11 rounded-full bg-[#123D2B] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
           >
             Continue to Payment
           </button>

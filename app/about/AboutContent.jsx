@@ -60,22 +60,22 @@ const pillars = [
 export default function AboutContent() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F4F8F8] text-[#123838] font-sans pb-20 selection:bg-[#126768] selection:text-white">
+      <div className="min-h-screen bg-[#F8F4E9] text-[#171717] font-sans pb-20 selection:bg-[#123D2B] selection:text-white">
         
         {/* --- 1. HERO HEADER --- */}
         <section className="px-4 sm:px-6 pt-6 pb-12 md:pt-10 md:pb-16 text-center max-w-4xl mx-auto space-y-6">
           <motion.div {...fadeUp} className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#126768]/10 text-[#126768] text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
               <Sparkles size={13} />
               <span>Our Heritage & Philosophy</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#123838] leading-[1.15]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#171717] leading-[1.15]">
               Rooted in Ancient Wisdom, <br className="hidden sm:inline" />
-              <span className="font-serif italic text-[#126768] font-normal">Refined for Modern Living.</span>
+              <span className="font-serif italic text-[#123D2B] font-normal">Refined for Modern Living.</span>
             </h1>
 
-            <p className="text-xs sm:text-base text-[#123838]/75 max-w-2xl mx-auto leading-relaxed font-normal">
+            <p className="text-xs sm:text-base text-[#171717]/75 max-w-2xl mx-auto leading-relaxed font-normal">
               Founded in Delhi by Suresh Gaur, <strong>Floramade</strong> bridges classical Ayurvedic science with botanical purity—formulating high-potency herbal remedies that nurture daily balance, sugar metabolism, and long-term vitality.
             </p>
           </motion.div>
@@ -85,7 +85,7 @@ export default function AboutContent() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2 text-[11px] sm:text-xs font-semibold text-[#123838]"
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2 text-[11px] sm:text-xs font-semibold text-[#171717]"
           >
             {[
               "100% Botanical Extracts",
@@ -95,9 +95,9 @@ export default function AboutContent() {
             ].map((pill, i) => (
               <div 
                 key={i} 
-                className="px-3.5 py-1.5 rounded-full bg-white border border-[#DCE8E8] shadow-2xs flex items-center gap-1.5"
+                className="px-3.5 py-1.5 rounded-full bg-white border border-[#E0D9C8] shadow-2xs flex items-center gap-1.5"
               >
-                <Check size={13} className="text-[#126768] stroke-[2.5]" />
+                <Check size={13} className="text-[#123D2B] stroke-[2.5]" />
                 <span>{pill}</span>
               </div>
             ))}
@@ -122,12 +122,12 @@ export default function AboutContent() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#39160D]/40 via-transparent to-transparent" />
                 
                 {/* Floating Badge */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#DCE8E8] flex items-center justify-between shadow-lg">
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#E0D9C8] flex items-center justify-between shadow-lg">
                   <div>
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-[#126768]">Established in Delhi</p>
-                    <p className="text-xs font-semibold text-[#123838]">Pure Botanical Wellness</p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-[#123D2B]">Established in Delhi</p>
+                    <p className="text-xs font-semibold text-[#171717]">Pure Botanical Wellness</p>
                   </div>
-                  <div className="w-9 h-9 rounded-full bg-[#F4F8F8] text-[#126768] flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-[#F8F4E9] text-[#123D2B] flex items-center justify-center shrink-0">
                     <Leaf size={18} />
                   </div>
                 </div>
@@ -137,16 +137,16 @@ export default function AboutContent() {
             {/* Story Content */}
             <motion.div {...fadeUp} className="lg:col-span-7 space-y-6">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#126768]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#123D2B]">
                   <Globe size={14} />
                   <span>The Floramade Story</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#123838] tracking-tight leading-snug">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-[#171717] tracking-tight leading-snug">
                   Harmonizing the Five Sacred Elements of Nature
                 </h2>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-[#123838]/80 leading-relaxed font-normal">
+              <div className="space-y-4 text-xs sm:text-sm text-[#171717]/80 leading-relaxed font-normal">
                 <p>
                   At <strong>Floramade</strong>, our formulations are deeply anchored in the timeless Ayurvedic doctrine of the <em>Pancha Mahabhutas</em>—Akasha (Space), Vayu (Air), Agni (Fire), Jala (Water), and Prithvi (Earth). When these primordial forces fall into disharmony, fatigue and chronic ailments begin to take hold.
                 </p>
@@ -156,12 +156,12 @@ export default function AboutContent() {
               </div>
 
               {/* Quote Card */}
-              <div className="p-5 rounded-2xl bg-white border border-[#DCE8E8] shadow-2xs space-y-2 relative overflow-hidden">
-                <Quote size={28} className="text-[#126768]/20 absolute right-4 top-4" />
-                <p className="text-xs sm:text-sm text-[#123838] font-serif italic leading-relaxed">
+              <div className="p-5 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs space-y-2 relative overflow-hidden">
+                <Quote size={28} className="text-[#123D2B]/20 absolute right-4 top-4" />
+                <p className="text-xs sm:text-sm text-[#171717] font-serif italic leading-relaxed">
                   &ldquo;Ayurveda is not simply an ancient remedy; it is the living art of bringing the human constitution into seamless balance with nature.&rdquo;
                 </p>
-                <p className="text-[11px] font-bold text-[#126768] uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-[#123D2B] uppercase tracking-wider">
                   — The Floramade Guiding Principle
                 </p>
               </div>
@@ -175,35 +175,35 @@ export default function AboutContent() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 my-12 md:my-16">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-white border border-[#DCE8E8] shadow-xs p-6 sm:p-10 md:p-12 relative overflow-hidden space-y-6"
+            className="rounded-3xl bg-white border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-12 relative overflow-hidden space-y-6"
           >
             <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#126768]/10 text-[#126768] text-[10px] font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[10px] font-bold uppercase tracking-wider">
                 <Building2 size={12} />
                 <span>Founder's Vision</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-light text-[#123838] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-light text-[#171717] tracking-tight">
                 A Personal Word from Our Founder
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#123838]/80 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#171717]/80 leading-relaxed">
                 &ldquo;Having witnessed how modern lifestyles, high stress, and processed diets have disrupted natural vitality, I felt a deep responsibility to make genuine, unadulterated Ayurvedic health solutions accessible to every household. Floramade is dedicated to zero compromises—every bottle delivers the exact herbal purity and therapeutic potency we would trust for our own families.&rdquo;
               </p>
             </div>
 
             {/* Signature & Credentials Strip */}
-            <div className="pt-4 border-t border-[#DCE8E8]/60 flex flex-wrap items-center justify-between gap-4">
+            <div className="pt-4 border-t border-[#E0D9C8]/60 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#126768]/10 text-[#126768] font-serif font-bold text-lg flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-[#123D2B]/10 text-[#123D2B] font-serif font-bold text-lg flex items-center justify-center shrink-0">
                   SG
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#123838]">Suresh Gaur</h4>
-                  <p className="text-[11px] text-[#126768] font-medium">Founder & Visionary, Floramade Healthcare Pvt. Ltd.</p>
+                  <h4 className="text-sm font-bold text-[#171717]">Suresh Gaur</h4>
+                  <p className="text-[11px] text-[#123D2B] font-medium">Founder & Visionary, Floramade Healthcare Pvt. Ltd.</p>
                 </div>
               </div>
-              <div className="text-right text-[11px] text-[#123838]/60 hidden sm:block">
+              <div className="text-right text-[11px] text-[#171717]/60 hidden sm:block">
                 <span>Rohini, New Delhi • India</span>
               </div>
             </div>
@@ -214,10 +214,10 @@ export default function AboutContent() {
         {/* --- 4. OUR PILLARS OF EXCELLENCE (4 Clean Cards) --- */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 space-y-10">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto space-y-3">
-            <h2 className="text-2xl sm:text-4xl font-light text-[#123838] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-light text-[#171717] tracking-tight">
               Why Discerning Wellness Seekers Choose Us
             </h2>
-            <p className="text-xs sm:text-sm text-[#123838]/70 font-normal">
+            <p className="text-xs sm:text-sm text-[#171717]/70 font-normal">
               Four fundamental pillars that distinguish Floramade from generic market supplements.
             </p>
           </motion.div>
@@ -230,15 +230,15 @@ export default function AboutContent() {
                   key={idx}
                   {...fadeUp}
                   transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  className="p-6 rounded-2xl bg-white border border-[#DCE8E8] shadow-2xs hover:shadow-md hover:border-[#126768]/40 transition-all duration-300 space-y-3 group"
+                  className="p-6 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs hover:shadow-md hover:border-[#123D2B]/40 transition-all duration-300 space-y-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#F4F8F8] text-[#126768] border border-[#DCE8E8] flex items-center justify-center group-hover:bg-[#126768] group-hover:text-white transition-colors duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-[#F8F4E9] text-[#123D2B] border border-[#E0D9C8] flex items-center justify-center group-hover:bg-[#123D2B] group-hover:text-white transition-colors duration-300">
                     <Icon size={20} />
                   </div>
-                  <h3 className="font-bold text-sm text-[#123838] tracking-tight pt-1">
+                  <h3 className="font-bold text-sm text-[#171717] tracking-tight pt-1">
                     {pillar.title}
                   </h3>
-                  <p className="text-xs text-[#123838]/75 leading-relaxed font-normal">
+                  <p className="text-xs text-[#171717]/75 leading-relaxed font-normal">
                     {pillar.description}
                   </p>
                 </motion.div>
@@ -252,16 +252,16 @@ export default function AboutContent() {
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-white border border-[#DCE8E8] p-8 sm:p-12 space-y-8"
+            className="rounded-3xl bg-white border border-[#E0D9C8] p-8 sm:p-12 space-y-8"
           >
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#126768]">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#123D2B]">
                 Accreditation & Safety
               </span>
-              <h2 className="text-2xl sm:text-3xl font-light text-[#123838] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-light text-[#171717] tracking-tight">
                 Certified by Years of Unbroken Trust
               </h2>
-              <p className="text-xs text-[#123838]/70">
+              <p className="text-xs text-[#171717]/70">
                 Rigorous multi-stage quality control from farm harvest to your medicine cabinet.
               </p>
             </div>
@@ -270,7 +270,7 @@ export default function AboutContent() {
               {certificates.map((cert) => (
                 <div 
                   key={cert.id}
-                  className="p-5 rounded-2xl bg-white border border-[#DCE8E8]/80 shadow-2xs text-center space-y-3 hover:border-[#126768]/30 transition-all duration-300"
+                  className="p-5 rounded-2xl bg-white border border-[#E0D9C8]/80 shadow-2xs text-center space-y-3 hover:border-[#123D2B]/30 transition-all duration-300"
                 >
                   <div className="w-14 h-14 mx-auto relative">
                     <Image 
@@ -281,8 +281,8 @@ export default function AboutContent() {
                     />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#123838]">{cert.title}</h4>
-                    <p className="text-[11px] text-[#123838]/60 pt-0.5">{cert.subtitle}</p>
+                    <h4 className="text-sm font-bold text-[#171717]">{cert.title}</h4>
+                    <p className="text-[11px] text-[#171717]/60 pt-0.5">{cert.subtitle}</p>
                   </div>
                 </div>
               ))}
@@ -295,10 +295,10 @@ export default function AboutContent() {
         <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-[#126768] text-white p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-xl"
+            className="rounded-3xl bg-[#123D2B] text-white p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-xl"
           >
             <div className="relative z-10 max-w-xl mx-auto space-y-3">
-              <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#FF8900] text-[10px] font-bold uppercase tracking-wider">
+              <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#D4AF55] text-[10px] font-bold uppercase tracking-wider">
                 Begin Your Wellness Ritual
               </span>
               <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
@@ -312,7 +312,7 @@ export default function AboutContent() {
             <div className="relative z-10 flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link 
                 href="/collection" 
-                className="px-6 py-3 rounded-full bg-[#FF8900] hover:bg-[#E67A00] text-[#123838] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center gap-2 group"
+                className="px-6 py-3 rounded-full bg-[#D4AF55] hover:bg-[#B8923A] text-[#171717] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md inline-flex items-center gap-2 group"
               >
                 <span>Explore Products</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />

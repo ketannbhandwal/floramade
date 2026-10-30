@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 :root {
-  /* Floramade theme: #FFF7EB warm ivory background & #39160D deep Ayurvedic brown */
-  --background: #FFFFFF;
-  --foreground: #123838;
-  --primary: #126768;
-  --accent: #FF8900;
-  --highlight: #FF8900;
-  --muted: #F4F8F8;
-  --border: #DCE8E8;
+  /* Floramade Premium Herbal Wellness Theme */
+  --background: #F8F4E9;
+  --foreground: #171717;
+  --primary: #123D2B;
+  --accent: #D4AF55;
+  --highlight: #D4AF55;
+  --muted: #F0EBE0;
+  --border: #E0D9C8;
   --font-dm-sans: "DM Sans", sans-serif;
   --font-funnel: "DM Sans", sans-serif;
 }
@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8CDCD;
+  background: #C8BDA8;
 }
 
 ::selection {

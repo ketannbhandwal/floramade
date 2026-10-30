@@ -5,7 +5,7 @@ import { ProductCardSkeleton } from "@/components/ui/LoadingSkeleton";
 
 export default function CollectionSkeleton() {
   return (
-    <div className="w-full bg-white text-[#123838] pb-16 pt-24 md:pt-32">
+    <div className="w-full bg-white text-[#171717] pb-16 pt-24 md:pt-32">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Collection Header Banner Shimmer */}
@@ -20,8 +20,8 @@ export default function CollectionSkeleton() {
           {[1, 2, 3, 4, 5, 6].map((f) => (
             <div
               key={f}
-              className={`h-9 rounded-full shimmer-luxury border border-[#DCE8E8] ${
-                f === 1 ? "w-24 bg-[#126768]/10" : "w-28"
+              className={`h-9 rounded-full shimmer-luxury border border-[#E0D9C8] ${
+                f === 1 ? "w-24 bg-[#123D2B]/10" : "w-28"
               }`}
             />
           ))}

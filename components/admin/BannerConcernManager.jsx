@@ -44,7 +44,7 @@ import {
 } from "@/lib/settings-constants";
 
 const PRESET_COLORS = [
-  { name: "Floramade Brown", hex: "#126768" },
+  { name: "Floramade Brown", hex: "#123D2B" },
   { name: "Terracotta Sand", hex: "#DBC7B5" },
   { name: "Muted Ocean", hex: "#B8CDD8" },
   { name: "Sage Teal", hex: "#A6C7C4" },
@@ -353,7 +353,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
       id: `concern-${Date.now()}`,
       title: "NEW CARE",
       image: "https://gcxfqnqewpfypocphmml.supabase.co/storage/v1/object/public/product-media/products/ad217c00-7725-4b8a-bc22-2b861a30e86f.png",
-      bgColor: "#126768",
+      bgColor: "#123D2B",
       href: "/collection",
     };
     setConcerns(prev => [...prev, newConcern]);
@@ -585,8 +585,8 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-16 text-[#123838]">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#126768] border-t-transparent mb-3" />
+      <div className="flex flex-col items-center justify-center p-16 text-[#171717]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#123D2B] border-t-transparent mb-3" />
         <p className="text-sm font-semibold tracking-tight">Loading Store Customizer...</p>
       </div>
     );
@@ -597,11 +597,11 @@ export default function BannerConcernManager({ products: initialProducts = [] })
       {/* Top Action Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-[2rem] border border-[#211b13]/10 bg-white/80 p-6 md:p-8 backdrop-blur-md shadow-sm">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#126768]/10 text-[#126768] text-[11px] font-bold tracking-tight mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold tracking-tight mb-2">
             <Sparkles size={13} />
             <span>WEBSITE SECTIONS CUSTOMIZER</span>
           </div>
-          <h2 className="text-2xl md:text-3xl text-[#123838] font-bold tracking-tight">
+          <h2 className="text-2xl md:text-3xl text-[#171717] font-bold tracking-tight">
             Store Content & Navigation
           </h2>
           <p className="text-xs md:text-sm text-foreground/60 tracking-tight mt-1">
@@ -613,7 +613,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
           <button
             type="button"
             onClick={handleReset}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-black/10 text-[#123838] hover:bg-black/5 text-xs font-semibold tracking-tight transition-colors"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-black/10 text-[#171717] hover:bg-black/5 text-xs font-semibold tracking-tight transition-colors"
           >
             <RotateCcw size={14} />
             <span>Reset Defaults</span>
@@ -623,7 +623,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#126768] text-white hover:bg-[#126768] disabled:opacity-50 text-xs font-semibold tracking-tight transition-all shadow-md active:scale-95"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] disabled:opacity-50 text-xs font-semibold tracking-tight transition-all shadow-md active:scale-95"
           >
             {saving ? (
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -651,7 +651,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             onClick={() => setSubTab(tab.key)}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-tight transition-all whitespace-nowrap ${
               subTab === tab.key
-                ? "bg-[#126768] text-white shadow-sm"
+                ? "bg-[#123D2B] text-white shadow-sm"
                 : "text-foreground/60 hover:text-foreground hover:bg-white/60"
             }`}
           >
@@ -673,7 +673,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Featured Product Spotlight Section
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -684,13 +684,13 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
           <div className="bg-white rounded-2xl border border-[#211b13]/10 p-6 md:p-8 shadow-sm space-y-6">
             <div className="max-w-xl space-y-3">
-              <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
+              <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                 Select Spotlight Product
               </label>
               <select
                 value={spotlightProductId}
                 onChange={e => setSpotlightProductId(e.target.value)}
-                className="w-full rounded-xl border border-black/10 bg-white/40 px-4 py-3 text-sm font-semibold text-[#123838] tracking-tight focus:border-[#126768] focus:outline-none cursor-pointer"
+                className="w-full rounded-xl border border-black/10 bg-white/40 px-4 py-3 text-sm font-semibold text-[#171717] tracking-tight focus:border-[#123D2B] focus:outline-none cursor-pointer"
               >
                 <option value="">-- Auto (First Product in Catalogue) --</option>
                 {availableProducts.map(p => {
@@ -702,7 +702,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   );
                 })}
               </select>
-              <p className="text-[11px] text-[#123838]/60 tracking-tight">
+              <p className="text-[11px] text-[#171717]/60 tracking-tight">
                 Choose the product to showcase on the homepage, or click any card below to select it directly. Remember to click &apos;Save Changes&apos; above.
               </p>
             </div>
@@ -710,7 +710,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             {/* Visual Product Selector Grid */}
             {availableProducts.length > 0 && (
               <div className="space-y-3 pt-2">
-                <label className="block text-xs font-bold text-[#123838] uppercase tracking-tight">
+                <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                   Or Click A Product Below To Select:
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
@@ -726,22 +726,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         onClick={() => setSpotlightProductId(pid)}
                         className={`text-left p-3 rounded-2xl border-2 transition-all flex flex-col items-center cursor-pointer relative ${
                           isSelected
-                            ? "border-[#126768] bg-white shadow-md scale-102 ring-2 ring-[#872B10]/20"
-                            : "border-[#DCE8E8] bg-white hover:border-[#126768]/40 hover:bg-[#F4F8F8]"
+                            ? "border-[#123D2B] bg-white shadow-md scale-102 ring-2 ring-[#123D2B]/20"
+                            : "border-[#E0D9C8] bg-white hover:border-[#123D2B]/40 hover:bg-[#F8F4E9]"
                         }`}
                       >
                         {isSelected && (
-                          <div className="absolute top-2 right-2 bg-[#126768] text-white rounded-full p-1">
+                          <div className="absolute top-2 right-2 bg-[#123D2B] text-white rounded-full p-1">
                             <Check size={11} strokeWidth={3} />
                           </div>
                         )}
-                        <div className="relative w-16 h-16 rounded-xl bg-white border border-[#DCE8E8] overflow-hidden mb-2">
+                        <div className="relative w-16 h-16 rounded-xl bg-white border border-[#E0D9C8] overflow-hidden mb-2">
                           <Image src={pImg} alt={p.name} fill className="object-contain p-1" />
                         </div>
-                        <h5 className="text-xs font-bold text-[#123838] tracking-tight text-center line-clamp-2 w-full">
+                        <h5 className="text-xs font-bold text-[#171717] tracking-tight text-center line-clamp-2 w-full">
                           {p.name}
                         </h5>
-                        <span className="text-[11px] font-bold text-[#126768] mt-1">
+                        <span className="text-[11px] font-bold text-[#123D2B] mt-1">
                           ₹{p.discountPrice || p.price || 0}
                         </span>
                       </button>
@@ -762,21 +762,21 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               const img = selectedProduct.images?.[0] || selectedProduct.formulaimage || "/placeholder.png";
 
               return (
-                <div className="rounded-2xl border border-[#DCE8E8] bg-[#F4F8F8] p-5 flex flex-col sm:flex-row items-center gap-5 max-w-xl">
-                  <div className="relative w-24 h-24 rounded-xl bg-white border border-[#DCE8E8] overflow-hidden flex-shrink-0 flex items-center justify-center">
+                <div className="rounded-2xl border border-[#E0D9C8] bg-[#F8F4E9] p-5 flex flex-col sm:flex-row items-center gap-5 max-w-xl">
+                  <div className="relative w-24 h-24 rounded-xl bg-white border border-[#E0D9C8] overflow-hidden flex-shrink-0 flex items-center justify-center">
                     <Image src={img} alt={selectedProduct.name} fill className="object-contain p-1" />
                   </div>
                   <div className="space-y-1 text-center sm:text-left flex-1">
-                    <span className="text-[10px] font-bold uppercase tracking-tight text-[#126768] bg-[#126768]/10 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-bold uppercase tracking-tight text-[#123D2B] bg-[#123D2B]/10 px-2 py-0.5 rounded-full">
                       Active Spotlight Preview
                     </span>
-                    <h4 className="text-base font-bold text-[#123838] tracking-tight">
+                    <h4 className="text-base font-bold text-[#171717] tracking-tight">
                       {selectedProduct.name}
                     </h4>
-                    <p className="text-xs font-semibold text-[#126768]">
+                    <p className="text-xs font-semibold text-[#123D2B]">
                       Price: ₹{selectedProduct.discountPrice || selectedProduct.price}
                     </p>
-                    <p className="text-[11px] text-[#123838]/60">
+                    <p className="text-[11px] text-[#171717]/60">
                       Slug: /product/{selectedProduct.slug}
                     </p>
                   </div>
@@ -794,7 +794,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Discount Coupons & Offers ({coupons.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -804,7 +804,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             <button
               type="button"
               onClick={addCoupon}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer shrink-0"
             >
               <Plus size={14} /> Add Coupon
             </button>
@@ -819,10 +819,10 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 {/* Header Row: Badge & Reorder/Delete */}
                 <div className="flex items-center justify-between border-b border-black/5 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#126768]/10 text-[#126768] text-xs font-bold flex items-center justify-center">
+                    <span className="w-6 h-6 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-xs font-bold flex items-center justify-center">
                       {idx + 1}
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-tight text-[#123838]">
+                    <span className="text-xs font-bold uppercase tracking-tight text-[#171717]">
                       {coupon.code || "UNTITLED"}
                     </span>
                     {coupon.showOnProductPage && (
@@ -865,23 +865,23 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 </div>
 
                 {/* Live Preview Card */}
-                <div className="p-3.5 rounded-2xl bg-[#F4F8F8] border border-[#DCE8E8] flex items-center justify-between gap-3">
+                <div className="p-3.5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] flex items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       {coupon.badge && (
-                        <span className="text-[10px] font-bold text-white bg-[#126768] px-2 py-0.5 rounded-md uppercase tracking-tight">
+                        <span className="text-[10px] font-bold text-white bg-[#123D2B] px-2 py-0.5 rounded-md uppercase tracking-tight">
                           {coupon.badge}
                         </span>
                       )}
-                      <span className="text-xs font-bold text-[#123838] tracking-tight">
+                      <span className="text-xs font-bold text-[#171717] tracking-tight">
                         {coupon.title || "Coupon Title"}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#123838]/75 tracking-tight">
+                    <p className="text-[11px] text-[#171717]/75 tracking-tight">
                       {coupon.description || "Coupon description..."}
                     </p>
                   </div>
-                  <span className="px-3 py-1.5 rounded-xl border border-[#126768]/20 bg-white text-[#123838] text-xs font-bold tracking-tight shrink-0">
+                  <span className="px-3 py-1.5 rounded-xl border border-[#123D2B]/20 bg-white text-[#171717] text-xs font-bold tracking-tight shrink-0">
                     {coupon.code || "CODE"}
                   </span>
                 </div>
@@ -889,7 +889,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 {/* Form Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Coupon Code
                     </label>
                     <input
@@ -897,12 +897,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.code || ""}
                       onChange={e => updateCoupon(idx, "code", e.target.value.toUpperCase().replace(/\s+/g, ""))}
                       placeholder="e.g. FLAT05"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold tracking-wider uppercase text-[#123838] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold tracking-wider uppercase text-[#171717] outline-none focus:border-[#123D2B]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Badge Text (Tag)
                     </label>
                     <input
@@ -910,18 +910,18 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.badge || ""}
                       onChange={e => updateCoupon(idx, "badge", e.target.value)}
                       placeholder="e.g. FIRST ORDER, BEST VALUE"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#123838] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#171717] outline-none focus:border-[#123D2B]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Discount Type
                     </label>
                     <select
                       value={coupon.discountType || "percentage"}
                       onChange={e => updateCoupon(idx, "discountType", e.target.value)}
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#123838] outline-none focus:border-[#126768] cursor-pointer"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#171717] outline-none focus:border-[#123D2B] cursor-pointer"
                     >
                       <option value="percentage">Percentage Discount (%)</option>
                       <option value="fixed">Flat Amount Discount (₹)</option>
@@ -929,7 +929,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Discount Value {coupon.discountType === "percentage" ? "(%)" : "(₹)"}
                     </label>
                     <input
@@ -938,12 +938,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.discountValue || ""}
                       onChange={e => updateCoupon(idx, "discountValue", Number(e.target.value))}
                       placeholder={coupon.discountType === "percentage" ? "e.g. 5 for 5%" : "e.g. 200 for ₹200"}
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold text-[#126768] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold text-[#123D2B] outline-none focus:border-[#123D2B]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Min Order Value (₹)
                     </label>
                     <input
@@ -952,12 +952,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.minOrderAmount || 0}
                       onChange={e => updateCoupon(idx, "minOrderAmount", Number(e.target.value))}
                       placeholder="e.g. 0 or 3000"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#123838] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#171717] outline-none focus:border-[#123D2B]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Display Title
                     </label>
                     <input
@@ -965,12 +965,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.title || ""}
                       onChange={e => updateCoupon(idx, "title", e.target.value)}
                       placeholder="e.g. Flat 5% OFF"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#123838] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#171717] outline-none focus:border-[#123D2B]"
                     />
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#123838] mb-1">
+                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#171717] mb-1">
                       Description
                     </label>
                     <input
@@ -978,7 +978,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={coupon.description || ""}
                       onChange={e => updateCoupon(idx, "description", e.target.value)}
                       placeholder="e.g. Get flat 5% OFF on your first order. Applicable on all products."
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] outline-none focus:border-[#126768]"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] outline-none focus:border-[#123D2B]"
                     />
                   </div>
                 </div>
@@ -990,9 +990,9 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="checkbox"
                       checked={coupon.showOnProductPage !== false}
                       onChange={e => updateCoupon(idx, "showOnProductPage", e.target.checked)}
-                      className="w-4 h-4 rounded border-black/20 accent-[#872B10]"
+                      className="w-4 h-4 rounded border-black/20 accent-[#123D2B]"
                     />
-                    <span className="text-xs font-semibold text-[#123838]">
+                    <span className="text-xs font-semibold text-[#171717]">
                       Show in &apos;Offers for You&apos; on Product Page
                     </span>
                   </label>
@@ -1002,9 +1002,9 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="checkbox"
                       checked={coupon.isActive !== false}
                       onChange={e => updateCoupon(idx, "isActive", e.target.checked)}
-                      className="w-4 h-4 rounded border-black/20 accent-[#872B10]"
+                      className="w-4 h-4 rounded border-black/20 accent-[#123D2B]"
                     />
-                    <span className="text-xs font-semibold text-[#123838]">
+                    <span className="text-xs font-semibold text-[#171717]">
                       Active (Can be redeemed)
                     </span>
                   </label>
@@ -1024,7 +1024,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Hero Banner Slides ({banners.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -1034,7 +1034,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             <button
               type="button"
               onClick={addBanner}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
             >
               <Plus size={14} /> Add Hero Slide
             </button>
@@ -1047,7 +1047,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 className="bg-white rounded-2xl border border-[#211b13]/10 p-5 shadow-sm space-y-4"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-black/5">
-                  <span className="text-xs font-bold text-[#126768] uppercase tracking-tight">
+                  <span className="text-xs font-bold text-[#123D2B] uppercase tracking-tight">
                     Slide #{idx + 1}
                   </span>
                   <div className="flex items-center gap-1">
@@ -1055,7 +1055,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="button"
                       onClick={() => moveBanner(idx, -1)}
                       disabled={idx === 0}
-                      className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-30"
+                      className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-30"
                       title="Move Up"
                     >
                       <ChevronUp size={16} />
@@ -1064,7 +1064,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="button"
                       onClick={() => moveBanner(idx, 1)}
                       disabled={idx === banners.length - 1}
-                      className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-30"
+                      className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-30"
                       title="Move Down"
                     >
                       <ChevronDown size={16} />
@@ -1092,9 +1092,9 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         value={banner.desktop || ""}
                         onChange={e => updateBanner(idx, "desktop", e.target.value)}
                         placeholder="/posters/1.jpg"
-                        className="flex-1 rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                        className="flex-1 rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                       />
-                      <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold tracking-tight transition-colors">
+                      <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold tracking-tight transition-colors">
                         <Upload size={13} />
                         <span>Upload</span>
                         <input
@@ -1129,9 +1129,9 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         value={banner.mobile || ""}
                         onChange={e => updateBanner(idx, "mobile", e.target.value)}
                         placeholder="/posters/mobile1.jpg"
-                        className="flex-1 rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                        className="flex-1 rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                       />
-                      <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold tracking-tight transition-colors">
+                      <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold tracking-tight transition-colors">
                         <Upload size={13} />
                         <span>Upload</span>
                         <input
@@ -1166,7 +1166,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={banner.alt || ""}
                       onChange={e => updateBanner(idx, "alt", e.target.value)}
                       placeholder="Floramade Ayurvedic Product"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -1178,7 +1178,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={banner.href || "/collection"}
                       onChange={e => updateBanner(idx, "href", e.target.value)}
                       placeholder="/collection"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -1195,7 +1195,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Benefits Section Cards ({benefits.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -1205,7 +1205,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             <button
               type="button"
               onClick={addBenefit}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
             >
               <Plus size={14} /> Add Benefit Card
             </button>
@@ -1221,7 +1221,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               value={benefitsHeading}
               onChange={e => setBenefitsHeading(e.target.value)}
               placeholder="Benefits"
-              className="w-full rounded-xl border border-black/10 bg-white/40 px-3.5 py-2.5 text-base font-bold text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+              className="w-full rounded-xl border border-black/10 bg-white/40 px-3.5 py-2.5 text-base font-bold text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
             />
           </div>
 
@@ -1233,7 +1233,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 className="bg-white rounded-2xl border border-[#211b13]/10 p-5 shadow-sm space-y-4"
               >
                 <div className="flex items-center justify-between pb-3 border-b border-black/5">
-                  <span className="text-xs font-bold text-[#126768] uppercase tracking-tight">
+                  <span className="text-xs font-bold text-[#123D2B] uppercase tracking-tight">
                     Benefit #{idx + 1}
                   </span>
                   <button
@@ -1255,7 +1255,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                     value={benefit.title || ""}
                     onChange={e => updateBenefit(idx, "title", e.target.value)}
                     placeholder="e.g. Natural Healing"
-                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-sm font-bold text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-sm font-bold text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                   />
                 </div>
 
@@ -1268,7 +1268,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                     value={benefit.description || ""}
                     onChange={e => updateBenefit(idx, "description", e.target.value)}
                     placeholder="Describe this benefit..."
-                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none leading-relaxed"
+                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none leading-relaxed"
                   />
                 </div>
 
@@ -1279,7 +1279,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   <select
                     value={benefit.icon || "natural"}
                     onChange={e => updateBenefit(idx, "icon", e.target.value)}
-                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-semibold text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none"
+                    className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-semibold text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none"
                   >
                     {BENEFIT_ICON_OPTIONS.map(opt => (
                       <option key={opt.value} value={opt.value}>
@@ -1301,7 +1301,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Header Navbar Links ({navLinks.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -1311,7 +1311,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             <button
               type="button"
               onClick={addNavLink}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
             >
               <Plus size={14} /> Add Navbar Link
             </button>
@@ -1325,7 +1325,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               >
                 <div className="flex items-center justify-between pb-3 border-b border-black/5">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#126768] uppercase tracking-tight">
+                    <span className="text-xs font-bold text-[#123D2B] uppercase tracking-tight">
                       Navbar Link #{idx + 1}
                     </span>
                     <span className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${
@@ -1340,7 +1340,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="button"
                       onClick={() => moveNavLink(idx, -1)}
                       disabled={idx === 0}
-                      className="p-1.5 rounded-lg hover:bg-black/5 text-[#123838] disabled:opacity-25 transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-black/5 text-[#171717] disabled:opacity-25 transition-colors"
                       title="Move Up"
                     >
                       <ChevronUp size={16} />
@@ -1349,7 +1349,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       type="button"
                       onClick={() => moveNavLink(idx, 1)}
                       disabled={idx === navLinks.length - 1}
-                      className="p-1.5 rounded-lg hover:bg-black/5 text-[#123838] disabled:opacity-25 transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-black/5 text-[#171717] disabled:opacity-25 transition-colors"
                       title="Move Down"
                     >
                       <ChevronDown size={16} />
@@ -1367,7 +1367,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[11px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1.5">
+                    <label className="block text-[11px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1.5">
                       Navbar Display Label
                     </label>
                     <input
@@ -1375,12 +1375,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={link.label || ""}
                       onChange={e => updateNavLink(idx, "label", e.target.value)}
                       placeholder="e.g. MADHUCUREX"
-                      className="w-full rounded-xl border border-[#126768]/20 bg-white px-3.5 py-2.5 text-xs font-bold uppercase text-[#123838] tracking-tight placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                      className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3.5 py-2.5 text-xs font-bold uppercase text-[#171717] tracking-tight placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1.5">
+                    <label className="block text-[11px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1.5">
                       Direct Click URL (Fallback)
                     </label>
                     <input
@@ -1388,12 +1388,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       value={link.href || ""}
                       onChange={e => updateNavLink(idx, "href", cleanNavUrl(e.target.value))}
                       placeholder="/product/madhu-diabetes-pro"
-                      className="w-full rounded-xl border border-[#126768]/20 bg-white px-3.5 py-2.5 text-xs font-semibold text-[#123838] tracking-tight placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                      className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3.5 py-2.5 text-xs font-semibold text-[#171717] tracking-tight placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1.5">
+                    <label className="block text-[11px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1.5">
                       Link Behavior
                     </label>
                     <select
@@ -1405,7 +1405,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           addSubLink(idx);
                         }
                       }}
-                      className="w-full rounded-xl border border-[#126768]/20 bg-white px-3.5 py-2.5 text-xs font-semibold text-[#123838] tracking-tight focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                      className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3.5 py-2.5 text-xs font-semibold text-[#171717] tracking-tight focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                     >
                       <option value="link">Direct Click Link</option>
                       <option value="dropdown">Dropdown Menu (Opens On Hover)</option>
@@ -1415,20 +1415,20 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
                 {/* Dropdown items editor */}
                 {link.type === "dropdown" && (
-                  <div className="mt-4 pt-4 border-t border-[#126768]/10 bg-white/50 rounded-2xl p-4 sm:p-5 space-y-5">
+                  <div className="mt-4 pt-4 border-t border-[#123D2B]/10 bg-white/50 rounded-2xl p-4 sm:p-5 space-y-5">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                       <div>
-                        <span className="text-xs font-bold text-[#126768] uppercase tracking-tight">
+                        <span className="text-xs font-bold text-[#123D2B] uppercase tracking-tight">
                           Dropdown Menu Products ({link.subLinks?.length || 0})
                         </span>
-                        <p className="text-[11px] text-[#123838]/70 tracking-tight">
+                        <p className="text-[11px] text-[#171717]/70 tracking-tight">
                           These items appear in the floating card when visitors hover over <span className="font-bold">{link.label || "this link"}</span>.
                         </p>
                       </div>
                       <button
                         type="button"
                         onClick={() => addSubLink(idx)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-[11px] font-bold uppercase tracking-tight transition-all shadow-sm active:scale-95"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-[11px] font-bold uppercase tracking-tight transition-all shadow-sm active:scale-95"
                       >
                         <Plus size={13} /> Add Product / Item
                       </button>
@@ -1436,7 +1436,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
                     {/* Tagline */}
                     <div>
-                      <label className="block text-[10px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1">
+                      <label className="block text-[10px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1">
                         Dropdown Header Tagline
                       </label>
                       <input
@@ -1444,7 +1444,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         value={link.subHeading || ""}
                         onChange={e => updateNavLink(idx, "subHeading", e.target.value)}
                         placeholder="e.g. Ayurvedic Sugar Support"
-                        className="w-full rounded-xl border border-[#126768]/20 bg-white px-3.5 py-2 text-xs font-semibold text-[#123838] placeholder:text-[#123838]/30 focus:border-[#126768] focus:outline-none shadow-sm"
+                        className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3.5 py-2 text-xs font-semibold text-[#171717] placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:outline-none shadow-sm"
                       />
                     </div>
 
@@ -1457,17 +1457,17 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                             key={sub.id || sIdx} 
                             className={`bg-white rounded-xl p-4 border transition-all shadow-sm space-y-3 ${
                               isMadhuPro 
-                                ? "border-[#126768]/40 ring-1 ring-[#872B10]/20" 
-                                : "border-[#126768]/15 hover:border-[#126768]/30"
+                                ? "border-[#123D2B]/40 ring-1 ring-[#123D2B]/20" 
+                                : "border-[#123D2B]/15 hover:border-[#123D2B]/30"
                             }`}
                           >
-                            <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#126768]/10">
+                            <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#123D2B]/10">
                               <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-[#123838]">
+                                <span className="text-xs font-bold text-[#171717]">
                                   Item #{sIdx + 1}
                                 </span>
                                 {isMadhuPro && (
-                                  <span className="text-[10px] font-bold bg-[#126768] text-white px-2 py-0.5 rounded-full shadow-xs">
+                                  <span className="text-[10px] font-bold bg-[#123D2B] text-white px-2 py-0.5 rounded-full shadow-xs">
                                     ✓ Active Madhu Diabetes Pro
                                   </span>
                                 )}
@@ -1482,7 +1482,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                     updateSubLink(idx, sIdx, "href", "/product/madhu-diabetes-pro");
                                     updateSubLink(idx, sIdx, "description", "Advanced Ayurvedic formulation for blood sugar & vitality");
                                   }}
-                                  className="px-2.5 py-1 rounded-lg bg-[#126768]/10 hover:bg-[#126768] text-[#126768] hover:text-white text-[10px] font-bold tracking-tight transition-colors shadow-xs"
+                                  className="px-2.5 py-1 rounded-lg bg-[#123D2B]/10 hover:bg-[#123D2B] text-[#123D2B] hover:text-white text-[10px] font-bold tracking-tight transition-colors shadow-xs"
                                   title="Quick Fill Madhu Diabetes Pro"
                                 >
                                   ⚡ Quick Fill: Madhu Diabetes Pro
@@ -1492,7 +1492,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                   type="button"
                                   onClick={() => moveSubLink(idx, sIdx, -1)}
                                   disabled={sIdx === 0}
-                                  className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-20 transition-colors"
+                                  className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-20 transition-colors"
                                   title="Move Up"
                                 >
                                   <ChevronUp size={14} />
@@ -1501,7 +1501,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                   type="button"
                                   onClick={() => moveSubLink(idx, sIdx, 1)}
                                   disabled={sIdx === (link.subLinks?.length || 1) - 1}
-                                  className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-20 transition-colors"
+                                  className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-20 transition-colors"
                                   title="Move Down"
                                 >
                                   <ChevronDown size={14} />
@@ -1519,7 +1519,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                               <div>
-                                <label className="block text-[10px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1">
+                                <label className="block text-[10px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1">
                                   Product Title
                                 </label>
                                 <input
@@ -1527,12 +1527,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                   value={sub.label || ""}
                                   onChange={e => updateSubLink(idx, sIdx, "label", e.target.value)}
                                   placeholder="e.g. Madhu Diabetes Pro"
-                                  className="w-full rounded-xl border border-[#126768]/20 bg-white px-3 py-2 text-xs font-bold text-[#123838] placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                                  className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3 py-2 text-xs font-bold text-[#171717] placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                                 />
                               </div>
 
                               <div>
-                                <label className="block text-[10px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1">
+                                <label className="block text-[10px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1">
                                   Badge / Pill (Optional)
                                 </label>
                                 <input
@@ -1540,12 +1540,12 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                   value={sub.badge || ""}
                                   onChange={e => updateSubLink(idx, sIdx, "badge", e.target.value)}
                                   placeholder="e.g. Diabetes PRO"
-                                  className="w-full rounded-xl border border-[#126768]/20 bg-white px-3 py-2 text-xs font-semibold text-[#123838] placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                                  className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3 py-2 text-xs font-semibold text-[#171717] placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                                 />
                               </div>
 
                               <div>
-                                <label className="block text-[10px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1">
+                                <label className="block text-[10px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1">
                                   Target Product URL
                                 </label>
                                 <input
@@ -1553,13 +1553,13 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                   value={sub.href || ""}
                                   onChange={e => updateSubLink(idx, sIdx, "href", e.target.value)}
                                   placeholder="/product/madhu-diabetes-pro"
-                                  className="w-full rounded-xl border border-[#126768]/20 bg-white px-3 py-2 text-xs font-semibold text-[#123838] placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                                  className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3 py-2 text-xs font-semibold text-[#171717] placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                                 />
                               </div>
                             </div>
 
                             <div>
-                              <label className="block text-[10px] font-bold text-[#123838]/80 uppercase tracking-tight mb-1">
+                              <label className="block text-[10px] font-bold text-[#171717]/80 uppercase tracking-tight mb-1">
                                 Short Description
                               </label>
                               <input
@@ -1567,7 +1567,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                                 value={sub.description || ""}
                                 onChange={e => updateSubLink(idx, sIdx, "description", e.target.value)}
                                 placeholder="e.g. Advanced Ayurvedic formulation for blood sugar & vitality"
-                                className="w-full rounded-xl border border-[#126768]/20 bg-white px-3 py-2 text-xs font-normal text-[#123838] placeholder:text-[#123838]/30 focus:border-[#126768] focus:ring-1 focus:ring-[#872B10] focus:outline-none shadow-sm"
+                                className="w-full rounded-xl border border-[#123D2B]/20 bg-white px-3 py-2 text-xs font-normal text-[#171717] placeholder:text-[#171717]/30 focus:border-[#123D2B] focus:ring-1 focus:ring-[#123D2B] focus:outline-none shadow-sm"
                               />
                             </div>
                           </div>
@@ -1577,13 +1577,13 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
                     {/* Live Preview Card */}
                     <div className="pt-2">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#126768] mb-2">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#123D2B] mb-2">
                         👁 Live Dropdown Preview (How customers see it on hover):
                       </p>
-                      <div className="bg-white border border-[#DCE8E8] rounded-2xl shadow-lg p-3 max-w-sm">
+                      <div className="bg-white border border-[#E0D9C8] rounded-2xl shadow-lg p-3 max-w-sm">
                         {link.subHeading && (
-                          <div className="px-2.5 py-1.5 border-b border-[#126768]/10 mb-2">
-                            <span className="text-[10px] uppercase font-bold text-[#126768] flex items-center gap-1">
+                          <div className="px-2.5 py-1.5 border-b border-[#123D2B]/10 mb-2">
+                            <span className="text-[10px] uppercase font-bold text-[#123D2B] flex items-center gap-1">
                               <Sparkles size={11} /> {link.subHeading}
                             </span>
                           </div>
@@ -1595,22 +1595,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                               <div
                                 key={sIdx}
                                 className={`p-2.5 rounded-xl flex items-start justify-between gap-2 ${
-                                  isMadhuPro ? "bg-[#126768]/10 border border-[#126768]/30" : "bg-white/70 border border-[#126768]/10"
+                                  isMadhuPro ? "bg-[#123D2B]/10 border border-[#123D2B]/30" : "bg-white/70 border border-[#123D2B]/10"
                                 }`}
                               >
                                 <div>
                                   <div className="flex items-center gap-1.5">
-                                    <span className="text-xs font-bold text-[#123838]">{sub.label || "Product"}</span>
+                                    <span className="text-xs font-bold text-[#171717]">{sub.label || "Product"}</span>
                                     {sub.badge && (
-                                      <span className="text-[9px] font-bold bg-[#126768] text-white px-1.5 py-0.2 rounded-full">
+                                      <span className="text-[9px] font-bold bg-[#123D2B] text-white px-1.5 py-0.2 rounded-full">
                                         {sub.badge}
                                       </span>
                                     )}
                                   </div>
                                   {sub.description && (
-                                    <p className="text-[10px] text-[#123838]/70 mt-0.5 leading-snug">{sub.description}</p>
+                                    <p className="text-[10px] text-[#171717]/70 mt-0.5 leading-snug">{sub.description}</p>
                                   )}
-                                  <span className="text-[9px] text-[#126768] font-mono mt-1 block font-semibold">{sub.href || "#"}</span>
+                                  <span className="text-[9px] text-[#123D2B] font-mono mt-1 block font-semibold">{sub.href || "#"}</span>
                                 </div>
                               </div>
                             );
@@ -1633,7 +1633,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Customer Testimonials ({testimonials.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -1643,7 +1643,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             <button
               type="button"
               onClick={addTestimonial}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
             >
               <Plus size={14} /> Add New Review
             </button>
@@ -1660,7 +1660,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 value={testimonialsPretitle}
                 onChange={e => setTestimonialsPretitle(e.target.value)}
                 placeholder="REAL STORIES & REVIEWS"
-                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-bold text-[#126768] uppercase tracking-tight"
+                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-bold text-[#123D2B] uppercase tracking-tight"
               />
             </div>
             <div>
@@ -1672,7 +1672,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 value={testimonialsTitle}
                 onChange={e => setTestimonialsTitle(e.target.value)}
                 placeholder="What Our Customers Are Saying"
-                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-bold text-[#123838] tracking-tight"
+                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs font-bold text-[#171717] tracking-tight"
               />
             </div>
             <div>
@@ -1684,7 +1684,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 value={testimonialsSubtitle}
                 onChange={e => setTestimonialsSubtitle(e.target.value)}
                 placeholder="Customer satisfaction is our #1 priority"
-                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight"
+                className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight"
               />
             </div>
           </div>
@@ -1698,7 +1698,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               >
                 <div>
                   <div className="flex items-center justify-between pb-3 border-b border-black/5 mb-3">
-                    <span className="text-xs font-bold text-[#126768] uppercase tracking-tight">
+                    <span className="text-xs font-bold text-[#123D2B] uppercase tracking-tight">
                       Review #{idx + 1}
                     </span>
                     <div className="flex items-center gap-1">
@@ -1706,7 +1706,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         type="button"
                         onClick={() => moveTestimonial(idx, -1)}
                         disabled={idx === 0}
-                        className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-30"
+                        className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-30"
                         title="Move Up"
                       >
                         <ChevronUp size={16} />
@@ -1715,7 +1715,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         type="button"
                         onClick={() => moveTestimonial(idx, 1)}
                         disabled={idx === testimonials.length - 1}
-                        className="p-1 rounded hover:bg-black/5 text-[#123838] disabled:opacity-30"
+                        className="p-1 rounded hover:bg-black/5 text-[#171717] disabled:opacity-30"
                         title="Move Down"
                       >
                         <ChevronDown size={16} />
@@ -1732,8 +1732,8 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   </div>
 
                   {/* Customer Avatar & Photo Upload */}
-                  <div className="flex items-center gap-4 p-3 bg-[#F4F8F8] rounded-xl mb-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0 bg-[#126768]/10">
+                  <div className="flex items-center gap-4 p-3 bg-[#F8F4E9] rounded-xl mb-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0 bg-[#123D2B]/10">
                       {t.img ? (
                         <Image
                           src={t.img}
@@ -1743,16 +1743,16 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           className="object-cover object-top"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center font-bold text-xs text-[#123838]">
+                        <div className="w-full h-full flex items-center justify-center font-bold text-xs text-[#171717]">
                           {t.initials || t.name?.[0] || "U"}
                         </div>
                       )}
                     </div>
 
                     <div className="flex-1 space-y-1.5">
-                      <p className="text-xs font-bold text-[#123838] tracking-tight">Customer Avatar Photo</p>
+                      <p className="text-xs font-bold text-[#171717] tracking-tight">Customer Avatar Photo</p>
                       <div className="flex items-center gap-2">
-                        <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#126768] text-white hover:bg-[#126768] text-[11px] font-bold tracking-tight transition-colors">
+                        <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#123D2B] text-white hover:bg-[#123D2B] text-[11px] font-bold tracking-tight transition-colors">
                           <Upload size={12} />
                           <span>{uploadingTarget === `testimonial-${idx}` ? "Uploading..." : "Upload New Photo"}</span>
                           <input
@@ -1773,7 +1773,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         <select
                           value={t.img || ""}
                           onChange={e => updateTestimonial(idx, "img", e.target.value)}
-                          className="rounded-lg border border-black/10 bg-white px-2 py-1 text-[11px] text-[#123838]"
+                          className="rounded-lg border border-black/10 bg-white px-2 py-1 text-[11px] text-[#171717]"
                         >
                           <option value="">Or choose preset avatar</option>
                           {PRESET_AVATARS.map((av, avIdx) => (
@@ -1797,7 +1797,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         value={t.text || ""}
                         onChange={e => updateTestimonial(idx, "text", e.target.value)}
                         placeholder="Write customer review..."
-                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#123838] tracking-tight focus:border-[#FF8900] focus:outline-none leading-relaxed"
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#171717] tracking-tight focus:border-[#D4AF55] focus:outline-none leading-relaxed"
                       />
                     </div>
 
@@ -1811,7 +1811,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           value={t.name || ""}
                           onChange={e => updateTestimonial(idx, "name", e.target.value)}
                           placeholder="e.g. Mr. Amit Patel"
-                          className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-1.5 text-xs font-bold text-[#123838] tracking-tight"
+                          className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-1.5 text-xs font-bold text-[#171717] tracking-tight"
                         />
                       </div>
                       <div>
@@ -1823,7 +1823,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           value={t.location || ""}
                           onChange={e => updateTestimonial(idx, "location", e.target.value)}
                           placeholder="e.g. Ahmedabad"
-                          className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-1.5 text-xs text-[#123838] tracking-tight"
+                          className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-1.5 text-xs text-[#171717] tracking-tight"
                         />
                       </div>
                     </div>
@@ -1838,7 +1838,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           value={t.tag || "OVERALL HEALTH"}
                           onChange={e => updateTestimonial(idx, "tag", e.target.value)}
                           placeholder="PILES RELIEF"
-                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs font-bold uppercase text-[#126768] tracking-tight"
+                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs font-bold uppercase text-[#123D2B] tracking-tight"
                         />
                       </div>
                       <div>
@@ -1850,7 +1850,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                           value={t.role || "Verified Customer"}
                           onChange={e => updateTestimonial(idx, "role", e.target.value)}
                           placeholder="Verified Customer"
-                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs text-[#123838] tracking-tight"
+                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs text-[#171717] tracking-tight"
                         />
                       </div>
                       <div>
@@ -1860,7 +1860,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                         <select
                           value={t.rating || 5}
                           onChange={e => updateTestimonial(idx, "rating", Number(e.target.value))}
-                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs font-bold text-[#123838]"
+                          className="w-full rounded-xl border border-black/10 bg-white/40 px-2.5 py-1.5 text-xs font-bold text-[#171717]"
                         >
                           <option value={5}>★★★★★ (5 Stars)</option>
                           <option value={4}>★★★★☆ (4 Stars)</option>
@@ -1883,7 +1883,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         <div className="space-y-6 max-w-4xl">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-[#123838] tracking-tight">
+              <h3 className="text-lg font-bold text-[#171717] tracking-tight">
                 Top Announcement Bar Settings
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
@@ -1894,7 +1894,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
             >
               {saving ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -1907,10 +1907,10 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
           {/* Live Preview Card */}
           <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#123838]/70">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#171717]/70">
               Live Preview (Header Top Banner)
             </span>
-            <div className="bg-[#126768] text-white py-2.5 px-4 rounded-xl border border-[#0D5253] shadow-md flex items-center justify-between text-xs font-medium">
+            <div className="bg-[#123D2B] text-white py-2.5 px-4 rounded-xl border border-[#0A2A1A] shadow-md flex items-center justify-between text-xs font-medium">
               <div className="hidden sm:flex items-center gap-2 text-xs text-white/80">
                 <span className="h-5 w-5 rounded-full bg-white/10 flex items-center justify-center text-[10px]">f</span>
                 <span className="h-5 w-5 rounded-full bg-white/10 flex items-center justify-center text-[10px]">📷</span>
@@ -1920,7 +1920,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 <span className="inline-flex items-center gap-1.5 text-white font-semibold text-xs">
                   {announcement.emoji && <span>{announcement.emoji}</span>}
                   {announcement.highlight && (
-                    <span className="text-[#FF8900]">{announcement.highlight}</span>
+                    <span className="text-[#D4AF55]">{announcement.highlight}</span>
                   )}
                   <span>{announcement.text || "Save Up to 20% + Extra Combo OFF!"}</span>
                 </span>
@@ -1943,7 +1943,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
             {/* Enable/Disable Toggle */}
             <div className="flex items-center justify-between pb-4 border-b border-[#211b13]/10">
               <div>
-                <p className="text-sm font-bold text-[#123838]">Show Announcement Bar</p>
+                <p className="text-sm font-bold text-[#171717]">Show Announcement Bar</p>
                 <p className="text-xs text-foreground/60">Display this top announcement bar on all website pages.</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
@@ -1953,14 +1953,14 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   onChange={(e) => updateAnnouncement("enabled", e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#126768]"></div>
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#123D2B]"></div>
               </label>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Emoji */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#123838] mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] mb-1.5">
                   Icon / Emoji
                 </label>
                 <input
@@ -1968,13 +1968,13 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   value={announcement.emoji || ""}
                   onChange={(e) => updateAnnouncement("emoji", e.target.value)}
                   placeholder="🎉"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#126768]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#123D2B]/20 focus:border-[#123D2B]"
                 />
               </div>
 
               {/* Highlight Prefix */}
               <div className="md:col-span-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#123838] mb-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] mb-1.5">
                   Golden Highlight Prefix (e.g. "Festive Offer:")
                 </label>
                 <input
@@ -1982,14 +1982,14 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                   value={announcement.highlight || ""}
                   onChange={(e) => updateAnnouncement("highlight", e.target.value)}
                   placeholder="Festive Offer:"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#126768]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#123D2B]/20 focus:border-[#123D2B]"
                 />
               </div>
             </div>
 
             {/* Main Text */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#123838] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] mb-1.5">
                 Main Announcement Offer Text
               </label>
               <input
@@ -1997,7 +1997,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 value={announcement.text || ""}
                 onChange={(e) => updateAnnouncement("text", e.target.value)}
                 placeholder="Save Up to 20% + Extra Combo OFF!"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#126768]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#123D2B]/20 focus:border-[#123D2B]"
               />
               <p className="text-[11px] text-foreground/50 mt-1">
                 Yeh text announcement bar ke beech mein golden prefix ke sath dikhega.
@@ -2006,7 +2006,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
             {/* Optional Link */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#123838] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#171717] mb-1.5">
                 Clickable Destination URL (Optional)
               </label>
               <input
@@ -2014,7 +2014,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 value={announcement.link || ""}
                 onChange={(e) => updateAnnouncement("link", e.target.value)}
                 placeholder="/collection"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#126768]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#123D2B]/20 focus:border-[#123D2B]"
               />
               <p className="text-[11px] text-foreground/50 mt-1">
                 Agar user announcement bar par click karega toh ye page open hoga (jaise /collection ya /product/...).
@@ -2026,7 +2026,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 type="button"
                 onClick={handleSave}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#126768] text-white hover:bg-[#126768] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#123D2B] text-white hover:bg-[#123D2B] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
               >
                 {saving ? (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

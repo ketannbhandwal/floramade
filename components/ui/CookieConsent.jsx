@@ -36,33 +36,33 @@ export default function CookieConsent() {
           transition={{ duration: 0.22, ease: "easeOut" }}
           className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[95] max-w-sm sm:max-w-[400px] w-[calc(100vw-2rem)]"
         >
-          <div className="bg-white text-[#123838] p-3.5 sm:p-4 rounded-2xl shadow-[0_12px_36px_rgba(18,103,104,0.18)] border border-[#DCE8E8] flex items-start gap-3">
+          <div className="bg-white text-[#171717] p-3.5 sm:p-4 rounded-2xl shadow-[0_12px_36px_rgba(18,61,43,0.18)] border border-[#E0D9C8] flex items-start gap-3">
             {/* Small Cookie Icon Bubble */}
-            <div className="w-8 h-8 rounded-xl bg-[#126768]/10 text-[#126768] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center shrink-0 mt-0.5">
               <Cookie size={17} />
             </div>
 
             {/* Content & Action Buttons */}
             <div className="flex-1 min-w-0 pr-0.5">
               <div className="flex items-center justify-between mb-1">
-                <h4 className="text-xs sm:text-sm font-bold text-[#123838] tracking-tight">
+                <h4 className="text-xs sm:text-sm font-bold text-[#171717] tracking-tight">
                   Cookie Preferences
                 </h4>
                 <button
                   type="button"
                   onClick={handleDecline}
-                  className="p-1 rounded-lg text-[#123838]/50 hover:text-[#123838] hover:bg-[#F4F8F8] transition-colors -mr-1"
+                  className="p-1 rounded-lg text-[#171717]/50 hover:text-[#171717] hover:bg-[#F8F4E9] transition-colors -mr-1"
                   aria-label="Dismiss cookie notice"
                 >
                   <X size={15} />
                 </button>
               </div>
 
-              <p className="text-[11px] sm:text-xs text-[#123838]/75 leading-relaxed mb-3">
+              <p className="text-[11px] sm:text-xs text-[#171717]/75 leading-relaxed mb-3">
                 We use cookies to optimize your browsing experience. By continuing, you agree to our{" "}
                 <Link
                   href="/privacy-policy"
-                  className="text-[#126768] font-semibold underline underline-offset-2 hover:text-[#FF8900] transition-colors"
+                  className="text-[#123D2B] font-semibold underline underline-offset-2 hover:text-[#D4AF55] transition-colors"
                 >
                   Privacy Policy
                 </Link>.
@@ -72,14 +72,14 @@ export default function CookieConsent() {
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className="px-4 py-1.5 rounded-xl bg-[#126768] text-white hover:bg-[#0D5253] transition-all font-bold text-[11px] uppercase tracking-tight shadow-xs cursor-pointer active:scale-95"
+                  className="px-4 py-1.5 rounded-xl bg-[#123D2B] text-white hover:bg-[#071E12] transition-all font-bold text-[11px] uppercase tracking-tight shadow-xs cursor-pointer active:scale-95"
                 >
                   Accept
                 </button>
                 <button
                   type="button"
                   onClick={handleDecline}
-                  className="px-3 py-1.5 rounded-xl bg-[#F4F8F8] text-[#123838] hover:bg-[#DCE8E8] transition-all font-semibold text-[11px] cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#F8F4E9] text-[#171717] hover:bg-[#E0D9C8] transition-all font-semibold text-[11px] cursor-pointer"
                 >
                   Decline
                 </button>

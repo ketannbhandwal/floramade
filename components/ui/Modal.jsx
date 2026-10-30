@@ -27,23 +27,23 @@ export default function Modal({ open, title, subtitle, onClose, children, maxWid
 
       {/* Modal Card */}
       <div 
-        className={`relative w-full ${maxWidth} rounded-3xl border border-[#DCE8E8] bg-[#FFFBF5] shadow-2xl overflow-hidden z-10 transition-all duration-300 my-auto`}
+        className={`relative w-full ${maxWidth} rounded-3xl border border-[#E0D9C8] bg-[#FFFBF5] shadow-2xl overflow-hidden z-10 transition-all duration-300 my-auto`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[#DCE8E8]/80 px-6 py-4 sm:px-7 sm:py-5 bg-white">
+        <div className="flex items-center justify-between border-b border-[#E0D9C8]/80 px-6 py-4 sm:px-7 sm:py-5 bg-white">
           <div>
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#123838] tracking-tight">
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#171717] tracking-tight">
               {title}
             </h3>
             {subtitle && (
-              <p className="text-xs text-[#123838]/60 mt-0.5 font-normal">
+              <p className="text-xs text-[#171717]/60 mt-0.5 font-normal">
                 {subtitle}
               </p>
             )}
           </div>
           <button 
             onClick={onClose} 
-            className="rounded-full p-2 text-[#123838]/60 hover:text-[#123838] hover:bg-[#126768]/10 transition-all active:scale-95 border border-[#126768]/10"
+            className="rounded-full p-2 text-[#171717]/60 hover:text-[#171717] hover:bg-[#123D2B]/10 transition-all active:scale-95 border border-[#123D2B]/10"
             aria-label="Close"
           >
             <X className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
