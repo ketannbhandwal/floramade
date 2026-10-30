@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Cookie, ShieldCheck } from "lucide-react";
+import { X, Cookie } from "lucide-react";
 import Link from "next/link";
 
 export default function CookieConsent() {
@@ -11,7 +11,7 @@ export default function CookieConsent() {
   useEffect(() => {
     const consent = localStorage.getItem("floramade-cookie-consent");
     if (!consent) {
-      const timer = setTimeout(() => setVisible(true), 2000);
+      const timer = setTimeout(() => setVisible(true), 1500);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -21,42 +21,67 @@ export default function CookieConsent() {
     setVisible(false);
   };
 
+  const handleDecline = () => {
+    localStorage.setItem("floramade-cookie-consent", "declined");
+    setVisible(false);
+  };
+
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-6 left-6 right-6 z-[100] mx-auto max-w-2xl"
+          initial={{ y: 40, opacity: 0, scale: 0.96 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: 40, opacity: 0, scale: 0.96 }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[95] max-w-sm sm:max-w-[400px] w-[calc(100vw-2rem)]"
         >
-          <div className="bg-secondary text-white p-6 md:p-8 rounded-[2rem] shadow-2xl border border-white/10 backdrop-blur-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
-              <div className="h-12 w-12 rounded-2xl bg-white/10 text-primary flex items-center justify-center shrink-0">
-                <Cookie size={24} />
-              </div>
-              
-              <div className="flex-1 space-y-2">
-                <h4 className="text-lg font-medium">Cookie <span className="font-display italic text-primary">Preferences</span></h4>
-                <p className="text-white/60 text-sm font-light leading-relaxed">
-                  We use cookies to harmonize your experience, personalize rituals, and understand how you interact with our botanical wisdom. By continuing, you agree to our <Link href="/privacy-policy" className="underline hover:text-primary transition-colors">Privacy Policy</Link>.
-                </p>
+          <div className="bg-white text-[#123838] p-3.5 sm:p-4 rounded-2xl shadow-[0_12px_36px_rgba(18,103,104,0.18)] border border-[#DCE8E8] flex items-start gap-3">
+            {/* Small Cookie Icon Bubble */}
+            <div className="w-8 h-8 rounded-xl bg-[#126768]/10 text-[#126768] flex items-center justify-center shrink-0 mt-0.5">
+              <Cookie size={17} />
+            </div>
+
+            {/* Content & Action Buttons */}
+            <div className="flex-1 min-w-0 pr-0.5">
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-xs sm:text-sm font-bold text-[#123838] tracking-tight">
+                  Cookie Preferences
+                </h4>
+                <button
+                  type="button"
+                  onClick={handleDecline}
+                  className="p-1 rounded-lg text-[#123838]/50 hover:text-[#123838] hover:bg-[#F4F8F8] transition-colors -mr-1"
+                  aria-label="Dismiss cookie notice"
+                >
+                  <X size={15} />
+                </button>
               </div>
 
-              <div className="flex items-center gap-3 w-full md:w-auto">
+              <p className="text-[11px] sm:text-xs text-[#123838]/75 leading-relaxed mb-3">
+                We use cookies to optimize your browsing experience. By continuing, you agree to our{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="text-[#126768] font-semibold underline underline-offset-2 hover:text-[#FF8900] transition-colors"
+                >
+                  Privacy Policy
+                </Link>.
+              </p>
+
+              <div className="flex items-center gap-2">
                 <button
+                  type="button"
                   onClick={handleAccept}
-                  className="flex-1 md:flex-none bg-primary text-secondary px-8 py-3 rounded-full font-bold uppercase tracking-[0.1em] text-[10px] hover:bg-white transition-all duration-300"
+                  className="px-4 py-1.5 rounded-xl bg-[#126768] text-white hover:bg-[#0D5253] transition-all font-bold text-[11px] uppercase tracking-tight shadow-xs cursor-pointer active:scale-95"
                 >
                   Accept
                 </button>
                 <button
-                  onClick={() => setVisible(false)}
-                  className="p-3 text-white/40 hover:text-white transition-colors"
+                  type="button"
+                  onClick={handleDecline}
+                  className="px-3 py-1.5 rounded-xl bg-[#F4F8F8] text-[#123838] hover:bg-[#DCE8E8] transition-all font-semibold text-[11px] cursor-pointer"
                 >
-                  <X size={20} />
+                  Decline
                 </button>
               </div>
             </div>
