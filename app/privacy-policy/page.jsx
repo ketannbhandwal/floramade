@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
       {/* Hero Section */}
       <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-wider">
             <Lock size={13} />
             <span>Data Protection & Privacy</span>
           </div>
@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
 
       {/* Content Document Card */}
       <section className="px-4 sm:px-6 mb-16">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-10 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
+        <div className="max-w-4xl mx-auto bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-10 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
           
           {/* Metadata */}
           <div className="border-b border-[#E0D9C8] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#171717]/60">
@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
           {/* 1. Information We Collect */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 1
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Information We Collect</h2>
@@ -73,11 +73,11 @@ export default function PrivacyPolicyPage() {
             <div className="space-y-3 pl-0 sm:pl-11">
               {/* a. Personal Information */}
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-2">
-                <h3 className="font-bold text-xs uppercase tracking-tight text-[#123D2B]">a. Personal Information</h3>
+                <h3 className="font-bold text-xs uppercase tracking-tight text-[#101D17]">a. Personal Information</h3>
                 <p>When you place an order or contact us, we may collect:</p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                   {["Full name", "Phone number", "Email address", "Shipping & billing address"].map((item, idx) => (
-                    <div key={idx} className="p-2.5 rounded-lg bg-white border border-[#E0D9C8] text-[11px] font-semibold text-[#171717] text-center">
+                    <div key={idx} className="p-2.5 rounded-lg bg-[#F8F4E9] border border-[#E0D9C8] text-[11px] font-semibold text-[#171717] text-center">
                       {item}
                     </div>
                   ))}
@@ -89,13 +89,13 @@ export default function PrivacyPolicyPage() {
 
               {/* b. Payment Information */}
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-2">
-                <h3 className="font-bold text-xs uppercase tracking-tight text-[#123D2B]">b. Payment Information</h3>
+                <h3 className="font-bold text-xs uppercase tracking-tight text-[#101D17]">b. Payment Information</h3>
                 <p>
                   We do <strong>NOT</strong> store your card or bank details. All payments are securely processed through certified third-party payment gateways such as:
                 </p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {["Razorpay", "Cashfree", "PCI-DSS Compliant Gateways"].map((gateway, idx) => (
-                    <span key={idx} className="px-3 py-1 rounded-md bg-white border border-[#E0D9C8] text-xs font-semibold text-[#171717]">
+                    <span key={idx} className="px-3 py-1 rounded-md bg-[#F8F4E9] border border-[#E0D9C8] text-xs font-semibold text-[#171717]">
                       {gateway}
                     </span>
                   ))}
@@ -110,7 +110,7 @@ export default function PrivacyPolicyPage() {
           {/* 2. How We Use Your Information */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 2
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">How We Use Your Information</h2>
@@ -123,7 +123,7 @@ export default function PrivacyPolicyPage() {
               <li>To improve our products, customer experience, and formulations.</li>
               <li>To prevent fraud, misuse, or unauthorized transactions.</li>
             </ul>
-            <p className="text-xs font-semibold text-[#123D2B]">
+            <p className="text-xs font-semibold text-[#101D17]">
               We do not sell or rent your personal information to third parties.
             </p>
           </div>
@@ -131,7 +131,7 @@ export default function PrivacyPolicyPage() {
           {/* 3. Data Security */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 3
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Data Security</h2>
@@ -159,7 +159,7 @@ export default function PrivacyPolicyPage() {
           {/* 4. Data Sharing */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 4
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Data Sharing</h2>
@@ -167,17 +167,17 @@ export default function PrivacyPolicyPage() {
             <p>We may share limited information only with trusted service providers:</p>
             <div className="grid sm:grid-cols-3 gap-3 pt-1">
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1 text-center">
-                <Truck size={20} className="text-[#123D2B] mx-auto" />
+                <Truck size={20} className="text-[#101D17] mx-auto" />
                 <h4 className="font-bold text-xs text-[#171717]">Delivery Partners</h4>
                 <p className="text-[11px] text-[#171717]/70">(for shipping orders)</p>
               </div>
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1 text-center">
-                <CreditCard size={20} className="text-[#123D2B] mx-auto" />
+                <CreditCard size={20} className="text-[#101D17] mx-auto" />
                 <h4 className="font-bold text-xs text-[#171717]">Payment Gateways</h4>
                 <p className="text-[11px] text-[#171717]/70">(for transactions)</p>
               </div>
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1 text-center">
-                <Headphones size={20} className="text-[#123D2B] mx-auto" />
+                <Headphones size={20} className="text-[#101D17] mx-auto" />
                 <h4 className="font-bold text-xs text-[#171717]">Customer Support</h4>
                 <p className="text-[11px] text-[#171717]/70">(for assistance)</p>
               </div>
@@ -190,7 +190,7 @@ export default function PrivacyPolicyPage() {
           {/* 5. Cookies & Tracking */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 5
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Cookies & Tracking</h2>
@@ -209,7 +209,7 @@ export default function PrivacyPolicyPage() {
           {/* 6. Your Rights */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 6
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Your Rights</h2>
@@ -221,14 +221,14 @@ export default function PrivacyPolicyPage() {
               <li>Stop promotional communication</li>
             </ul>
             <div className="pt-1 text-xs">
-              Contact us at: <a href="mailto:floramade517@gmail.com" className="font-semibold text-[#123D2B] underline">floramade517@gmail.com</a>
+              Contact us at: <a href="mailto:floramade517@gmail.com" className="font-semibold text-[#101D17] underline">floramade517@gmail.com</a>
             </div>
           </div>
 
           {/* 7. Policy Updates */}
           <div className="space-y-4 pt-6 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#123D2B]/10 text-[#123D2B] font-bold text-sm flex items-center justify-center shrink-0">
+              <span className="w-8 h-8 rounded-xl bg-[#101D17]/10 text-[#101D17] font-bold text-sm flex items-center justify-center shrink-0">
                 7
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Policy Updates</h2>
@@ -241,14 +241,14 @@ export default function PrivacyPolicyPage() {
           {/* Contact Details Box */}
           <div className="p-5 sm:p-6 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-3">
             <div className="font-bold text-sm text-[#171717] flex items-center gap-2">
-              <Building2 size={16} className="text-[#123D2B]" />
+              <Building2 size={16} className="text-[#101D17]" />
               <span>Floramade Healthcare Pvt. Ltd.</span>
             </div>
             <div className="flex items-start gap-2 text-xs text-[#171717]/80">
-              <MapPin size={15} className="text-[#123D2B] shrink-0 mt-0.5" />
+              <MapPin size={15} className="text-[#101D17] shrink-0 mt-0.5" />
               <span>Rohini Sector 21, New Delhi - 110086, India</span>
             </div>
-            <div className="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-[#123D2B]">
+            <div className="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-[#101D17]">
               <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
                 <Mail size={14} /> floramade517@gmail.com
               </a>

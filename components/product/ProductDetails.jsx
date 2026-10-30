@@ -486,12 +486,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12 mb-4 sm:mb-6">
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#171717]/70 py-2.5 border-b border-[#E0D9C8]">
           <div className="flex items-center gap-1.5 overflow-hidden">
-            <Link href="/" className="hover:text-[#123D2B] transition-colors flex items-center gap-1">
+            <Link href="/" className="hover:text-[#101D17] transition-colors flex items-center gap-1">
               <Home size={13} />
               <span>Home</span>
             </Link>
             <span>›</span>
-            <Link href="/collection" className="hover:text-[#123D2B] transition-colors">
+            <Link href="/collection" className="hover:text-[#101D17] transition-colors">
               <span>Products</span>
             </Link>
             <span>›</span>
@@ -505,7 +505,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("facebook")} 
-              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#123D2B] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#101D17] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
               title="Share on Facebook"
             >
               <FaFacebookF size={10} />
@@ -521,7 +521,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("copy")} 
-              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#123D2B] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] hover:bg-[#101D17] hover:text-white flex items-center justify-center transition-all text-[#171717] text-[10px]"
               title="Copy Link"
             >
               <Copy size={11} />
@@ -551,12 +551,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#123D2B] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
                   size={16} 
-                  className={isInWishlist(product._id) ? "fill-[#872B10] text-[#123D2B]" : "text-[#171717]/60"} 
+                  className={isInWishlist(product._id) ? "fill-[#872B10] text-[#101D17]" : "text-[#171717]/60"} 
                 />
               </button>
 
@@ -580,7 +580,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length)}
                     aria-label="Previous Image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronLeft size={18} />
                   </button>
@@ -588,7 +588,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev + 1) % productImages.length)}
                     aria-label="Next Image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9]/95 hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronRight size={18} />
                   </button>
@@ -607,8 +607,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     aria-label={`View thumbnail ${idx + 1}`}
                     className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#F8F4E9] flex-shrink-0 transition-all p-1 ${
                       activeIdx === idx
-                        ? "border-[#123D2B] shadow-sm scale-105"
-                        : "border-[#E0D9C8] opacity-75 hover:opacity-100 hover:border-[#123D2B]/50"
+                        ? "border-[#101D17] shadow-sm scale-105"
+                        : "border-[#E0D9C8] opacity-75 hover:opacity-100 hover:border-[#101D17]/50"
                     }`}
                   >
                     <Image
@@ -633,7 +633,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* Title & Category Tag */}
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-bold text-[#123D2B] uppercase tracking-tight bg-[#123D2B]/10 px-2.5 py-0.5 rounded-full border border-[#123D2B]/15">
+                <span className="text-[10px] font-bold text-[#101D17] uppercase tracking-tight bg-[#101D17]/10 px-2.5 py-0.5 rounded-full border border-[#101D17]/15">
                   🌿 {product.category || "Ayurvedic Formulation"}
                 </span>
                 <span className="text-[10px] font-semibold text-[#171717]/60 uppercase tracking-tight">
@@ -668,9 +668,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 return (
                   <div
                     key={idx}
-                    className="p-2.5 sm:p-3 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#123D2B]/50 transition-colors"
+                    className="p-2.5 sm:p-3 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#101D17]/50 transition-colors"
                   >
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white border border-[#E0D9C8] text-[#D4AF55] flex items-center justify-center shrink-0 p-1.5 overflow-hidden shadow-xs">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] text-[#D4AF55] flex items-center justify-center shrink-0 p-1.5 overflow-hidden shadow-xs">
                       {badge.image ? (
                         <img 
                           src={badge.image} 
@@ -726,12 +726,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         onClick={() => setSelectedPack(pack)}
                         className={`p-3 rounded-2xl border-2 text-left transition-all ${
                           isSelected
-                            ? "border-[#123D2B] bg-white ring-2 ring-[#39160D]/10 shadow-xs"
-                            : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#123D2B]/40"
+                            ? "border-[#101D17] bg-[#F8F4E9] ring-2 ring-[#101D17]/15 shadow-xs"
+                            : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#101D17]/40"
                         }`}
                       >
                         <span className="block text-xs font-bold text-[#171717] tracking-tight">{pack.label}</span>
-                        <span className="block text-sm font-bold text-[#123D2B] mt-0.5">₹{pack.price}</span>
+                        <span className="block text-sm font-bold text-[#101D17] mt-0.5">₹{pack.price}</span>
                       </button>
                     );
                   })}
@@ -770,7 +770,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="h-12 sm:h-13 rounded-2xl bg-[#123D2B] text-white flex items-center justify-center gap-2 hover:bg-[#0A2A1A] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm hover:shadow-md cursor-pointer"
+                className="h-12 sm:h-13 rounded-2xl bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#0A2A1A] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm hover:shadow-md cursor-pointer"
               >
                 <ShoppingBag size={17} />
                 <span>Add to Bag</span>
@@ -790,7 +790,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <div className="space-y-2.5 pt-2">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xs sm:text-sm font-bold text-[#171717] uppercase tracking-tight">Offers for You</h3>
-                  <span className="text-[10px] text-[#123D2B] font-semibold">Click to apply coupon</span>
+                  <span className="text-[10px] text-[#101D17] font-semibold">Click to apply coupon</span>
                 </div>
                 
                 <div className="space-y-2">
@@ -798,12 +798,12 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     <div 
                       key={coupon.id || idx}
                       onClick={() => applyAndCopyCoupon(coupon)}
-                      className="p-3 sm:p-3.5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] hover:border-[#123D2B]/50 flex items-center justify-between gap-3 shadow-xs cursor-pointer transition-all hover:scale-[1.01]"
+                      className="p-3 sm:p-3.5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] hover:border-[#101D17]/50 flex items-center justify-between gap-3 shadow-xs cursor-pointer transition-all hover:scale-[1.01]"
                     >
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           {coupon.badge && (
-                            <span className="text-[10px] font-bold text-white bg-[#123D2B] px-2 py-0.5 rounded-md uppercase tracking-tight">
+                            <span className="text-[10px] font-bold text-white bg-[#101D17] px-2 py-0.5 rounded-md uppercase tracking-tight">
                               {coupon.badge}
                             </span>
                           )}
@@ -821,7 +821,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                           e.stopPropagation();
                           applyAndCopyCoupon(coupon);
                         }}
-                        className="px-3 py-1.5 rounded-xl border border-[#123D2B]/20 bg-white hover:bg-[#123D2B] hover:text-white text-[#171717] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl border border-[#101D17]/20 bg-[#F8F4E9] hover:bg-[#101D17] hover:text-white text-[#171717] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
                         title="Copy and Apply Coupon"
                       >
                         <span>{coupon.code}</span>
@@ -841,10 +841,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-[#E0D9C8]/30 transition-colors cursor-pointer select-none"
                 >
                   <span>Description</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.description ? "rotate-45 text-[#123D2B]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.description ? "rotate-45 text-[#101D17]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.description && (
@@ -869,10 +869,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-[#E0D9C8]/30 transition-colors cursor-pointer select-none"
                 >
                   <span>How to Use</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.howToUse ? "rotate-45 text-[#123D2B]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.howToUse ? "rotate-45 text-[#101D17]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.howToUse && (
@@ -885,7 +885,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#171717]/85 leading-relaxed border-t border-[#E0D9C8]/50 space-y-2">
-                        <p className="font-semibold text-[#123D2B]">🌿 Recommended Daily Ritual:</p>
+                        <p className="font-semibold text-[#101D17]">🌿 Recommended Daily Ritual:</p>
                         <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#171717]/80">
                           <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
                           <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
@@ -902,10 +902,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-white transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#171717] hover:bg-[#E0D9C8]/30 transition-colors cursor-pointer select-none"
                 >
                   <span>Ingredients</span>
-                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#123D2B]" : ""}`} />
+                  <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#101D17]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
                   {accordionOpen.ingredients && (
@@ -918,7 +918,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#171717]/85 leading-relaxed border-t border-[#E0D9C8]/50 space-y-2.5">
-                        <p className="font-semibold text-[#123D2B]">🌿 100% Pure Botanical Ingredients:</p>
+                        <p className="font-semibold text-[#101D17]">🌿 100% Pure Botanical Ingredients:</p>
                         <div className="flex flex-wrap gap-1.5">
                           {(product.ingredients && product.ingredients.length > 0 
                             ? product.ingredients 
@@ -928,7 +928,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                             return (
                               <span 
                                 key={idx}
-                                className="inline-block px-2.5 py-1 rounded-full bg-white border border-[#E0D9C8] text-xs font-semibold text-[#171717] capitalize tracking-tight"
+                                className="inline-block px-2.5 py-1 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] text-xs font-semibold text-[#171717] capitalize tracking-tight"
                               >
                                 {name}
                               </span>
@@ -1009,7 +1009,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
       <section className="py-14 sm:py-18 bg-[#F8F4E9] border-t border-[#E0D9C8]/80">
         <div className="max-w-[840px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-tight">
+            <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-tight">
               Got Questions?
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#171717] tracking-tight mt-2">
@@ -1028,16 +1028,16 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               return (
                 <div 
                   key={i}
-                  className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] overflow-hidden shadow-xs transition-colors hover:border-[#123D2B]/40"
+                  className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] overflow-hidden shadow-xs transition-colors hover:border-[#101D17]/40"
                 >
                   <button
                     type="button"
                     onClick={() => toggleFaq(i)}
                     className="w-full flex items-center gap-3 p-4 sm:p-5 cursor-pointer text-left text-xs sm:text-sm font-bold text-[#171717] hover:bg-[#F8F4E9]/40 transition-colors select-none"
                   >
-                    <span className="text-[#123D2B] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[#101D17] font-bold text-xs min-w-[24px]">{String(i + 1).padStart(2, "0")}</span>
                     <span className="flex-1">{faq.question}</span>
-                    <div className={`flex-shrink-0 w-6 h-6 rounded-full bg-[#123D2B] flex items-center justify-center text-white transition-all duration-300 ease-in-out ${isOpen ? "rotate-45 bg-[#123D2B]" : ""}`}>
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-full bg-[#101D17] flex items-center justify-center text-white transition-all duration-300 ease-in-out ${isOpen ? "rotate-45 bg-[#101D17]" : ""}`}>
                       <Plus size={13} />
                     </div>
                   </button>
@@ -1098,9 +1098,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         <Star key={i} size={12} className={i < stars ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"} />
                       ))}
                     </div>
-                    <div className="flex-1 h-2 bg-[#123D2B]/10 rounded-full overflow-hidden">
+                    <div className="flex-1 h-2 bg-[#101D17]/10 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-[#123D2B] rounded-full transition-all duration-500" 
+                        className="h-full bg-[#101D17] rounded-full transition-all duration-500" 
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -1113,7 +1113,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div>
               <button 
                 onClick={() => setReviewOpen(true)}
-                className="px-6 py-3 bg-[#123D2B] text-white rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
+                className="px-6 py-3 bg-[#101D17] text-white rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
               >
                 Write a review
               </button>
@@ -1157,11 +1157,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 </div>
 
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#123D2B] font-bold text-xs border border-[#E0D9C8]">
+                  <div className="w-8 h-8 rounded-full bg-[#F8F4E9] flex items-center justify-center text-[#101D17] font-bold text-xs border border-[#E0D9C8]">
                     {review.name?.charAt(0) || "U"}
                   </div>
                   <span className="text-sm font-bold text-[#171717] capitalize">{review.name}</span>
-                  <span className="px-2 py-0.5 bg-[#123D2B]/10 text-[#123D2B] border border-[#123D2B]/20 text-[10px] font-bold rounded-full">
+                  <span className="px-2 py-0.5 bg-[#101D17]/10 text-[#101D17] border border-[#101D17]/20 text-[10px] font-bold rounded-full">
                     ✓ Verified Buyer
                   </span>
                 </div>
@@ -1195,7 +1195,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <label className="block text-xs font-bold text-[#171717] uppercase tracking-tight">
                 Your Rating <span className="text-red-500">*</span>
               </label>
-              <span className="text-xs font-semibold text-[#123D2B]">
+              <span className="text-xs font-semibold text-[#101D17]">
                 {ratingLabels[hoverRating || reviewData.rating]}
               </span>
             </div>
@@ -1233,7 +1233,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 placeholder="e.g. Ramesh Kumar"
                 value={reviewData.name}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, name: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#123D2B]"
+                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#101D17]"
               />
             </div>
 
@@ -1246,7 +1246,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 placeholder="e.g. Excellent Ayurvedic remedy!"
                 value={reviewData.title}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, title: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#123D2B]"
+                className="h-11 w-full rounded-xl border border-[#E0D9C8] bg-[#F8F4E9] px-3.5 text-sm text-[#171717] outline-none transition placeholder:text-[#171717]/35 focus:border-[#101D17]"
               />
             </div>
 
@@ -1275,14 +1275,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   </button>
                 </div>
               ) : (
-                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#E0D9C8] hover:border-[#123D2B]/40 bg-[#F8F4E9] cursor-pointer transition-all">
+                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#E0D9C8] hover:border-[#101D17]/40 bg-[#F8F4E9] cursor-pointer transition-all">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleImageSelect(e.target.files?.[0])}
                     className="hidden"
                   />
-                  <Camera size={16} className="text-[#123D2B]" />
+                  <Camera size={16} className="text-[#101D17]" />
                   <span className="text-xs font-semibold text-[#171717]">Click to upload a photo (Optional)</span>
                 </label>
               )}
@@ -1295,7 +1295,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <textarea
                 value={reviewData.comment}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, comment: e.target.value }))}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E0D9C8] focus:outline-none focus:border-[#123D2B] min-h-[100px] bg-[#F8F4E9] text-sm text-[#171717] placeholder:text-[#171717]/35 resize-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E0D9C8] focus:outline-none focus:border-[#101D17] min-h-[100px] bg-[#F8F4E9] text-sm text-[#171717] placeholder:text-[#171717]/35 resize-none transition-all"
                 placeholder="Share your experience with this product..."
                 rows={3}
               />
@@ -1306,7 +1306,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             type="button"
             onClick={handleSubmitReview}
             disabled={uploading || !reviewData.name.trim() || !reviewData.comment.trim()}
-            className="w-full h-11 rounded-full bg-[#123D2B] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-11 rounded-full bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] disabled:opacity-50 disabled:cursor-not-allowed shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
           >
             {uploading ? (
               <span>Submitting Review...</span>
@@ -1352,7 +1352,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           <button 
             type="button"
             onClick={buyNow}
-            className="w-full h-11 rounded-full bg-[#123D2B] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
+            className="w-full h-11 rounded-full bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
           >
             Continue to Payment
           </button>

@@ -145,7 +145,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
       <div className="mx-auto max-w-[1360px]">
         {/* Centered Header Section - Matches Reference 1:1 with Elevated Floramade Style */}
         <div className="mb-10 sm:mb-14 text-center max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 mb-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-tight text-[#123D2B] bg-[#123D2B]/10 px-3.5 py-1 rounded-full border border-[#123D2B]/15">
+          <span className="inline-flex items-center gap-1.5 mb-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-tight text-[#101D17] bg-[#101D17]/10 px-3.5 py-1 rounded-full border border-[#101D17]/15">
             🌿 {pre}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#171717] leading-tight">
@@ -163,7 +163,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollPrev}
             aria-label="Previous testimonial"
-            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E0D9C8] bg-white text-[#171717] shadow-md hover:bg-[#123D2B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
+            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E0D9C8] bg-[#F8F4E9] text-[#171717] shadow-md hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <ChevronLeft size={20} />
           </button>
@@ -177,7 +177,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                   className="min-w-0 flex-[0_0_84%] xs:flex-[0_0_80%] sm:flex-[0_0_55%] lg:flex-[0_0_33.333%] px-2.5 sm:px-3"
                 >
                   {/* Testimonial Card - Centered Avatar at Top, Centered Text, Centered Signature */}
-                  <div className="h-full flex flex-col justify-between items-center text-center rounded-3xl border border-[#E0D9C8] bg-white/95 p-7 sm:p-8 shadow-[0_4px_20px_rgba(18,61,43,0.04)] hover:shadow-[0_14px_36px_rgba(18,61,43,0.10)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="h-full flex flex-col justify-between items-center text-center rounded-3xl border border-[#E0D9C8] bg-[#F8F4E9] p-7 sm:p-8 shadow-[0_4px_20px_rgba(18,61,43,0.04)] hover:shadow-[0_14px_36px_rgba(18,61,43,0.10)] hover:-translate-y-1 transition-all duration-300">
                     
                     {/* Top Section: Centered Customer Avatar + 5 Golden Stars */}
                     <div className="w-full flex flex-col items-center">
@@ -212,11 +212,11 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                     </p>
 
                     {/* Bottom Section: Centered Author Signature — Name + Verified Badge */}
-                    <div className="pt-4 border-t border-[#123D2B]/10 w-full text-center">
+                    <div className="pt-4 border-t border-[#101D17]/10 w-full text-center">
                       <p className="text-xs sm:text-sm md:text-[15px] font-bold text-[#171717] tracking-tight">
                         — {rev.name}
                       </p>
-                      <div className="flex items-center justify-center gap-1 text-[11px] text-[#123D2B] font-semibold tracking-tight uppercase mt-1">
+                      <div className="flex items-center justify-center gap-1 text-[11px] text-[#101D17] font-semibold tracking-tight uppercase mt-1">
                         <CheckCircle2 size={12} className="text-[#2E6930] flex-shrink-0" />
                         <span>{rev.role || "Verified Buyer"}</span>
                         {rev.location && (
@@ -239,7 +239,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollNext}
             aria-label="Next testimonial"
-            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E0D9C8] bg-white text-[#171717] shadow-md hover:bg-[#123D2B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
+            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E0D9C8] bg-[#F8F4E9] text-[#171717] shadow-md hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <ChevronRight size={20} />
           </button>
@@ -251,7 +251,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollPrev}
             aria-label="Previous testimonial"
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E0D9C8] bg-white text-[#171717] shadow-sm active:scale-90"
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E0D9C8] bg-[#F8F4E9] text-[#171717] shadow-sm active:scale-90"
           >
             <ChevronLeft size={16} />
           </button>
@@ -265,8 +265,8 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   selectedIndex === idx
-                    ? "w-8 bg-[#123D2B]"
-                    : "w-2 bg-[#123D2B]/25 hover:bg-[#123D2B]/50"
+                    ? "w-8 bg-[#101D17]"
+                    : "w-2 bg-[#101D17]/25 hover:bg-[#101D17]/50"
                 }`}
               />
             ))}
@@ -276,7 +276,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollNext}
             aria-label="Next testimonial"
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E0D9C8] bg-white text-[#171717] shadow-sm active:scale-90"
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E0D9C8] bg-[#F8F4E9] text-[#171717] shadow-sm active:scale-90"
           >
             <ChevronRight size={16} />
           </button>

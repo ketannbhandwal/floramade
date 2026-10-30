@@ -62,7 +62,7 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
         
         {/* Active Progress Line */}
         <div
-          className="absolute top-4 left-6 sm:left-8 h-1 bg-[#123D2B] -translate-y-1/2 z-0 rounded-full transition-all duration-700 ease-out"
+          className="absolute top-4 left-6 sm:left-8 h-1 bg-[#101D17] -translate-y-1/2 z-0 rounded-full transition-all duration-700 ease-out"
           style={{ width: `calc(${progressPercent}% * (100% - 3rem) / 100)` }}
         />
 
@@ -80,9 +80,9 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
                 <div
                   className={`h-8 w-8 sm:h-9 sm:w-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 relative ${
                     isCompleted
-                      ? "bg-[#123D2B] text-white shadow-xs"
+                      ? "bg-[#101D17] text-white shadow-xs"
                       : isCurrent
-                      ? "bg-[#123D2B] text-white ring-4 ring-[#123D2B]/20 shadow-md shadow-[#123D2B]/20"
+                      ? "bg-[#101D17] text-white ring-4 ring-[#101D17]/20 shadow-md shadow-[#101D17]/20"
                       : "bg-white border-2 border-[#E0D9C8] text-[#171717]/40"
                   }`}
                 >
@@ -94,7 +94,7 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
 
                   {/* Pulsing glow for current stage */}
                   {isCurrent && (
-                    <span className="absolute inset-0 rounded-full bg-[#123D2B] animate-ping opacity-25 pointer-events-none" />
+                    <span className="absolute inset-0 rounded-full bg-[#101D17] animate-ping opacity-25 pointer-events-none" />
                   )}
                 </div>
 
@@ -103,7 +103,7 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
                   <p
                     className={`text-[11px] sm:text-xs font-bold tracking-tight leading-tight ${
                       isCurrent
-                        ? "text-[#123D2B]"
+                        ? "text-[#101D17]"
                         : isCompleted
                         ? "text-[#171717]"
                         : "text-[#171717]/40"

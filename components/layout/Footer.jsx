@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone, MapPin, Leaf, CreditCard, Lock, Headphones } from "lucide-react";
 import Image from "next/image";
@@ -5,11 +7,84 @@ import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-white text-[#171717] overflow-hidden mt-16 md:mt-24">
+    <footer className="relative bg-[#F8F4E9] text-[#171717] overflow-hidden mt-16 md:mt-24">
       {/* =========================================================================
-          1. 4 TRUST BADGES STRIP (White Background with #D4AF55 Gold Icons)
+          0. STAY CONNECTED WITH FLORAMADE (Theme Reference Design Strip)
           ========================================================================= */}
-      <div className="border-t border-b border-[#E0D9C8] py-8 sm:py-10 bg-white">
+      <div className="py-12 sm:py-16 bg-[#F8F4E9] border-t border-[#E0D9C8] text-center">
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="max-w-xl mx-auto space-y-2">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#171717] tracking-tight">
+              Stay Connected With Floramade
+            </h3>
+            <p className="text-xs sm:text-sm text-[#171717]/75 font-normal">
+              हमारे नए प्रोडक्ट्स और ऑफर्स की जानकारी पाएं।
+            </p>
+            
+            {/* Newsletter Subscription Form */}
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Thank you for subscribing to Floramade!");
+              }}
+              className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2 max-w-md mx-auto"
+            >
+              <input 
+                type="email" 
+                placeholder="Enter your email address" 
+                required
+                className="w-full sm:flex-1 px-4 py-2.5 rounded-full bg-white border border-[#E0D9C8] text-xs sm:text-sm text-[#171717] placeholder-[#171717]/40 focus:outline-none focus:border-[#D4AF55]"
+              />
+              <button 
+                type="submit"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#D4AF55] hover:bg-[#C49B3D] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm active:scale-95 shrink-0"
+              >
+                Subscribe
+              </button>
+            </form>
+
+            {/* Follow Us Strip */}
+            <div className="pt-4 flex items-center justify-center gap-3">
+              <span className="text-xs font-semibold text-[#171717]/70">Follow Us</span>
+              <div className="flex items-center gap-2">
+                <a 
+                  href="https://www.facebook.com/share/1HuEXx3gQh/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-7 h-7 rounded-full bg-[#101D17] text-white hover:bg-[#D4AF55] transition-colors flex items-center justify-center text-xs"
+                  aria-label="Facebook"
+                >
+                  <FaFacebookF size={11} />
+                </a>
+                <a 
+                  href="https://www.instagram.com/floramadeofficial/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-7 h-7 rounded-full bg-[#101D17] text-white hover:bg-[#D4AF55] transition-colors flex items-center justify-center text-xs"
+                  aria-label="Instagram"
+                >
+                  <FaInstagram size={12} />
+                </a>
+                <a 
+                  href="https://wa.me/919220251059" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-7 h-7 rounded-full bg-[#101D17] text-white hover:bg-[#25D366] transition-colors flex items-center justify-center text-xs"
+                  aria-label="WhatsApp"
+                >
+                  <FaWhatsapp size={13} />
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          1. 4 TRUST BADGES STRIP (Cream Background with #D4AF55 Gold Icons)
+          ========================================================================= */}
+      <div className="border-t border-b border-[#E0D9C8] py-8 sm:py-10 bg-[#F8F4E9]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             
@@ -18,7 +93,7 @@ export default function Footer() {
               <div className="w-12 h-12 flex items-center justify-center text-[#D4AF55] transition-transform duration-300 group-hover:scale-110">
                 <Leaf size={32} strokeWidth={1.8} />
               </div>
-              <h4 className="text-sm sm:text-base font-bold text-[#123D2B] tracking-tight">100% Natural Products</h4>
+              <h4 className="text-sm sm:text-base font-bold text-[#101D17] tracking-tight">100% Natural Products</h4>
               <p className="text-xs text-[#171717]/70">Proven Ayurvedic products</p>
             </div>
 
@@ -27,7 +102,7 @@ export default function Footer() {
               <div className="w-12 h-12 flex items-center justify-center text-[#D4AF55] transition-transform duration-300 group-hover:scale-110">
                 <CreditCard size={32} strokeWidth={1.8} />
               </div>
-              <h4 className="text-sm sm:text-base font-bold text-[#123D2B] tracking-tight">Easy Payment Methods</h4>
+              <h4 className="text-sm sm:text-base font-bold text-[#101D17] tracking-tight">Easy Payment Methods</h4>
               <p className="text-xs text-[#171717]/70">Pay Through Net-Banking, Cards, UPI or COD</p>
             </div>
 
@@ -36,7 +111,7 @@ export default function Footer() {
               <div className="w-12 h-12 flex items-center justify-center text-[#D4AF55] transition-transform duration-300 group-hover:scale-110">
                 <Lock size={32} strokeWidth={1.8} />
               </div>
-              <h4 className="text-sm sm:text-base font-bold text-[#123D2B] tracking-tight">Secure Website</h4>
+              <h4 className="text-sm sm:text-base font-bold text-[#101D17] tracking-tight">Secure Website</h4>
               <p className="text-xs text-[#171717]/70">SSL Secured Website, Order With Confidence</p>
             </div>
 
@@ -45,7 +120,7 @@ export default function Footer() {
               <div className="w-12 h-12 flex items-center justify-center text-[#D4AF55] transition-transform duration-300 group-hover:scale-110">
                 <Headphones size={32} strokeWidth={1.8} />
               </div>
-              <h4 className="text-sm sm:text-base font-bold text-[#123D2B] tracking-tight">24/7 Customer Support</h4>
+              <h4 className="text-sm sm:text-base font-bold text-[#101D17] tracking-tight">24/7 Customer Support</h4>
               <p className="text-xs text-[#171717]/70">Got Questions? Just Email, WhatsApp or Call Us</p>
             </div>
 
@@ -63,7 +138,7 @@ export default function Footer() {
               href="https://www.facebook.com/share/1HuEXx3gQh/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white hover:text-[#123D2B] transition-all flex items-center justify-center"
+              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white hover:text-[#101D17] transition-all flex items-center justify-center"
               aria-label="Facebook"
             >
               <FaFacebookF size={13} />
@@ -72,7 +147,7 @@ export default function Footer() {
               href="https://www.instagram.com/floramadeofficial/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white hover:text-[#123D2B] transition-all flex items-center justify-center"
+              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white hover:text-[#101D17] transition-all flex items-center justify-center"
               aria-label="Instagram"
             >
               <FaInstagram size={14} />
@@ -111,7 +186,7 @@ export default function Footer() {
                   href="https://www.instagram.com/floramadeofficial/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#123D2B] transition-all flex items-center justify-center text-white"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#101D17] transition-all flex items-center justify-center text-white"
                   aria-label="Instagram"
                 >
                   <FaInstagram size={14} />
@@ -120,7 +195,7 @@ export default function Footer() {
                   href="https://www.facebook.com/share/1HuEXx3gQh/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#123D2B] transition-all flex items-center justify-center text-white"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#101D17] transition-all flex items-center justify-center text-white"
                   aria-label="Facebook"
                 >
                   <FaFacebookF size={12} />
@@ -136,7 +211,7 @@ export default function Footer() {
                 </a>
                 <a 
                   href="mailto:floramade517@gmail.com" 
-                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#123D2B] transition-all flex items-center justify-center text-white"
+                  className="h-9 w-9 rounded-full bg-white/10 hover:bg-white hover:text-[#101D17] transition-all flex items-center justify-center text-white"
                   aria-label="Email"
                 >
                   <Mail size={14} />

@@ -29,7 +29,7 @@ export default function ShippingPolicyPage() {
       {/* Hero Section */}
       <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-wider">
             <Truck size={13} />
             <span>Shipping & Delivery Policy</span>
           </div>
@@ -44,7 +44,7 @@ export default function ShippingPolicyPage() {
 
       {/* Content Document Card */}
       <section className="px-4 sm:px-6 mb-16">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-9 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
+        <div className="max-w-4xl mx-auto bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-9 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
           
           {/* Top Quick Facts */}
           <div className="border-b border-[#E0D9C8] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#171717]/60">
@@ -59,7 +59,7 @@ export default function ShippingPolicyPage() {
           {/* Key Shipping Highlights */}
           <div className="grid sm:grid-cols-3 gap-3.5">
             <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1.5">
-              <div className="w-7 h-7 rounded-lg bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center">
                 <Clock size={15} />
               </div>
               <h3 className="font-bold text-xs uppercase tracking-tight text-[#171717]">Shipping Timelines</h3>
@@ -69,7 +69,7 @@ export default function ShippingPolicyPage() {
             </div>
 
             <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1.5">
-              <div className="w-7 h-7 rounded-lg bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center">
                 <ShieldCheck size={15} />
               </div>
               <h3 className="font-bold text-xs uppercase tracking-tight text-[#171717]">Hidden Charges</h3>
@@ -79,7 +79,7 @@ export default function ShippingPolicyPage() {
             </div>
 
             <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1.5">
-              <div className="w-7 h-7 rounded-lg bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center">
                 <Package size={15} />
               </div>
               <h3 className="font-bold text-xs uppercase tracking-tight text-[#171717]">Order Tracking</h3>
@@ -103,7 +103,7 @@ export default function ShippingPolicyPage() {
               </div>
 
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1.5">
-                <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold">
+                <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold">
                   After Dispatch
                 </span>
                 <p className="text-xs text-[#171717]/80 leading-relaxed">
@@ -116,7 +116,7 @@ export default function ShippingPolicyPage() {
           {/* Privacy Policy (Summary) */}
           <div className="space-y-4 pt-4 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center">
                 <Lock size={15} />
               </div>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Privacy Policy (Summary)</h2>
@@ -132,7 +132,7 @@ export default function ShippingPolicyPage() {
           {/* Terms of Service */}
           <div className="space-y-4 pt-4 border-t border-[#E0D9C8]/60">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center">
                 <Scale size={15} />
               </div>
               <h2 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">Terms of Service</h2>
@@ -155,8 +155,8 @@ export default function ShippingPolicyPage() {
           </div>
 
           {/* Medical Disclaimer */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#123D2B]/5 border border-[#123D2B]/20 space-y-2">
-            <div className="flex items-center gap-2 text-[#123D2B] font-bold text-xs uppercase tracking-wider">
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#101D17]/5 border border-[#101D17]/20 space-y-2">
+            <div className="flex items-center gap-2 text-[#101D17] font-bold text-xs uppercase tracking-wider">
               <AlertCircle size={15} />
               <span>Medical Disclaimer</span>
             </div>
@@ -168,14 +168,14 @@ export default function ShippingPolicyPage() {
           {/* Contact Details Box */}
           <div className="p-5 sm:p-6 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-3">
             <div className="font-bold text-sm text-[#171717] flex items-center gap-2">
-              <Building2 size={16} className="text-[#123D2B]" />
+              <Building2 size={16} className="text-[#101D17]" />
               <span>Floramade Healthcare Pvt. Ltd.</span>
             </div>
             <div className="flex items-start gap-2 text-xs text-[#171717]/80">
-              <MapPin size={15} className="text-[#123D2B] shrink-0 mt-0.5" />
+              <MapPin size={15} className="text-[#101D17] shrink-0 mt-0.5" />
               <span>Rohini Sector 21, New Delhi - 110086, India</span>
             </div>
-            <div className="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-[#123D2B]">
+            <div className="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-[#101D17]">
               <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
                 <Mail size={14} /> floramade517@gmail.com
               </a>

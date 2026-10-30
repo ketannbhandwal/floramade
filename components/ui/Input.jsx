@@ -16,7 +16,7 @@ export default function Input({ label, error, className, icon, ...props }) {
         )}
         <input
           className={clsx(
-            "h-11 w-full rounded-xl border border-[#E0D9C8] bg-white px-4 text-sm tracking-tight text-[#171717] outline-none transition placeholder:text-[#171717]/30 focus:border-[#123D2B]/40 focus:ring-1 focus:ring-[#39160D]/10 focus:bg-white",
+            "h-11 w-full rounded-xl border border-[#E0D9C8] bg-white px-4 text-sm tracking-tight text-[#171717] outline-none transition placeholder:text-[#171717]/30 focus:border-[#101D17]/40 focus:ring-1 focus:ring-[#39160D]/10 focus:bg-white",
             icon && "pl-11",
             error && "border-red-500/50 focus:border-red-500",
             className

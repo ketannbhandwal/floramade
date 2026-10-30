@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
   if (!validToken) {
     return (
       <div className="w-full pt-4 md:pt-6 pb-20 px-6">
-        <div className="mx-auto max-w-md rounded-[2rem] border border-border bg-white/50 backdrop-blur-sm p-8 shadow-sm text-center">
+        <div className="mx-auto max-w-md rounded-[2rem] border border-border bg-[#F8F4E9]/50 backdrop-blur-sm p-8 shadow-sm text-center">
           <p className="text-red-600">Invalid or expired reset link. Please request a new password reset.</p>
           <Link 
             href="/forgot-password"
@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-[2rem] border border-border bg-white/50 backdrop-blur-sm p-8 shadow-sm"
+          className="rounded-[2rem] border border-border bg-[#F8F4E9]/50 backdrop-blur-sm p-8 shadow-sm"
         >
           {!success ? (
             <>
@@ -115,7 +115,7 @@ export default function ResetPasswordPage() {
                     placeholder="New Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-white/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-[#F8F4E9]/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     required
                     minLength={6}
                   />
@@ -127,7 +127,7 @@ export default function ResetPasswordPage() {
                     placeholder="Confirm New Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-white/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-[#F8F4E9]/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     required
                     minLength={6}
                   />

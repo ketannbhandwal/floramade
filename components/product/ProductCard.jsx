@@ -49,15 +49,15 @@ function ProductCard({ product, index = 0 }) {
     .trim();
 
   return (
-    <div className="group relative flex flex-col h-full bg-white rounded-2xl border border-[#E0D9C8] hover:border-[#D4AF55]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(18,61,43,0.04)] hover:shadow-[0_12px_28px_rgba(18,61,43,0.10)] hover:-translate-y-1">
+    <div className="group relative flex flex-col h-full bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] hover:border-[#D4AF55]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(18,61,43,0.04)] hover:shadow-[0_12px_28px_rgba(18,61,43,0.10)] hover:-translate-y-1">
       
       {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container */}
-      <div className="relative aspect-square w-full flex items-center justify-center bg-white overflow-hidden border-b border-[#E0D9C8]/50">
+      <div className="relative aspect-square w-full flex items-center justify-center bg-[#F8F4E9] overflow-hidden border-b border-[#E0D9C8]/50">
         
         {/* Top-Left: Sleek Terracotta Discount Pill */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 pointer-events-none">
           {hasDiscount ? (
-            <span className="inline-flex items-center gap-1 bg-[#123D2B] text-white text-[9.5px] sm:text-[10px] font-bold uppercase tracking-tight px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs">
+            <span className="inline-flex items-center gap-1 bg-[#101D17] text-white text-[9.5px] sm:text-[10px] font-bold uppercase tracking-tight px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs">
               SAVE ₹{savings.toLocaleString("en-IN")}
             </span>
           ) : (
@@ -71,12 +71,12 @@ function ProductCard({ product, index = 0 }) {
         <button
           type="button"
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#123D2B] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
           aria-label="Save to Wishlist"
         >
           <Heart 
             size={13} 
-            className={isInWishlist(product._id) ? "fill-[#D4AF55] text-[#123D2B]" : "text-[#171717]/60"} 
+            className={isInWishlist(product._id) ? "fill-[#D4AF55] text-[#101D17]" : "text-[#171717]/60"} 
           />
         </button>
 
@@ -97,14 +97,14 @@ function ProductCard({ product, index = 0 }) {
       </div>
 
       {/* 2. BOTTOM STAGE: Clean Warm Info Area with Tight Typography */}
-      <div className="flex flex-col flex-1 justify-between bg-white p-3.5 sm:p-4 text-center">
+      <div className="flex flex-col flex-1 justify-between bg-[#F8F4E9] p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-1.5">
           
           {/* Product Title (Centered, Bold, Tight Tracking) */}
           <Link href={`/product/${product.slug}`} className="block w-full">
             <h3 
               title={cleanName}
-              className="text-[13px] sm:text-[14.5px] font-bold text-[#171717] group-hover:text-[#123D2B] transition-colors tracking-tight truncate px-1"
+              className="text-[13px] sm:text-[14.5px] font-bold text-[#171717] group-hover:text-[#101D17] transition-colors tracking-tight truncate px-1"
             >
               {cleanName}
             </h3>
@@ -123,7 +123,7 @@ function ProductCard({ product, index = 0 }) {
 
           {/* Pricing (Centered, Tight Tracking) */}
           <div className="flex items-baseline justify-center gap-2 pt-0.5 tracking-tight flex-wrap">
-            <span className="text-base sm:text-[17px] font-extrabold text-[#123D2B] tracking-tight">
+            <span className="text-base sm:text-[17px] font-extrabold text-[#101D17] tracking-tight">
               ₹{currentPrice.toLocaleString("en-IN")}
             </span>
             {hasDiscount && (

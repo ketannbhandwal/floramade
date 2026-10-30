@@ -121,10 +121,10 @@ export default function ReviewsPage() {
         
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
           <div className="max-w-3xl mb-16 space-y-4">
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-slate-900 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-light tracking-tight text-[#171717] leading-tight">
               What Our <span className="font-display italic text-accent">Community</span> Says
             </h1>
-            <p className="text-lg text-slate-500 font-light">
+            <p className="text-lg text-[#171717]/70 font-light">
               Real stories from real people who have transformed their wellness journey with Floramade.
             </p>
           </div>
@@ -137,15 +137,15 @@ export default function ReviewsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: (index % 3) * 0.1 }}
-                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 flex flex-col h-full hover:shadow-2xl hover:shadow-amber-900/5 transition-all duration-500"
+                className="group p-8 rounded-[2.5rem] bg-[#F8F4E9] border border-[#E0D9C8] flex flex-col h-full hover:shadow-2xl hover:shadow-amber-900/5 transition-all duration-500"
               >
                 <div className="flex gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} fill="#b18a3b" className="text-[#b18a3b]" />
+                    <Star key={i} size={14} fill="#D4AF55" className="text-[#D4AF55]" />
                   ))}
                 </div>
 
-                <p className="text-lg text-slate-600 leading-relaxed mb-8 flex-grow font-light italic">
+                <p className="text-lg text-[#171717]/80 leading-relaxed mb-8 flex-grow font-light italic">
                   "{rev.text}"
                 </p>
 
@@ -158,8 +158,8 @@ export default function ReviewsPage() {
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900">{rev.name}</h4>
-                    <p className="text-[10px] text-[#b18a3b] font-black uppercase tracking-widest mt-0.5">
+                    <h4 className="font-bold text-[#171717]">{rev.name}</h4>
+                    <p className="text-[10px] text-[#D4AF55] font-black uppercase tracking-widest mt-0.5">
                       {rev.role}
                     </p>
                   </div>
@@ -168,14 +168,14 @@ export default function ReviewsPage() {
             ))}
           </div>
 
-          <div className="mt-20 p-12 rounded-[3rem] bg-[#17140f] text-white text-center space-y-8 relative overflow-hidden">
+          <div className="mt-20 p-12 rounded-[3rem] bg-[#101D17] text-white text-center space-y-8 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-[80px] rounded-full" />
              <div className="relative z-10 space-y-6">
                 <h2 className="text-3xl md:text-4xl font-light">Have a Story to <span className="italic font-display">Share?</span></h2>
                 <p className="text-white/70 max-w-xl mx-auto font-light">
                   We love hearing from our community. Your feedback helps us grow and inspires others on their wellness journey.
                 </p>
-                <button className="bg-white text-[#17140f] px-10 py-4 rounded-full font-bold hover:bg-white/90 transition-all active:scale-95">
+                <button className="bg-[#D4AF55] text-white hover:bg-[#C49B3D] px-10 py-4 rounded-full font-bold hover:bg-white/90 transition-all active:scale-95">
                   Write a Review
                 </button>
              </div>

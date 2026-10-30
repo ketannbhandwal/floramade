@@ -16,7 +16,7 @@ export default function RefundPolicyPage() {
       {/* Hero Section */}
       <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-wider">
             <RefreshCcw size={13} />
             <span>Returns & Cancellations</span>
           </div>
@@ -31,7 +31,7 @@ export default function RefundPolicyPage() {
 
       {/* Content Document Card */}
       <section className="px-4 sm:px-6 mb-16">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-8 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
+        <div className="max-w-4xl mx-auto bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-14 space-y-8 leading-relaxed text-[#171717]/85 text-xs sm:text-sm">
           
           <div className="border-b border-[#E0D9C8] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#171717]/60">
             <div>
@@ -53,17 +53,17 @@ export default function RefundPolicyPage() {
             <p>We accept return or replacement requests within <strong>7 days of delivery</strong> under the following valid conditions:</p>
             <div className="grid sm:grid-cols-3 gap-3 pt-1">
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1">
-                <CheckCircle2 size={16} className="text-[#123D2B]" />
+                <CheckCircle2 size={16} className="text-[#101D17]" />
                 <h4 className="font-bold text-xs text-[#171717]">Damaged / Defective</h4>
                 <p className="text-[11px] text-[#171717]/70">Product arrived broken, unsealed, or leaked during transit.</p>
               </div>
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1">
-                <CheckCircle2 size={16} className="text-[#123D2B]" />
+                <CheckCircle2 size={16} className="text-[#101D17]" />
                 <h4 className="font-bold text-xs text-[#171717]">Incorrect Item</h4>
                 <p className="text-[11px] text-[#171717]/70">You received a different product or variant than ordered.</p>
               </div>
               <div className="p-4 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] space-y-1">
-                <CheckCircle2 size={16} className="text-[#123D2B]" />
+                <CheckCircle2 size={16} className="text-[#101D17]" />
                 <h4 className="font-bold text-xs text-[#171717]">Overcharged Price</h4>
                 <p className="text-[11px] text-[#171717]/70">You were mistakenly charged higher than the product MRP.</p>
               </div>
@@ -85,7 +85,7 @@ export default function RefundPolicyPage() {
           <div className="space-y-3 pt-2 border-t border-[#E0D9C8]/60">
             <h3 className="text-base sm:text-lg font-bold text-[#171717] tracking-tight">3. Order Cancellation Before Dispatch</h3>
             <p>
-              If you wish to cancel an order, you can do so within <strong>24 hours of placing it</strong> or prior to courier handover by emailing us at <a href="mailto:floramade517@gmail.com" className="text-[#123D2B] font-semibold underline">floramade517@gmail.com</a>.
+              If you wish to cancel an order, you can do so within <strong>24 hours of placing it</strong> or prior to courier handover by emailing us at <a href="mailto:floramade517@gmail.com" className="text-[#101D17] font-semibold underline">floramade517@gmail.com</a>.
             </p>
             <p>
               If the cancellation request is accepted before dispatch, 100% of the prepaid amount will be refunded to the original payment method within 5–7 business days.
@@ -106,7 +106,7 @@ export default function RefundPolicyPage() {
             <p className="text-xs text-[#171717]/75">
               Please email us your order number, invoice, and clear photos/unboxing video of the affected product:
             </p>
-            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#123D2B]">
+            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#101D17]">
               <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
                 <Mail size={14} /> floramade517@gmail.com
               </a>

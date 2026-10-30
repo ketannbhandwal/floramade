@@ -66,7 +66,7 @@ export default function LoginPage() {
           Back to shop
         </Link>
 
-        <div className="grid overflow-hidden rounded-[2rem] border border-[#e4dfd5] bg-white shadow-[0_24px_80px_-38px_rgba(35,48,39,0.32)] md:min-h-[590px] md:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid overflow-hidden rounded-[2rem] border border-[#e4dfd5] bg-[#F8F4E9] shadow-[0_24px_80px_-38px_rgba(35,48,39,0.32)] md:min-h-[590px] md:grid-cols-[0.9fr_1.1fr]">
           <aside className="relative hidden flex-col justify-between overflow-hidden bg-[#17140f] p-10 text-white md:flex lg:p-12">
             <div aria-hidden="true" className="absolute -right-24 -top-20 h-80 w-80 rounded-full border border-white/10" />
             <div aria-hidden="true" className="absolute -bottom-40 -left-28 h-96 w-96 rounded-full border border-white/10" />
@@ -80,7 +80,7 @@ export default function LoginPage() {
             </div>
 
             <div className="relative z-10 my-12">
-              <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-[#dfc77f]">
+              <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-[#F8F4E9]/5 text-[#dfc77f]">
                 <Leaf size={20} aria-hidden="true" />
               </span>
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#dfc77f]">Your wellness, your way</p>

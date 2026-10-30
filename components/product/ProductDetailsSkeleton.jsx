@@ -4,7 +4,7 @@ import React from "react";
 
 export default function ProductDetailsSkeleton() {
   return (
-    <div className="w-full bg-white text-[#171717] pb-12 pt-24 md:pt-32 lg:pt-36">
+    <div className="w-full bg-[#F8F4E9] text-[#171717] pb-12 pt-24 md:pt-32 lg:pt-36">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* Breadcrumb Shimmer */}

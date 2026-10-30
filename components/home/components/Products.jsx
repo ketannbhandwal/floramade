@@ -52,7 +52,7 @@ export default function Products({
             <div className="mt-9 sm:mt-12 flex justify-center">
               <Link
                 href="/collection"
-                className="group inline-flex items-center gap-2 rounded-full border border-[#123D2B]/20 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#171717] tracking-tight transition-all hover:bg-[#123D2B] hover:text-white hover:border-[#123D2B] cursor-pointer"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#101D17]/20 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#171717] tracking-tight transition-all hover:bg-[#101D17] hover:text-white hover:border-[#101D17] cursor-pointer"
               >
                 View Complete Collection
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -60,13 +60,13 @@ export default function Products({
             </div>
           </div>
         ) : (
-          <div className="grid overflow-hidden rounded-3xl border border-[#123D2B]/15 bg-[#F8F4E9] md:grid-cols-[.8fr_1.2fr]">
+          <div className="grid overflow-hidden rounded-3xl border border-[#101D17]/15 bg-[#F8F4E9] md:grid-cols-[.8fr_1.2fr]">
             <div className="relative min-h-52 md:min-h-64">
               <Image src="/assets/about.jpg" alt="Traditional herbs and ingredients" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#39160D]/40 to-transparent" />
             </div>
             <div className="flex flex-col items-start justify-center p-7 sm:p-10 lg:p-14">
-              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#123D2B]/10 text-[#171717]"><Leaf size={20} /></span>
+              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#101D17]/10 text-[#171717]"><Leaf size={20} /></span>
               <h3 className="text-2xl font-medium text-[#171717] sm:text-3xl tracking-tight">A thoughtful collection is taking shape.</h3>
               <p className="mt-3 max-w-lg text-sm leading-6 text-[#171717]/65 sm:text-base tracking-tight">Our products will appear here as soon as they’re added to the Floramade catalogue.</p>
             </div>

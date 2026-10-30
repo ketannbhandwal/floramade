@@ -60,19 +60,19 @@ const pillars = [
 export default function AboutContent() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F4E9] text-[#171717] font-sans pb-20 selection:bg-[#123D2B] selection:text-white">
+      <div className="min-h-screen bg-[#F8F4E9] text-[#171717] font-sans pb-20 selection:bg-[#101D17] selection:text-white">
         
         {/* --- 1. HERO HEADER --- */}
         <section className="px-4 sm:px-6 pt-6 pb-12 md:pt-10 md:pb-16 text-center max-w-4xl mx-auto space-y-6">
           <motion.div {...fadeUp} className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-wider">
               <Sparkles size={13} />
               <span>Our Heritage & Philosophy</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#171717] leading-[1.15]">
               Rooted in Ancient Wisdom, <br className="hidden sm:inline" />
-              <span className="font-serif italic text-[#123D2B] font-normal">Refined for Modern Living.</span>
+              <span className="font-serif italic text-[#101D17] font-normal">Refined for Modern Living.</span>
             </h1>
 
             <p className="text-xs sm:text-base text-[#171717]/75 max-w-2xl mx-auto leading-relaxed font-normal">
@@ -95,9 +95,9 @@ export default function AboutContent() {
             ].map((pill, i) => (
               <div 
                 key={i} 
-                className="px-3.5 py-1.5 rounded-full bg-white border border-[#E0D9C8] shadow-2xs flex items-center gap-1.5"
+                className="px-3.5 py-1.5 rounded-full bg-[#F8F4E9] border border-[#E0D9C8] shadow-2xs flex items-center gap-1.5"
               >
-                <Check size={13} className="text-[#123D2B] stroke-[2.5]" />
+                <Check size={13} className="text-[#101D17] stroke-[2.5]" />
                 <span>{pill}</span>
               </div>
             ))}
@@ -122,12 +122,12 @@ export default function AboutContent() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#39160D]/40 via-transparent to-transparent" />
                 
                 {/* Floating Badge */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#E0D9C8] flex items-center justify-between shadow-lg">
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#F8F4E9] backdrop-blur-md border border-[#E0D9C8] flex items-center justify-between shadow-lg">
                   <div>
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-[#123D2B]">Established in Delhi</p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-[#101D17]">Established in Delhi</p>
                     <p className="text-xs font-semibold text-[#171717]">Pure Botanical Wellness</p>
                   </div>
-                  <div className="w-9 h-9 rounded-full bg-[#F8F4E9] text-[#123D2B] flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-[#F8F4E9] text-[#101D17] flex items-center justify-center shrink-0">
                     <Leaf size={18} />
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function AboutContent() {
             {/* Story Content */}
             <motion.div {...fadeUp} className="lg:col-span-7 space-y-6">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#123D2B]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#101D17]">
                   <Globe size={14} />
                   <span>The Floramade Story</span>
                 </div>
@@ -156,12 +156,12 @@ export default function AboutContent() {
               </div>
 
               {/* Quote Card */}
-              <div className="p-5 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs space-y-2 relative overflow-hidden">
-                <Quote size={28} className="text-[#123D2B]/20 absolute right-4 top-4" />
+              <div className="p-5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-2xs space-y-2 relative overflow-hidden">
+                <Quote size={28} className="text-[#101D17]/20 absolute right-4 top-4" />
                 <p className="text-xs sm:text-sm text-[#171717] font-serif italic leading-relaxed">
                   &ldquo;Ayurveda is not simply an ancient remedy; it is the living art of bringing the human constitution into seamless balance with nature.&rdquo;
                 </p>
-                <p className="text-[11px] font-bold text-[#123D2B] uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-[#101D17] uppercase tracking-wider">
                   — The Floramade Guiding Principle
                 </p>
               </div>
@@ -175,10 +175,10 @@ export default function AboutContent() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 my-12 md:my-16">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-white border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-12 relative overflow-hidden space-y-6"
+            className="rounded-3xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs p-6 sm:p-10 md:p-12 relative overflow-hidden space-y-6"
           >
             <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[10px] font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[10px] font-bold uppercase tracking-wider">
                 <Building2 size={12} />
                 <span>Founder's Vision</span>
               </div>
@@ -195,12 +195,12 @@ export default function AboutContent() {
             {/* Signature & Credentials Strip */}
             <div className="pt-4 border-t border-[#E0D9C8]/60 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#123D2B]/10 text-[#123D2B] font-serif font-bold text-lg flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-[#101D17]/10 text-[#101D17] font-serif font-bold text-lg flex items-center justify-center shrink-0">
                   SG
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-[#171717]">Suresh Gaur</h4>
-                  <p className="text-[11px] text-[#123D2B] font-medium">Founder & Visionary, Floramade Healthcare Pvt. Ltd.</p>
+                  <p className="text-[11px] text-[#101D17] font-medium">Founder & Visionary, Floramade Healthcare Pvt. Ltd.</p>
                 </div>
               </div>
               <div className="text-right text-[11px] text-[#171717]/60 hidden sm:block">
@@ -230,9 +230,9 @@ export default function AboutContent() {
                   key={idx}
                   {...fadeUp}
                   transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  className="p-6 rounded-2xl bg-white border border-[#E0D9C8] shadow-2xs hover:shadow-md hover:border-[#123D2B]/40 transition-all duration-300 space-y-3 group"
+                  className="p-6 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-2xs hover:shadow-md hover:border-[#101D17]/40 transition-all duration-300 space-y-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#F8F4E9] text-[#123D2B] border border-[#E0D9C8] flex items-center justify-center group-hover:bg-[#123D2B] group-hover:text-white transition-colors duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-[#F8F4E9] text-[#101D17] border border-[#E0D9C8] flex items-center justify-center group-hover:bg-[#101D17] group-hover:text-white transition-colors duration-300">
                     <Icon size={20} />
                   </div>
                   <h3 className="font-bold text-sm text-[#171717] tracking-tight pt-1">
@@ -252,10 +252,10 @@ export default function AboutContent() {
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-white border border-[#E0D9C8] p-8 sm:p-12 space-y-8"
+            className="rounded-3xl bg-[#F8F4E9] border border-[#E0D9C8] p-8 sm:p-12 space-y-8"
           >
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#123D2B]">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#101D17]">
                 Accreditation & Safety
               </span>
               <h2 className="text-2xl sm:text-3xl font-light text-[#171717] tracking-tight">
@@ -270,7 +270,7 @@ export default function AboutContent() {
               {certificates.map((cert) => (
                 <div 
                   key={cert.id}
-                  className="p-5 rounded-2xl bg-white border border-[#E0D9C8]/80 shadow-2xs text-center space-y-3 hover:border-[#123D2B]/30 transition-all duration-300"
+                  className="p-5 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8]/80 shadow-2xs text-center space-y-3 hover:border-[#101D17]/30 transition-all duration-300"
                 >
                   <div className="w-14 h-14 mx-auto relative">
                     <Image 
@@ -295,10 +295,10 @@ export default function AboutContent() {
         <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-[#123D2B] text-white p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-xl"
+            className="rounded-3xl bg-[#101D17] text-white p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-xl"
           >
             <div className="relative z-10 max-w-xl mx-auto space-y-3">
-              <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#D4AF55] text-[10px] font-bold uppercase tracking-wider">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#F8F4E9] text-[#D4AF55] text-[10px] font-bold uppercase tracking-wider">
                 Begin Your Wellness Ritual
               </span>
               <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
@@ -319,7 +319,7 @@ export default function AboutContent() {
               </Link>
               <a 
                 href="tel:+919220251059" 
-                className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20 text-xs font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center gap-2"
+                className="px-6 py-3 rounded-full bg-[#F8F4E9] hover:bg-[#F8F4E9] text-white border border-white/20 text-xs font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center gap-2"
               >
                 <Phone size={13} />
                 <span>Talk to Expert</span>

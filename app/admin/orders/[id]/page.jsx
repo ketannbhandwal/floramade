@@ -37,7 +37,7 @@ export default async function AdminOrderDetailsPage({ params }) {
       <div className="flex items-center gap-3">
         <Link
           href="/admin"
-          className="h-9 w-9 rounded-full bg-white border border-[#E0D9C8] flex items-center justify-center text-[#171717] hover:bg-[#123D2B] hover:text-white hover:border-[#123D2B] transition-colors"
+          className="h-9 w-9 rounded-full bg-white border border-[#E0D9C8] flex items-center justify-center text-[#171717] hover:bg-[#123D28] hover:text-white hover:border-[#123D28] transition-colors"
         >
           <ArrowLeft size={16} />
         </Link>
@@ -57,7 +57,7 @@ export default async function AdminOrderDetailsPage({ params }) {
           <h2 className="text-xs uppercase tracking-[0.08em] font-bold text-[#171717]/50">
             Order Lifecycle
           </h2>
-          <span className="capitalize px-3 py-1 rounded-full text-xs font-bold tracking-tight bg-[#123D2B]/10 text-[#123D2B] border border-[#123D2B]/20">
+          <span className="capitalize px-3 py-1 rounded-full text-xs font-bold tracking-tight bg-[#123D28]/10 text-[#123D28] border border-[#123D28]/20">
             {order.status || "placed"}
           </span>
         </div>
@@ -68,13 +68,13 @@ export default async function AdminOrderDetailsPage({ params }) {
         {/* Customer & Delivery */}
         <div className="rounded-2xl border border-[#E0D9C8] bg-white p-5 sm:p-6 space-y-3">
           <h2 className="text-xs uppercase tracking-[0.08em] font-bold text-[#171717]/50 flex items-center gap-1.5">
-            <MapPin size={13} className="text-[#123D2B]" /> Customer & Delivery Details
+            <MapPin size={13} className="text-[#123D28]" /> Customer & Delivery Details
           </h2>
           <div className="space-y-1.5 text-sm text-[#171717] tracking-tight">
             <p className="font-bold">{order.address?.fullName || order.user?.name || "Customer"}</p>
             <p className="text-xs text-[#171717]/70">{order.user?.email}</p>
             <p className="text-xs text-[#171717]/70 flex items-center gap-1">
-              <Phone size={12} className="text-[#123D2B]" /> {order.address?.phone || order.user?.phone || "N/A"}
+              <Phone size={12} className="text-[#123D28]" /> {order.address?.phone || order.user?.phone || "N/A"}
             </p>
             <div className="pt-2 text-xs text-[#171717]/80 leading-relaxed border-t border-[#E0D9C8]/60 mt-2">
               <span className="font-semibold block text-[#171717]">Shipping Address:</span>
@@ -86,7 +86,7 @@ export default async function AdminOrderDetailsPage({ params }) {
         {/* Payment Summary */}
         <div className="rounded-2xl border border-[#E0D9C8] bg-white p-5 sm:p-6 space-y-3">
           <h2 className="text-xs uppercase tracking-[0.08em] font-bold text-[#171717]/50 flex items-center gap-1.5">
-            <CreditCard size={13} className="text-[#123D2B]" /> Payment Summary
+            <CreditCard size={13} className="text-[#123D28]" /> Payment Summary
           </h2>
           <div className="space-y-2 text-sm text-[#171717] tracking-tight">
             <div className="flex justify-between items-center text-xs text-[#171717]/70">
@@ -98,7 +98,7 @@ export default async function AdminOrderDetailsPage({ params }) {
             {order.paymentId && (
               <div className="flex justify-between items-center text-xs text-[#171717]/70">
                 <span>Payment Reference</span>
-                <span className="font-mono text-[11px] text-[#123D2B]">{order.paymentId}</span>
+                <span className="font-mono text-[11px] text-[#123D28]">{order.paymentId}</span>
               </div>
             )}
             <div className="flex justify-between items-center text-xs text-[#171717]/70">
@@ -107,7 +107,7 @@ export default async function AdminOrderDetailsPage({ params }) {
             </div>
             <div className="flex justify-between items-center text-base font-bold text-[#171717] border-t border-[#E0D9C8]/60 pt-2">
               <span>Total Amount</span>
-              <span className="text-[#123D2B]">₹{order.amount?.toLocaleString()}</span>
+              <span className="text-[#123D28]">₹{order.amount?.toLocaleString()}</span>
             </div>
           </div>
         </div>

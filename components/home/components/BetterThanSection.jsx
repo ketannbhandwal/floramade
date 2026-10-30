@@ -34,7 +34,7 @@ export default function BetterThanSection() {
   return (
     <section 
       aria-label="Store benefits marquee" 
-      className="relative w-full overflow-hidden bg-[#123D2B] text-white border-y border-[#123D2B]/20 py-3 sm:py-3.5 select-none"
+      className="relative w-full overflow-hidden bg-[#123D28] text-white border-y border-[#123D28]/20 py-3 sm:py-3.5 select-none"
     >
       <div className="flex w-max animate-marquee items-center gap-8 sm:gap-12 lg:gap-16">
         {displayItems.map((item, idx) => {

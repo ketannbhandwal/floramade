@@ -8,11 +8,12 @@
   /* Floramade Premium Herbal Wellness Theme */
   --background: #F8F4E9;
   --foreground: #171717;
-  --primary: #123D2B;
+  --primary: #123D28;
   --accent: #D4AF55;
   --highlight: #D4AF55;
   --muted: #F0EBE0;
   --border: #E0D9C8;
+  --footer: #101D17;
   --font-dm-sans: "DM Sans", sans-serif;
   --font-funnel: "DM Sans", sans-serif;
 }

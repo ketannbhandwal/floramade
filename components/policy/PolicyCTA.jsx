@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function PolicyCTA() {
   return (
     <section className="py-12 sm:py-16 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto rounded-3xl bg-[#123D2B] text-white p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-md">
+      <div className="max-w-4xl mx-auto rounded-3xl bg-[#101D17] text-white p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-md">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +62,7 @@ export default function PolicyCTA() {
 
         {/* Ambient glow */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF55]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#123D2B]/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#101D17]/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
       </div>
     </section>
   );

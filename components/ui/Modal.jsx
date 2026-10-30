@@ -43,7 +43,7 @@ export default function Modal({ open, title, subtitle, onClose, children, maxWid
           </div>
           <button 
             onClick={onClose} 
-            className="rounded-full p-2 text-[#171717]/60 hover:text-[#171717] hover:bg-[#123D2B]/10 transition-all active:scale-95 border border-[#123D2B]/10"
+            className="rounded-full p-2 text-[#171717]/60 hover:text-[#171717] hover:bg-[#101D17]/10 transition-all active:scale-95 border border-[#101D17]/10"
             aria-label="Close"
           >
             <X className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />

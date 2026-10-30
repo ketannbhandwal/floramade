@@ -58,7 +58,7 @@ export default function FlagshipProducts({
         
         {/* Section Header */}
         <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto space-y-1.5 px-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold tracking-tight uppercase mb-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold tracking-tight uppercase mb-1">
             <Sparkles size={12} />
             <span>Handpicked Ayurvedic Formulations</span>
           </div>
@@ -80,7 +80,7 @@ export default function FlagshipProducts({
             type="button"
             onClick={scrollPrev}
             aria-label="Previous Products"
-            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronLeft size={20} />
           </button>
@@ -90,7 +90,7 @@ export default function FlagshipProducts({
             type="button"
             onClick={scrollNext}
             aria-label="Next Products"
-            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
           >
             <ChevronRight size={20} />
           </button>
@@ -124,8 +124,8 @@ export default function FlagshipProducts({
                 aria-label={`Go to slide ${dotIdx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   selectedIndex === dotIdx
-                    ? "w-7 h-2 bg-[#123D2B]"
-                    : "w-2 h-2 bg-[#123D2B]/20 hover:bg-[#123D2B]/40"
+                    ? "w-7 h-2 bg-[#101D17]"
+                    : "w-2 h-2 bg-[#101D17]/20 hover:bg-[#101D17]/40"
                 }`}
               />
             ))}

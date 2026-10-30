@@ -368,7 +368,7 @@ export default function CheckoutPage() {
           },
         },
         theme: {
-          color: "#123D2B",
+          color: "#101D17",
         },
         handler: async (response) => {
           // Save address to profile if checkbox is checked
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
           id="saveToProfile"
           checked={saveToProfile}
           onChange={(e) => setSaveToProfile(e.target.checked)}
-          className="w-4 h-4 rounded border-[#E0D9C8] accent-[#123D2B]"
+          className="w-4 h-4 rounded border-[#E0D9C8] accent-[#101D17]"
         />
         <label
           htmlFor="saveToProfile"
@@ -524,7 +524,7 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F8F4E9]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 pt-4 md:pt-6 pb-12 md:pb-20">
         {/* Header */}
         <motion.div
@@ -534,7 +534,7 @@ export default function CheckoutPage() {
           className="mb-8 md:mb-10"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-[#123D2B]" />
+            <span className="h-[1px] w-8 bg-[#101D17]" />
             <span className="text-[10px] uppercase tracking-[0.08em] text-[#171717]/50 font-semibold">Secure Checkout</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#171717]">
@@ -553,10 +553,10 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="bg-white rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-6"
+              className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-6"
             >
               <div className="flex items-center gap-3 border-b border-[#E0D9C8] pb-4">
-                <div className="h-9 w-9 rounded-full bg-[#123D2B]/8 text-[#123D2B] flex items-center justify-center">
+                <div className="h-9 w-9 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center">
                   <Truck size={17} />
                 </div>
                 <h2 className="text-base font-bold tracking-tight text-[#171717]">
@@ -576,14 +576,14 @@ export default function CheckoutPage() {
                         onClick={() => selectAddress(addr)}
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                           selectedAddressId === addr._id
-                            ? "border-[#123D2B] bg-[#123D2B]/5"
-                            : "border-[#E0D9C8] bg-white hover:border-[#123D2B]/30"
+                            ? "border-[#101D17] bg-[#101D17]/5"
+                            : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#101D17]/30"
                         }`}
                       >
                         <div className="flex items-start gap-2.5">
-                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#123D2B]' : 'border-[#E0D9C8]'}`}>
+                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#101D17]' : 'border-[#E0D9C8]'}`}>
                             {selectedAddressId === addr._id && (
-                              <div className="h-2 w-2 rounded-full bg-[#123D2B]" />
+                              <div className="h-2 w-2 rounded-full bg-[#101D17]" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -600,7 +600,7 @@ export default function CheckoutPage() {
                               {addr.city}, {addr.state} - {addr.pincode}
                             </p>
                             {addr.isDefault && (
-                              <span className="inline-block mt-1.5 text-[10px] font-bold text-[#123D2B] uppercase tracking-[0.06em]">
+                              <span className="inline-block mt-1.5 text-[10px] font-bold text-[#101D17] uppercase tracking-[0.06em]">
                                 Default
                               </span>
                             )}
@@ -611,7 +611,7 @@ export default function CheckoutPage() {
                   </div>
                   <button
                     onClick={() => setShowNewAddress(true)}
-                    className="flex items-center gap-1.5 text-[#123D2B] text-xs font-bold hover:text-[#171717] transition-colors tracking-tight"
+                    className="flex items-center gap-1.5 text-[#101D17] text-xs font-bold hover:text-[#171717] transition-colors tracking-tight"
                   >
                     <Plus size={14} strokeWidth={2.5} /> Add New Address
                   </button>
@@ -638,10 +638,10 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-5"
+              className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-5"
             >
               <div className="flex items-center gap-3 border-b border-[#E0D9C8] pb-4">
-                <div className="h-9 w-9 rounded-full bg-[#123D2B]/8 text-[#123D2B] flex items-center justify-center">
+                <div className="h-9 w-9 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center">
                   <CreditCard size={17} />
                 </div>
                 <h2 className="text-base font-bold tracking-tight text-[#171717]">
@@ -666,14 +666,14 @@ export default function CheckoutPage() {
                     key={method.id}
                     className={`relative p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all duration-200 flex flex-col gap-0.5 ${
                       paymentMethod === method.id
-                        ? "border-[#123D2B] bg-[#123D2B]/5"
-                        : "border-[#E0D9C8] bg-white hover:border-[#123D2B]/30"
+                        ? "border-[#101D17] bg-[#101D17]/5"
+                        : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#101D17]/30"
                     }`}
                   >
                     <input
                       type="radio"
                       name="paymentMethod"
-                      className="absolute top-4 right-4 accent-[#123D2B]"
+                      className="absolute top-4 right-4 accent-[#101D17]"
                       checked={paymentMethod === method.id}
                       onChange={() => setPaymentMethod(method.id)}
                     />
@@ -696,7 +696,7 @@ export default function CheckoutPage() {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:sticky lg:top-32 space-y-5"
           >
-            <div className="bg-[#123D2B] text-white rounded-2xl p-6 sm:p-7 relative overflow-hidden">
+            <div className="bg-[#101D17] text-white rounded-2xl p-6 sm:p-7 relative overflow-hidden">
 
               <h2 className="text-lg font-bold tracking-tight text-white mb-5">
                 Order Summary
@@ -716,7 +716,7 @@ export default function CheckoutPage() {
                         Qty: {item.quantity}
                       </p>
                     </div>
-                    <span className="font-bold text-[#123D2B] text-sm whitespace-nowrap" style={{ color: '#D4AF55' }}>
+                    <span className="font-bold text-[#101D17] text-sm whitespace-nowrap" style={{ color: '#D4AF55' }}>
                       ₹{(item.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
@@ -824,7 +824,7 @@ export default function CheckoutPage() {
                 <label className="flex items-start gap-2.5 cursor-pointer group">
                   <input
                     type="checkbox"
-                    className="mt-0.5 accent-[#123D2B] rounded border-white/20"
+                    className="mt-0.5 accent-[#101D17] rounded border-white/20"
                     checked={marketingConsent}
                     onChange={(e) => setMarketingConsent(e.target.checked)}
                   />
@@ -848,7 +848,7 @@ export default function CheckoutPage() {
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-[#123D2B] text-white py-3.5 rounded-full font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#123D2B]/90 transition-all duration-300 mt-5"
+                className="w-full bg-[#101D17] text-white py-3.5 rounded-full font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#101D17]/90 transition-all duration-300 mt-5"
               >
                 {paymentMethod === "cod"
                   ? "Place COD Order"
@@ -860,7 +860,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="bg-white border border-[#E0D9C8] p-5 sm:p-6 rounded-2xl space-y-2.5">
+            <div className="bg-[#F8F4E9] border border-[#E0D9C8] p-5 sm:p-6 rounded-2xl space-y-2.5">
               <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-[#171717]/35">
                 Need Help?
               </h4>
@@ -869,7 +869,7 @@ export default function CheckoutPage() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#123D2B] hover:text-[#171717] transition-colors tracking-tight"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#101D17] hover:text-[#171717] transition-colors tracking-tight"
               >
                 Contact Support <ChevronRight size={13} />
               </Link>

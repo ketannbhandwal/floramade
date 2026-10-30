@@ -28,7 +28,7 @@ import {
 const STATUS_DETAILS = {
   placed: {
     label: "Order Placed",
-    color: "bg-[#123D2B]/10 text-[#123D2B] border-[#123D2B]/25",
+    color: "bg-[#101D17]/10 text-[#101D17] border-[#101D17]/25",
     description: "Your order has been confirmed. Our team is preparing your Ayurvedic remedies.",
   },
   processing: {
@@ -157,14 +157,14 @@ export default function OrderCard({ order, onStatusUpdate }) {
             <button
               onClick={handleCopyOrderId}
               title="Copy Order ID"
-              className="p-1 rounded-md text-[#171717]/40 hover:text-[#123D2B] hover:bg-[#123D2B]/10 transition-colors"
+              className="p-1 rounded-md text-[#171717]/40 hover:text-[#101D17] hover:bg-[#101D17]/10 transition-colors"
             >
-              {copied ? <Check size={13} className="text-[#123D2B]" /> : <Copy size={13} />}
+              {copied ? <Check size={13} className="text-[#101D17]" /> : <Copy size={13} />}
             </button>
           </div>
 
           <div className="flex items-center gap-2 text-xs text-[#171717]/55 tracking-tight">
-            <Calendar size={12} className="text-[#123D2B]/70" />
+            <Calendar size={12} className="text-[#101D17]/70" />
             <span>{formattedDate}</span>
             <span>•</span>
             <span>{formattedTime}</span>
@@ -185,12 +185,12 @@ export default function OrderCard({ order, onStatusUpdate }) {
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-tight border border-[#E0D9C8] bg-white text-[#171717]">
             {paymentMethod === "cod" ? (
               <>
-                <Banknote size={12} className="text-[#123D2B]" />
+                <Banknote size={12} className="text-[#101D17]" />
                 <span>Cash on Delivery</span>
               </>
             ) : (
               <>
-                <CreditCard size={12} className="text-[#123D2B]" />
+                <CreditCard size={12} className="text-[#101D17]" />
                 <span>Prepaid (Razorpay)</span>
               </>
             )}
@@ -211,9 +211,9 @@ export default function OrderCard({ order, onStatusUpdate }) {
           </div>
 
           {statusKey !== "delivered" && statusKey !== "cancelled" && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#123D2B]/5 border border-[#123D2B]/20 text-[#123D2B] text-xs font-bold tracking-tight self-start sm:self-auto">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#101D17]/5 border border-[#101D17]/20 text-[#101D17] text-xs font-bold tracking-tight self-start sm:self-auto">
               <span>Expected Delivery:</span>
-              <span className="underline decoration-[#123D2B]/40">{formattedEstDelivery}</span>
+              <span className="underline decoration-[#101D17]/40">{formattedEstDelivery}</span>
             </div>
           )}
         </div>
@@ -231,7 +231,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
             Items ({(order.items || []).length})
           </h4>
           <span className="text-xs font-bold text-[#171717] tracking-tight">
-            Order Total: <span className="text-base sm:text-lg text-[#123D2B]">₹{order.amount?.toLocaleString()}</span>
+            Order Total: <span className="text-base sm:text-lg text-[#101D17]">₹{order.amount?.toLocaleString()}</span>
           </span>
         </div>
 
@@ -254,7 +254,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
                 <div className="min-w-0">
                   <Link
                     href={`/product/${item.slug || "madhu-diabetes-pro"}`}
-                    className="text-xs sm:text-sm font-bold tracking-tight text-[#171717] hover:text-[#123D2B] transition-colors line-clamp-1"
+                    className="text-xs sm:text-sm font-bold tracking-tight text-[#171717] hover:text-[#101D17] transition-colors line-clamp-1"
                   >
                     {item.name}
                   </Link>
@@ -276,7 +276,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
                 )}
                 <button
                   onClick={() => handleBuyAgain(item)}
-                  className="px-3 py-1.5 rounded-full border border-[#E0D9C8] bg-white hover:bg-[#123D2B] hover:text-white hover:border-[#123D2B] text-[#171717] text-[11px] font-bold tracking-tight transition-all duration-200 flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-full border border-[#E0D9C8] bg-white hover:bg-[#101D17] hover:text-white hover:border-[#101D17] text-[#171717] text-[11px] font-bold tracking-tight transition-all duration-200 flex items-center gap-1"
                 >
                   <RotateCcw size={11} />
                   <span>Buy Again</span>
@@ -293,7 +293,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
           <div className="grid sm:grid-cols-2 gap-4 pt-2">
             {/* Delivery Address Card */}
             <div className="p-4 rounded-xl border border-[#E0D9C8] bg-white space-y-2">
-              <div className="flex items-center gap-2 text-[#123D2B] font-bold uppercase tracking-tight text-[11px]">
+              <div className="flex items-center gap-2 text-[#101D17] font-bold uppercase tracking-tight text-[11px]">
                 <MapPin size={13} />
                 <span>Shipping Address</span>
               </div>
@@ -308,7 +308,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
               </p>
               {order.address?.phone && (
                 <div className="flex items-center gap-1.5 text-xs text-[#171717]/70 tracking-tight pt-1">
-                  <Phone size={11} className="text-[#123D2B]" />
+                  <Phone size={11} className="text-[#101D17]" />
                   <span>{order.address.phone}</span>
                 </div>
               )}
@@ -316,7 +316,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
 
             {/* Price Breakdown Card */}
             <div className="p-4 rounded-xl border border-[#E0D9C8] bg-white space-y-2">
-              <div className="flex items-center gap-2 text-[#123D2B] font-bold uppercase tracking-tight text-[11px]">
+              <div className="flex items-center gap-2 text-[#101D17] font-bold uppercase tracking-tight text-[11px]">
                 <Package size={13} />
                 <span>Payment & Cost Summary</span>
               </div>
@@ -331,7 +331,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
                 </div>
                 <div className="flex justify-between border-t border-[#E0D9C8] pt-1.5 text-sm font-bold text-[#171717]">
                   <span>Grand Total</span>
-                  <span className="text-[#123D2B]">₹{order.amount?.toLocaleString()}</span>
+                  <span className="text-[#101D17]">₹{order.amount?.toLocaleString()}</span>
                 </div>
                 {order.paymentId && (
                   <p className="text-[10px] text-[#171717]/40 tracking-tight pt-1">
@@ -349,7 +349,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
         {/* Toggle Details Button */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-xs font-bold text-[#123D2B] hover:text-[#171717] transition-colors flex items-center gap-1.5 tracking-tight"
+          className="text-xs font-bold text-[#101D17] hover:text-[#171717] transition-colors flex items-center gap-1.5 tracking-tight"
         >
           <span>{expanded ? "Hide Details" : "View Delivery Address & Receipt"}</span>
           {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -406,7 +406,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
               <button
                 disabled={isCancelling}
                 onClick={() => setShowCancelModal(false)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-[#171717]/70 hover:bg-[#123D2B]/5 transition-colors"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#171717]/70 hover:bg-[#101D17]/5 transition-colors"
               >
                 Keep Order
               </button>

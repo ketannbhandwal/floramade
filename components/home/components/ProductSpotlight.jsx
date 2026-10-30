@@ -117,7 +117,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const shareText = `Check out ${cleanName} on Floramade: ${productUrl}`;
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-24 bg-gradient-to-b from-background via-[#FAF5EC]/50 to-background border-t border-[#E0D9C8]/60">
+    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-24 bg-gradient-to-b from-background via-[#F8F4E9] to-background border-t border-[#E0D9C8]/60">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         
         {/* Spotlight Showcase Grid */}
@@ -144,7 +144,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               {/* Top-Right Discount Badge */}
               {hasDiscount && (
                 <div className="absolute top-4 right-4 z-10">
-                  <span className="inline-flex items-center gap-1 bg-[#123D2B] text-white text-[10px] sm:text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full shadow-xs">
+                  <span className="inline-flex items-center gap-1 bg-[#101D17] text-white text-[10px] sm:text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full shadow-xs">
                     SAVE ₹{savings.toLocaleString("en-IN")}
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   type="button"
                   onClick={handlePrevImage}
                   aria-label="Previous Image"
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -168,7 +168,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   type="button"
                   onClick={handleNextImage}
                   aria-label="Next Image"
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#123D2B] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F8F4E9] hover:bg-[#101D17] text-[#171717] hover:text-white border border-[#E0D9C8] shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -177,7 +177,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               {/* Image Counter Pill */}
               {images.length > 1 && (
                 <div className="absolute bottom-4 right-4 z-10 pointer-events-none">
-                  <span className="inline-flex items-center bg-[#123D2B]/60 backdrop-blur-xs text-white text-[10px] font-bold tracking-tight px-2.5 py-0.5 rounded-full shadow-xs">
+                  <span className="inline-flex items-center bg-[#101D17]/60 backdrop-blur-xs text-white text-[10px] font-bold tracking-tight px-2.5 py-0.5 rounded-full shadow-xs">
                     {safeIndex + 1} / {images.length}
                   </span>
                 </div>
@@ -207,7 +207,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                     onClick={() => setActiveImageIndex(idx)}
                     className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 bg-[#F8F4E9] transition-all cursor-pointer flex-shrink-0 ${
                       safeIndex === idx
-                        ? "border-[#123D2B] shadow-sm ring-2 ring-[#D4AF55]/20 scale-102"
+                        ? "border-[#101D17] shadow-sm ring-2 ring-[#D4AF55]/20 scale-102"
                         : "border-[#E0D9C8]/80 opacity-70 hover:opacity-100"
                     }`}
                   >
@@ -228,14 +228,14 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
           <div className="space-y-4 sm:space-y-5">
             
             {/* Category / Super-title */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold tracking-tight uppercase">
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold tracking-tight uppercase">
               <Sparkles size={12} />
               <span>Ayurvedic Spotlight Formulation</span>
             </div>
 
             {/* Title */}
             <Link href={`/product/${product.slug}`} className="block group">
-              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-bold tracking-tight text-[#171717] group-hover:text-[#123D2B] transition-colors leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-bold tracking-tight text-[#171717] group-hover:text-[#101D17] transition-colors leading-tight">
                 {cleanName}
               </h2>
             </Link>
@@ -251,10 +251,10 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               <span className="text-[#171717]/60 font-medium">({reviewsCount} verified customer ratings)</span>
             </div>
 
-            {/* Luxury Price Box - Pure Floramade Theme (#F8F4E9 + #E8D9C5 + #123D2B + #D4AF55) */}
+            {/* Luxury Price Box - Pure Floramade Theme (#F8F4E9 + #E8D9C5 + #101D17 + #D4AF55) */}
             <div className="rounded-2xl border border-[#E0D9C8] bg-[#F8F4E9] p-5 sm:p-6 shadow-xs space-y-3">
               <div className="flex items-baseline gap-3 flex-wrap">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#123D2B] tracking-tight">
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#101D17] tracking-tight">
                   ₹{currentPrice.toLocaleString("en-IN")}
                 </span>
                 {hasDiscount && (
@@ -263,7 +263,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   </span>
                 )}
                 {hasDiscount && (
-                  <span className="text-xs font-bold text-[#123D2B] bg-[#123D2B]/10 px-2.5 py-0.5 rounded-full tracking-tight">
+                  <span className="text-xs font-bold text-[#101D17] bg-[#101D17]/10 px-2.5 py-0.5 rounded-full tracking-tight">
                     Save ₹{savings.toLocaleString("en-IN")}
                   </span>
                 )}
@@ -284,7 +284,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
             {/* Quantity Selector & Primary Actions */}
             <div className="space-y-3 pt-1">
               <div className="flex items-center gap-3">
-                <div className="inline-flex items-center rounded-full border border-[#E0D9C8] bg-white p-1 shadow-xs">
+                <div className="inline-flex items-center rounded-full border border-[#E0D9C8] bg-[#F8F4E9] p-1 shadow-xs">
                   <button
                     type="button"
                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
@@ -309,7 +309,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3.5 px-5 rounded-full bg-[#123D2B] hover:bg-[#123D2B] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                  className="flex-1 py-3.5 px-5 rounded-full bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
                 >
                   <ShoppingBag size={15} strokeWidth={2.2} />
                   <span>Add to Bag</span>
@@ -319,7 +319,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="w-full py-3.5 px-6 rounded-full bg-[#123D2B] hover:bg-[#123D2B] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-full bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
               >
                 <Zap size={16} className="fill-[#D4AF55] text-[#D4AF55]" />
                 <span>Buy Now with 1-Click</span>
@@ -354,7 +354,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                 </a>
                 <a
                   href={`mailto:?subject=${encodeURIComponent(cleanName)}&body=${encodeURIComponent(shareText)}`}
-                  className="w-7 h-7 rounded-full bg-[#123D2B]/5 text-[#171717] hover:bg-[#123D2B] hover:text-white flex items-center justify-center transition-all"
+                  className="w-7 h-7 rounded-full bg-[#101D17]/5 text-[#171717] hover:bg-[#101D17] hover:text-white flex items-center justify-center transition-all"
                   aria-label="Share via Email"
                 >
                   <MdEmail size={14} />
@@ -380,7 +380,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
 
                 <Link
                   href={`/product/${product.slug}`}
-                  className="font-bold text-[#123D2B] hover:text-[#171717] inline-flex items-center gap-1 tracking-tight transition-colors"
+                  className="font-bold text-[#101D17] hover:text-[#171717] inline-flex items-center gap-1 tracking-tight transition-colors"
                 >
                   Full details <ArrowRight size={13} />
                 </Link>

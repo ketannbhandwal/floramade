@@ -28,7 +28,7 @@ export default function AccountPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="animate-pulse flex flex-col items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-[#123D2B]/10" />
+          <div className="h-10 w-10 rounded-full bg-[#101D17]/10" />
           <p className="text-xs text-[#171717]/40 tracking-tight font-semibold">Loading...</p>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function AccountPage() {
           className="mb-8 md:mb-10"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-[#123D2B]" />
+            <span className="h-[1px] w-8 bg-[#101D17]" />
             <span className="text-[10px] uppercase tracking-[0.08em] text-[#171717]/50 font-semibold">Your Space</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#171717]">
@@ -157,7 +157,7 @@ export default function AccountPage() {
           >
             {/* User Card */}
             <div className="bg-white rounded-2xl border border-[#E0D9C8] p-5 flex flex-col items-center text-center space-y-3">
-              <div className="h-16 w-16 rounded-full bg-[#123D2B]/8 text-[#123D2B] flex items-center justify-center text-2xl font-bold tracking-tight">
+              <div className="h-16 w-16 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center text-2xl font-bold tracking-tight">
                 {user?.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
               <div>
@@ -174,8 +174,8 @@ export default function AccountPage() {
                   onClick={() => setActiveSection(item.id)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     activeSection === item.id
-                      ? "bg-[#123D2B] text-white"
-                      : "hover:bg-[#123D2B]/5 text-[#171717]/60"
+                      ? "bg-[#101D17] text-white"
+                      : "hover:bg-[#101D17]/5 text-[#171717]/60"
                   }`}
                 >
                   <item.icon size={16} strokeWidth={2} />
@@ -213,7 +213,7 @@ export default function AccountPage() {
                       <Input label="Email Address" value={user?.email || ""} disabled />
                       <Input label="Phone Number" placeholder="e.g. 9220251059" value={profile.phone || user?.phone || ""} onChange={(e) => setProfile((p) => ({ ...p, phone: e.target.value }))} />
                     </div>
-                    <button type="submit" className="h-11 px-7 rounded-full bg-[#123D2B] text-white flex items-center justify-center gap-2 hover:bg-[#123D2B] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
+                    <button type="submit" className="h-11 px-7 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
                       Save Changes
                     </button>
                   </form>
@@ -242,7 +242,7 @@ export default function AccountPage() {
                         onChange={(e) => setPasswordForm((p) => ({ ...p, newPassword: e.target.value }))}
                       />
                     </div>
-                    <button type="submit" className="h-11 px-7 rounded-full bg-[#123D2B] text-white flex items-center justify-center gap-2 hover:bg-[#123D2B]/90 transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
+                    <button type="submit" className="h-11 px-7 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17]/90 transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
                       Update Password
                     </button>
                   </form>
@@ -259,7 +259,7 @@ export default function AccountPage() {
                   <div className="space-y-4">
                     {!orders.length ? (
                       <div className="py-16 border border-[#E0D9C8] rounded-2xl bg-white flex flex-col items-center justify-center text-center space-y-4">
-                        <div className="w-14 h-14 rounded-full bg-[#123D2B]/5 flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
                           <ShoppingBag size={24} className="text-[#171717]/25" />
                         </div>
                         <div className="space-y-1">
@@ -268,7 +268,7 @@ export default function AccountPage() {
                         </div>
                         <Link
                           href="/"
-                          className="h-10 px-6 rounded-full bg-[#123D2B] text-white flex items-center justify-center gap-2 hover:bg-[#123D2B] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
+                          className="h-10 px-6 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
                         >
                           Shop Now <ArrowRight size={13} strokeWidth={2} />
                         </Link>
@@ -301,7 +301,7 @@ export default function AccountPage() {
                     </div>
                     <Link
                       href="/account/add-address"
-                      className="h-9 px-5 rounded-full bg-[#123D2B] text-white flex items-center justify-center gap-1.5 hover:bg-[#123D2B] transition-colors duration-300 text-[11px] font-bold uppercase tracking-[0.06em] flex-shrink-0"
+                      className="h-9 px-5 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-1.5 hover:bg-[#101D17] transition-colors duration-300 text-[11px] font-bold uppercase tracking-[0.06em] flex-shrink-0"
                     >
                       <Plus size={13} strokeWidth={2.5} /> Add Address
                     </Link>
@@ -310,7 +310,7 @@ export default function AccountPage() {
                   <div className="space-y-3">
                     {!addresses.length ? (
                       <div className="py-16 border border-[#E0D9C8] rounded-2xl bg-white flex flex-col items-center justify-center text-center space-y-4">
-                        <div className="w-14 h-14 rounded-full bg-[#123D2B]/5 flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
                           <MapPin size={24} className="text-[#171717]/25" />
                         </div>
                         <div className="space-y-1">
@@ -327,12 +327,12 @@ export default function AccountPage() {
                           key={addr._id}
                           className={`relative p-4 sm:p-5 rounded-xl border transition-all ${
                             addr.isDefault
-                              ? "bg-[#123D2B]/5 border-[#123D2B]/30"
+                              ? "bg-[#101D17]/5 border-[#101D17]/30"
                               : "bg-white border-[#E0D9C8]"
                           }`}
                         >
                           {addr.isDefault && (
-                            <span className="absolute top-3 right-3 text-[10px] font-bold text-[#123D2B] uppercase tracking-[0.06em]">Default</span>
+                            <span className="absolute top-3 right-3 text-[10px] font-bold text-[#101D17] uppercase tracking-[0.06em]">Default</span>
                           )}
                           <div className="space-y-1">
                             <p className="text-sm font-bold tracking-tight text-[#171717]">{addr.fullName}</p>
@@ -344,7 +344,7 @@ export default function AccountPage() {
                             {!addr.isDefault && (
                               <button
                                 onClick={() => setDefaultAddress(addr._id)}
-                                className="text-[10px] uppercase tracking-[0.06em] font-bold text-[#123D2B] hover:text-[#171717] transition-colors"
+                                className="text-[10px] uppercase tracking-[0.06em] font-bold text-[#101D17] hover:text-[#171717] transition-colors"
                               >
                                 Set Default
                               </button>

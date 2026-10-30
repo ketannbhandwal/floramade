@@ -44,7 +44,7 @@ export default function PolicyPage() {
       {/* Hero Section */}
       <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123D2B]/10 text-[#123D2B] text-[11px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold uppercase tracking-wider">
             <ShieldCheck size={13} />
             <span>Store Standards</span>
           </div>
@@ -69,9 +69,9 @@ export default function PolicyPage() {
               transition={{ delay: idx * 0.08 }}
             >
               <Link href={policy.href} className="group block h-full">
-                <div className="p-7 sm:p-8 rounded-2xl bg-white border border-[#E0D9C8] shadow-xs h-full flex flex-col justify-between hover:border-[#123D2B]/50 hover:shadow-md transition-all duration-300">
+                <div className="p-7 sm:p-8 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs h-full flex flex-col justify-between hover:border-[#101D17]/50 hover:shadow-md transition-all duration-300">
                   <div className="space-y-4">
-                    <div className="h-12 w-12 rounded-xl bg-[#123D2B]/10 text-[#123D2B] flex items-center justify-center group-hover:bg-[#123D2B] group-hover:text-white transition-colors duration-300">
+                    <div className="h-12 w-12 rounded-xl bg-[#101D17]/10 text-[#101D17] flex items-center justify-center group-hover:bg-[#101D17] group-hover:text-white transition-colors duration-300">
                       <policy.icon size={22} strokeWidth={2} />
                     </div>
                     <div className="space-y-1.5">
@@ -79,7 +79,7 @@ export default function PolicyPage() {
                       <p className="text-xs sm:text-sm text-[#171717]/70 leading-relaxed">{policy.description}</p>
                     </div>
                   </div>
-                  <div className="pt-6 flex items-center gap-1.5 text-[#123D2B] font-bold text-xs uppercase tracking-wider">
+                  <div className="pt-6 flex items-center gap-1.5 text-[#101D17] font-bold text-xs uppercase tracking-wider">
                     <span>Read Document</span> 
                     <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
