@@ -17,14 +17,14 @@ const DEFAULT_SLIDES = [
   { 
     desktop: "/posters/2.jpg", 
     mobile: "/posters/mobile2.jpg", 
-    alt: "Floramade Paachan Sathi Powder - Most Effective Ayurvedic Digestive Solution",
-    href: "/product/paachan-sathi-powder"
+    alt: "Floramade Natural Wellness - Most Effective Ayurvedic Solutions",
+    href: "/collection"
   },
   { 
     desktop: "/posters/3.jpg", 
     mobile: "/posters/mobile3.jpg", 
-    alt: "Floramade MadhuCurex - Sugar Control & Metabolism Support",
-    href: "/product/madhucurex-powder"
+    alt: "Floramade Herbal Wellness - Sugar Control & Metabolism Support",
+    href: "/collection"
   },
   { 
     desktop: "/posters/4.jpg", 

@@ -5,31 +5,7 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const PRODUCT_CATEGORIES = [
-  {
-    label: "Diabetes Care",
-    hasDropdown: true,
-    href: "/collections/diabetes",
-    subLinks: [
-      {
-        label: "MadhuCurex Powder",
-        description: "15-Herb Ayurvedic Blend for Sugar Control",
-        href: "/product/madhucurex-powder"
-      },
-      {
-        label: "MadhuCurex Capsules",
-        description: "Advanced Glucose & Insulin Sensitivity Support",
-        href: "/product/madhucurex-capsules"
-      }
-    ]
-  },
-  {
-    label: "Digestive Health",
-    hasDropdown: false,
-    href: "/product/paachan-sathi-powder",
-    description: "Instant relief for gastric & digestive wellness"
-  }
-];
+export const PRODUCT_CATEGORIES = [];
 
 export const SEARCH_PAGES = [
   { href: "/collection", title: "All Products", description: "Explore the entire Floramade Ayurvedic range." },

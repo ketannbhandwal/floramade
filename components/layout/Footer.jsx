@@ -69,8 +69,6 @@ export default function Footer() {
             <ul className="flex flex-col gap-3 md:gap-4 text-xs sm:text-sm font-light text-[#FFF7EB]/75">
               <li><Link href="/" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Home</Link></li>
               <li><Link href="/collection" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>All Products</Link></li>
-              <li><Link href="/collections/diabetes" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Diabetes Care</Link></li>
-              <li><Link href="/product/paachan-sathi-powder" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Digestive Health</Link></li>
               <li><Link href="/about" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>About Our Founder</Link></li>
               <li><Link href="/contact" className="hover:text-[#DFC77F] transition-colors duration-300 inline-flex items-center gap-2 group"><span className="w-0 group-hover:w-2 h-[1px] bg-[#DFC77F] transition-all duration-300"></span>Contact Us</Link></li>
             </ul>

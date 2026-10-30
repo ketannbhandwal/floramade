@@ -18,17 +18,6 @@ async function getProduct(slug) {
     const slugified = normalizedSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
     product = await Product.findOne({ slug: slugified }).lean();
   }
-  if (!product && (normalizedSlug.toLowerCase().includes("relief") || normalizedSlug.toLowerCase().includes("madhu") || normalizedSlug.toLowerCase().includes("diabetes"))) {
-    product = (await Product.findOne({ slug: "madhucurex-diabetes-pro" }).lean()) || (await Product.findOne({ slug: "madhu-diabetes-pro" }).lean());
-  }
-  if (!product && normalizedSlug.toLowerCase().includes("paachan")) {
-    product = (await Product.findOne({ slug: "paachan-sathi-powder" }).lean()) || (await Product.findOne({ slug: "paachan-sathi" }).lean());
-  }
-  if (!product) {
-    const { productsSeed } = await import("@/lib/data");
-    const seed = productsSeed.find((p) => p.slug === normalizedSlug || p.slug.includes(normalizedSlug) || normalizedSlug.includes(p.slug));
-    if (seed) product = seed;
-  }
   if (!product) return null;
 
   // Older catalog rows store their gallery under `featureImages` rather than
