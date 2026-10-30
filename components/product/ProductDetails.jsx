@@ -161,34 +161,86 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     }
   }, [product._id, packs]);
 
-  // 6 Benefit Badges for the Hero Grid (matching reference image)
+  // 6 Benefit Badges for the Hero Grid (Authentic Ayurvedic Benefits, No Fake/Dummy Claims)
   const benefitBadges = useMemo(() => {
     const defaultIcons = [Sparkles, Zap, Leaf, Flame, Activity, ShieldCheck];
-    if (Array.isArray(product.benefits) && product.benefits.length > 0) {
-      return product.benefits.slice(0, 6).map((b, idx) => ({
-        text: typeof b === "string" ? b : b?.text || "Natural Wellness",
+
+    const isDiabetes = product.category === "diabetes" || 
+      product.slug?.includes("madhu") || 
+      product.name?.toLowerCase().includes("diabetes") ||
+      product.name?.toLowerCase().includes("sugar");
+
+    const isDigestion = product.category === "digestion" ||
+      product.slug?.includes("paachan") ||
+      product.name?.toLowerCase().includes("paachan") ||
+      product.name?.toLowerCase().includes("digest");
+
+    const authenticDefaults = isDiabetes ? [
+      { text: "Balances Fasting Sugar", icon: Sparkles },
+      { text: "Enhances Insulin Response", icon: Zap },
+      { text: "Curbs Sugar Cravings", icon: Leaf },
+      { text: "Supports Healthy Metabolism", icon: Flame },
+      { text: "Boosts Daily Energy", icon: Activity },
+      { text: "Supports Pancreas Health", icon: ShieldCheck },
+    ] : isDigestion ? [
+      { text: "Relieves Acidity & Gas", icon: Sparkles },
+      { text: "Boosts Digestive Fire", icon: Zap },
+      { text: "Smooth Bowel Movement", icon: Leaf },
+      { text: "Eases Stomach Heaviness", icon: Flame },
+      { text: "Improves Gut Health", icon: Activity },
+      { text: "Detoxifies Gut System", icon: ShieldCheck },
+    ] : [
+      { text: "Reduces Stress & Fatigue", icon: Sparkles },
+      { text: "Improves Daily Energy", icon: Zap },
+      { text: "Relaxes Mind & Body", icon: Leaf },
+      { text: "Enhances Natural Vitality", icon: Flame },
+      { text: "Balances Natural Doshas", icon: Activity },
+      { text: "Supports Immune Health", icon: ShieldCheck },
+    ];
+
+    // Filter out dummy/fake placeholder strings like "better results", "relief from discomfort"
+    const cleanedProductBenefits = Array.isArray(product.benefits)
+      ? product.benefits
+          .map(b => (typeof b === "string" ? b : b?.text || "").trim())
+          .filter(text => {
+            if (!text) return false;
+            const lower = text.toLowerCase();
+            return !lower.includes("better results") && 
+                   !lower.includes("relief from discomfort") && 
+                   lower !== "better" && 
+                   lower !== "results";
+          })
+      : [];
+
+    if (cleanedProductBenefits.length >= 6) {
+      return cleanedProductBenefits.slice(0, 6).map((text, idx) => ({
+        text,
         icon: defaultIcons[idx % defaultIcons.length],
       }));
     }
-    if (product.category === "diabetes") {
-      return [
-        { text: "Balances Fasting Sugar", icon: Sparkles },
-        { text: "Enhances Insulin Response", icon: Zap },
-        { text: "Curbs Sugar Cravings", icon: Leaf },
-        { text: "Supports Vital Organs", icon: Flame },
-        { text: "Boosts Daily Energy", icon: Activity },
-        { text: "Metabolism Balance", icon: ShieldCheck },
+
+    if (cleanedProductBenefits.length > 0) {
+      const merged = [
+        ...cleanedProductBenefits.map((text, idx) => ({
+          text,
+          icon: defaultIcons[idx % defaultIcons.length],
+        })),
+        ...authenticDefaults.slice(cleanedProductBenefits.length),
       ];
+      return merged.slice(0, 6);
     }
-    return [
-      { text: "Reduces Stress & Anxiety", icon: Sparkles },
-      { text: "Improves Daily Energy", icon: Zap },
-      { text: "Relaxes Mind & Body", icon: Leaf },
-      { text: "Improves Vitality", icon: Flame },
-      { text: "Balances Hormones", icon: Activity },
-      { text: "Supports Long-term Health", icon: ShieldCheck },
-    ];
+
+    return authenticDefaults;
   }, [product]);
+
+  // Clean description without generic placeholder
+  const cleanDescription = useMemo(() => {
+    if (product.description && 
+        !["relief from discomfort", "better results", "relief from discomfort."].includes(product.description.toLowerCase().trim())) {
+      return product.description;
+    }
+    return "100% natural Ayurvedic formulation crafted with time-tested botanical herbs for holistic wellness, sustained vitality, and natural health balance.";
+  }, [product.description]);
 
   // Pricing
   const currentPrice = selectedPack?.price || product.discountPrice || product.price;
@@ -433,8 +485,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               LEFT COLUMN: Sticky on PC so it does NOT scroll away while browsing details
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
-            {/* Main Stage Image */}
-            <div className="relative aspect-square max-h-[500px] xl:max-h-[540px] w-full rounded-3xl bg-[#FAF6EE] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            {/* Main Stage Image (Slightly Darker Warm Beige Background for Definition) */}
+            <div className="relative aspect-square max-h-[500px] xl:max-h-[540px] w-full rounded-3xl bg-[#F3E8D8] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Left Brand Tag */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
                 <span className="text-[#39160D]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
@@ -500,10 +552,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#FAF6EE] flex-shrink-0 transition-all p-1 ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#F3E8D8] flex-shrink-0 transition-all p-1 ${
                       activeIdx === idx
                         ? "border-[#39160D] shadow-sm scale-105"
-                        : "border-[#E8D9C5] opacity-70 hover:opacity-100 hover:border-[#872B10]/50"
+                        : "border-[#E8D9C5] opacity-75 hover:opacity-100 hover:border-[#872B10]/50"
                     }`}
                   >
                     <Image
@@ -540,46 +592,32 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </h1>
             </div>
 
-            {/* Rating & Social Proof Bar */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                <div className="flex text-amber-400">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E8D9C5]"}
-                    />
-                  ))}
-                </div>
-                <span className="text-xs font-bold text-[#39160D] tracking-tight">
-                  {Number(product.rating || 4.8).toFixed(1)} ({totalReviews} ratings)
-                </span>
+            {/* Rating Bar (Clean & Authentic, NO Fake Social Proof Claims) */}
+            <div className="flex items-center gap-2">
+              <div className="flex text-amber-400">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    size={14}
+                    className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E8D9C5]"}
+                  />
+                ))}
               </div>
-
-              {/* Social Proof Pill Bar */}
-              <div className="flex items-center gap-2 pl-2 border-l border-[#E8D9C5]">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold tracking-tight">
-                  <span className="bg-[#872B10] text-white text-[9px] px-1 py-0.2 rounded font-extrabold uppercase">SOLD</span>
-                  <span>800+ Bought Last Month</span>
-                </span>
-                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-[#39160D]/60 tracking-tight">
-                  <Eye size={12} className="text-[#872B10]" />
-                  <span>1K+ Views Today</span>
-                </span>
-              </div>
+              <span className="text-xs font-bold text-[#39160D] tracking-tight">
+                {Number(product.rating || 4.8).toFixed(1)} ({totalReviews} ratings)
+              </span>
             </div>
 
-            {/* KEY BENEFIT BADGES GRID (2x3 or 3x2, matching reference image) */}
+            {/* KEY BENEFIT BADGES GRID (2x3 or 3x2, Warm Darker Beige Background) */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
               {benefitBadges.map((badge, idx) => {
                 const IconComp = badge.icon;
                 return (
                   <div
                     key={idx}
-                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/40 transition-colors"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/50 transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#FFF7EB] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0">
                       <IconComp size={16} />
                     </div>
                     <span className="text-[11.5px] sm:text-xs font-semibold text-[#39160D] leading-tight tracking-tight">
@@ -628,7 +666,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         className={`p-3 rounded-2xl border-2 text-left transition-all ${
                           isSelected
                             ? "border-[#39160D] bg-[#FFF7EB] ring-2 ring-[#39160D]/10 shadow-xs"
-                            : "border-[#E8D9C5] bg-[#FAF6EE] hover:border-[#39160D]/40"
+                            : "border-[#E8D9C5] bg-[#F3E8D8] hover:border-[#39160D]/40"
                         }`}
                       >
                         <span className="block text-xs font-bold text-[#39160D] tracking-tight">{pack.label}</span>
@@ -643,11 +681,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* QUANTITY SELECTOR */}
             <div className="flex items-center gap-4 pt-1">
               <span className="text-xs font-bold text-[#39160D] uppercase tracking-tight">Quantity</span>
-              <div className="flex items-center border border-[#E8D9C5] rounded-xl bg-[#FAF6EE]">
+              <div className="flex items-center border border-[#E8D9C5] rounded-xl bg-[#F3E8D8]">
                 <button
                   type="button"
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FFF7EB] rounded-l-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FAF6EE] rounded-l-xl transition-colors active:scale-90"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={14} />
@@ -658,7 +696,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => setQuantity(q => q + 1)}
-                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FFF7EB] rounded-r-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FAF6EE] rounded-r-xl transition-colors active:scale-90"
                   aria-label="Increase quantity"
                 >
                   <Plus size={14} />
@@ -686,17 +724,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </button>
             </div>
 
-            {/* Prepaid Online Discount Badge */}
-            <div className="flex items-center justify-center gap-2 py-2 px-3 bg-[#872B10]/10 rounded-xl border border-[#872B10]/20 text-center">
-              <Zap size={13} className="fill-[#872B10] text-[#872B10]" />
-              <span className="text-xs font-bold text-[#872B10] tracking-tight">Extra ₹100 Off On Online Payment (Prepaid UPI / Card)</span>
-            </div>
-
             {/* OFFERS FOR YOU (matching reference Image 2) */}
             <div className="space-y-2.5 pt-2">
               <h3 className="text-xs sm:text-sm font-bold text-[#39160D] uppercase tracking-tight">Offers for You</h3>
               
-              <div className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
+              <div className="p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#872B10] px-2 py-0.5 rounded-md uppercase tracking-tight">
@@ -720,7 +752,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 </button>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
+              <div className="p-3.5 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#39160D] px-2 py-0.5 rounded-md uppercase tracking-tight">
@@ -737,7 +769,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => copyCoupon("FLAT10")}
-                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FAF6EE] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
+                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FFF7EB] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
                 >
                   <span>FLAT10</span>
                   <Copy size={13} />
@@ -749,7 +781,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#F3E8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
@@ -760,13 +792,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 </button>
                 {accordionOpen.description && (
                   <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#39160D]/85 leading-relaxed border-t border-[#E8D9C5]/50">
-                    <p>{product.description || "100% natural Ayurvedic formulation crafted with time-tested herbs for holistic wellness and fast, natural relief."}</p>
+                    <p>{cleanDescription}</p>
                   </div>
                 )}
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#F3E8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
@@ -788,7 +820,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#F3E8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
