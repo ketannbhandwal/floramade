@@ -301,7 +301,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
   const savings = currentMRP > currentPrice ? currentMRP - currentPrice : 0;
 
   // Reviews Stats
-  const totalReviews = reviewsList?.length || product.reviewsCount || 48;
+  const totalReviews = (reviewsList && reviewsList.length > 0) ? reviewsList.length : (product.reviewsCount || 0);
   const ratingDistribution = useMemo(() => {
     const dist = [0, 0, 0, 0, 0];
     (reviewsList || []).forEach(r => {
@@ -645,20 +645,28 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </h1>
             </div>
 
-            {/* Rating Bar (Clean & Authentic, NO Fake Social Proof Claims) */}
-            <div className="flex items-center gap-2">
-              <div className="flex text-amber-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={14}
-                    className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"}
-                  />
-                ))}
-              </div>
-              <span className="text-xs font-bold text-[#171717] tracking-tight">
-                {Number(product.rating || 4.8).toFixed(1)} ({totalReviews} ratings)
-              </span>
+            {/* Rating Bar (Clean & Authentic, only shown when reviews exist) */}
+            <div className="flex items-center gap-2 min-h-[20px]">
+              {totalReviews > 0 ? (
+                <>
+                  <div className="flex text-[#D4AF55]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        size={14}
+                        className={i < Math.round(product.rating || 5) ? "fill-[#D4AF55] text-[#D4AF55]" : "text-[#E0D9C8]"}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs sm:text-sm font-bold text-[#171717] tracking-tight whitespace-nowrap">
+                    {Number(product.rating || 5).toFixed(1)} ({totalReviews} {totalReviews === 1 ? "rating" : "ratings"})
+                  </span>
+                </>
+              ) : (
+                <span className="text-xs text-[#171717]/50 tracking-tight">
+                  No reviews yet
+                </span>
+              )}
             </div>
 
             {/* KEY BENEFIT BADGES GRID (Prominent crisp icons, admin image support, compact elegant layout) */}
@@ -1074,17 +1082,26 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           {/* Rating Summary Card */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#F8F4E9] rounded-3xl border border-[#E0D9C8] shadow-xs">
             <div className="flex flex-col items-center gap-1.5">
-              <span className="text-4xl sm:text-5xl font-bold text-[#171717] tracking-tight">
-                {Number(product.rating || 4.8).toFixed(1)}
-              </span>
-              <div className="flex text-amber-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={18} className={i < Math.round(product.rating || 4.8) ? "fill-amber-400 text-amber-400" : "text-[#E0D9C8]"} />
-                ))}
-              </div>
-              <span className="text-xs text-[#171717]/60 font-medium">
-                Based on {totalReviews} reviews
-              </span>
+              {totalReviews > 0 ? (
+                <>
+                  <span className="text-4xl sm:text-5xl font-bold text-[#171717] tracking-tight">
+                    {Number(product.rating || 5).toFixed(1)}
+                  </span>
+                  <div className="flex text-[#D4AF55]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={18} className={i < Math.round(product.rating || 5) ? "fill-[#D4AF55] text-[#D4AF55]" : "text-[#E0D9C8]"} />
+                    ))}
+                  </div>
+                  <span className="text-xs text-[#171717]/60 font-medium">
+                    Based on {totalReviews} {totalReviews === 1 ? "review" : "reviews"}
+                  </span>
+                </>
+              ) : (
+                <div className="text-center py-2">
+                  <span className="text-sm font-bold text-[#171717]">No reviews yet</span>
+                  <p className="text-xs text-[#171717]/60 mt-0.5">Be the first to share your experience</p>
+                </div>
+              )}
             </div>
 
             <div className="flex-1 w-full space-y-2">

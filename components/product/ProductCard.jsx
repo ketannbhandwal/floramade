@@ -39,9 +39,11 @@ function ProductCard({ product, index = 0 }) {
   const currentPrice = Number(product.discountPrice || product.price || 0);
   const regularPrice = Number(product.price || currentPrice);
   const hasDiscount = regularPrice > currentPrice;
-  const savings = hasDiscount ? regularPrice - currentPrice : 0;
-  const rating = Number(product.rating || 4.8).toFixed(1);
-  const reviewsCount = product.reviewsCount || product.reviews?.length || 48;
+  const ratingValue = Number(product.rating || 0);
+  const reviewsCount = typeof product.reviewsCount === "number" 
+    ? product.reviewsCount 
+    : (product.reviews?.length || 0);
+  const hasReviews = reviewsCount > 0;
 
   // Clean title by stripping any "(Copy)" artifact from duplicated products
   const cleanName = (product.name || "")
@@ -54,19 +56,6 @@ function ProductCard({ product, index = 0 }) {
       {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container with Slightly Darker Warm Background */}
       <div className="relative aspect-square w-full flex items-center justify-center bg-[#EFE8D8] overflow-hidden border-b border-[#DDD2BD]/60">
         
-        {/* Top-Left: Sleek Terracotta Discount Pill */}
-        <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 pointer-events-none">
-          {hasDiscount ? (
-            <span className="inline-flex items-center gap-1 bg-[#101D17] text-white text-[9.5px] sm:text-[10px] font-bold uppercase tracking-tight px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs">
-              SAVE ₹{savings.toLocaleString("en-IN")}
-            </span>
-          ) : (
-            <span className="text-[#171717]/40 text-[10px] sm:text-[11px] font-semibold tracking-tight uppercase select-none">
-              Floramade
-            </span>
-          )}
-        </div>
-
         {/* Top-Right: Refined Wishlist Heart */}
         <button
           type="button"
@@ -110,15 +99,27 @@ function ProductCard({ product, index = 0 }) {
             </h3>
           </Link>
 
-          {/* Star Rating & Reviews (Centered, Tight Tracking) */}
-          <div className="flex items-center justify-center gap-1 text-[11px] sm:text-xs tracking-tight">
-            <div className="flex items-center text-amber-500">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
-              ))}
-            </div>
-            <span className="font-bold text-[#171717] ml-0.5 tracking-tight">{rating}</span>
-            <span className="text-[#171717]/55 tracking-tight">({reviewsCount} ratings)</span>
+          {/* Star Rating & Reviews (Centered, Tight Tracking, No Wrapping on Mobile) */}
+          <div className="flex items-center justify-center gap-1 text-[11px] sm:text-xs tracking-tight min-h-[18px] whitespace-nowrap">
+            {hasReviews ? (
+              <>
+                <div className="flex items-center text-[#D4AF55]">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star 
+                      key={i} 
+                      size={11} 
+                      className={i < Math.round(ratingValue) ? "fill-[#D4AF55] text-[#D4AF55]" : "text-[#D4AF55]/30"} 
+                    />
+                  ))}
+                </div>
+                <span className="font-bold text-[#171717] ml-0.5 tracking-tight">{ratingValue.toFixed(1)}</span>
+                <span className="text-[#171717]/55 tracking-tight whitespace-nowrap">({reviewsCount})</span>
+              </>
+            ) : (
+              <span className="text-[10.5px] text-[#171717]/40 tracking-tight">
+                No reviews yet
+              </span>
+            )}
           </div>
 
           {/* Pricing (Centered, Tight Tracking) */}

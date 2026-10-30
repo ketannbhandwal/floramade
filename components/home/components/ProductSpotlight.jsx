@@ -58,8 +58,9 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const regularPrice = Number(product.price || currentPrice);
   const hasDiscount = regularPrice > currentPrice;
   const savings = hasDiscount ? regularPrice - currentPrice : 0;
-  const rating = Number(product.rating || 4.8).toFixed(1);
-  const reviewsCount = product.reviewsCount || product.reviews?.length || 115;
+  const rating = Number(product.rating || 0).toFixed(1);
+  const reviewsCount = typeof product.reviewsCount === "number" ? product.reviewsCount : (product.reviews?.length || 0);
+  const hasReviews = reviewsCount > 0;
 
   // Clean title by stripping any "(Copy)" artifact
   const cleanName = (product.name || "")
@@ -140,15 +141,6 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   Floramade
                 </span>
               </div>
-
-              {/* Top-Right Discount Badge */}
-              {hasDiscount && (
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="inline-flex items-center gap-1 bg-[#101D17] text-white text-[10px] sm:text-xs font-bold uppercase tracking-tight px-3 py-1 rounded-full shadow-xs">
-                    SAVE ₹{savings.toLocaleString("en-IN")}
-                  </span>
-                </div>
-              )}
 
               {/* Left Arrow Button */}
               {images.length > 1 && (
@@ -241,14 +233,20 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
             </Link>
 
             {/* Star Rating */}
-            <div className="flex items-center gap-2 text-xs sm:text-sm tracking-tight">
-              <div className="flex items-center text-amber-500">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={15} className="fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <span className="font-bold text-[#171717]">{rating}</span>
-              <span className="text-[#171717]/60 font-medium">({reviewsCount} verified customer ratings)</span>
+            <div className="flex items-center gap-2 text-xs sm:text-sm tracking-tight min-h-[22px]">
+              {hasReviews ? (
+                <>
+                  <div className="flex items-center text-[#D4AF55]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={15} className={i < Math.round(Number(rating)) ? "fill-[#D4AF55] text-[#D4AF55]" : "text-[#E0D9C8]"} />
+                    ))}
+                  </div>
+                  <span className="font-bold text-[#171717]">{rating}</span>
+                  <span className="text-[#171717]/60 font-medium">({reviewsCount} {reviewsCount === 1 ? "rating" : "ratings"})</span>
+                </>
+              ) : (
+                <span className="text-xs text-[#171717]/50">No reviews yet</span>
+              )}
             </div>
 
             {/* Luxury Price Box - Pure Floramade Theme (#F8F4E9 + #E8D9C5 + #101D17 + #D4AF55) */}
