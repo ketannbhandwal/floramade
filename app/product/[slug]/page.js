@@ -45,7 +45,7 @@ async function getProduct(slug) {
 }
 
 async function getRelated(currentSlug) {
-  const products = await Product.find({ slug: { $ne: currentSlug }, isVisible: true }).limit(2).lean();
+  const products = await Product.find({ slug: { $ne: currentSlug }, isVisible: true }).limit(4).lean();
   return JSON.parse(JSON.stringify(products));
 }
 
