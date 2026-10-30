@@ -130,7 +130,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
-      <body className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-foreground">
+      <body className="min-h-screen bg-background text-foreground overflow-x-clip selection:bg-primary selection:text-foreground">
         <NetworkStatus />
         <Providers>
           <LenisProvider>

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -401,7 +400,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("facebook")} 
-              className="w-6 h-6 rounded-full bg-white border border-[#E8D9C5] hover:bg-[#872B10] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] hover:bg-[#872B10] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
               title="Share on Facebook"
             >
               <FaFacebookF size={10} />
@@ -409,7 +408,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("whatsapp")} 
-              className="w-6 h-6 rounded-full bg-white border border-[#E8D9C5] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
               title="Share on WhatsApp"
             >
               <FaWhatsapp size={11} />
@@ -417,7 +416,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <button 
               type="button" 
               onClick={() => shareProduct("copy")} 
-              className="w-6 h-6 rounded-full bg-white border border-[#E8D9C5] hover:bg-[#39160D] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
+              className="w-6 h-6 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] hover:bg-[#39160D] hover:text-white flex items-center justify-center transition-all text-[#39160D] text-[10px]"
               title="Copy Link"
             >
               <Copy size={11} />
@@ -426,16 +425,16 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         </div>
       </div>
 
-      {/* PRODUCT HERO SECTION (2 COLUMNS) */}
-      <section className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12 mb-12 sm:mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+      {/* PRODUCT HERO SECTION (2 COLUMNS: STICKY IMAGE ON PC) */}
+      <section className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12 mb-14 sm:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           
           {/* =========================================================================
-              LEFT COLUMN: Product Gallery & Thumbnails
+              LEFT COLUMN: Sticky on PC so it does NOT scroll away while browsing details
               ========================================================================= */}
-          <div className="space-y-4">
+          <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
             {/* Main Stage Image */}
-            <div className="relative aspect-square w-full rounded-3xl bg-[#FAF6EE] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            <div className="relative aspect-square max-h-[500px] xl:max-h-[540px] w-full rounded-3xl bg-[#FAF6EE] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Left Brand Tag */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
                 <span className="text-[#39160D]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
@@ -447,7 +446,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white border border-[#E8D9C5] text-[#39160D]/60 hover:text-[#872B10] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#FAF6EE]/90 hover:bg-[#FAF6EE] border border-[#E8D9C5] text-[#39160D]/60 hover:text-[#872B10] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
@@ -457,7 +456,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </button>
 
               {/* Main Product Image */}
-              <div className="relative w-full h-full p-6 sm:p-8 flex items-center justify-center">
+              <div className="relative w-full h-full p-4 sm:p-6 flex items-center justify-center">
                 <Image
                   src={productImages[activeIdx] || "/placeholder.png"}
                   alt={product.name}
@@ -476,7 +475,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length)}
                     aria-label="Previous Image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FAF6EE]/95 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronLeft size={18} />
                   </button>
@@ -484,7 +483,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(prev => (prev + 1) % productImages.length)}
                     aria-label="Next Image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FAF6EE]/95 hover:bg-[#39160D] text-[#39160D] hover:text-[#FFF7EB] border border-[#E8D9C5] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
                   >
                     <ChevronRight size={18} />
                   </button>
@@ -501,10 +500,10 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-white flex-shrink-0 transition-all p-1.5 ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#FAF6EE] flex-shrink-0 transition-all p-1 ${
                       activeIdx === idx
                         ? "border-[#39160D] shadow-sm scale-105"
-                        : "border-[#E8D9C5] opacity-70 hover:opacity-100 hover:border-[#872B10]/40"
+                        : "border-[#E8D9C5] opacity-70 hover:opacity-100 hover:border-[#872B10]/50"
                     }`}
                   >
                     <Image
@@ -522,9 +521,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: Details, Badges, Pricing, Accordions
+              RIGHT COLUMN: Details, Badges, Pricing, Accordions (Unified warm theme, NO white blocks)
               ========================================================================= */}
-          <div className="space-y-4 sm:space-y-5">
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5">
             
             {/* Title & Category Tag */}
             <div>
@@ -578,9 +577,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 return (
                   <div
                     key={idx}
-                    className="p-3 sm:p-3.5 rounded-2xl bg-white border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/40 transition-colors"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/40 transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#FAF6EE] text-[#872B10] flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[#FFF7EB] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0">
                       <IconComp size={16} />
                     </div>
                     <span className="text-[11.5px] sm:text-xs font-semibold text-[#39160D] leading-tight tracking-tight">
@@ -628,8 +627,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         onClick={() => setSelectedPack(pack)}
                         className={`p-3 rounded-2xl border-2 text-left transition-all ${
                           isSelected
-                            ? "border-[#39160D] bg-white ring-2 ring-[#39160D]/10 shadow-sm"
-                            : "border-[#E8D9C5] bg-white/70 hover:bg-white"
+                            ? "border-[#39160D] bg-[#FFF7EB] ring-2 ring-[#39160D]/10 shadow-xs"
+                            : "border-[#E8D9C5] bg-[#FAF6EE] hover:border-[#39160D]/40"
                         }`}
                       >
                         <span className="block text-xs font-bold text-[#39160D] tracking-tight">{pack.label}</span>
@@ -644,11 +643,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {/* QUANTITY SELECTOR */}
             <div className="flex items-center gap-4 pt-1">
               <span className="text-xs font-bold text-[#39160D] uppercase tracking-tight">Quantity</span>
-              <div className="flex items-center border border-[#E8D9C5] rounded-xl bg-white shadow-xs">
+              <div className="flex items-center border border-[#E8D9C5] rounded-xl bg-[#FAF6EE]">
                 <button
                   type="button"
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FAF6EE] rounded-l-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FFF7EB] rounded-l-xl transition-colors active:scale-90"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={14} />
@@ -659,7 +658,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => setQuantity(q => q + 1)}
-                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FAF6EE] rounded-r-xl transition-colors active:scale-90"
+                  className="w-9 h-9 flex items-center justify-center text-[#39160D] hover:bg-[#FFF7EB] rounded-r-xl transition-colors active:scale-90"
                   aria-label="Increase quantity"
                 >
                   <Plus size={14} />
@@ -672,7 +671,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="h-12 sm:h-13 rounded-2xl bg-[#FFFDF9] border-2 border-[#39160D] text-[#39160D] flex items-center justify-center gap-2 hover:bg-[#39160D]/5 transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-sm cursor-pointer"
+                className="h-12 sm:h-13 rounded-2xl bg-[#FFF7EB] border-2 border-[#39160D] text-[#39160D] flex items-center justify-center gap-2 hover:bg-[#39160D]/5 transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-xs cursor-pointer"
               >
                 <ShoppingBag size={17} />
                 <span>Add to Bag</span>
@@ -697,7 +696,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               <h3 className="text-xs sm:text-sm font-bold text-[#39160D] uppercase tracking-tight">Offers for You</h3>
               
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
+              <div className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#872B10] px-2 py-0.5 rounded-md uppercase tracking-tight">
@@ -714,14 +713,14 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <button
                   type="button"
                   onClick={() => copyCoupon("FLAT05")}
-                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FAF6EE] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
+                  className="px-3 py-1.5 rounded-xl border border-[#39160D]/20 bg-[#FFF7EB] hover:bg-[#39160D] hover:text-white text-[#39160D] text-xs font-bold tracking-tight transition-all flex items-center gap-1.5 shrink-0"
                 >
                   <span>FLAT05</span>
                   <Copy size={13} />
                 </button>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
+              <div className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] flex items-center justify-between gap-3 shadow-xs">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#FFF7EB] bg-[#39160D] px-2 py-0.5 rounded-md uppercase tracking-tight">
@@ -750,11 +749,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-white shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FAF6EE]/50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
                 >
                   <span>Description</span>
                   <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.description ? "rotate-45" : ""}`} />
@@ -767,11 +766,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-white shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FAF6EE]/50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
                 >
                   <span>How to Use</span>
                   <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.howToUse ? "rotate-45" : ""}`} />
@@ -789,11 +788,11 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
-              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-white shadow-xs">
+              <div className="border border-[#E8D9C5] rounded-2xl overflow-hidden bg-[#FAF6EE] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
-                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FAF6EE]/50 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#39160D] hover:bg-[#FFF7EB] transition-colors"
                 >
                   <span>Ingredients</span>
                   <Plus size={16} className={`transition-transform duration-200 ${accordionOpen.ingredients ? "rotate-45" : ""}`} />
@@ -810,7 +809,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                         return (
                           <span 
                             key={idx}
-                            className="inline-block px-2.5 py-1 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] text-xs font-semibold text-[#39160D] capitalize tracking-tight"
+                            className="inline-block px-2.5 py-1 rounded-full bg-[#FFF7EB] border border-[#E8D9C5] text-xs font-semibold text-[#39160D] capitalize tracking-tight"
                           >
                             {name}
                           </span>
@@ -830,45 +829,41 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         </div>
       </section>
 
-      {/* CERTIFIED NATURAL GOODNESS (4 Trust Badges) */}
-      <section className="py-10 sm:py-14 bg-white border-y border-[#E8D9C5]/80">
+      {/* CERTIFIED NATURAL GOODNESS (4 Trust Badges - Identical to Why Choose Floramade, Crisp & Warm) */}
+      <section className="py-12 sm:py-16 bg-[#FAF6EE] border-t border-[#E8D9C5]/80">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#39160D] tracking-tight">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#39160D] tracking-tight">
               Certified Natural Goodness For You
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-sm sm:max-w-md md:max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10 md:gap-14 lg:gap-16 max-w-xs sm:max-w-md md:max-w-4xl mx-auto justify-items-center items-center">
             {[
-              { image: "/certificate/1.svg", label: "Quality You\nCan Trust", sublabel: "Gluten Free" },
-              { image: "/certificate/2.svg", label: "100% Pure\n& Vegan", sublabel: "Pure Natural" },
-              { image: "/certificate/3.svg", label: "Clinical Tested\nIngredients", sublabel: "Expert Formulation" },
-              { image: "/certificate/4.svg", label: "Certified Organic\n& GMO Free", sublabel: "GMO Free" },
-            ].map((item, i) => (
-              <div key={i} className="flex flex-col items-center gap-2.5 w-full text-center">
-                <div className="relative h-18 w-18 sm:h-22 sm:w-22 rounded-full overflow-hidden shadow-sm border border-[#E8D9C5] bg-[#FAF6EE] flex items-center justify-center p-2">
-                  <Image 
-                    src={item.image} 
-                    alt={item.label.replace("\n", " ")} 
-                    fill 
-                    className="object-contain p-1" 
-                  />
-                </div>
-                <div>
-                  <p className="text-xs sm:text-[13px] font-bold text-[#39160D] leading-tight whitespace-pre-line tracking-tight">{item.label}</p>
-                  {item.sublabel && (
-                    <span className="block text-[10px] uppercase tracking-wider text-[#872B10] mt-0.5 font-semibold">{item.sublabel}</span>
-                  )}
-                </div>
+              { id: 1, src: "/certificate/1.svg", alt: "Quality You Can Trust - Gluten Free" },
+              { id: 2, src: "/certificate/2.svg", alt: "100% Pure, Natural & Vegan" },
+              { id: 3, src: "/certificate/3.svg", alt: "Clinically Tested Ingredients" },
+              { id: 4, src: "/certificate/4.svg", alt: "Certified Organic & GMO Free" },
+            ].map((cert) => (
+              <div
+                key={cert.id}
+                className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 transition-transform duration-300 hover:scale-105 flex items-center justify-center cursor-default"
+              >
+                <Image
+                  src={cert.src}
+                  alt={cert.alt}
+                  fill
+                  sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 160px"
+                  className="object-contain p-0 m-0"
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FREQUENTLY BOUGHT TOGETHER (matching reference Image 3) */}
+      {/* FREQUENTLY BOUGHT TOGETHER (4 Product Cards matching reference Image 3) */}
       {relatedProducts && relatedProducts.length > 0 && (
-        <section className="py-14 sm:py-18 bg-[#FAF6EE] border-b border-[#E8D9C5]/80">
+        <section className="py-14 sm:py-18 bg-[#FAF6EE] border-t border-[#E8D9C5]/80">
           <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-12">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold text-[#39160D] tracking-tight">
@@ -889,8 +884,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         </section>
       )}
 
-      {/* FREQUENTLY ASKED QUESTIONS */}
-      <section className="py-14 sm:py-18 bg-white border-b border-[#E8D9C5]/80">
+      {/* FREQUENTLY ASKED QUESTIONS (Unified warm theme, NO white bands) */}
+      <section className="py-14 sm:py-18 bg-[#FAF6EE] border-t border-[#E8D9C5]/80">
         <div className="max-w-[840px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-10">
             <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-tight">
@@ -928,15 +923,15 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         </div>
       </section>
 
-      {/* CUSTOMER REVIEWS SECTION */}
-      <section id="reviews-section" className="py-14 sm:py-18 bg-[#FAF6EE]">
+      {/* CUSTOMER REVIEWS SECTION (Unified warm theme) */}
+      <section id="reviews-section" className="py-14 sm:py-18 bg-[#FAF6EE] border-t border-[#E8D9C5]/80">
         <div className="max-w-[900px] mx-auto px-4 sm:px-6">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#39160D] tracking-tight">Customer Reviews</h2>
           </div>
 
           {/* Rating Summary Card */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-white rounded-3xl border border-[#E8D9C5] shadow-xs">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#FAF6EE] rounded-3xl border border-[#E8D9C5] shadow-xs">
             <div className="flex flex-col items-center gap-1.5">
               <span className="text-4xl sm:text-5xl font-bold text-[#39160D] tracking-tight">
                 {Number(product.rating || 4.8).toFixed(1)}
@@ -977,7 +972,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div>
               <button 
                 onClick={() => setReviewOpen(true)}
-                className="px-6 py-3 bg-[#39160D] text-[#FFF7EB] rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#4E2014] transition-all shadow-sm whitespace-nowrap active:scale-95"
+                className="px-6 py-3 bg-[#39160D] text-[#FFF7EB] rounded-full font-bold text-xs uppercase tracking-tight hover:bg-[#4E2014] transition-all shadow-sm whitespace-nowrap active:scale-95 cursor-pointer"
               >
                 Write a review
               </button>
@@ -992,7 +987,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <select
               value={reviewSort}
               onChange={(e) => setReviewSort(e.target.value)}
-              className="text-xs sm:text-sm border border-[#E8D9C5] rounded-full px-3.5 py-1.5 bg-white text-[#39160D] outline-none shadow-xs font-medium cursor-pointer"
+              className="text-xs sm:text-sm border border-[#E8D9C5] rounded-full px-3.5 py-1.5 bg-[#FAF6EE] text-[#39160D] outline-none shadow-xs font-medium cursor-pointer"
             >
               <option value="recent">Most Recent</option>
               <option value="highest">Highest Rating</option>
@@ -1005,7 +1000,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {sortedReviews.map((review, i) => (
               <div 
                 key={i}
-                className="p-5 bg-white rounded-2xl border border-[#E8D9C5] shadow-xs"
+                className="p-5 bg-[#FAF6EE] rounded-2xl border border-[#E8D9C5] shadow-xs"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex text-amber-400">
@@ -1021,7 +1016,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 </div>
 
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#FAF6EE] flex items-center justify-center text-[#872B10] font-bold text-xs border border-[#E8D9C5]">
+                  <div className="w-8 h-8 rounded-full bg-[#FFF7EB] flex items-center justify-center text-[#872B10] font-bold text-xs border border-[#E8D9C5]">
                     {review.name?.charAt(0) || "U"}
                   </div>
                   <span className="text-sm font-bold text-[#39160D] capitalize">{review.name}</span>
@@ -1063,7 +1058,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 {ratingLabels[hoverRating || reviewData.rating]}
               </span>
             </div>
-            <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-[#E8D9C5]">
+            <div className="flex items-center gap-2 p-3 bg-[#FAF6EE] rounded-xl border border-[#E8D9C5]">
               {[1, 2, 3, 4, 5].map((star) => {
                 const active = (hoverRating || reviewData.rating) >= star;
                 return (
@@ -1097,7 +1092,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 placeholder="e.g. Ramesh Kumar"
                 value={reviewData.name}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, name: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#E8D9C5] bg-white px-3.5 text-sm text-[#39160D] outline-none transition placeholder:text-[#39160D]/35 focus:border-[#39160D]"
+                className="h-11 w-full rounded-xl border border-[#E8D9C5] bg-[#FAF6EE] px-3.5 text-sm text-[#39160D] outline-none transition placeholder:text-[#39160D]/35 focus:border-[#39160D]"
               />
             </div>
 
@@ -1110,7 +1105,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 placeholder="e.g. Excellent Ayurvedic remedy!"
                 value={reviewData.title}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, title: e.target.value }))}
-                className="h-11 w-full rounded-xl border border-[#E8D9C5] bg-white px-3.5 text-sm text-[#39160D] outline-none transition placeholder:text-[#39160D]/35 focus:border-[#39160D]"
+                className="h-11 w-full rounded-xl border border-[#E8D9C5] bg-[#FAF6EE] px-3.5 text-sm text-[#39160D] outline-none transition placeholder:text-[#39160D]/35 focus:border-[#39160D]"
               />
             </div>
 
@@ -1120,7 +1115,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </label>
               
               {imagePreview ? (
-                <div className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-[#E8D9C5]">
+                <div className="relative flex items-center gap-3 p-3 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5]">
                   <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#E8D9C5]">
                     <Image src={imagePreview} alt="Review attachment" fill className="object-cover" />
                   </div>
@@ -1139,7 +1134,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   </button>
                 </div>
               ) : (
-                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#E8D9C5] hover:border-[#39160D]/40 bg-white/70 hover:bg-white cursor-pointer transition-all">
+                <label className="flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-[#E8D9C5] hover:border-[#39160D]/40 bg-[#FAF6EE] cursor-pointer transition-all">
                   <input
                     type="file"
                     accept="image/*"
@@ -1159,7 +1154,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <textarea
                 value={reviewData.comment}
                 onChange={(e) => setReviewData((prev) => ({ ...prev, comment: e.target.value }))}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D9C5] focus:outline-none focus:border-[#39160D] min-h-[100px] bg-white text-sm text-[#39160D] placeholder:text-[#39160D]/35 resize-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E8D9C5] focus:outline-none focus:border-[#39160D] min-h-[100px] bg-[#FAF6EE] text-sm text-[#39160D] placeholder:text-[#39160D]/35 resize-none transition-all"
                 placeholder="Share your experience with this product..."
                 rows={3}
               />

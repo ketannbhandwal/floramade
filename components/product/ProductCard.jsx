@@ -49,7 +49,7 @@ function ProductCard({ product, index = 0 }) {
     .trim();
 
   return (
-    <div className="group relative flex flex-col h-full bg-white rounded-2xl border border-[#E8D9C5] hover:border-[#872B10]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(57,22,13,0.04)] hover:shadow-[0_12px_28px_rgba(57,22,13,0.10)] hover:-translate-y-1">
+    <div className="group relative flex flex-col h-full bg-[#FAF6EE] rounded-2xl border border-[#E8D9C5] hover:border-[#872B10]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(57,22,13,0.04)] hover:shadow-[0_12px_28px_rgba(57,22,13,0.10)] hover:-translate-y-1">
       
       {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container */}
       <div className="relative aspect-square w-full flex items-center justify-center bg-[#FAF6EE] overflow-hidden border-b border-[#E8D9C5]/50">
@@ -71,7 +71,7 @@ function ProductCard({ product, index = 0 }) {
         <button
           type="button"
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-[#E8D9C5] text-[#39160D]/60 hover:text-[#872B10] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FAF6EE]/90 hover:bg-[#FAF6EE] border border-[#E8D9C5] text-[#39160D]/60 hover:text-[#872B10] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
           aria-label="Save to Wishlist"
         >
           <Heart 
@@ -96,8 +96,8 @@ function ProductCard({ product, index = 0 }) {
         </Link>
       </div>
 
-      {/* 2. BOTTOM STAGE: Clean White Info Area with Tight Typography */}
-      <div className="flex flex-col flex-1 justify-between bg-white p-3.5 sm:p-4 text-center">
+      {/* 2. BOTTOM STAGE: Clean Warm Info Area with Tight Typography */}
+      <div className="flex flex-col flex-1 justify-between bg-[#FAF6EE] p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-1.5">
           
           {/* Product Title (Centered, Bold, Tight Tracking) */}
