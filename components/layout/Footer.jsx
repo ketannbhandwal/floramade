@@ -95,11 +95,11 @@ export default function Footer() {
               <div className="flex items-center justify-start">
                 <Link href="/" className="inline-block group focus:outline-none">
                   <Image 
-                    src="/logo.png" 
+                    src="/floramade-logo-white.png" 
                     alt="Floramade Logo" 
-                    width={140} 
-                    height={140} 
-                    className="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert" 
+                    width={200} 
+                    height={58} 
+                    className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
                   />
                 </Link>
               </div>
