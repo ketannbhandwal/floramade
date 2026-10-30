@@ -38,7 +38,7 @@ export default function CookieConsent() {
         >
           <div className="bg-[#F8F4E9] text-[#171717] p-3.5 sm:p-4 rounded-2xl shadow-[0_12px_36px_rgba(18,61,40,0.18)] border border-[#E0D9C8] flex items-start gap-3">
             {/* Small Cookie Icon Bubble */}
-            <div className="w-8 h-8 rounded-lg bg-[#123D28]/10 text-[#123D28] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-8 h-8 rounded-lg bg-[#101D17]/10 text-[#101D17] flex items-center justify-center shrink-0 mt-0.5">
               <Cookie size={17} />
             </div>
 
@@ -72,7 +72,7 @@ export default function CookieConsent() {
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className="px-4 py-1.5 rounded-lg bg-[#123D28] text-white hover:bg-[#101D17] transition-all font-bold text-[11px] uppercase tracking-tight shadow-xs cursor-pointer active:scale-95"
+                  className="px-4 py-1.5 rounded-lg bg-[#101D17] text-white hover:bg-[#101D17] transition-all font-bold text-[11px] uppercase tracking-tight shadow-xs cursor-pointer active:scale-95"
                 >
                   Accept
                 </button>

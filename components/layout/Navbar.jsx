@@ -27,7 +27,7 @@ import Image from "next/image";
 import { DEFAULT_NAV_LINKS, DEFAULT_ANNOUNCEMENT } from "@/lib/settings-constants";
 import SearchOverlay from "@/components/layout/SearchOverlay";
 
-/* Top Announcement Bar: Floramade Luxury Ayurvedic Theme (#123D28 & #D4AF55) */
+/* Top Announcement Bar: Floramade Luxury Ayurvedic Theme (#101D17 & #D4AF55) */
 const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
   if (announcement?.enabled === false) return null;
 
@@ -42,7 +42,7 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
   );
 
   return (
-    <div className="bg-[#123D28] text-white py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#0A2A1A] relative z-[80]">
+    <div className="bg-[#101D17] text-white py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#0A2A1A] relative z-[80]">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[11px] sm:text-xs font-medium tracking-tight">
         
         {/* Left: Social Media + Follow us! (Hidden on mobile for clean centered offer) */}
@@ -207,8 +207,8 @@ export default function Navbar() {
       >
         <AnnouncementBar announcement={announcement} />
 
-        {/* Floramade Premium Herbal Header: Dark Green #123D28 */}
-        <div className={`bg-[#123D28] border-b border-[#0A2A1A] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#123D28]/15' : ''}`}>
+        {/* Floramade Premium Herbal Header: Dark Green #101D17 */}
+        <div className={`bg-[#101D17] border-b border-[#0A2A1A] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#101D17]/15' : ''}`}>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
             
             {/* =========================================================================
@@ -272,8 +272,8 @@ export default function Navbar() {
                         >
                           <div className="bg-white border border-[#E0D9C8] rounded-2xl shadow-[0_15px_40px_rgba(18,61,43,0.12)] p-2.5 backdrop-blur-xl">
                             {item.subHeading && (
-                              <div className="px-3 py-1.5 border-b border-[#123D28]/10 mb-1 flex items-center justify-between">
-                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#123D28] flex items-center gap-1.5">
+                              <div className="px-3 py-1.5 border-b border-[#101D17]/10 mb-1 flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#101D17] flex items-center gap-1.5">
                                   <Sparkles size={11} /> {item.subHeading}
                                 </p>
                               </div>
@@ -289,20 +289,20 @@ export default function Navbar() {
                                     onClick={() => setOpenDropdownId(null)}
                                     className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-all group/item ${
                                       isTargetProduct
-                                        ? "bg-[#123D28]/10 hover:bg-[#123D28]/20 border border-[#123D28]/25 shadow-xs"
+                                        ? "bg-[#101D17]/10 hover:bg-[#101D17]/20 border border-[#101D17]/25 shadow-xs"
                                         : "hover:bg-[#F8F4E9]/80 border border-transparent"
                                     }`}
                                   >
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2">
-                                        <span className="text-[13px] font-bold text-[#171717] group-hover/item:text-[#123D28] transition-colors tracking-tight">
+                                        <span className="text-[13px] font-bold text-[#171717] group-hover/item:text-[#101D17] transition-colors tracking-tight">
                                           {sub.label}
                                         </span>
                                         {sub.badge && (
                                           <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full tracking-tight ${
                                             isTargetProduct
-                                              ? "bg-[#123D28] text-white"
-                                              : "bg-[#123D28]/10 text-[#171717]"
+                                              ? "bg-[#101D17] text-white"
+                                              : "bg-[#101D17]/10 text-[#171717]"
                                           }`}>
                                             {sub.badge}
                                           </span>
@@ -314,7 +314,7 @@ export default function Navbar() {
                                         </p>
                                       )}
                                     </div>
-                                    <ArrowRight size={12} className="text-[#123D28] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
+                                    <ArrowRight size={12} className="text-[#101D17] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
                                   </Link>
                                 );
                               })}
@@ -342,7 +342,7 @@ export default function Navbar() {
                 {mounted && (user?.role === "admin" || user?.isAdmin) && (
                   <Link
                     href="/admin"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] hover:bg-[#D4AF55] hover:text-[#123D28] font-bold text-[10px] uppercase tracking-tight transition-all border border-[#123D28]/20 whitespace-nowrap mr-1 shadow-xs"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] hover:bg-[#D4AF55] hover:text-[#101D17] font-bold text-[10px] uppercase tracking-tight transition-all border border-[#101D17]/20 whitespace-nowrap mr-1 shadow-xs"
                     title="Open Admin Dashboard"
                   >
                     <LayoutDashboard size={12} />
@@ -352,7 +352,7 @@ export default function Navbar() {
 
                 <Link 
                   href={mounted && user ? "/account" : "/login"} 
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#123D28]/5 transition-all focus:outline-none"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none"
                   title={mounted && user ? "My Account" : "Login / Account"}
                   aria-label="User Account"
                 >
@@ -362,7 +362,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#123D28]/5 transition-all focus:outline-none cursor-pointer"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none cursor-pointer"
                   title="Search Products"
                   aria-label="Search"
                 >
@@ -371,13 +371,13 @@ export default function Navbar() {
 
                 <Link 
                   href="/wishlist" 
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#123D28]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
                   title="Wishlist"
                   aria-label="Wishlist"
                 >
                   <Heart size={20} strokeWidth={1.9} />
                   {mounted && wishlistItems.length > 0 && (
-                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#123D28] text-white shadow-xs">
+                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#101D17] text-white shadow-xs">
                       {wishlistItems.length}
                     </span>
                   )}
@@ -385,12 +385,12 @@ export default function Navbar() {
 
                 <Link 
                   href="/cart" 
-                  className="relative p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#123D28]/5 transition-all focus:outline-none group active:scale-95"
+                  className="relative p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none group active:scale-95"
                   title="Shopping Cart"
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={21} strokeWidth={1.9} className="group-hover:scale-105 transition-transform" />
-                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#123D28] text-white shadow-sm ring-2 ring-[#123D28]">
+                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#101D17] text-white shadow-sm ring-2 ring-[#101D17]">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -447,7 +447,7 @@ export default function Navbar() {
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={22} strokeWidth={2} />
-                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#123D28] text-white shadow-xs">
+                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#101D17] text-white shadow-xs">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -485,7 +485,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#123D28] text-white flex flex-col justify-between shadow-2xl overflow-y-auto"
+              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#101D17] text-white flex flex-col justify-between shadow-2xl overflow-y-auto"
             >
               {/* Scrollable Container */}
               <div className="flex-1 flex flex-col">
@@ -543,7 +543,7 @@ export default function Navbar() {
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium">{sub.label}</span>
                                       {sub.badge && (
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#123D28] text-white">
+                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#101D17] text-white">
                                           {sub.badge}
                                         </span>
                                       )}

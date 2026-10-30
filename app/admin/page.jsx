@@ -1145,7 +1145,7 @@ export default function AdminPage() {
                                 #1 is the front cover. Use arrows or &quot;Make Front&quot; to arrange order.
                               </p>
                             </div>
-                            <span className="text-[11px] font-medium text-[#123D28] bg-[#123D28]/10 px-2.5 py-1 rounded-full">
+                            <span className="text-[11px] font-medium text-[#101D17] bg-[#101D17]/10 px-2.5 py-1 rounded-full">
                               Cover: Image #1
                             </span>
                           </div>
@@ -1156,7 +1156,7 @@ export default function AdminPage() {
                                 key={idx}
                                 className={`group relative flex flex-col rounded-2xl overflow-hidden border transition-all ${
                                   idx === 0
-                                    ? "border-[#123D28] ring-2 ring-[#123D28]/20 shadow-md bg-white"
+                                    ? "border-[#101D17] ring-2 ring-[#101D17]/20 shadow-md bg-white"
                                     : "border-foreground/15 bg-white hover:border-foreground/30 shadow-sm"
                                 }`}
                               >
@@ -1171,11 +1171,11 @@ export default function AdminPage() {
                                   {/* Top header badge & Delete button */}
                                   <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-none">
                                     {idx === 0 ? (
-                                      <span className="pointer-events-auto inline-flex items-center gap-1 bg-[#123D28] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                                      <span className="pointer-events-auto inline-flex items-center gap-1 bg-[#101D17] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
                                         <Star size={10} className="fill-amber-400 text-amber-400" /> FRONT COVER
                                       </span>
                                     ) : (
-                                      <span className="pointer-events-auto bg-[#123D28]/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                                      <span className="pointer-events-auto bg-[#101D17]/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
                                         #{idx + 1}
                                       </span>
                                     )}
@@ -1196,13 +1196,13 @@ export default function AdminPage() {
                                 </div>
 
                                 {/* Reorder Controls Footer */}
-                                <div className="border-t border-[#123D28]/10 bg-white/80 backdrop-blur-sm p-1.5 flex items-center justify-between gap-1">
+                                <div className="border-t border-[#101D17]/10 bg-white/80 backdrop-blur-sm p-1.5 flex items-center justify-between gap-1">
                                   {/* Move Left / Earlier */}
                                   <button
                                     type="button"
                                     disabled={idx === 0}
                                     onClick={() => moveImage(idx, -1)}
-                                    className="p-1 rounded-lg text-[#171717] hover:bg-[#123D28]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                                    className="p-1 rounded-lg text-[#171717] hover:bg-[#101D17]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
                                     title="Move left (earlier)"
                                   >
                                     <ChevronLeft size={16} />
@@ -1217,10 +1217,10 @@ export default function AdminPage() {
                                     <button
                                       type="button"
                                       onClick={() => setAsMainImage(idx)}
-                                      className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold text-[#123D28] bg-[#123D28]/10 hover:bg-[#123D28]/20 transition-colors"
+                                      className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold text-[#101D17] bg-[#101D17]/10 hover:bg-[#101D17]/20 transition-colors"
                                       title="Make this the front cover"
                                     >
-                                      <Star size={11} className="fill-[#123D28]" /> Make Front
+                                      <Star size={11} className="fill-[#101D17]" /> Make Front
                                     </button>
                                   )}
 
@@ -1229,7 +1229,7 @@ export default function AdminPage() {
                                     type="button"
                                     disabled={idx === form.images.length - 1}
                                     onClick={() => moveImage(idx, 1)}
-                                    className="p-1 rounded-lg text-[#171717] hover:bg-[#123D28]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
+                                    className="p-1 rounded-lg text-[#171717] hover:bg-[#101D17]/10 disabled:opacity-20 disabled:pointer-events-none transition-colors"
                                     title="Move right (later)"
                                   >
                                     <ChevronRight size={16} />
