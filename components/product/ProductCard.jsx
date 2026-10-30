@@ -49,19 +49,19 @@ function ProductCard({ product, index = 0 }) {
     .trim();
 
   return (
-    <div className="group relative flex flex-col h-full bg-[#FAF6EE] rounded-2xl border border-[#E8D9C5] hover:border-[#872B10]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(57,22,13,0.04)] hover:shadow-[0_12px_28px_rgba(57,22,13,0.10)] hover:-translate-y-1">
+    <div className="group relative flex flex-col h-full bg-[#F4F8F8] rounded-2xl border border-[#DCE8E8] hover:border-[#126768]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(57,22,13,0.04)] hover:shadow-[0_12px_28px_rgba(57,22,13,0.10)] hover:-translate-y-1">
       
       {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container */}
-      <div className="relative aspect-square w-full flex items-center justify-center bg-[#FAF6EE] overflow-hidden border-b border-[#E8D9C5]/50">
+      <div className="relative aspect-square w-full flex items-center justify-center bg-[#F4F8F8] overflow-hidden border-b border-[#DCE8E8]/50">
         
         {/* Top-Left: Sleek Terracotta Discount Pill */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 pointer-events-none">
           {hasDiscount ? (
-            <span className="inline-flex items-center gap-1 bg-[#872B10] text-[#FFF7EB] text-[9.5px] sm:text-[10px] font-bold uppercase tracking-tight px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs">
+            <span className="inline-flex items-center gap-1 bg-[#126768] text-white text-[9.5px] sm:text-[10px] font-bold uppercase tracking-tight px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs">
               SAVE ₹{savings.toLocaleString("en-IN")}
             </span>
           ) : (
-            <span className="text-[#39160D]/40 text-[10px] sm:text-[11px] font-semibold tracking-tight uppercase select-none">
+            <span className="text-[#123838]/40 text-[10px] sm:text-[11px] font-semibold tracking-tight uppercase select-none">
               Floramade
             </span>
           )}
@@ -71,12 +71,12 @@ function ProductCard({ product, index = 0 }) {
         <button
           type="button"
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FAF6EE]/90 hover:bg-[#FAF6EE] border border-[#E8D9C5] text-[#39160D]/60 hover:text-[#872B10] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F4F8F8]/90 hover:bg-[#F4F8F8] border border-[#DCE8E8] text-[#123838]/60 hover:text-[#126768] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
           aria-label="Save to Wishlist"
         >
           <Heart 
             size={13} 
-            className={isInWishlist(product._id) ? "fill-[#872B10] text-[#872B10]" : "text-[#39160D]/60"} 
+            className={isInWishlist(product._id) ? "fill-[#872B10] text-[#126768]" : "text-[#123838]/60"} 
           />
         </button>
 
@@ -97,14 +97,14 @@ function ProductCard({ product, index = 0 }) {
       </div>
 
       {/* 2. BOTTOM STAGE: Clean Warm Info Area with Tight Typography */}
-      <div className="flex flex-col flex-1 justify-between bg-[#FAF6EE] p-3.5 sm:p-4 text-center">
+      <div className="flex flex-col flex-1 justify-between bg-[#F4F8F8] p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-1.5">
           
           {/* Product Title (Centered, Bold, Tight Tracking) */}
           <Link href={`/product/${product.slug}`} className="block w-full">
             <h3 
               title={cleanName}
-              className="text-[13px] sm:text-[14.5px] font-bold text-[#39160D] group-hover:text-[#872B10] transition-colors tracking-tight truncate px-1"
+              className="text-[13px] sm:text-[14.5px] font-bold text-[#123838] group-hover:text-[#126768] transition-colors tracking-tight truncate px-1"
             >
               {cleanName}
             </h3>
@@ -117,17 +117,17 @@ function ProductCard({ product, index = 0 }) {
                 <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
               ))}
             </div>
-            <span className="font-bold text-[#39160D] ml-0.5 tracking-tight">{rating}</span>
-            <span className="text-[#39160D]/55 tracking-tight">({reviewsCount} ratings)</span>
+            <span className="font-bold text-[#123838] ml-0.5 tracking-tight">{rating}</span>
+            <span className="text-[#123838]/55 tracking-tight">({reviewsCount} ratings)</span>
           </div>
 
           {/* Pricing (Centered, Tight Tracking) */}
           <div className="flex items-baseline justify-center gap-2 pt-0.5 tracking-tight flex-wrap">
-            <span className="text-base sm:text-[17px] font-extrabold text-[#872B10] tracking-tight">
+            <span className="text-base sm:text-[17px] font-extrabold text-[#126768] tracking-tight">
               ₹{currentPrice.toLocaleString("en-IN")}
             </span>
             {hasDiscount && (
-              <span className="text-xs sm:text-[13px] text-[#39160D]/40 line-through tracking-tight font-normal">
+              <span className="text-xs sm:text-[13px] text-[#123838]/40 line-through tracking-tight font-normal">
                 ₹{regularPrice.toLocaleString("en-IN")}
               </span>
             )}
@@ -140,7 +140,7 @@ function ProductCard({ product, index = 0 }) {
           <button
             type="button"
             onClick={handleAddToCart}
-            className="w-full py-2 sm:py-2.5 px-3 bg-[#39160D] hover:bg-[#872B10] text-[#FFF7EB] rounded-full flex items-center justify-center gap-1.5 font-semibold text-xs sm:text-[13px] tracking-tight active:scale-95 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md"
+            className="w-full py-2 sm:py-2.5 px-3 bg-[#126768] hover:bg-[#126768] text-white rounded-full flex items-center justify-center gap-1.5 font-semibold text-xs sm:text-[13px] tracking-tight active:scale-95 transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md"
           >
             <ShoppingBag size={13} strokeWidth={2.2} />
             <span>Add to Bag</span>

@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="w-full pt-32 md:pt-40 pb-20 px-6">
+    <div className="w-full pt-4 md:pt-6 pb-20 px-6">
       <div className="mx-auto max-w-md">
         <Link 
           href="/login" 

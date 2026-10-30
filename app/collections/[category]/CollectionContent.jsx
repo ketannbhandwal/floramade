@@ -26,10 +26,10 @@ export default function CollectionContent({ products, category }) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 md:mb-12 text-center max-w-2xl mx-auto space-y-2"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#872B10]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#126768]">
             {categoryTitle}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-[#39160D]/70 font-normal">
+          <p className="text-xs sm:text-sm md:text-base text-[#123838]/70 font-normal">
             Meticulously crafted formulations for balanced living and holistic wellness.
           </p>
         </motion.div>
@@ -57,14 +57,14 @@ export default function CollectionContent({ products, category }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="py-16 border border-[#39160D]/10 rounded-2xl bg-[#FFF7EB]/40 flex flex-col items-center justify-center text-center space-y-6"
+            className="py-16 border border-[#126768]/10 rounded-2xl bg-white/40 flex flex-col items-center justify-center text-center space-y-6"
           >
-            <p className="text-base font-light text-[#39160D]/70">
+            <p className="text-base font-light text-[#123838]/70">
               Products for this collection are coming soon.
             </p>
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 h-10 px-6 rounded-full bg-[#39160D] text-[#FFF7EB] hover:bg-[#872B10] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
+              className="inline-flex items-center gap-2 h-10 px-6 rounded-full bg-[#126768] text-white hover:bg-[#126768] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
             >
               Back to Home
               <ArrowRight size={14} />

@@ -6,13 +6,13 @@
 
 :root {
   /* Floramade theme: #FFF7EB warm ivory background & #39160D deep Ayurvedic brown */
-  --background: #FFF7EB;
-  --foreground: #39160D;
-  --primary: #39160D;
-  --accent: #872B10;
-  --highlight: #DFC77F;
-  --muted: #F5EADB;
-  --border: #E8D9C5;
+  --background: #FFFFFF;
+  --foreground: #123838;
+  --primary: #126768;
+  --accent: #FF8900;
+  --highlight: #FF8900;
+  --muted: #F4F8F8;
+  --border: #DCE8E8;
   --font-dm-sans: "DM Sans", sans-serif;
   --font-funnel: "DM Sans", sans-serif;
 }
@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C4B29B;
+  background: #B8CDCD;
 }
 
 ::selection {

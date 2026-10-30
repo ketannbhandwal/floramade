@@ -13,7 +13,7 @@ export default function WishlistPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-[80vh] bg-background w-full pt-24 md:pt-32 pb-20 relative overflow-hidden">
+      <div className="min-h-[80vh] bg-background w-full pt-4 md:pt-6 pb-20 relative overflow-hidden">
         {/* Decorative Leaves */}
         <FloatingLeaf 
           type="branch" 

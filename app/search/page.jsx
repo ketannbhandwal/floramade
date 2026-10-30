@@ -61,7 +61,7 @@ export default function SearchPage() {
 
   return (
     <PageTransition>
-      <div className="bg-background text-foreground w-full min-h-screen pt-24 md:pt-32 pb-20">
+      <div className="bg-background text-foreground w-full min-h-screen pt-4 md:pt-6 pb-20">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           
           {/* Search Header */}

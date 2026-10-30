@@ -108,7 +108,7 @@ const reviews = [
 export default function ReviewsPage() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background pt-24 pb-20 relative overflow-hidden">
+      <div className="min-h-screen bg-background pt-4 pb-20 relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-50/50 rounded-full blur-[100px] -z-10" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-50/50 rounded-full blur-[100px] -z-10" />

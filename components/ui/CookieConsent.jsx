@@ -9,7 +9,7 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("fiveetatv-cookie-consent");
+    const consent = localStorage.getItem("floramade-cookie-consent");
     if (!consent) {
       const timer = setTimeout(() => setVisible(true), 2000);
       return () => clearTimeout(timer);
@@ -17,7 +17,7 @@ export default function CookieConsent() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("fiveetatv-cookie-consent", "accepted");
+    localStorage.setItem("floramade-cookie-consent", "accepted");
     setVisible(false);
   };
 

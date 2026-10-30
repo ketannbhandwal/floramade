@@ -3,7 +3,7 @@ import { Home, ArrowRight, Search } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen pt-24 md:pt-32 pb-12 bg-background flex items-center justify-center px-6">
+    <div className="min-h-screen pt-4 md:pt-6 pb-12 bg-background flex items-center justify-center px-6">
       <div className="text-center space-y-8 max-w-lg mx-auto">
         <div className="space-y-4">
           <div className="relative inline-block">

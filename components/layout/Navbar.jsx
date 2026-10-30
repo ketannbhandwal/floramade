@@ -32,17 +32,17 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
   if (announcement?.enabled === false) return null;
 
   const content = (
-    <span className="inline-flex items-center gap-1.5 text-[#FFF7EB] font-semibold text-[11px] sm:text-xs">
+    <span className="inline-flex items-center gap-1.5 text-white font-semibold text-[11px] sm:text-xs">
       {announcement.emoji && <span>{announcement.emoji}</span>}
       {announcement.highlight && (
-        <span className="text-[#DFC77F]">{announcement.highlight}</span>
+        <span className="text-[#FF8900]">{announcement.highlight}</span>
       )}
       <span>{announcement.text || "Save Up to 20% + Extra Combo OFF!"}</span>
     </span>
   );
 
   return (
-    <div className="bg-[#39160D] text-[#FFF7EB] py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#4A1E13] relative z-[80]">
+    <div className="bg-[#126768] text-white py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#0D5253] relative z-[80]">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[11px] sm:text-xs font-medium tracking-tight">
         
         {/* Left: Social Media + Follow us! (Hidden on mobile for clean centered offer) */}
@@ -51,7 +51,7 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
             href="https://www.facebook.com/share/1HuEXx3gQh/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
+            className="h-5 w-5 rounded-full bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center text-white text-[10px]" 
             title="Follow us on Facebook"
             aria-label="Facebook"
           >
@@ -61,13 +61,13 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
             href="https://www.instagram.com/floramadeofficial/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
+            className="h-5 w-5 rounded-full bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center text-white text-[10px]" 
             title="Follow us on Instagram"
             aria-label="Instagram"
           >
             <FaInstagram size={11} />
           </a>
-          <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/90 ml-0.5">Follow us!</span>
+          <span className="text-[11px] sm:text-xs font-medium text-white/90 ml-0.5">Follow us!</span>
         </div>
         
         {/* Center: Offer Banner (Centered on mobile & desktop like Vedabay) */}
@@ -82,12 +82,12 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
         </div>
 
         {/* Right: Get in touch with us + Call & WhatsApp Icons (Hidden on mobile) */}
-        <div className="hidden sm:flex items-center gap-2 text-[#FFF7EB]/90">
-          <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/80">Get in touch with us</span>
+        <div className="hidden sm:flex items-center gap-2 text-white/90">
+          <span className="text-[11px] sm:text-xs font-medium text-white/80">Get in touch with us</span>
           <div className="flex items-center gap-1.5 ml-1">
             <a 
               href="tel:+919220251059" 
-              className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
+              className="h-5 w-5 rounded-full bg-white/10 hover:bg-white/25 transition-all flex items-center justify-center text-white"
               title="Call helpline: +91 9220251059"
               aria-label="Call Helpline"
             >
@@ -97,7 +97,7 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
               href="https://wa.me/919220251059" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
+              className="h-5 w-5 rounded-full bg-white/10 hover:bg-white/25 transition-all flex items-center justify-center text-white"
               title="Chat on WhatsApp"
               aria-label="WhatsApp Support"
             >
@@ -208,7 +208,7 @@ export default function Navbar() {
         <AnnouncementBar announcement={announcement} />
 
         {/* Floramade Luxury Header: #FFF7EB Ivory & #39160D Palette */}
-        <div className={`bg-[#FFF7EB] border-b border-[#E8D9C5] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#39160D]/5' : ''}`}>
+        <div className={`bg-white border-b border-[#DCE8E8] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#126768]/5' : ''}`}>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
             
             {/* =========================================================================
@@ -248,15 +248,15 @@ export default function Navbar() {
                         <button
                           type="button"
                           onClick={() => setOpenDropdownId(isOpen ? null : itemId)}
-                          className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer focus:outline-none ${
-                            isOpen ? "text-[#872B10]" : "text-[#39160D] hover:text-[#872B10]"
+                          className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 select-none ${
+                            isOpen ? "text-[#126768]" : "text-[#123838] hover:text-[#126768]"
                           }`}
                         >
                           <span>{item.label}</span>
                           <ChevronDown 
                             size={12} 
                             strokeWidth={2.4}
-                            className={`text-[#872B10] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
+                            className={`text-[#126768] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
                           />
                         </button>
 
@@ -270,10 +270,10 @@ export default function Navbar() {
                           onMouseEnter={() => handleMouseEnterDropdown(itemId)}
                           onMouseLeave={handleMouseLeaveDropdown}
                         >
-                          <div className="bg-[#FFF7EB] border border-[#E8D9C5] rounded-2xl shadow-[0_15px_40px_rgba(57,22,13,0.12)] p-2.5 backdrop-blur-xl">
+                          <div className="bg-white border border-[#DCE8E8] rounded-2xl shadow-[0_15px_40px_rgba(57,22,13,0.12)] p-2.5 backdrop-blur-xl">
                             {item.subHeading && (
-                              <div className="px-3 py-1.5 border-b border-[#39160D]/10 mb-1 flex items-center justify-between">
-                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#872B10] flex items-center gap-1.5">
+                              <div className="px-3 py-1.5 border-b border-[#126768]/10 mb-1 flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#126768] flex items-center gap-1.5">
                                   <Sparkles size={11} /> {item.subHeading}
                                 </p>
                               </div>
@@ -289,32 +289,32 @@ export default function Navbar() {
                                     onClick={() => setOpenDropdownId(null)}
                                     className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-all group/item ${
                                       isTargetProduct
-                                        ? "bg-[#872B10]/10 hover:bg-[#872B10]/20 border border-[#872B10]/25 shadow-xs"
-                                        : "hover:bg-[#F5EADB]/80 border border-transparent"
+                                        ? "bg-[#126768]/10 hover:bg-[#126768]/20 border border-[#126768]/25 shadow-xs"
+                                        : "hover:bg-[#F4F8F8]/80 border border-transparent"
                                     }`}
                                   >
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2">
-                                        <span className="text-[13px] font-bold text-[#39160D] group-hover/item:text-[#872B10] transition-colors tracking-tight">
+                                        <span className="text-[13px] font-bold text-[#123838] group-hover/item:text-[#126768] transition-colors tracking-tight">
                                           {sub.label}
                                         </span>
                                         {sub.badge && (
                                           <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full tracking-tight ${
                                             isTargetProduct
-                                              ? "bg-[#872B10] text-[#FFF7EB]"
-                                              : "bg-[#39160D]/10 text-[#39160D]"
+                                              ? "bg-[#126768] text-white"
+                                              : "bg-[#126768]/10 text-[#123838]"
                                           }`}>
                                             {sub.badge}
                                           </span>
                                         )}
                                       </div>
                                       {sub.description && (
-                                        <p className="text-[11px] text-[#39160D]/70 mt-0.5 leading-snug font-normal line-clamp-1">
+                                        <p className="text-[11px] text-[#123838]/70 mt-0.5 leading-snug font-normal line-clamp-1">
                                           {sub.description}
                                         </p>
                                       )}
                                     </div>
-                                    <ArrowRight size={12} className="text-[#872B10] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
+                                    <ArrowRight size={12} className="text-[#126768] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
                                   </Link>
                                 );
                               })}
@@ -329,7 +329,7 @@ export default function Navbar() {
                     <Link
                       key={itemId}
                       href={item.href || "/"}
-                      className="text-[13.5px] xl:text-[14px] font-semibold tracking-tight text-[#39160D] hover:text-[#872B10] transition-colors whitespace-nowrap py-3"
+                      className="text-[13.5px] xl:text-[14px] font-semibold tracking-tight text-[#123838] hover:text-[#126768] transition-colors whitespace-nowrap py-3 outline-none focus:outline-none focus-visible:outline-none ring-0 select-none"
                     >
                       {item.label}
                     </Link>
@@ -342,7 +342,7 @@ export default function Navbar() {
                 {mounted && (user?.role === "admin" || user?.isAdmin) && (
                   <Link
                     href="/admin"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] hover:bg-[#872B10] hover:text-[#FFF7EB] font-bold text-[10px] uppercase tracking-tight transition-all border border-[#872B10]/20 whitespace-nowrap mr-1 shadow-xs"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#126768]/10 text-[#126768] hover:bg-[#126768] hover:text-white font-bold text-[10px] uppercase tracking-tight transition-all border border-[#126768]/20 whitespace-nowrap mr-1 shadow-xs"
                     title="Open Admin Dashboard"
                   >
                     <LayoutDashboard size={12} />
@@ -352,7 +352,7 @@ export default function Navbar() {
 
                 <Link 
                   href={mounted && user ? "/account" : "/login"} 
-                  className="p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all focus:outline-none"
+                  className="p-2 sm:p-2.5 rounded-full text-[#123838] hover:text-[#126768] hover:bg-[#126768]/5 transition-all focus:outline-none"
                   title={mounted && user ? "My Account" : "Login / Account"}
                   aria-label="User Account"
                 >
@@ -362,7 +362,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all focus:outline-none cursor-pointer"
+                  className="p-2 sm:p-2.5 rounded-full text-[#123838] hover:text-[#126768] hover:bg-[#126768]/5 transition-all focus:outline-none cursor-pointer"
                   title="Search Products"
                   aria-label="Search"
                 >
@@ -371,13 +371,13 @@ export default function Navbar() {
 
                 <Link 
                   href="/wishlist" 
-                  className="p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
+                  className="p-2 sm:p-2.5 rounded-full text-[#123838] hover:text-[#126768] hover:bg-[#126768]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
                   title="Wishlist"
                   aria-label="Wishlist"
                 >
                   <Heart size={20} strokeWidth={1.9} />
                   {mounted && wishlistItems.length > 0 && (
-                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#872B10] text-[#FFF7EB] shadow-xs">
+                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#126768] text-white shadow-xs">
                       {wishlistItems.length}
                     </span>
                   )}
@@ -385,12 +385,12 @@ export default function Navbar() {
 
                 <Link 
                   href="/cart" 
-                  className="relative p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all focus:outline-none group active:scale-95"
+                  className="relative p-2 sm:p-2.5 rounded-full text-[#123838] hover:text-[#126768] hover:bg-[#126768]/5 transition-all focus:outline-none group active:scale-95"
                   title="Shopping Cart"
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={21} strokeWidth={1.9} className="group-hover:scale-105 transition-transform" />
-                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#872B10] text-[#FFF7EB] shadow-sm ring-2 ring-[#FFF7EB]">
+                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#126768] text-white shadow-sm ring-2 ring-white">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -409,7 +409,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setOpenMenu(true)}
-                  className="p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none"
+                  className="p-1.5 text-[#123838] hover:text-[#126768] transition-colors focus:outline-none"
                   aria-label="Open Navigation Menu"
                 >
                   <Menu size={22} strokeWidth={2.2} />
@@ -418,7 +418,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none"
+                  className="p-1.5 text-[#123838] hover:text-[#126768] transition-colors focus:outline-none"
                   aria-label="Search"
                 >
                   <Search size={20} strokeWidth={2.2} />
@@ -443,11 +443,11 @@ export default function Navbar() {
               <div className="flex items-center justify-end shrink-0">
                 <Link 
                   href="/cart" 
-                  className="relative p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none active:scale-95"
+                  className="relative p-1.5 text-[#123838] hover:text-[#126768] transition-colors focus:outline-none active:scale-95"
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={22} strokeWidth={2} />
-                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#872B10] text-[#FFF7EB] shadow-xs">
+                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#126768] text-white shadow-xs">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -485,18 +485,18 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#39160D] text-[#FFF7EB] flex flex-col justify-between shadow-2xl overflow-y-auto"
+              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#126768] text-white flex flex-col justify-between shadow-2xl overflow-y-auto"
             >
               {/* Scrollable Container */}
               <div className="flex-1 flex flex-col">
                 
                 {/* 1. Drawer Header: "Menu" + Close "×" */}
                 <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
-                  <span className="text-[17px] font-bold text-[#FFF7EB] tracking-tight">Menu</span>
+                  <span className="text-[17px] font-bold text-white tracking-tight">Menu</span>
                   <button
                     type="button"
                     onClick={() => setOpenMenu(false)}
-                    className="p-1 rounded-full text-[#FFF7EB]/80 hover:text-white transition-colors focus:outline-none"
+                    className="p-1 rounded-full text-white/80 hover:text-white transition-colors focus:outline-none"
                     aria-label="Close Menu"
                   >
                     <X size={21} strokeWidth={2.2} />
@@ -516,10 +516,10 @@ export default function Navbar() {
                           <button 
                             type="button"
                             onClick={() => setMobileOpenDropdownId(isMobOpen ? null : itemId)} 
-                            className="flex items-center justify-between w-full py-3.5 px-5 text-[15px] font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors focus:outline-none text-left"
+                            className="flex items-center justify-between w-full py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#FF8900] transition-colors focus:outline-none text-left"
                           >
                             <span>{item.label}</span>
-                            <span className="text-xl font-light text-[#FFF7EB]/80 leading-none">
+                            <span className="text-xl font-light text-white/80 leading-none">
                               {isMobOpen ? "−" : "+"}
                             </span>
                           </button>
@@ -531,25 +531,25 @@ export default function Navbar() {
                                 animate={{ height: 'auto', opacity: 1 }} 
                                 exit={{ height: 0, opacity: 0 }} 
                                 transition={{ duration: 0.22 }}
-                                className="bg-[#2B0F08] px-5 py-2 space-y-2 border-t border-white/5 overflow-hidden"
+                                className="bg-[#0D5253] px-5 py-2 space-y-2 border-t border-white/5 overflow-hidden"
                               >
                                 {item.subLinks.map((sub, sIdx) => (
                                   <Link 
                                     key={sub.id || sIdx}
                                     href={sub.href || "/product/madhucurex-diabetes-pro"} 
                                     onClick={() => setOpenMenu(false)}
-                                    className="block py-2 text-sm text-[#FFF7EB]/90 hover:text-[#DFC77F] transition-colors"
+                                    className="block py-2 text-sm text-white/90 hover:text-[#FF8900] transition-colors"
                                   >
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium">{sub.label}</span>
                                       {sub.badge && (
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#872B10] text-[#FFF7EB]">
+                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#126768] text-white">
                                           {sub.badge}
                                         </span>
                                       )}
                                     </div>
                                     {sub.description && (
-                                      <p className="text-[11px] text-[#FFF7EB]/60 line-clamp-1 mt-0.5">{sub.description}</p>
+                                      <p className="text-[11px] text-white/60 line-clamp-1 mt-0.5">{sub.description}</p>
                                     )}
                                   </Link>
                                 ))}
@@ -565,7 +565,7 @@ export default function Navbar() {
                         key={itemId}
                         href={item.href || "/"} 
                         onClick={() => setOpenMenu(false)} 
-                        className="flex items-center justify-between py-3.5 px-5 text-[15px] font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors"
+                        className="flex items-center justify-between py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#FF8900] transition-colors"
                       >
                         <span>{item.label}</span>
                       </Link>
@@ -579,27 +579,27 @@ export default function Navbar() {
                   <Link 
                     href={mounted && user ? "/account" : "/login"} 
                     onClick={() => setOpenMenu(false)} 
-                    className="flex items-center gap-3 py-3 px-5 text-sm font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors"
+                    className="flex items-center gap-3 py-3 px-5 text-sm font-semibold text-white hover:text-[#FF8900] transition-colors"
                   >
-                    <span className="text-[#DFC77F] text-base">⚡</span>
+                    <span className="text-[#FF8900] text-base">⚡</span>
                     <span>{mounted && user ? "My Account" : "Register / Login"}</span>
                   </Link>
 
                   {/* Email */}
                   <a 
                     href="mailto:floramade517@gmail.com" 
-                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-[#FFF7EB]/85 hover:text-[#DFC77F] transition-colors"
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#FF8900] transition-colors"
                   >
-                    <Mail size={15} className="text-[#DFC77F] shrink-0" />
+                    <Mail size={15} className="text-[#FF8900] shrink-0" />
                     <span>floramade517@gmail.com</span>
                   </a>
 
                   {/* Phone */}
                   <a 
                     href="tel:+919220251059" 
-                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-[#FFF7EB]/85 hover:text-[#DFC77F] transition-colors"
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#FF8900] transition-colors"
                   >
-                    <Phone size={15} className="text-[#DFC77F] shrink-0" />
+                    <Phone size={15} className="text-[#FF8900] shrink-0" />
                     <span>+91 9220251059</span>
                   </a>
                 </div>
@@ -609,28 +609,28 @@ export default function Navbar() {
                   <Link 
                     href="/" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#FF8900] font-medium transition-colors"
                   >
                     Home
                   </Link>
                   <Link 
                     href="/contact" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#FF8900] font-medium transition-colors"
                   >
                     Contact us
                   </Link>
                   <Link 
                     href="/about" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#FF8900] font-medium transition-colors"
                   >
                     About Floramade
                   </Link>
                   <Link 
                     href="/collection" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#FF8900] font-medium transition-colors"
                   >
                     All Products
                   </Link>
@@ -639,7 +639,7 @@ export default function Navbar() {
                     <Link 
                       href="/admin" 
                       onClick={() => setOpenMenu(false)} 
-                      className="flex items-center gap-2 py-2.5 px-5 text-[#DFC77F] font-bold hover:underline"
+                      className="flex items-center gap-2 py-2.5 px-5 text-[#FF8900] font-bold hover:underline"
                     >
                       <LayoutDashboard size={14} /> Admin Dashboard
                     </Link>
@@ -667,7 +667,7 @@ export default function Navbar() {
                   href="https://www.facebook.com/share/1HuEXx3gQh/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-[#FFF7EB] hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
+                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
                   aria-label="Facebook"
                 >
                   <FaFacebookF size={12} />
@@ -676,7 +676,7 @@ export default function Navbar() {
                   href="https://www.instagram.com/floramadeofficial/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-[#FFF7EB] hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
+                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
                   aria-label="Instagram"
                 >
                   <FaInstagram size={13} />

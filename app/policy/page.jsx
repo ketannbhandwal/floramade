@@ -40,18 +40,18 @@ const fadeUp = {
 
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pb-16 font-sans">
+    <div className="min-h-screen bg-[#F4F8F8] text-[#123838] pb-16 font-sans">
       {/* Hero Section */}
       <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#126768]/10 text-[#126768] text-[11px] font-bold uppercase tracking-wider">
             <ShieldCheck size={13} />
             <span>Store Standards</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#39160D]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#123838]">
             Our Policies
           </h1>
-          <p className="text-xs sm:text-sm text-[#39160D]/65 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#123838]/65 max-w-xl mx-auto leading-relaxed">
             Clarity, ethics, and transparency in every step of your Ayurvedic wellness journey.
           </p>
         </motion.div>
@@ -69,17 +69,17 @@ export default function PolicyPage() {
               transition={{ delay: idx * 0.08 }}
             >
               <Link href={policy.href} className="group block h-full">
-                <div className="p-7 sm:p-8 rounded-2xl bg-white border border-[#E8D9C5] shadow-xs h-full flex flex-col justify-between hover:border-[#872B10]/50 hover:shadow-md transition-all duration-300">
+                <div className="p-7 sm:p-8 rounded-2xl bg-white border border-[#DCE8E8] shadow-xs h-full flex flex-col justify-between hover:border-[#126768]/50 hover:shadow-md transition-all duration-300">
                   <div className="space-y-4">
-                    <div className="h-12 w-12 rounded-xl bg-[#872B10]/10 text-[#872B10] flex items-center justify-center group-hover:bg-[#872B10] group-hover:text-white transition-colors duration-300">
+                    <div className="h-12 w-12 rounded-xl bg-[#126768]/10 text-[#126768] flex items-center justify-center group-hover:bg-[#126768] group-hover:text-white transition-colors duration-300">
                       <policy.icon size={22} strokeWidth={2} />
                     </div>
                     <div className="space-y-1.5">
-                      <h3 className="text-lg font-bold text-[#39160D] tracking-tight">{policy.title}</h3>
-                      <p className="text-xs sm:text-sm text-[#39160D]/70 leading-relaxed">{policy.description}</p>
+                      <h3 className="text-lg font-bold text-[#123838] tracking-tight">{policy.title}</h3>
+                      <p className="text-xs sm:text-sm text-[#123838]/70 leading-relaxed">{policy.description}</p>
                     </div>
                   </div>
-                  <div className="pt-6 flex items-center gap-1.5 text-[#872B10] font-bold text-xs uppercase tracking-wider">
+                  <div className="pt-6 flex items-center gap-1.5 text-[#126768] font-bold text-xs uppercase tracking-wider">
                     <span>Read Document</span> 
                     <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </div>

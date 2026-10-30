@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
 
   if (!validToken) {
     return (
-      <div className="w-full pt-32 md:pt-40 pb-20 px-6">
+      <div className="w-full pt-4 md:pt-6 pb-20 px-6">
         <div className="mx-auto max-w-md rounded-[2rem] border border-border bg-white/50 backdrop-blur-sm p-8 shadow-sm text-center">
           <p className="text-red-600">Invalid or expired reset link. Please request a new password reset.</p>
           <Link 
@@ -83,7 +83,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="w-full pt-32 md:pt-40 pb-20 px-6">
+    <div className="w-full pt-4 md:pt-6 pb-20 px-6">
       <div className="mx-auto max-w-md">
         <Link 
           href="/login" 

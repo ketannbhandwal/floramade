@@ -43,7 +43,7 @@ export default function AddAddressPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 pt-32 md:pt-40 pb-12 md:pb-24">
+    <div className="max-w-4xl mx-auto px-6 pt-4 md:pt-6 pb-12 md:pb-24">
       <div className="space-y-8">
         <div className="flex items-center gap-4">
           <Link href="/account" className="flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors">

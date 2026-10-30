@@ -24,7 +24,7 @@ export default function CheckoutPage() {
   const { cartItems, total, clearCart } = useCart();
   const [buyNowItems] = useState(() => {
     if (typeof window === "undefined") return [];
-    const saved = localStorage.getItem("fiveetatv-buy-now-items");
+    const saved = localStorage.getItem("floramade-buy-now-items");
     if (!saved) return [];
     try {
       return JSON.parse(saved);
@@ -49,7 +49,7 @@ export default function CheckoutPage() {
         pincode: "",
       };
     }
-    const saved = localStorage.getItem("fiveetatv-buy-now-address");
+    const saved = localStorage.getItem("floramade-buy-now-address");
     if (!saved)
       return {
         fullName: "",
@@ -286,8 +286,8 @@ export default function CheckoutPage() {
     if (!res.ok)
       return toast.error(data.message || "Failed to place COD order");
     toast.success("COD order placed successfully");
-    localStorage.removeItem("fiveetatv-buy-now-items");
-    localStorage.removeItem("fiveetatv-buy-now-address");
+    localStorage.removeItem("floramade-buy-now-items");
+    localStorage.removeItem("floramade-buy-now-address");
     localStorage.removeItem("floramade-applied-coupon");
     if (!buyNowItems.length) clearCart();
     router.push("/account");
@@ -368,7 +368,7 @@ export default function CheckoutPage() {
           },
         },
         theme: {
-          color: "#39160D",
+          color: "#126768",
         },
         handler: async (response) => {
           // Save address to profile if checkbox is checked
@@ -400,8 +400,8 @@ export default function CheckoutPage() {
           const verifyData = await verifyRes.json();
           if (verifyRes.ok) {
             toast.success("Order placed successfully");
-            localStorage.removeItem("fiveetatv-buy-now-items");
-            localStorage.removeItem("fiveetatv-buy-now-address");
+            localStorage.removeItem("floramade-buy-now-items");
+            localStorage.removeItem("floramade-buy-now-address");
             localStorage.removeItem("floramade-applied-coupon");
             if (!buyNowItems.length) clearCart();
             router.push("/account");
@@ -511,11 +511,11 @@ export default function CheckoutPage() {
           id="saveToProfile"
           checked={saveToProfile}
           onChange={(e) => setSaveToProfile(e.target.checked)}
-          className="w-4 h-4 rounded border-[#E8D9C5] accent-[#872B10]"
+          className="w-4 h-4 rounded border-[#DCE8E8] accent-[#872B10]"
         />
         <label
           htmlFor="saveToProfile"
-          className="text-xs text-[#39160D]/60 tracking-tight"
+          className="text-xs text-[#123838]/60 tracking-tight"
         >
           Save this address to my profile for future orders
         </label>
@@ -524,8 +524,8 @@ export default function CheckoutPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FFF7EB]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 pt-28 md:pt-36 pb-12 md:pb-20">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 pt-4 md:pt-6 pb-12 md:pb-20">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -534,13 +534,13 @@ export default function CheckoutPage() {
           className="mb-8 md:mb-10"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-[#872B10]" />
-            <span className="text-[10px] uppercase tracking-[0.08em] text-[#39160D]/50 font-semibold">Secure Checkout</span>
+            <span className="h-[1px] w-8 bg-[#126768]" />
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#123838]/50 font-semibold">Secure Checkout</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#39160D]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#123838]">
             Checkout
           </h1>
-          <p className="text-sm text-[#39160D]/50 tracking-tight mt-1.5">
+          <p className="text-sm text-[#123838]/50 tracking-tight mt-1.5">
             Fill in your delivery details to complete the order.
           </p>
         </motion.div>
@@ -553,20 +553,20 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="bg-white rounded-2xl border border-[#E8D9C5] p-5 sm:p-7 md:p-8 space-y-6"
+              className="bg-white rounded-2xl border border-[#DCE8E8] p-5 sm:p-7 md:p-8 space-y-6"
             >
-              <div className="flex items-center gap-3 border-b border-[#E8D9C5] pb-4">
-                <div className="h-9 w-9 rounded-full bg-[#872B10]/8 text-[#872B10] flex items-center justify-center">
+              <div className="flex items-center gap-3 border-b border-[#DCE8E8] pb-4">
+                <div className="h-9 w-9 rounded-full bg-[#126768]/8 text-[#126768] flex items-center justify-center">
                   <Truck size={17} />
                 </div>
-                <h2 className="text-base font-bold tracking-tight text-[#39160D]">
+                <h2 className="text-base font-bold tracking-tight text-[#123838]">
                   Delivery Address
                 </h2>
               </div>
 
               {savedAddresses.length > 0 && !showNewAddress && (
                 <div className="space-y-4">
-                  <p className="text-xs text-[#39160D]/50 tracking-tight">
+                  <p className="text-xs text-[#123838]/50 tracking-tight">
                     Select a saved address or add a new one
                   </p>
                   <div className="grid gap-3 sm:grid-cols-2">
@@ -576,31 +576,31 @@ export default function CheckoutPage() {
                         onClick={() => selectAddress(addr)}
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                           selectedAddressId === addr._id
-                            ? "border-[#872B10] bg-[#872B10]/5"
-                            : "border-[#E8D9C5] bg-white hover:border-[#872B10]/30"
+                            ? "border-[#126768] bg-[#126768]/5"
+                            : "border-[#DCE8E8] bg-white hover:border-[#126768]/30"
                         }`}
                       >
                         <div className="flex items-start gap-2.5">
-                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#872B10]' : 'border-[#E8D9C5]'}`}>
+                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#126768]' : 'border-[#DCE8E8]'}`}>
                             {selectedAddressId === addr._id && (
-                              <div className="h-2 w-2 rounded-full bg-[#872B10]" />
+                              <div className="h-2 w-2 rounded-full bg-[#126768]" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="font-bold text-sm tracking-tight text-[#39160D]">
+                            <p className="font-bold text-sm tracking-tight text-[#123838]">
                               {addr.fullName}
                             </p>
-                            <p className="text-xs text-[#39160D]/50 tracking-tight">
+                            <p className="text-xs text-[#123838]/50 tracking-tight">
                               {addr.phone}
                             </p>
-                            <p className="text-xs text-[#39160D]/50 tracking-tight mt-1 truncate">
+                            <p className="text-xs text-[#123838]/50 tracking-tight mt-1 truncate">
                               {addr.addressLine}
                             </p>
-                            <p className="text-xs text-[#39160D]/50 tracking-tight">
+                            <p className="text-xs text-[#123838]/50 tracking-tight">
                               {addr.city}, {addr.state} - {addr.pincode}
                             </p>
                             {addr.isDefault && (
-                              <span className="inline-block mt-1.5 text-[10px] font-bold text-[#872B10] uppercase tracking-[0.06em]">
+                              <span className="inline-block mt-1.5 text-[10px] font-bold text-[#126768] uppercase tracking-[0.06em]">
                                 Default
                               </span>
                             )}
@@ -611,7 +611,7 @@ export default function CheckoutPage() {
                   </div>
                   <button
                     onClick={() => setShowNewAddress(true)}
-                    className="flex items-center gap-1.5 text-[#872B10] text-xs font-bold hover:text-[#39160D] transition-colors tracking-tight"
+                    className="flex items-center gap-1.5 text-[#126768] text-xs font-bold hover:text-[#123838] transition-colors tracking-tight"
                   >
                     <Plus size={14} strokeWidth={2.5} /> Add New Address
                   </button>
@@ -622,7 +622,7 @@ export default function CheckoutPage() {
                 <div className="space-y-4">
                   <button
                     onClick={() => setShowNewAddress(false)}
-                    className="flex items-center gap-1.5 text-[#39160D]/50 text-xs hover:text-[#39160D] transition-colors tracking-tight font-semibold"
+                    className="flex items-center gap-1.5 text-[#123838]/50 text-xs hover:text-[#123838] transition-colors tracking-tight font-semibold"
                   >
                     ← Back to saved addresses
                   </button>
@@ -638,13 +638,13 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white rounded-2xl border border-[#E8D9C5] p-5 sm:p-7 md:p-8 space-y-5"
+              className="bg-white rounded-2xl border border-[#DCE8E8] p-5 sm:p-7 md:p-8 space-y-5"
             >
-              <div className="flex items-center gap-3 border-b border-[#E8D9C5] pb-4">
-                <div className="h-9 w-9 rounded-full bg-[#872B10]/8 text-[#872B10] flex items-center justify-center">
+              <div className="flex items-center gap-3 border-b border-[#DCE8E8] pb-4">
+                <div className="h-9 w-9 rounded-full bg-[#126768]/8 text-[#126768] flex items-center justify-center">
                   <CreditCard size={17} />
                 </div>
-                <h2 className="text-base font-bold tracking-tight text-[#39160D]">
+                <h2 className="text-base font-bold tracking-tight text-[#123838]">
                   Payment Method
                 </h2>
               </div>
@@ -666,8 +666,8 @@ export default function CheckoutPage() {
                     key={method.id}
                     className={`relative p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all duration-200 flex flex-col gap-0.5 ${
                       paymentMethod === method.id
-                        ? "border-[#872B10] bg-[#872B10]/5"
-                        : "border-[#E8D9C5] bg-white hover:border-[#872B10]/30"
+                        ? "border-[#126768] bg-[#126768]/5"
+                        : "border-[#DCE8E8] bg-white hover:border-[#126768]/30"
                     }`}
                   >
                     <input
@@ -677,10 +677,10 @@ export default function CheckoutPage() {
                       checked={paymentMethod === method.id}
                       onChange={() => setPaymentMethod(method.id)}
                     />
-                    <span className="text-sm font-bold tracking-tight text-[#39160D]">
+                    <span className="text-sm font-bold tracking-tight text-[#123838]">
                       {method.label}
                     </span>
-                    <span className="text-[11px] text-[#39160D]/45 tracking-tight">
+                    <span className="text-[11px] text-[#123838]/45 tracking-tight">
                       {method.desc}
                     </span>
                   </label>
@@ -696,9 +696,9 @@ export default function CheckoutPage() {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:sticky lg:top-32 space-y-5"
           >
-            <div className="bg-[#39160D] text-[#FFF7EB] rounded-2xl p-6 sm:p-7 relative overflow-hidden">
+            <div className="bg-[#126768] text-white rounded-2xl p-6 sm:p-7 relative overflow-hidden">
 
-              <h2 className="text-lg font-bold tracking-tight text-[#FFF7EB] mb-5">
+              <h2 className="text-lg font-bold tracking-tight text-white mb-5">
                 Order Summary
               </h2>
 
@@ -706,17 +706,17 @@ export default function CheckoutPage() {
                 {selectedItems.map((item) => (
                   <div
                     key={item.productId}
-                    className="flex justify-between gap-3 text-sm border-b border-[#FFF7EB]/15 pb-3"
+                    className="flex justify-between gap-3 text-sm border-b border-white/15 pb-3"
                   >
                     <div>
-                      <p className="font-semibold text-[#FFF7EB]/90 leading-tight tracking-tight text-[13px]">
+                      <p className="font-semibold text-white/90 leading-tight tracking-tight text-[13px]">
                         {item.name}
                       </p>
-                      <p className="text-[10px] text-[#FFF7EB]/40 uppercase tracking-[0.04em] font-semibold mt-0.5">
+                      <p className="text-[10px] text-white/40 uppercase tracking-[0.04em] font-semibold mt-0.5">
                         Qty: {item.quantity}
                       </p>
                     </div>
-                    <span className="font-bold text-[#872B10] text-sm whitespace-nowrap" style={{ color: '#DFC77F' }}>
+                    <span className="font-bold text-[#126768] text-sm whitespace-nowrap" style={{ color: '#FF8900' }}>
                       ₹{(item.price * item.quantity).toLocaleString()}
                     </span>
                   </div>
@@ -724,16 +724,16 @@ export default function CheckoutPage() {
               </div>
 
               {/* Coupon Redemption Section */}
-              <div className="mt-5 pt-4 border-t border-[#FFF7EB]/15">
+              <div className="mt-5 pt-4 border-t border-white/15">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-[#FFF7EB]/90 flex items-center gap-1.5 tracking-tight">
-                    <Tag size={13} className="text-[#DFC77F]" /> Have a coupon code?
+                  <span className="text-xs font-bold text-white/90 flex items-center gap-1.5 tracking-tight">
+                    <Tag size={13} className="text-[#FF8900]" /> Have a coupon code?
                   </span>
                   {appliedCoupon && (
                     <button
                       type="button"
                       onClick={removeAppliedCoupon}
-                      className="text-[11px] font-semibold text-[#DFC77F] hover:underline cursor-pointer"
+                      className="text-[11px] font-semibold text-[#FF8900] hover:underline cursor-pointer"
                     >
                       Remove
                     </button>
@@ -741,21 +741,21 @@ export default function CheckoutPage() {
                 </div>
 
                 {appliedCoupon ? (
-                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#FFF7EB]/10 border border-[#DFC77F]/40 text-xs">
+                  <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/10 border border-[#FF8900]/40 text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#DFC77F]/20 text-[#DFC77F] flex items-center justify-center font-bold text-[10px]">
+                      <span className="w-5 h-5 rounded-full bg-[#FF8900]/20 text-[#FF8900] flex items-center justify-center font-bold text-[10px]">
                         ✓
                       </span>
                       <div>
-                        <span className="font-bold text-[#DFC77F] tracking-wide uppercase">{appliedCoupon.code}</span>
-                        <p className="text-[10px] text-[#FFF7EB]/60">
+                        <span className="font-bold text-[#FF8900] tracking-wide uppercase">{appliedCoupon.code}</span>
+                        <p className="text-[10px] text-white/60">
                           {appliedCoupon.discountType === "percentage"
                             ? `${appliedCoupon.discountValue}% OFF applied`
                             : `₹${appliedCoupon.discountValue} FLAT OFF applied`}
                         </p>
                       </div>
                     </div>
-                    <span className="font-bold text-[#DFC77F]">-₹{couponDiscount.toLocaleString()}</span>
+                    <span className="font-bold text-[#FF8900]">-₹{couponDiscount.toLocaleString()}</span>
                   </div>
                 ) : (
                   <div className="space-y-1.5">
@@ -771,12 +771,12 @@ export default function CheckoutPage() {
                           }
                         }}
                         placeholder="Enter coupon code"
-                        className="flex-1 bg-[#FFF7EB]/10 border border-[#FFF7EB]/20 rounded-xl px-3 py-2 text-xs text-[#FFF7EB] placeholder-[#FFF7EB]/40 focus:outline-none focus:border-[#DFC77F] uppercase tracking-wider font-semibold"
+                        className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder-[#FFF7EB]/40 focus:outline-none focus:border-[#FF8900] uppercase tracking-wider font-semibold"
                       />
                       <button
                         type="button"
                         onClick={() => applyCouponCode()}
-                        className="px-4 py-2 bg-[#DFC77F] hover:bg-[#DFC77F]/90 text-[#39160D] text-xs font-bold rounded-xl transition-colors tracking-tight cursor-pointer"
+                        className="px-4 py-2 bg-[#FF8900] hover:bg-[#FF8900]/90 text-[#123838] text-xs font-bold rounded-xl transition-colors tracking-tight cursor-pointer"
                       >
                         Apply
                       </button>
@@ -788,13 +788,13 @@ export default function CheckoutPage() {
                 )}
               </div>
 
-              <div className="mt-5 pt-4 border-t border-[#FFF7EB]/15 space-y-2.5 text-sm">
+              <div className="mt-5 pt-4 border-t border-white/15 space-y-2.5 text-sm">
                 <div className="flex justify-between items-center">
-                  <p className="text-[#FFF7EB]/50 tracking-tight">Subtotal</p>
-                  <p className="text-[#FFF7EB]/90 font-semibold tracking-tight">₹{subtotal.toLocaleString()}</p>
+                  <p className="text-white/50 tracking-tight">Subtotal</p>
+                  <p className="text-white/90 font-semibold tracking-tight">₹{subtotal.toLocaleString()}</p>
                 </div>
                 {couponDiscount > 0 && (
-                  <div className="flex justify-between items-center text-[#DFC77F]">
+                  <div className="flex justify-between items-center text-[#FF8900]">
                     <p className="tracking-tight text-xs flex items-center gap-1">
                       Coupon Discount ({appliedCoupon?.code})
                     </p>
@@ -802,19 +802,19 @@ export default function CheckoutPage() {
                   </div>
                 )}
                 <div className="flex justify-between items-center">
-                  <p className="text-[#FFF7EB]/50 tracking-tight">Shipping</p>
-                  <p className={shippingCost === 0 ? "font-bold text-[#DFC77F] text-xs uppercase tracking-[0.04em]" : "text-[#FFF7EB]/90 font-semibold tracking-tight"}>
+                  <p className="text-white/50 tracking-tight">Shipping</p>
+                  <p className={shippingCost === 0 ? "font-bold text-[#FF8900] text-xs uppercase tracking-[0.04em]" : "text-white/90 font-semibold tracking-tight"}>
                     {shippingCost === 0 ? "FREE" : `₹${shippingCost}`}
                   </p>
                 </div>
                 {shippingCost > 0 && subtotal < 600 && (
-                  <p className="text-[10px] text-[#FFF7EB]/40 tracking-tight">
+                  <p className="text-[10px] text-white/40 tracking-tight">
                     Add ₹{600 - subtotal} more for free shipping
                   </p>
                 )}
-                <div className="flex justify-between items-end pt-3 border-t border-[#FFF7EB]/15">
-                  <p className="text-[#FFF7EB]/50 tracking-tight">Grand Total</p>
-                  <p className="text-2xl font-bold tracking-tight" style={{ color: '#DFC77F' }}>
+                <div className="flex justify-between items-end pt-3 border-t border-white/15">
+                  <p className="text-white/50 tracking-tight">Grand Total</p>
+                  <p className="text-2xl font-bold tracking-tight" style={{ color: '#FF8900' }}>
                     ₹{finalTotal.toLocaleString()}
                   </p>
                 </div>
@@ -824,22 +824,22 @@ export default function CheckoutPage() {
                 <label className="flex items-start gap-2.5 cursor-pointer group">
                   <input
                     type="checkbox"
-                    className="mt-0.5 accent-[#872B10] rounded border-[#FFF7EB]/20"
+                    className="mt-0.5 accent-[#872B10] rounded border-white/20"
                     checked={marketingConsent}
                     onChange={(e) => setMarketingConsent(e.target.checked)}
                   />
-                  <span className="text-[11px] text-[#FFF7EB]/50 leading-relaxed tracking-tight group-hover:text-[#FFF7EB]/70 transition-colors">
+                  <span className="text-[11px] text-white/50 leading-relaxed tracking-tight group-hover:text-white/70 transition-colors">
                     I agree to receive marketing emails about new rituals and wellness tips.
                   </span>
                 </label>
 
-                <p className="text-[10px] text-[#FFF7EB]/40 leading-relaxed tracking-tight">
+                <p className="text-[10px] text-white/40 leading-relaxed tracking-tight">
                   By placing this order, you agree to Floramade&apos;s{" "}
-                  <Link href="/terms" className="underline hover:text-[#DFC77F] transition-colors">
+                  <Link href="/terms" className="underline hover:text-[#FF8900] transition-colors">
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link href="/privacy-policy" className="underline hover:text-[#DFC77F] transition-colors">
+                  <Link href="/privacy-policy" className="underline hover:text-[#FF8900] transition-colors">
                     Privacy Policy
                   </Link>
                   .
@@ -848,28 +848,28 @@ export default function CheckoutPage() {
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-[#872B10] text-[#FFF7EB] py-3.5 rounded-full font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#872B10]/90 transition-all duration-300 mt-5"
+                className="w-full bg-[#126768] text-white py-3.5 rounded-full font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#126768]/90 transition-all duration-300 mt-5"
               >
                 {paymentMethod === "cod"
                   ? "Place COD Order"
                   : "Pay with Razorpay"}
               </button>
 
-              <div className="mt-4 flex items-center justify-center gap-1.5 text-[#FFF7EB]/30 text-[10px] uppercase tracking-[0.06em] font-bold">
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-white/30 text-[10px] uppercase tracking-[0.06em] font-bold">
                 <ShieldCheck size={13} /> 100% Secure Checkout
               </div>
             </div>
 
-            <div className="bg-white border border-[#E8D9C5] p-5 sm:p-6 rounded-2xl space-y-2.5">
-              <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-[#39160D]/35">
+            <div className="bg-white border border-[#DCE8E8] p-5 sm:p-6 rounded-2xl space-y-2.5">
+              <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-[#123838]/35">
                 Need Help?
               </h4>
-              <p className="text-xs text-[#39160D]/55 leading-relaxed tracking-tight">
+              <p className="text-xs text-[#123838]/55 leading-relaxed tracking-tight">
                 Our practitioners are available for any questions regarding your ritual.
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#872B10] hover:text-[#39160D] transition-colors tracking-tight"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#126768] hover:text-[#123838] transition-colors tracking-tight"
               >
                 Contact Support <ChevronRight size={13} />
               </Link>

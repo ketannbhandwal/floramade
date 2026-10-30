@@ -158,7 +158,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/floramade-icon.png" type="image/png" />
-        <meta name="theme-color" content="#39160D" />
+        <meta name="theme-color" content="#126768" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Floramade" />
@@ -197,7 +197,7 @@ export default function RootLayout({ children }) {
         <Toaster
           position="top-right"
           toastOptions={{
-            style: { border: "1px solid #E8D9C5", background: "#FFF7EB", color: "#39160D" },
+            style: { border: "1px solid #DCE8E8", background: "#FFFFFF", color: "#123838" },
           }}
         />
       </body>

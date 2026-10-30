@@ -141,17 +141,17 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative overflow-hidden border-t border-[#E8D9C5]/60 bg-[#FAF6EE] px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+    <section className="relative overflow-hidden border-t border-[#DCE8E8]/60 bg-[#F4F8F8] px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1360px]">
         {/* Centered Header Section - Matches Reference 1:1 with Elevated Floramade Style */}
         <div className="mb-10 sm:mb-14 text-center max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 mb-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-tight text-[#872B10] bg-[#872B10]/10 px-3.5 py-1 rounded-full border border-[#872B10]/15">
+          <span className="inline-flex items-center gap-1.5 mb-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-tight text-[#126768] bg-[#126768]/10 px-3.5 py-1 rounded-full border border-[#126768]/15">
             🌿 {pre}
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#39160D] leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#123838] leading-tight">
             {mainTitle}
           </h2>
-          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-[#39160D]/75 tracking-tight font-normal">
+          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-[#123838]/75 tracking-tight font-normal">
             {sub}
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollPrev}
             aria-label="Previous testimonial"
-            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E8D9C5] bg-white text-[#39160D] shadow-md hover:bg-[#39160D] hover:text-[#FFF7EB] hover:scale-105 active:scale-95 transition-all duration-200"
+            className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#DCE8E8] bg-white text-[#123838] shadow-md hover:bg-[#126768] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <ChevronLeft size={20} />
           </button>
@@ -177,11 +177,11 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                   className="min-w-0 flex-[0_0_84%] xs:flex-[0_0_80%] sm:flex-[0_0_55%] lg:flex-[0_0_33.333%] px-2.5 sm:px-3"
                 >
                   {/* Testimonial Card - Centered Avatar at Top, Centered Text, Centered Signature */}
-                  <div className="h-full flex flex-col justify-between items-center text-center rounded-3xl border border-[#E8D9C5] bg-white/95 p-7 sm:p-8 shadow-[0_4px_20px_rgba(57,22,13,0.04)] hover:shadow-[0_14px_36px_rgba(57,22,13,0.10)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="h-full flex flex-col justify-between items-center text-center rounded-3xl border border-[#DCE8E8] bg-white/95 p-7 sm:p-8 shadow-[0_4px_20px_rgba(57,22,13,0.04)] hover:shadow-[0_14px_36px_rgba(57,22,13,0.10)] hover:-translate-y-1 transition-all duration-300">
                     
                     {/* Top Section: Centered Customer Avatar + 5 Golden Stars */}
                     <div className="w-full flex flex-col items-center">
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white shadow-md mx-auto mb-4 bg-[#FAF6EE] flex-shrink-0 ring-2 ring-[#DFC77F]/30">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white shadow-md mx-auto mb-4 bg-[#F4F8F8] flex-shrink-0 ring-2 ring-[#DFC77F]/30">
                         {rev.img ? (
                           <Image
                             src={rev.img}
@@ -192,7 +192,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                             className="object-cover object-top"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center font-bold text-base text-[#39160D] bg-[#E8D9C5]/40">
+                          <div className="w-full h-full flex items-center justify-center font-bold text-base text-[#123838] bg-[#DCE8E8]/40">
                             {rev.initials || rev.name?.charAt(0)}
                           </div>
                         )}
@@ -207,22 +207,22 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                     </div>
 
                     {/* Middle Section: Centered Authentic Testimonial Quote */}
-                    <p className="text-xs sm:text-sm md:text-[14.5px] leading-relaxed text-[#39160D]/85 tracking-tight font-normal text-center mb-6 px-1 flex-grow">
+                    <p className="text-xs sm:text-sm md:text-[14.5px] leading-relaxed text-[#123838]/85 tracking-tight font-normal text-center mb-6 px-1 flex-grow">
                       "{rev.text}"
                     </p>
 
                     {/* Bottom Section: Centered Author Signature — Name + Verified Badge */}
-                    <div className="pt-4 border-t border-[#39160D]/10 w-full text-center">
-                      <p className="text-xs sm:text-sm md:text-[15px] font-bold text-[#39160D] tracking-tight">
+                    <div className="pt-4 border-t border-[#126768]/10 w-full text-center">
+                      <p className="text-xs sm:text-sm md:text-[15px] font-bold text-[#123838] tracking-tight">
                         — {rev.name}
                       </p>
-                      <div className="flex items-center justify-center gap-1 text-[11px] text-[#872B10] font-semibold tracking-tight uppercase mt-1">
+                      <div className="flex items-center justify-center gap-1 text-[11px] text-[#126768] font-semibold tracking-tight uppercase mt-1">
                         <CheckCircle2 size={12} className="text-[#2E6930] flex-shrink-0" />
                         <span>{rev.role || "Verified Buyer"}</span>
                         {rev.location && (
                           <>
-                            <span className="text-[#39160D]/30">•</span>
-                            <span className="text-[#39160D]/60 normal-case font-normal">{rev.location}</span>
+                            <span className="text-[#123838]/30">•</span>
+                            <span className="text-[#123838]/60 normal-case font-normal">{rev.location}</span>
                           </>
                         )}
                       </div>
@@ -239,7 +239,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollNext}
             aria-label="Next testimonial"
-            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#E8D9C5] bg-white text-[#39160D] shadow-md hover:bg-[#39160D] hover:text-[#FFF7EB] hover:scale-105 active:scale-95 transition-all duration-200"
+            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-10 hidden md:flex h-11 w-11 items-center justify-center rounded-full border border-[#DCE8E8] bg-white text-[#123838] shadow-md hover:bg-[#126768] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200"
           >
             <ChevronRight size={20} />
           </button>
@@ -251,7 +251,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollPrev}
             aria-label="Previous testimonial"
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E8D9C5] bg-white text-[#39160D] shadow-sm active:scale-90"
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#DCE8E8] bg-white text-[#123838] shadow-sm active:scale-90"
           >
             <ChevronLeft size={16} />
           </button>
@@ -265,8 +265,8 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   selectedIndex === idx
-                    ? "w-8 bg-[#39160D]"
-                    : "w-2 bg-[#39160D]/25 hover:bg-[#39160D]/50"
+                    ? "w-8 bg-[#126768]"
+                    : "w-2 bg-[#126768]/25 hover:bg-[#126768]/50"
                 }`}
               />
             ))}
@@ -276,7 +276,7 @@ export default function Review({ pretitle, title, subtitle, testimonials }) {
             type="button"
             onClick={scrollNext}
             aria-label="Next testimonial"
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#E8D9C5] bg-white text-[#39160D] shadow-sm active:scale-90"
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#DCE8E8] bg-white text-[#123838] shadow-sm active:scale-90"
           >
             <ChevronRight size={16} />
           </button>
