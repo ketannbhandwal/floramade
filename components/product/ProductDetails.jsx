@@ -545,7 +545,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
             {/* Main Stage Image (Slightly Darker Warm Beige Background for Definition) */}
-            <div className="relative aspect-square max-h-[500px] xl:max-h-[540px] w-full rounded-3xl bg-[#F3E8D8] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#F3E8D8] border border-[#E8D9C5] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Left Brand Tag */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
                 <span className="text-[#39160D]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
@@ -567,7 +567,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </button>
 
               {/* Main Product Image */}
-              <div className="relative w-full h-full p-4 sm:p-6 flex items-center justify-center">
+              <div className="relative w-full h-full p-2.5 sm:p-4 flex items-center justify-center">
                 <Image
                   src={productImages[activeIdx] || "/placeholder.png"}
                   alt={product.name}
@@ -667,27 +667,27 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </span>
             </div>
 
-            {/* KEY BENEFIT BADGES GRID (Compact width, admin image support, smaller tight text) */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 pt-1 max-w-[460px]">
+            {/* KEY BENEFIT BADGES GRID (Prominent crisp icons, admin image support, compact elegant layout) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1 max-w-[480px]">
               {benefitBadges.map((badge, idx) => {
                 const IconComp = badge.icon;
                 return (
                   <div
                     key={idx}
-                    className="p-2 sm:p-2.5 rounded-xl bg-[#F3E8D8] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-1.5 hover:border-[#872B10]/50 transition-colors"
+                    className="p-2.5 sm:p-3 rounded-2xl bg-[#F3E8D8] border border-[#E8D9C5] shadow-xs flex flex-col items-center text-center justify-center gap-2 hover:border-[#872B10]/50 transition-colors"
                   >
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FAF6EE] border border-[#E8D9C5] text-[#872B10] flex items-center justify-center shrink-0 p-1 overflow-hidden">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FAF6EE] border border-[#E8D9C5]/80 text-[#872B10] flex items-center justify-center shrink-0 p-1.5 overflow-hidden shadow-xs">
                       {badge.image ? (
                         <img 
                           src={badge.image} 
                           alt={badge.text} 
-                          className="w-full h-full object-contain" 
+                          className="w-full h-full object-contain transition-transform duration-300 hover:scale-105" 
                         />
                       ) : (
-                        <IconComp size={14} />
+                        <IconComp size={24} className="text-[#872B10]" />
                       )}
                     </div>
-                    <span className="text-[10px] sm:text-[10.5px] font-semibold text-[#39160D] leading-tight tracking-tight line-clamp-2">
+                    <span className="text-[10.5px] sm:text-[11px] font-semibold text-[#39160D] leading-tight tracking-tight line-clamp-2">
                       {badge.text}
                     </span>
                   </div>
