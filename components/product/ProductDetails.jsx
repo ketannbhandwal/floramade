@@ -538,30 +538,23 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               LEFT COLUMN: Sticky on PC so it does NOT scroll away while browsing details
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
-            {/* Main Stage Image (Slightly Darker Warm Beige Background for Definition) */}
-            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#EFE8D8] border border-[#DDD2BD] overflow-hidden flex items-center justify-center shadow-xs select-none group">
-              {/* Top-Left Brand Tag */}
-              <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                <span className="text-[#171717]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
-                  Floramade
-                </span>
-              </div>
-
+            {/* Main Stage Image (Edge-to-Edge Container with Slightly Darker Warm Beige Background) */}
+            <div className="relative aspect-square w-full rounded-3xl bg-[#EFE8D8] border border-[#DDD2BD] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Right Wishlist Button */}
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#EFE8D8]/90 hover:bg-[#EFE8D8] border border-[#DDD2BD] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#EFE8D8]/90 hover:bg-[#EFE8D8] border border-[#DDD2BD] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
                   size={16} 
-                  className={isInWishlist(product._id) ? "fill-[#872B10] text-[#101D17]" : "text-[#171717]/60"} 
+                  className={isInWishlist(product._id) ? "fill-[#D4AF55] text-[#101D17]" : "text-[#171717]/60"} 
                 />
               </button>
 
-              {/* Main Product Image */}
-              <div className="relative w-full h-full p-2.5 sm:p-4 flex items-center justify-center">
+              {/* Main Product Image (Zero Side Insets, Edge-to-Edge Fit) */}
+              <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src={productImages[activeIdx] || "/placeholder.png"}
                   alt={product.name}
@@ -569,7 +562,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                   priority={activeIdx === 0}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   quality={85}
-                  className="object-contain select-none transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover select-none transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
@@ -605,7 +598,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#EFE8D8] flex-shrink-0 transition-all p-1 ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#EFE8D8] flex-shrink-0 transition-all ${
                       activeIdx === idx
                         ? "border-[#101D17] shadow-sm scale-105"
                         : "border-[#E0D9C8] opacity-75 hover:opacity-100 hover:border-[#101D17]/50"

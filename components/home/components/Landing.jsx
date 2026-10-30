@@ -55,7 +55,7 @@ export default function Landing({ banners }) {
   }, [emblaApi]);
 
   return (
-    <section aria-label="Floramade featured banners" className="w-full relative overflow-hidden p-0 m-0">
+    <section aria-label="Floramade featured banners" className="w-full relative overflow-hidden p-0 m-0 -mt-1 sm:mt-0">
       <h1 className="sr-only">Floramade Ayurvedic wellness</h1>
       
       {/* Full-width Banner Container with Zero Padding */}

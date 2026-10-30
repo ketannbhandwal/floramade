@@ -154,28 +154,28 @@ const fallbackBenefitsData = [
     id: 1,
     title: "Natural Healing",
     description:
-      "Floramade focuses on using natural, plant-based ingredients providing a holistic approach to health without harmful chemicals or synthetic additives.",
+      "Floramade focuses on pure, plant-based herbs providing a holistic approach to health without harmful chemicals or synthetic additives.",
     icon: "natural",
   },
   {
     id: 2,
     title: "Customized Solutions",
     description:
-      "Our products, such as for diabetes relief or liver detox, target specific health concerns with tailored Ayurvedic remedies for long-term results.",
+      "Targeted Ayurvedic formulas for diabetes relief, liver detox, and digestion with tailored remedies for long-term results.",
     icon: "solutions",
   },
   {
     id: 3,
     title: "Long-Lasting Wellness",
     description:
-      "Ayurvedic products promote long-term health by addressing root causes, not just symptoms, ensuring sustainable vitality and wellness.",
+      "Ayurvedic remedies promote lasting health by addressing root causes, ensuring sustainable vitality and daily wellness.",
     icon: "wellness",
   },
   {
     id: 4,
     title: "Holistic Health",
     description:
-      "Following Ayurveda principles, Floramade supports mind, body and spirit to promote balance, harmony, and complete well-being.",
+      "Following authentic Ayurveda principles, Floramade supports mind, body, and spirit to promote balance and well-being.",
     icon: "holistic",
   },
 ];
@@ -193,8 +193,8 @@ export default function BenefitsSection({ heading = "Benefits", benefits }) {
           </h2>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6 lg:gap-7">
+        {/* Cards Grid: Perfectly Balanced and Even Heights */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 lg:gap-7 items-stretch">
           {items.map((benefit, idx) => {
             const IconComponent =
               (typeof benefit.icon === "string" && ICON_MAP[benefit.icon]) ||
@@ -204,20 +204,20 @@ export default function BenefitsSection({ heading = "Benefits", benefits }) {
             return (
               <div
                 key={benefit.id || idx}
-                className="bg-[#F8F4E9] rounded-2xl sm:rounded-[22px] p-4 sm:p-6 md:p-8 border border-[#E0D9C8]/80 shadow-[0_4px_20px_rgba(18,61,43,0.03)] hover:shadow-[0_10px_30px_rgba(18,61,43,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-start"
+                className="h-full flex flex-col justify-start bg-[#F8F4E9] rounded-2xl sm:rounded-[22px] p-4 sm:p-6 md:p-7 border border-[#DDD2BD] shadow-[0_4px_20px_rgba(18,61,43,0.03)] hover:shadow-[0_10px_30px_rgba(18,61,43,0.07)] hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Icon */}
-                <div className="mb-3 sm:mb-5 md:mb-6">
-                  <IconComponent className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14" />
+                <div className="mb-3 sm:mb-4 md:mb-5 shrink-0 flex items-center">
+                  <IconComponent className="w-8 h-8 sm:w-11 sm:h-11 md:w-12 md:h-12" />
                 </div>
 
-                {/* Title */}
-                <h3 className="text-sm sm:text-lg md:text-xl font-bold tracking-tight text-[#171717] mb-1.5 sm:mb-3 leading-snug">
+                {/* Title (Consistent height ensures descriptions always align across row) */}
+                <h3 className="text-[13.5px] sm:text-base md:text-lg font-bold tracking-tight text-[#171717] mb-2 leading-snug min-h-[38px] sm:min-h-[44px] flex items-center">
                   {benefit.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[11px] sm:text-xs md:text-sm text-[#171717]/75 leading-relaxed tracking-tight font-normal">
+                <p className="text-[11.5px] sm:text-xs md:text-sm text-[#171717]/75 leading-relaxed tracking-tight font-normal flex-1">
                   {benefit.description}
                 </p>
               </div>
