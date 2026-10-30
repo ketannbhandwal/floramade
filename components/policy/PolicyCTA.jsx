@@ -2,60 +2,67 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MessageSquare } from "lucide-react";
-import Button from "@/components/ui/Button";
 import Link from "next/link";
 
 export default function PolicyCTA() {
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-4xl mx-auto rounded-[2rem] bg-[#17140f] text-white p-8 md:p-16 text-center relative overflow-hidden shadow-2xl">
+    <section className="py-12 sm:py-16 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto rounded-3xl bg-[#39160D] text-[#FFF7EB] p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-md">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 space-y-8"
+          transition={{ duration: 0.6 }}
+          className="relative z-10 space-y-6"
         >
-          <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-light italic font-display">Still have questions?</h2>
-            <p className="text-white/60 font-light max-w-lg mx-auto">
-              Our Ayurvedic experts are here to help you with any queries regarding our policies or products.
+          <div className="space-y-2.5">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#FFF7EB]">
+              Still have questions?
+            </h2>
+            <p className="text-[#FFF7EB]/70 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed">
+              Our practitioners and support team are here to help you with any queries regarding our policies or rituals.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-            <div className="flex flex-col items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-[#b18a3b]" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-4 max-w-2xl mx-auto">
+            <a 
+              href="mailto:floramade517@gmail.com" 
+              className="p-4 rounded-2xl bg-[#FFF7EB]/10 border border-[#FFF7EB]/15 hover:bg-[#FFF7EB]/20 transition-colors flex flex-col items-center gap-2 text-center"
+            >
+              <div className="h-10 w-10 rounded-full bg-[#DFC77F]/20 text-[#DFC77F] flex items-center justify-center">
+                <Mail className="h-5 w-5" />
               </div>
-              <a href="mailto:floramade517@gmail.com" className="text-sm font-medium hover:text-[#b18a3b] transition-colors">floramade517@gmail.com</a>
-            </div>
-            <div className="flex flex-col items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
-                <Phone className="h-5 w-5 text-[#b18a3b]" />
-              </div>
-              <a href="tel:+919220251059" className="text-sm font-medium hover:text-[#b18a3b] transition-colors">+91 9220251059</a>
-            </div>
-            <div className="flex flex-col items-center gap-3">
-              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
-                <MessageSquare className="h-5 w-5 text-[#b18a3b]" />
-              </div>
-              <p className="text-sm font-medium">Live Chat Support</p>
-            </div>
-          </div>
+              <span className="text-xs font-semibold text-[#FFF7EB] truncate max-w-[190px]">floramade517@gmail.com</span>
+              <span className="text-[10px] text-[#FFF7EB]/50">Email Support</span>
+            </a>
 
-          <div className="pt-8">
-            <Link href="/contact">
-              <Button className="bg-[#b18a3b] hover:bg-[#8a682c] text-white px-8 py-4 rounded-full text-sm uppercase tracking-widest font-medium transition-all duration-300">
-                Contact Us Now
-              </Button>
+            <a 
+              href="tel:+919220251059" 
+              className="p-4 rounded-2xl bg-[#FFF7EB]/10 border border-[#FFF7EB]/15 hover:bg-[#FFF7EB]/20 transition-colors flex flex-col items-center gap-2 text-center"
+            >
+              <div className="h-10 w-10 rounded-full bg-[#DFC77F]/20 text-[#DFC77F] flex items-center justify-center">
+                <Phone className="h-5 w-5" />
+              </div>
+              <span className="text-xs font-semibold text-[#FFF7EB]">+91 9220251059</span>
+              <span className="text-[10px] text-[#FFF7EB]/50">Mon - Sat (10am - 7pm)</span>
+            </a>
+
+            <Link 
+              href="/contact" 
+              className="p-4 rounded-2xl bg-[#FFF7EB]/10 border border-[#FFF7EB]/15 hover:bg-[#FFF7EB]/20 transition-colors flex flex-col items-center gap-2 text-center sm:col-span-2 md:col-span-1"
+            >
+              <div className="h-10 w-10 rounded-full bg-[#DFC77F]/20 text-[#DFC77F] flex items-center justify-center">
+                <MessageSquare className="h-5 w-5" />
+              </div>
+              <span className="text-xs font-semibold text-[#FFF7EB]">Contact Desk</span>
+              <span className="text-[10px] text-[#FFF7EB]/50">Reach Out Instantly</span>
             </Link>
           </div>
         </motion.div>
 
-        {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#b18a3b]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+        {/* Ambient glow */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#DFC77F]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#872B10]/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
       </div>
     </section>
   );

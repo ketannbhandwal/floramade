@@ -1,165 +1,205 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Scale, ShieldAlert, UserCheck, AlertCircle, HelpCircle, Landmark } from "lucide-react";
+import Link from "next/link";
 import PolicyCTA from "@/components/policy/PolicyCTA";
-import CouponSection from "@/components/policy/CouponSection";
+import { 
+  FileText, 
+  ShieldCheck, 
+  Scale, 
+  UserCheck, 
+  AlertCircle, 
+  Landmark, 
+  Tag, 
+  Mail, 
+  Phone 
+} from "lucide-react";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 };
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32">
-      {/* Hero Section */}
-      <section className="px-6 py-20 text-center relative overflow-hidden">
-        <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Terms & Conditions</h1>
-          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
-            Ethical guidelines for a trusted wellness partnership.
+    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pt-24 md:pt-32 pb-16 font-sans">
+      {/* Top Header */}
+      <section className="px-6 py-12 md:py-16 text-center">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
+            <FileText size={13} />
+            <span>Legal Documentation</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#39160D]">
+            Terms & Conditions
+          </h1>
+          <p className="text-xs sm:text-sm text-[#39160D]/65 max-w-xl mx-auto leading-relaxed">
+            Please read these terms and conditions carefully before using the Floramade website or purchasing our Ayurvedic formulations.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
-      {/* Intro Section - (Light) */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-light italic font-display text-[#17140f]">Agreement to Terms</h2>
-                <p className="text-[#17140f]/60 font-light leading-relaxed">
-                  By accessing and using the Floramade website, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+      {/* Main Document Paper Container */}
+      <section className="px-4 sm:px-6 mb-16">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E8D9C5] shadow-xs p-6 sm:p-10 md:p-14 space-y-10 leading-relaxed text-[#39160D]/85 text-xs sm:text-sm">
+
+          {/* Meta Info */}
+          <div className="border-b border-[#E8D9C5] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#39160D]/60">
+            <div>
+              <span className="font-semibold text-[#39160D]">Effective Date:</span> October 2026
+            </div>
+            <div>
+              <span className="font-semibold text-[#39160D]">Governing Law:</span> Republic of India
+            </div>
+          </div>
+
+          {/* 1. Agreement to Terms */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <FileText size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">1. Agreement to Terms</h2>
+            </div>
+            <p>
+              By accessing, browsing, or purchasing from the Floramade website, you confirm that you have read, understood, and agreed to be legally bound by these Terms and Conditions, along with our <Link href="/privacy-policy" className="text-[#872B10] font-semibold underline underline-offset-2">Privacy Policy</Link> and <Link href="/refund-policy" className="text-[#872B10] font-semibold underline underline-offset-2">Refund Policy</Link>.
+            </p>
+            <p>
+              If you do not agree with any part of these terms, please discontinue using our website and services immediately.
+            </p>
+          </div>
+
+          {/* 2. Eligibility & Account Responsibilities */}
+          <div className="space-y-4 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <UserCheck size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">2. Eligibility & Account Responsibility</h2>
+            </div>
+            <p>
+              To place orders or register an account with Floramade, you must be at least 18 years of age or be using the platform under the active guidance and consent of a parent or legal guardian.
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-[#39160D]/80">
+              <li><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your login credentials and for all activities that occur under your account.</li>
+              <li><strong>Accurate Details:</strong> You agree to provide accurate, current, and complete personal and delivery details during registration and checkout.</li>
+              <li><strong>Account Suspension:</strong> Floramade reserves the right to terminate accounts or refuse service if fraudulent or abusive activity is detected.</li>
+            </ul>
+          </div>
+
+          {/* 3. Product & Pricing Clarity */}
+          <div className="space-y-4 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <AlertCircle size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">3. Products, Pricing & Availability</h2>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-3.5 pt-1">
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+                <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Visual Accuracy</h3>
+                <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                  Actual product packaging, label designs, or colors may vary slightly from online representations due to lighting and screen calibrations.
                 </p>
               </div>
-
-              <div className="grid gap-6">
-                {[
-                  { icon: UserCheck, title: "Eligibility", text: "You must be at least 18 years of age or using the site under the supervision of a parent or guardian." },
-                  { icon: ShieldAlert, title: "Account Responsibility", text: "Users are responsible for maintaining the confidentiality of their account information and all activities under their account." }
-                ].map((item, idx) => (
-                  <div key={idx} className="p-8 rounded-3xl bg-white border border-[#17140f]/5 shadow-sm space-y-4">
-                    <item.icon size={24} className="text-[#b18a3b]" />
-                    <h4 className="text-xl font-medium text-[#17140f]">{item.title}</h4>
-                    <p className="text-sm text-[#17140f]/50 font-light leading-relaxed">{item.text}</p>
-                  </div>
-                ))}
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+                <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Stock Availability</h3>
+                <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                  Prices and stock availability are subject to change without prior notice. Floramade reserves the right to limit order quantities per household.
+                </p>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-[#17140f] p-12 flex items-center justify-center text-center"
-            >
-              <div className="space-y-8">
-                <Scale size={100} className="mx-auto text-[#b18a3b]/30" />
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-light italic text-white/90">Legal Framework</h3>
-                  <p className="text-white/40 font-light text-sm max-w-xs mx-auto uppercase tracking-widest">Governed by the laws of India</p>
-                </div>
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+                <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Pricing Errors</h3>
+                <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                  In case of an accidental typographical pricing error, we reserve the right to cancel the order and provide a full prompt refund.
+                </p>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Product & Pricing - Section (Dark) */}
-      <section className="py-24 px-6 bg-[#17140f] text-white">
-        <div className="max-w-6xl mx-auto space-y-20">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-5xl font-light italic font-display">Product & Pricing</h2>
-            <p className="text-white/40 font-light uppercase tracking-widest text-xs">Clarity in every transaction</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: AlertCircle,
-                title: "Visual Accuracy",
-                desc: "While we strive for accuracy, actual product colors and packaging may slightly vary depending on your device's display settings."
-              },
-              {
-                icon: HelpCircle,
-                title: "Availability",
-                desc: "Prices and availability of products are subject to change without prior notice. We reserve the right to limit quantities."
-              },
-              {
-                icon: ShieldAlert,
-                title: "Pricing Errors",
-                desc: "In the event of a pricing error, we reserve the right to cancel the order and provide a full refund to the customer."
-              }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="p-10 rounded-[2.5rem] border border-white/10 bg-white/5 space-y-6 hover:bg-white/10 transition-colors duration-500"
-              >
-                <item.icon size={28} className="text-[#b18a3b]" />
-                <h3 className="text-2xl font-light font-display">{item.title}</h3>
-                <p className="text-sm text-white/50 font-light leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Liability & Law - Section (Light) */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-12 rounded-[3rem] bg-[#f7f4ed] space-y-8"
-          >
-            <div className="h-16 w-16 rounded-3xl bg-[#b18a3b]/10 flex items-center justify-center text-[#b18a3b]">
-              <Landmark size={32} />
             </div>
-            <div className="space-y-4">
-              <h3 className="text-3xl font-light italic font-display text-[#17140f]">Limitation of Liability</h3>
-              <p className="text-sm text-[#17140f]/60 font-light leading-relaxed">
-                Floramade shall not be held liable for any indirect, incidental, or consequential damages resulting from the use or misuse of our products. Users are advised to follow usage guidelines strictly.
+          </div>
+
+          {/* 4. Ayurvedic Disclaimers & Usage */}
+          <div className="space-y-4 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <ShieldCheck size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">4. Ayurvedic Formulation Disclaimer</h2>
+            </div>
+            <p>
+              All products offered by Floramade are proprietary Ayurvedic wellness formulations prepared with botanical herbs. They are formulated to promote holistic health and vitality according to traditional principles.
+            </p>
+            <div className="p-4 rounded-xl bg-[#872B10]/5 border border-[#872B10]/20 space-y-1.5 text-xs">
+              <p className="font-semibold text-[#872B10]">Important Medical Disclaimer:</p>
+              <p className="text-[#39160D]/80 leading-relaxed">
+                Floramade products are not intended to diagnose, cure, mitigate, or replace certified allopathic emergency care. Individual results may vary based on bodily constitution, lifestyle, and consistency. Pregnant or nursing mothers and individuals with known medical conditions should consult an Ayurvedic practitioner or physician before use.
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="p-12 rounded-[3rem] bg-[#17140f] text-white space-y-8"
-          >
-            <div className="h-16 w-16 rounded-3xl bg-white/10 flex items-center justify-center text-[#b18a3b]">
-              <Scale size={32} />
+          {/* 5. Promotional Codes & Coupons */}
+          <div className="space-y-4 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <Tag size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">5. Discount Codes & Offers</h2>
             </div>
-            <div className="space-y-4">
-              <h3 className="text-3xl font-light italic font-display">Governing Law</h3>
-              <p className="text-sm text-white/50 font-light leading-relaxed">
-                These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising shall be subject to the exclusive jurisdiction of the courts in Delhi, India.
-              </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[#39160D]/80">
+              <li>Only one promotional code or coupon may be redeemed per order.</li>
+              <li>Discount coupons cannot be clubbed with certain pre-discounted combo packs unless specified.</li>
+              <li>Coupons are non-transferable and cannot be exchanged for cash.</li>
+              <li>Floramade reserves the right to withdraw or modify promotional discounts at any time without prior liability.</li>
+            </ul>
+          </div>
+
+          {/* 6. Limitation of Liability */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <Scale size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">6. Limitation of Liability</h2>
             </div>
-          </motion.div>
+            <p>
+              To the maximum extent permitted by applicable Indian law, Floramade, its directors, employees, and herbalists shall not be liable for any indirect, incidental, punitive, or consequential damages resulting from product misuse, failure to heed usage instructions, or delivery delays caused by third-party logistics partners or natural disruptions.
+            </p>
+          </div>
+
+          {/* 7. Governing Law & Jurisdiction */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="flex items-center gap-2.5 text-[#39160D]">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center shrink-0">
+                <Landmark size={15} />
+              </div>
+              <h2 className="text-base sm:text-lg font-bold tracking-tight">7. Governing Law & Dispute Resolution</h2>
+            </div>
+            <p>
+              These Terms and Conditions shall be governed by, interpreted, and construed in accordance with the substantive laws of the Republic of India. In the event of any dispute, controversy, or claim arising out of or relating to these terms, the competent courts in Delhi, India, shall hold exclusive jurisdiction.
+            </p>
+          </div>
+
+          {/* 8. Contact Information */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-3">
+            <h3 className="font-bold text-sm text-[#39160D]">Have questions regarding our terms?</h3>
+            <p className="text-xs text-[#39160D]/75">
+              Our customer care practitioners are available Monday to Saturday (10:00 AM – 7:00 PM IST) to assist with any clarifications.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#872B10]">
+              <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
+                <Mail size={14} /> floramade517@gmail.com
+              </a>
+              <a href="tel:+919220251059" className="flex items-center gap-1.5 hover:underline">
+                <Phone size={14} /> +91 9220251059
+              </a>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <CouponSection />
+      {/* Warm Policy Contact Section */}
       <PolicyCTA />
     </div>
   );
 }
-

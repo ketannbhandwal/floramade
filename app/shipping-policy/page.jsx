@@ -2,160 +2,128 @@
 
 import { motion } from "framer-motion";
 import PolicyCTA from "@/components/policy/PolicyCTA";
-import CouponSection from "@/components/policy/CouponSection";
+import { Truck, Clock, ShieldCheck, MapPin, Mail, Phone } from "lucide-react";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 };
 
 export default function ShippingPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pt-24 md:pt-32 pb-16 font-sans">
       {/* Hero Section */}
-      <section className="px-6 py-20 text-center relative overflow-hidden">
-        <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Shipping & Cancellation Policy</h1>
-          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
-            Delivering wellness with care and precision.
+      <section className="px-6 py-12 md:py-16 text-center">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
+            <Truck size={13} />
+            <span>Pan-India Logistics</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#39160D]">
+            Shipping & Delivery Policy
+          </h1>
+          <p className="text-xs sm:text-sm text-[#39160D]/65 max-w-xl mx-auto leading-relaxed">
+            Delivering authentic Ayurvedic formulations with care, speed, and precision across all pin codes in India.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
-      {/* Content Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] shadow-sm border border-[#17140f]/5 text-[#17140f]/80 font-light leading-relaxed space-y-8">
+      {/* Content Document Card */}
+      <section className="px-4 sm:px-6 mb-16">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E8D9C5] shadow-xs p-6 sm:p-10 md:p-14 space-y-8 leading-relaxed text-[#39160D]/85 text-xs sm:text-sm">
           
-          <div className="space-y-4">
-            <h2 className="text-3xl font-display text-[#17140f]">Shipping & Cancellation Policy</h2>
-            <p>At Floramade, we are committed to providing a smooth, reliable, and hassle-free shopping experience. This policy outlines our shipping process, delivery timelines, cancellations, and related terms.</p>
+          <div className="border-b border-[#E8D9C5] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#39160D]/60">
+            <div>
+              <span className="font-semibold text-[#39160D]">Free Shipping:</span> Orders above ₹600
+            </div>
+            <div>
+              <span className="font-semibold text-[#39160D]">Transit Time:</span> 2 to 7 Business Days
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Shipping Policy</h3>
-            <p>We strive to ensure that your orders are processed efficiently and delivered in a timely manner.</p>
-            
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">1. Shipping Charges</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Free shipping is available across India for orders above ₹600.</li>
-              <li>For orders below ₹600, a nominal shipping fee will be applied based on the delivery location.</li>
-            </ul>
-
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">2. Order Processing</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Orders are typically processed and dispatched within 1–3 working days.</li>
-              <li>Orders placed on Sundays or public holidays will be processed on the next working day.</li>
-              <li>During peak periods or promotional events, processing and dispatch timelines may be slightly extended.</li>
-            </ul>
-
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">3. Delivery Timelines</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Orders are generally delivered within 2–7 working days, depending on the delivery location.</li>
-              <li>Deliveries to remote or rural areas may require additional time.</li>
-              <li>Customers are responsible for providing accurate and complete delivery details at the time of placing the order.</li>
-            </ul>
-
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">4. Non-Delivery or Failed Delivery</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>If delivery fails due to incorrect or incomplete information provided by the customer (such as incorrect address or recipient unavailability), additional re-delivery charges may apply.</li>
-            </ul>
-
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">5. Delays Beyond Our Control</h4>
-            <p>Delivery timelines may be affected due to circumstances beyond our control, including:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Logistics disruptions</li>
-              <li>Weather conditions</li>
-              <li>Natural disasters, strikes, or other unforeseen events</li>
-            </ul>
-            <p>In such situations, we will make reasonable efforts to keep you informed about any delays.</p>
+          <div className="space-y-3">
+            <h2 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">Reliable Dispatch & Tracking</h2>
+            <p>At Floramade, we are committed to providing a smooth, reliable, and hassle-free shopping experience. This policy outlines our packaging standards, shipping charges, delivery timelines, and transit protocols.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Cancellation Policy</h3>
-            <p>We understand that you may need to cancel an order under certain circumstances. Please review the following guidelines:</p>
-            
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">1. Order Cancellation by Customer</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>If you wish to cancel your order, please contact us immediately via email.</li>
-              <li>Orders that have already been processed or dispatched cannot be canceled.</li>
-              <li>For perishable or temperature-sensitive products, cancellation may be allowed; however, applicable costs may be borne by the customer.</li>
-            </ul>
+          {/* Shipping Highlights Grid */}
+          <div className="grid sm:grid-cols-3 gap-3.5 pt-2 border-t border-[#E8D9C5]/60">
+            <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center">
+                <Truck size={15} />
+              </div>
+              <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Shipping Charges</h3>
+              <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                Free standard shipping across India on all orders of ₹600 or above. A flat nominal shipping fee of ₹50 applies on orders below ₹600.
+              </p>
+            </div>
 
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">2. Order Cancellation by Floramade</h4>
-            <p>Floramade reserves the right to cancel any order under the following circumstances:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Incorrect pricing or product information listed on the website</li>
-              <li>Product unavailability</li>
-              <li>Unforeseen issues affecting order fulfillment</li>
-            </ul>
-            <p>In such cases, customers will be informed, and a full refund will be processed.</p>
+            <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center">
+                <Clock size={15} />
+              </div>
+              <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Order Processing</h3>
+              <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                Orders are dispatched within 24 to 48 hours of verification. Orders placed on Sundays or gazetted holidays are processed next business morning.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1.5">
+              <div className="w-7 h-7 rounded-lg bg-[#872B10]/10 text-[#872B10] flex items-center justify-center">
+                <MapPin size={15} />
+              </div>
+              <h3 className="font-bold text-xs uppercase tracking-tight text-[#39160D]">Delivery Timelines</h3>
+              <p className="text-[11px] text-[#39160D]/75 leading-relaxed">
+                Metro cities usually arrive in 2–4 business days. Other states and remote rural pin codes generally arrive within 4–7 business days.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">General Cancellation Guidelines</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Orders that have already been dispatched are not eligible for cancellation.</li>
-              <li>Discount vouchers are intended for one-time use and will be considered utilized even if the order is canceled.</li>
-              <li>If loyalty points were used for the purchase, they will be credited back to your account in case of cancellation.</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Refunds for Cancellations</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Refunds for eligible cancellations will be processed only after verification, as per our Refund Policy.</li>
-              <li>Once approved, refunds will be processed within 5–7 business days.</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Replacement & Refund Conditions</h3>
-            <p>We take utmost care to ensure that products reach you in perfect condition. However, in rare cases, the following issues may occur:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Product damaged during transit</li>
-              <li>Manufacturing defects</li>
-              <li>Incorrect product delivered</li>
-            </ul>
-            <p>Eligibility for replacement/refund:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Request must be raised within 7 days of delivery</li>
-              <li>If the package appears damaged, please refuse delivery at the time of receipt</li>
-            </ul>
-            <p>Note: Products once accepted cannot be returned unless they meet the above conditions.</p>
-            <p>For detailed return and refund conditions, please refer to our Refund Policy.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Replacement / Refund Process</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Please email us with your Order ID and reason for replacement or refund</li>
-              <li>Do not send any product back without prior confirmation from our team</li>
-            </ul>
-            
-            <h4 className="text-lg font-medium text-[#17140f] mt-4">If Replacement is Unavailable</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>In case a replacement product is not available, suitable alternatives may be offered</li>
-              <li>If you choose not to proceed, a full refund will be issued</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Contact Us</h3>
-            <p>For any queries related to shipping, cancellations, or refunds, please contact us:</p>
+          {/* Courier Partners */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">1. Trusted Courier Partners</h3>
             <p>
-              <strong>Email:</strong> <a href="mailto:floramade517@gmail.com" className="text-[#b18a3b] hover:underline">floramade517@gmail.com</a><br />
-              <strong>Phone:</strong> <a href="tel:+919220251059" className="text-[#b18a3b] hover:underline">+91 9220251059</a>
+              We partner with India’s leading logistics providers (Delhivery, Blue Dart, DTDC, Xpressbees, and India Post) to ensure tamper-proof packaging and safe delivery to your doorstep.
             </p>
+          </div>
+
+          {/* Tracking */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">2. Shipment Tracking</h3>
+            <p>
+              As soon as your package is dispatched from our warehouse, you will receive an SMS and email notification containing your AWB tracking number and direct live tracking link.
+            </p>
+          </div>
+
+          {/* Non Delivery */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">3. Failed Delivery Attempts</h3>
+            <p>
+              Our courier partners attempt delivery up to 3 times. If delivery fails due to an incorrect address, wrong mobile number, or recipient unavailability, the parcel returns to our warehouse. Re-dispatch requests may incur additional courier costs.
+            </p>
+          </div>
+
+          {/* Contact Details Box */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-3">
+            <h3 className="font-bold text-sm text-[#39160D]">Need Urgent Help with Your Shipment?</h3>
+            <p className="text-xs text-[#39160D]/75">
+              Our dispatch team is available to assist you with address corrections, tracking updates, and delivery inquiries:
+            </p>
+            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#872B10]">
+              <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
+                <Mail size={14} /> floramade517@gmail.com
+              </a>
+              <a href="tel:+919220251059" className="flex items-center gap-1.5 hover:underline">
+                <Phone size={14} /> +91 9220251059
+              </a>
+            </div>
           </div>
 
         </div>
       </section>
 
-      <CouponSection />
       <PolicyCTA />
     </div>
   );
 }
-

@@ -2,95 +2,124 @@
 
 import { motion } from "framer-motion";
 import PolicyCTA from "@/components/policy/PolicyCTA";
-import CouponSection from "@/components/policy/CouponSection";
+import { RefreshCcw, CheckCircle2, XCircle, Mail, Phone, Truck } from "lucide-react";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 };
 
 export default function RefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pt-24 md:pt-32 pb-16 font-sans">
       {/* Hero Section */}
-      <section className="px-6 py-20 text-center relative overflow-hidden">
-        <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Refund Policy</h1>
-          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
-            Transparent and fair returns for your peace of mind.
+      <section className="px-6 py-12 md:py-16 text-center">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
+            <RefreshCcw size={13} />
+            <span>Returns & Cancellations</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#39160D]">
+            Refund & Cancellation Policy
+          </h1>
+          <p className="text-xs sm:text-sm text-[#39160D]/65 max-w-xl mx-auto leading-relaxed">
+            Transparent, fair, and hassle-free returns for your peace of mind and wellness satisfaction.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
-      {/* Content Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] shadow-sm border border-[#17140f]/5 text-[#17140f]/80 font-light leading-relaxed space-y-8">
+      {/* Content Document Card */}
+      <section className="px-4 sm:px-6 mb-16">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E8D9C5] shadow-xs p-6 sm:p-10 md:p-14 space-y-8 leading-relaxed text-[#39160D]/85 text-xs sm:text-sm">
           
-          <div className="space-y-4">
-            <h2 className="text-3xl font-display text-[#17140f]">Refund Policy</h2>
-            <p>At Floramade, your trust, wellness, and satisfaction are our top priorities. We are committed to providing high-quality Ayurvedic products and ensuring a smooth and reliable shopping experience.</p>
-            <p>If something isn’t right, we are here to assist you.</p>
+          <div className="border-b border-[#E8D9C5] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#39160D]/60">
+            <div>
+              <span className="font-semibold text-[#39160D]">Window:</span> 7 Days from Delivery
+            </div>
+            <div>
+              <span className="font-semibold text-[#39160D]">Processing:</span> 5-7 Business Days
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Return & Refund Eligibility</h3>
-            <p>We accept return or replacement requests within 7 days of delivery under the following conditions:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>You received a damaged, defective, or incorrect product</li>
-              <li>The product delivered is expired (although this is highly unlikely)</li>
-              <li>You were charged more than the listed MRP</li>
+          <div className="space-y-3">
+            <h2 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">Our Quality Guarantee</h2>
+            <p>At Floramade, your trust, wellness, and satisfaction are our top priorities. We are committed to providing high-quality Ayurvedic formulations and ensuring a reliable, supportive experience. If something is not right with your order, we are here to assist you.</p>
+          </div>
+
+          {/* Eligibility */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">1. Return & Replacement Eligibility</h3>
+            <p>We accept return or replacement requests within <strong>7 days of delivery</strong> under the following valid conditions:</p>
+            <div className="grid sm:grid-cols-3 gap-3 pt-1">
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1">
+                <CheckCircle2 size={16} className="text-[#872B10]" />
+                <h4 className="font-bold text-xs text-[#39160D]">Damaged / Defective</h4>
+                <p className="text-[11px] text-[#39160D]/70">Product arrived broken, unsealed, or leaked during transit.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1">
+                <CheckCircle2 size={16} className="text-[#872B10]" />
+                <h4 className="font-bold text-xs text-[#39160D]">Incorrect Item</h4>
+                <p className="text-[11px] text-[#39160D]/70">You received a different product or variant than ordered.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-1">
+                <CheckCircle2 size={16} className="text-[#872B10]" />
+                <h4 className="font-bold text-xs text-[#39160D]">Overcharged Price</h4>
+                <p className="text-[11px] text-[#39160D]/70">You were mistakenly charged higher than the product MRP.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Non-returnable */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">2. Non-Returnable Items</h3>
+            <p>To preserve Ayurvedic hygiene standards and safety integrity, the following cannot be returned once delivered:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[#39160D]/80">
+              <li>Opened or used bottles/jars where the protective inner seal has been tampered with or removed.</li>
+              <li>Products returned without original packaging, product carton, and invoice.</li>
+              <li>Damages caused by improper customer storage, moisture exposure, or mishandling.</li>
             </ul>
-            <p>To be eligible for a return:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>The product must be unused and in its original condition</li>
-              <li>It should be returned with original packaging, labels, and invoice</li>
-            </ul>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Non-Returnable Items</h3>
-            <p>Due to the nature of our products, the following items are not eligible for return:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Opened or used products</li>
-              <li>Temperature-sensitive or perishable items</li>
-              <li>Products damaged due to misuse or improper handling.</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Orders Not Yet Shipped</h3>
-            <p>If you wish to cancel your order, you may do so within 24 hours of placing it by emailing us at floramade517@gmail.com.</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>If the order has not been shipped, a full refund will be processed</li>
-              <li>If already shipped, the return policy mentioned above will apply</li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Damaged During Transit</h3>
-            <p>We take utmost care in packaging our products to ensure they reach you in perfect condition. However, in the rare event that damage occurs during transit, we are here to assist you.</p>
-            <p>If you notice any damage at the time of delivery, we request you to kindly refuse acceptance of the package and return it to the delivery agent.</p>
-            <p>Please email us at floramade517@gmail.com, and we will arrange a replacement at the earliest.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Contact Us</h3>
-            <p>For any queries or support, please reach out to us:</p>
+          {/* Order Cancellations */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">3. Order Cancellation Before Dispatch</h3>
             <p>
-              <strong>Email:</strong> <a href="mailto:floramade517@gmail.com" className="text-[#b18a3b] hover:underline">floramade517@gmail.com</a><br />
-              <strong>Phone:</strong> <a href="tel:+919220251059" className="text-[#b18a3b] hover:underline">+91 9220251059</a>
+              If you wish to cancel an order, you can do so within <strong>24 hours of placing it</strong> or prior to courier handover by emailing us at <a href="mailto:floramade517@gmail.com" className="text-[#872B10] font-semibold underline">floramade517@gmail.com</a>.
             </p>
-            <p>We are always here to help you on your journey towards natural wellness.</p>
+            <p>
+              If the cancellation request is accepted before dispatch, 100% of the prepaid amount will be refunded to the original payment method within 5–7 business days.
+            </p>
+          </div>
+
+          {/* Damage in Transit */}
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">4. Damage During Transit</h3>
+            <p>
+              If you notice clear external carton damage or tampering at the time of delivery, please refuse delivery from the courier executive and take photos of the box. Notify our team immediately with photos, and we will dispatch a fresh replacement package right away.
+            </p>
+          </div>
+
+          {/* Contact Details Box */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-3">
+            <h3 className="font-bold text-sm text-[#39160D]">Initiate a Return or Refund Request</h3>
+            <p className="text-xs text-[#39160D]/75">
+              Please email us your order number, invoice, and clear photos/unboxing video of the affected product:
+            </p>
+            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#872B10]">
+              <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
+                <Mail size={14} /> floramade517@gmail.com
+              </a>
+              <a href="tel:+919220251059" className="flex items-center gap-1.5 hover:underline">
+                <Phone size={14} /> +91 9220251059
+              </a>
+            </div>
           </div>
 
         </div>
       </section>
 
-      <CouponSection />
       <PolicyCTA />
     </div>
   );
 }
-

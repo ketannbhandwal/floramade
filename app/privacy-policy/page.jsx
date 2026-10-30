@@ -2,134 +2,119 @@
 
 import { motion } from "framer-motion";
 import PolicyCTA from "@/components/policy/PolicyCTA";
-import CouponSection from "@/components/policy/CouponSection";
+import { ShieldCheck, Lock, Eye, FileText, Mail, Phone } from "lucide-react";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 };
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#f7f4ed] pt-24 md:pt-32">
+    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pt-24 md:pt-32 pb-16 font-sans">
       {/* Hero Section */}
-      <section className="px-6 py-20 text-center relative overflow-hidden">
-        <motion.div {...fadeUp} className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-light italic font-display text-[#17140f]">Privacy Policy</h1>
-          <p className="text-[#17140f]/60 font-light text-lg max-w-2xl mx-auto uppercase tracking-[0.1em]">
-            Your trust is our most valued element.
+      <section className="px-6 py-12 md:py-16 text-center">
+        <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
+            <Lock size={13} />
+            <span>Data Protection & Privacy</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#39160D]">
+            Privacy Policy
+          </h1>
+          <p className="text-xs sm:text-sm text-[#39160D]/65 max-w-xl mx-auto leading-relaxed">
+            Your trust is our most valued element. Learn how we collect, protect, and handle your personal data.
           </p>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[#b18a3b]/5 rounded-full blur-3xl pointer-events-none" />
       </section>
 
-      {/* Content Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] shadow-sm border border-[#17140f]/5 text-[#17140f]/80 font-light leading-relaxed space-y-8">
+      {/* Content Document Card */}
+      <section className="px-4 sm:px-6 mb-16">
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-[#E8D9C5] shadow-xs p-6 sm:p-10 md:p-14 space-y-8 leading-relaxed text-[#39160D]/85 text-xs sm:text-sm">
           
-          <div className="space-y-4">
-            <h2 className="text-3xl font-display text-[#17140f]">Privacy Policy</h2>
-            <p className="font-medium">Effective Date: 17-April-2026</p>
+          <div className="border-b border-[#E8D9C5] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#39160D]/60">
+            <div>
+              <span className="font-semibold text-[#39160D]">Effective Date:</span> 17-April-2026
+            </div>
+            <div>
+              <span className="font-semibold text-[#39160D]">Compliance:</span> Digital Personal Data Protection Act
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">Introduction</h2>
             <p>At Floramade, we value your trust and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you visit or make a purchase from our website.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Information We Collect</h3>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">1. Information We Collect</h3>
             <p>When you use our website, we may collect the following information:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Personal details such as your name, email address, phone number, and shipping address</li>
-              <li>Order details and purchase history</li>
-              <li>Payment information (processed securely through third-party payment gateways)</li>
-              <li>Technical data such as IP address, browser type, device information, and cookies</li>
+            <ul className="list-disc pl-5 space-y-1.5 text-[#39160D]/80">
+              <li>Personal details such as your name, email address, phone number, and delivery address.</li>
+              <li>Order details, purchased Ayurvedic formulations, and transaction history.</li>
+              <li>Payment information (processed securely through certified third-party payment gateways like Razorpay; we never store your card PIN or CVV).</li>
+              <li>Technical data such as IP address, browser type, device identifiers, and browser cookies.</li>
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">How We Use Your Information</h3>
-            <p>We use your information for the following purposes:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>To process and deliver your orders</li>
-              <li>To communicate with you regarding orders, updates, and support</li>
-              <li>To improve our website, products, and customer experience</li>
-              <li>To send promotional offers and updates, where you have opted to receive them</li>
-              <li>To prevent fraud and ensure secure transactions</li>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">2. How We Use Your Information</h3>
+            <p>We use your information strictly for legitimate commercial and wellness service purposes:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[#39160D]/80">
+              <li>To fulfill, dispatch, and track your product orders.</li>
+              <li>To communicate order status updates, invoices, and customer care responses.</li>
+              <li>To improve our formulation portfolio, website experience, and site performance.</li>
+              <li>To send promotional updates and wellness ritual insights (only where you have explicitly opted in).</li>
+              <li>To prevent fraudulent transactions and maintain platform security.</li>
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Sharing of Information</h3>
-            <p>We do not sell, rent, or trade your personal information. However, we may share your data with trusted third parties, including:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Payment gateway providers for secure transactions</li>
-              <li>Shipping and logistics partners for order delivery</li>
-              <li>Service providers who assist in operating our website</li>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">3. Sharing of Information</h3>
+            <p>We never sell, rent, or trade your personal information to third-party data brokers. We share your data only with trusted operational partners:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[#39160D]/80">
+              <li>Certified payment gateway providers for encrypted transactions.</li>
+              <li>Shipping and courier partners for door-to-door delivery.</li>
+              <li>Cloud hosting and infrastructure services that maintain our secure servers.</li>
             </ul>
-            <p>These third parties are expected to handle your data securely and only for the intended purpose.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Data Security</h3>
-            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, loss, misuse, or alteration.</p>
-            <p>While we follow industry-standard security practices and work with trusted service providers, no method of transmission over the internet or electronic storage can be guaranteed to be completely secure.</p>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">4. Data Security & Storage</h3>
+            <p>We implement appropriate technical and administrative safeguards (including HTTPS encryption, access controls, and firewall monitoring) to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Third-Party Services & Limitation of Liability</h3>
-            <p>Our website may use third-party services such as payment gateways, hosting providers, and logistics partners. While we work with trusted providers, Floramade shall not be held responsible for any data breaches, losses, or unauthorized access arising from third-party systems or factors beyond our reasonable control.</p>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">5. Cookies & Tracking</h3>
+            <p>Our website uses essential cookies to remember your cart items, login sessions, and site preferences. You can disable non-essential cookies through your browser settings, though it may alter certain cart functions.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Cookies</h3>
-            <p>Our website uses cookies to enhance your browsing experience and analyze website traffic. You can choose to disable cookies through your browser settings; however, this may affect certain functionalities of the website.</p>
+          <div className="space-y-3 pt-2 border-t border-[#E8D9C5]/60">
+            <h3 className="text-base sm:text-lg font-bold text-[#39160D] tracking-tight">6. Your Rights</h3>
+            <p>Under applicable Indian data privacy regulations, you have the right to request access to, correction of, or deletion of your stored personal information. You can also unsubscribe from promotional emails at any time.</p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Your Rights</h3>
-            <p>You have the right to:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Access, update, or request deletion of your personal information</li>
-              <li>Opt out of receiving promotional communications at any time</li>
-            </ul>
-            <p>To exercise these rights, please contact us using the details below.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Third-Party Links</h3>
-            <p>Our website may contain links to external websites. We are not responsible for the privacy practices or content of such third-party websites.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Data Retention</h3>
-            <p>We will retain your personal information only for as long as necessary to fulfill the purposes outlined in this policy. After this period, your data will be securely deleted.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Children's Privacy</h3>
-            <p>Our website is not intended for children under 18 years of age. We do not knowingly collect personal information from individuals under 18.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Changes to This Policy</h3>
-            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display text-[#17140f]">Contact Us</h3>
-            <p>If you have any questions or concerns regarding this Privacy Policy, please contact us:</p>
-            <p>
-              <strong>Email:</strong> <a href="mailto:floramade517@gmail.com" className="text-[#b18a3b] hover:underline">floramade517@gmail.com</a><br />
-              <strong>Phone:</strong> <a href="tel:+919220251059" className="text-[#b18a3b] hover:underline">+91 9220251059</a>
+          {/* Contact Details Box */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] border border-[#E8D9C5] space-y-3">
+            <h3 className="font-bold text-sm text-[#39160D]">Contact Our Grievance Officer</h3>
+            <p className="text-xs text-[#39160D]/75">
+              For any privacy-related requests or questions regarding data handling, please write to us:
             </p>
-            <p>We will respond to your inquiry within 24-48 hours.</p>
+            <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-[#872B10]">
+              <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">
+                <Mail size={14} /> floramade517@gmail.com
+              </a>
+              <a href="tel:+919220251059" className="flex items-center gap-1.5 hover:underline">
+                <Phone size={14} /> +91 9220251059
+              </a>
+            </div>
           </div>
 
         </div>
       </section>
 
-      <CouponSection />
       <PolicyCTA />
     </div>
   );
 }
-
