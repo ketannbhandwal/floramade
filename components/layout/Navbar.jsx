@@ -24,76 +24,92 @@ import {
 } from "lucide-react";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import Image from "next/image";
-import { DEFAULT_NAV_LINKS } from "@/lib/settings-constants";
+import { DEFAULT_NAV_LINKS, DEFAULT_ANNOUNCEMENT } from "@/lib/settings-constants";
 import SearchOverlay from "@/components/layout/SearchOverlay";
 
 /* Top Announcement Bar: Floramade Luxury Ayurvedic Theme (#39160D & #FFF7EB) */
-const AnnouncementBar = () => (
-  <div className="bg-[#39160D] text-[#FFF7EB] py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#4A1E13] relative z-[80]">
-    <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[11px] sm:text-xs font-medium tracking-tight">
-      
-      {/* Left: Social Media + Follow us! */}
-      <div className="flex items-center gap-2 sm:gap-2.5">
-        <a 
-          href="https://www.facebook.com/share/1HuEXx3gQh/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
-          title="Follow us on Facebook"
-          aria-label="Facebook"
-        >
-          <FaFacebookF size={10} />
-        </a>
-        <a 
-          href="https://www.instagram.com/floramadeofficial/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
-          title="Follow us on Instagram"
-          aria-label="Instagram"
-        >
-          <FaInstagram size={11} />
-        </a>
-        <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/90 ml-0.5">Follow us!</span>
-      </div>
-      
-      {/* Center: Festive Offer Banner */}
-      <div className="text-center truncate px-2">
-        <span className="inline-flex items-center gap-1.5 text-[#FFF7EB] font-semibold text-[11px] sm:text-xs">
-          <span>🎉</span>
-          <span className="text-[#DFC77F]">Festive Offer:</span>
-          <span>Save Up to 20% + Extra Combo OFF!</span>
-        </span>
-      </div>
+const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
+  if (announcement?.enabled === false) return null;
 
-      {/* Right: Get in touch with us + Call & Mail Icons */}
-      <div className="hidden sm:flex items-center gap-2 text-[#FFF7EB]/90">
-        <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/80">Get in touch with us</span>
-        <div className="flex items-center gap-1.5 ml-1">
+  const content = (
+    <span className="inline-flex items-center gap-1.5 text-[#FFF7EB] font-semibold text-[11px] sm:text-xs">
+      {announcement.emoji && <span>{announcement.emoji}</span>}
+      {announcement.highlight && (
+        <span className="text-[#DFC77F]">{announcement.highlight}</span>
+      )}
+      <span>{announcement.text || "Save Up to 20% + Extra Combo OFF!"}</span>
+    </span>
+  );
+
+  return (
+    <div className="bg-[#39160D] text-[#FFF7EB] py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#4A1E13] relative z-[80]">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[11px] sm:text-xs font-medium tracking-tight">
+        
+        {/* Left: Social Media + Follow us! (Hidden on mobile for clean centered offer) */}
+        <div className="hidden sm:flex items-center gap-2 sm:gap-2.5">
           <a 
-            href="tel:+919220251059" 
-            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
-            title="Call helpline: +91 9220251059"
-            aria-label="Call Helpline"
-          >
-            <Phone size={11} />
-          </a>
-          <a 
-            href="https://wa.me/919220251059" 
+            href="https://www.facebook.com/share/1HuEXx3gQh/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
-            title="Chat on WhatsApp"
-            aria-label="WhatsApp Support"
+            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
+            title="Follow us on Facebook"
+            aria-label="Facebook"
           >
-            <Mail size={11} />
+            <FaFacebookF size={10} />
           </a>
+          <a 
+            href="https://www.instagram.com/floramadeofficial/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/20 transition-all flex items-center justify-center text-[#FFF7EB] text-[10px]" 
+            title="Follow us on Instagram"
+            aria-label="Instagram"
+          >
+            <FaInstagram size={11} />
+          </a>
+          <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/90 ml-0.5">Follow us!</span>
         </div>
-      </div>
+        
+        {/* Center: Offer Banner (Centered on mobile & desktop like Vedabay) */}
+        <div className="flex-1 text-center truncate px-2">
+          {announcement.link ? (
+            <Link href={announcement.link} className="hover:opacity-90 transition-opacity">
+              {content}
+            </Link>
+          ) : (
+            content
+          )}
+        </div>
 
+        {/* Right: Get in touch with us + Call & WhatsApp Icons (Hidden on mobile) */}
+        <div className="hidden sm:flex items-center gap-2 text-[#FFF7EB]/90">
+          <span className="text-[11px] sm:text-xs font-medium text-[#FFF7EB]/80">Get in touch with us</span>
+          <div className="flex items-center gap-1.5 ml-1">
+            <a 
+              href="tel:+919220251059" 
+              className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
+              title="Call helpline: +91 9220251059"
+              aria-label="Call Helpline"
+            >
+              <Phone size={11} />
+            </a>
+            <a 
+              href="https://wa.me/919220251059" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 hover:bg-[#FFF7EB]/25 transition-all flex items-center justify-center text-[#FFF7EB]"
+              title="Chat on WhatsApp"
+              aria-label="WhatsApp Support"
+            >
+              <Mail size={11} />
+            </a>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function Navbar() {
   const { cartItems = [], total = 0 } = useCart() || {};
@@ -104,6 +120,7 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [announcement, setAnnouncement] = useState(DEFAULT_ANNOUNCEMENT);
   const [navLinks, setNavLinks] = useState(DEFAULT_NAV_LINKS);
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [mobileOpenDropdownId, setMobileOpenDropdownId] = useState(null);
@@ -131,7 +148,11 @@ export default function Navbar() {
     fetch("/api/settings")
       .then(r => r.json())
       .then(data => {
-        if (isSubscribed && Array.isArray(data?.navLinks) && data.navLinks.length > 0) {
+        if (!isSubscribed) return;
+        if (data?.announcement) {
+          setAnnouncement(data.announcement);
+        }
+        if (Array.isArray(data?.navLinks) && data.navLinks.length > 0) {
           setNavLinks(data.navLinks);
         }
       })
@@ -183,24 +204,19 @@ export default function Navbar() {
           visible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <AnnouncementBar />
+        <AnnouncementBar announcement={announcement} />
 
-        {/* Floramade Luxury Single-Row Navbar: #FFF7EB Ivory & #39160D Palette */}
+        {/* Floramade Luxury Header: #FFF7EB Ivory & #39160D Palette */}
         <div className={`bg-[#FFF7EB] border-b border-[#E8D9C5] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#39160D]/5' : ''}`}>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
             
-            <div className="flex items-center justify-between h-[68px] sm:h-[72px] gap-2 lg:gap-6">
+            {/* =========================================================================
+                DESKTOP NAVBAR ROW (lg:flex)
+                ========================================================================= */}
+            <div className="hidden lg:flex items-center justify-between h-[68px] sm:h-[72px] gap-6">
               
-              {/* LEFT: Mobile Toggle + Official Floramade Golden Logo */}
-              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <button
-                  onClick={() => setOpenMenu(true)}
-                  className="lg:hidden p-2 -ml-1 rounded-full transition-colors hover:bg-[#39160D]/10 text-[#39160D] focus:outline-none"
-                  aria-label="Open Navigation Menu"
-                >
-                  <Menu size={23} strokeWidth={2.2} />
-                </button>
-
+              {/* LEFT: Official Floramade Golden Logo */}
+              <div className="flex items-center shrink-0">
                 <Link href="/" className="flex items-center focus:outline-none group">
                   <Image
                     src="/floramade-official-logo.png"
@@ -213,8 +229,8 @@ export default function Navbar() {
                 </Link>
               </div>
 
-              {/* CENTER: Navigation Links (Floramade Theme & User Customized) */}
-              <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-8 flex-1">
+              {/* CENTER: Navigation Links */}
+              <nav className="flex items-center justify-center gap-5 xl:gap-8 flex-1">
                 {navLinks.map((item, idx) => {
                   const isDropdown = item.type === "dropdown" && Array.isArray(item.subLinks) && item.subLinks.length > 0;
                   const itemId = item.id || `nav-${idx}`;
@@ -320,10 +336,8 @@ export default function Navbar() {
                 })}
               </nav>
 
-              {/* RIGHT: Action Icons (Floramade Theme: User, Search, Cart Bag, Admin) */}
+              {/* RIGHT: Action Icons */}
               <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
-                
-                {/* ADMIN BADGE (Visible only to Admin) */}
                 {mounted && (user?.role === "admin" || user?.isAdmin) && (
                   <Link
                     href="/admin"
@@ -335,7 +349,6 @@ export default function Navbar() {
                   </Link>
                 )}
 
-                {/* Account / Profile Icon */}
                 <Link 
                   href={mounted && user ? "/account" : "/login"} 
                   className="p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all focus:outline-none"
@@ -345,7 +358,6 @@ export default function Navbar() {
                   <UserRound size={20} strokeWidth={1.9} />
                 </Link>
 
-                {/* Search Icon (Opens SearchOverlay) */}
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
@@ -356,7 +368,6 @@ export default function Navbar() {
                   <Search size={20} strokeWidth={1.9} />
                 </button>
 
-                {/* Wishlist Icon */}
                 <Link 
                   href="/wishlist" 
                   className="p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
@@ -371,7 +382,6 @@ export default function Navbar() {
                   )}
                 </Link>
 
-                {/* Cart Icon (Shopping Bag with Floating Floramade Terracotta Badge) */}
                 <Link 
                   href="/cart" 
                   className="relative p-2 sm:p-2.5 rounded-full text-[#39160D] hover:text-[#872B10] hover:bg-[#39160D]/5 transition-all focus:outline-none group active:scale-95"
@@ -379,14 +389,69 @@ export default function Navbar() {
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={21} strokeWidth={1.9} className="group-hover:scale-105 transition-transform" />
-                  
-                  {/* Floating Bag Counter Badge sitting on top-right */}
                   <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#872B10] text-[#FFF7EB] shadow-sm ring-2 ring-[#FFF7EB]">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
-
               </div>
+
+            </div>
+
+            {/* =========================================================================
+                MOBILE NAVBAR ROW (lg:hidden) - EXACT VEDABAY STYLE (IMAGE 2)
+                Left: [ ☰  🔍 ]  |  Center: [ Floramade Logo ]  |  Right: [ 🛍️ (badge) ]
+                ========================================================================= */}
+            <div className="flex lg:hidden items-center justify-between h-[60px] sm:h-[66px] w-full">
+              
+              {/* LEFT: Hamburger Menu + Search Icon */}
+              <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setOpenMenu(true)}
+                  className="p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none"
+                  aria-label="Open Navigation Menu"
+                >
+                  <Menu size={22} strokeWidth={2.2} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(true)}
+                  className="p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none"
+                  aria-label="Search"
+                >
+                  <Search size={20} strokeWidth={2.2} />
+                </button>
+              </div>
+
+              {/* CENTER: Centered Logo */}
+              <div className="flex-1 flex justify-center items-center px-2">
+                <Link href="/" className="flex items-center focus:outline-none">
+                  <Image
+                    src="/floramade-official-logo.png"
+                    alt="Floramade Ayurveda"
+                    width={180}
+                    height={44}
+                    priority
+                    className="h-8 sm:h-9 w-auto object-contain cursor-pointer"
+                  />
+                </Link>
+              </div>
+
+              {/* RIGHT: Cart Bag with Counter Badge */}
+              <div className="flex items-center justify-end shrink-0">
+                <Link 
+                  href="/cart" 
+                  className="relative p-1.5 text-[#39160D] hover:text-[#872B10] transition-colors focus:outline-none active:scale-95"
+                  aria-label="View Shopping Cart"
+                >
+                  <ShoppingBag size={22} strokeWidth={2} />
+                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#872B10] text-[#FFF7EB] shadow-xs">
+                    {mounted ? cartCount : 0}
+                  </span>
+                </Link>
+              </div>
+
             </div>
 
           </div>
@@ -396,192 +461,229 @@ export default function Navbar() {
       {/* Interactive Search Overlay Modal */}
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
-      {/* Mobile Drawer Navigation (Floramade Theme #FFF7EB & #39160D) */}
-      <AnimatePresence mode="wait">
+      {/* =========================================================================
+          MOBILE DRAWER NAVIGATION - EXACT VEDABAY STYLE (IMAGE 3)
+          Deep Ayurvedic Brown #39160D, Menu Header, '+' Accordion, Contact & Footer
+          ========================================================================= */}
+      <AnimatePresence>
         {openMenu && (
-          <motion.div
-            initial={{ opacity: 0, x: "-100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-100%" }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] bg-[#FFF7EB] flex flex-col text-[#39160D]"
-          >
-            {/* Drawer Header */}
-            <div className="sticky top-0 flex items-center justify-between p-4 sm:p-5 bg-[#FFF7EB] border-b border-[#E8D9C5] z-20">
-              <Link href="/" onClick={() => setOpenMenu(false)}>
-                <Image 
-                  src="/floramade-official-logo.png" 
-                  alt="Floramade" 
-                  width={160} 
-                  height={45} 
-                  className="h-10 w-auto object-contain" 
-                />
-              </Link>
-              <button
-                onClick={() => setOpenMenu(false)}
-                className="p-2 rounded-full bg-[#39160D]/5 hover:bg-[#39160D]/15 text-[#39160D] transition-all border border-[#39160D]/10 active:scale-95"
-                aria-label="Close Navigation"
-              >
-                <X size={21} strokeWidth={2.2} />
-              </button>
-            </div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setOpenMenu(false)}
+              className="fixed inset-0 z-[99] bg-black/60 backdrop-blur-xs"
+            />
 
-            {/* Drawer Body */}
-            <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6">
-              
-              {/* Quick Search Button in Drawer */}
-              <button
-                onClick={() => { setOpenMenu(false); setSearchOpen(true); }}
-                className="w-full flex items-center gap-3 bg-white border border-[#E8D9C5] rounded-full px-4 py-2.5 text-sm text-[#39160D]/60 hover:border-[#39160D] transition-all text-left shadow-2xs"
-              >
-                <Search size={16} className="text-[#872B10]" />
-                <span>Search products & remedies...</span>
-              </button>
+            {/* Sidebar Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#39160D] text-[#FFF7EB] flex flex-col justify-between shadow-2xl overflow-y-auto"
+            >
+              {/* Scrollable Container */}
+              <div className="flex-1 flex flex-col">
+                
+                {/* 1. Drawer Header: "Menu" + Close "×" */}
+                <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
+                  <span className="text-[17px] font-bold text-[#FFF7EB] tracking-tight">Menu</span>
+                  <button
+                    type="button"
+                    onClick={() => setOpenMenu(false)}
+                    className="p-1 rounded-full text-[#FFF7EB]/80 hover:text-white transition-colors focus:outline-none"
+                    aria-label="Close Menu"
+                  >
+                    <X size={21} strokeWidth={2.2} />
+                  </button>
+                </div>
 
-              {/* Navigation Links Accordion */}
-              <div className="space-y-1 divide-y divide-[#E8D9C5]/60">
-                {navLinks.map((item, idx) => {
-                  const isDropdown = item.type === "dropdown" && Array.isArray(item.subLinks) && item.subLinks.length > 0;
-                  const itemId = item.id || `mob-${idx}`;
-                  const isMobOpen = mobileOpenDropdownId === itemId;
+                {/* 2. Primary Navigation Links (with '+' expandable accordion) */}
+                <div className="flex flex-col divide-y divide-white/10">
+                  {navLinks.map((item, idx) => {
+                    const isDropdown = item.type === "dropdown" && Array.isArray(item.subLinks) && item.subLinks.length > 0;
+                    const itemId = item.id || `mob-${idx}`;
+                    const isMobOpen = mobileOpenDropdownId === itemId;
 
-                  if (isDropdown) {
-                    return (
-                      <div key={itemId} className="pt-2 first:pt-0">
-                        <button 
-                          onClick={() => setMobileOpenDropdownId(isMobOpen ? null : itemId)} 
-                          className="flex items-center justify-between w-full py-2.5 text-base font-bold text-[#39160D]"
-                        >
-                          <span>{item.label}</span>
-                          <ChevronDown 
-                            size={16} 
-                            className={`transition-transform duration-300 text-[#872B10] ${isMobOpen ? 'rotate-180' : ''}`} 
-                          />
-                        </button>
+                    if (isDropdown) {
+                      return (
+                        <div key={itemId} className="flex flex-col">
+                          <button 
+                            type="button"
+                            onClick={() => setMobileOpenDropdownId(isMobOpen ? null : itemId)} 
+                            className="flex items-center justify-between w-full py-3.5 px-5 text-[15px] font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors focus:outline-none text-left"
+                          >
+                            <span>{item.label}</span>
+                            <span className="text-xl font-light text-[#FFF7EB]/80 leading-none">
+                              {isMobOpen ? "−" : "+"}
+                            </span>
+                          </button>
 
-                        <AnimatePresence>
-                          {isMobOpen && (
-                            <motion.div 
-                              initial={{ height: 0, opacity: 0 }} 
-                              animate={{ height: 'auto', opacity: 1 }} 
-                              exit={{ height: 0, opacity: 0 }} 
-                              className="pl-3.5 flex flex-col gap-2 py-2 border-l-2 border-[#872B10]/30 ml-2 overflow-hidden"
-                            >
-                              {item.subLinks.map((sub, sIdx) => (
-                                <Link 
-                                  key={sub.id || sIdx}
-                                  href={sub.href || "/product/madhucurex-diabetes-pro"} 
-                                  onClick={() => setOpenMenu(false)}
-                                  className="block py-1.5"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <p className="text-sm font-bold text-[#39160D]">{sub.label}</p>
-                                    {sub.badge && (
-                                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#872B10] text-[#FFF7EB]">
-                                        {sub.badge}
-                                      </span>
+                          <AnimatePresence>
+                            {isMobOpen && (
+                              <motion.div 
+                                initial={{ height: 0, opacity: 0 }} 
+                                animate={{ height: 'auto', opacity: 1 }} 
+                                exit={{ height: 0, opacity: 0 }} 
+                                transition={{ duration: 0.22 }}
+                                className="bg-[#2B0F08] px-5 py-2 space-y-2 border-t border-white/5 overflow-hidden"
+                              >
+                                {item.subLinks.map((sub, sIdx) => (
+                                  <Link 
+                                    key={sub.id || sIdx}
+                                    href={sub.href || "/product/madhucurex-diabetes-pro"} 
+                                    onClick={() => setOpenMenu(false)}
+                                    className="block py-2 text-sm text-[#FFF7EB]/90 hover:text-[#DFC77F] transition-colors"
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-medium">{sub.label}</span>
+                                      {sub.badge && (
+                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#872B10] text-[#FFF7EB]">
+                                          {sub.badge}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {sub.description && (
+                                      <p className="text-[11px] text-[#FFF7EB]/60 line-clamp-1 mt-0.5">{sub.description}</p>
                                     )}
-                                  </div>
-                                  {sub.description && (
-                                    <p className="text-[11px] text-[#39160D]/65 mt-0.5 line-clamp-1">{sub.description}</p>
-                                  )}
-                                </Link>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  }
+                                  </Link>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    }
 
-                  return (
-                    <div key={itemId} className="pt-2 first:pt-0">
+                    return (
                       <Link 
+                        key={itemId}
                         href={item.href || "/"} 
                         onClick={() => setOpenMenu(false)} 
-                        className="flex items-center py-2.5 text-base font-bold text-[#39160D]"
+                        className="flex items-center justify-between py-3.5 px-5 text-[15px] font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors"
                       >
-                        {item.label}
+                        <span>{item.label}</span>
                       </Link>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
 
-              {/* Company & Support Links */}
-              <div className="pt-4 border-t border-[#E8D9C5]">
-                <p className="text-[10px] uppercase tracking-wider text-[#872B10] font-bold mb-3">
-                  Company & Care
-                </p>
-                <div className="flex flex-col gap-2.5 text-sm text-[#39160D]/80 font-medium">
-                  <Link href="/about" onClick={() => setOpenMenu(false)} className="hover:text-[#872B10]">
+                {/* 3. Account & Contact Shortcuts (Vedabay style from Image 3) */}
+                <div className="py-2 border-b border-white/10 flex flex-col">
+                  {/* Register / Login / My Account */}
+                  <Link 
+                    href={mounted && user ? "/account" : "/login"} 
+                    onClick={() => setOpenMenu(false)} 
+                    className="flex items-center gap-3 py-3 px-5 text-sm font-semibold text-[#FFF7EB] hover:text-[#DFC77F] transition-colors"
+                  >
+                    <span className="text-[#DFC77F] text-base">⚡</span>
+                    <span>{mounted && user ? "My Account" : "Register / Login"}</span>
+                  </Link>
+
+                  {/* Email */}
+                  <a 
+                    href="mailto:care@floramade.in" 
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-[#FFF7EB]/85 hover:text-[#DFC77F] transition-colors"
+                  >
+                    <Mail size={15} className="text-[#DFC77F] shrink-0" />
+                    <span>care@floramade.in</span>
+                  </a>
+
+                  {/* Phone */}
+                  <a 
+                    href="tel:+919220251059" 
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-[#FFF7EB]/85 hover:text-[#DFC77F] transition-colors"
+                  >
+                    <Phone size={15} className="text-[#DFC77F] shrink-0" />
+                    <span>+91 9220251059</span>
+                  </a>
+                </div>
+
+                {/* 4. Secondary Navigation Links (Vedabay style from Image 3) */}
+                <div className="py-2 border-b border-white/10 flex flex-col text-sm">
+                  <Link 
+                    href="/" 
+                    onClick={() => setOpenMenu(false)} 
+                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                  >
+                    Home
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    onClick={() => setOpenMenu(false)} 
+                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                  >
+                    Contact us
+                  </Link>
+                  <Link 
+                    href="/about" 
+                    onClick={() => setOpenMenu(false)} 
+                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                  >
                     About Floramade
                   </Link>
-                  <Link href="/contact" onClick={() => setOpenMenu(false)} className="hover:text-[#872B10]">
-                    Contact Support
+                  <Link 
+                    href="/collection" 
+                    onClick={() => setOpenMenu(false)} 
+                    className="block py-2.5 px-5 text-[#FFF7EB]/80 hover:text-[#DFC77F] font-medium transition-colors"
+                  >
+                    All Products
                   </Link>
+
                   {mounted && (user?.role === 'admin' || user?.isAdmin) && (
                     <Link 
                       href="/admin" 
                       onClick={() => setOpenMenu(false)} 
-                      className="font-bold text-[#872B10] flex items-center gap-1.5 py-1"
+                      className="flex items-center gap-2 py-2.5 px-5 text-[#DFC77F] font-bold hover:underline"
                     >
-                      <LayoutDashboard size={15} /> Admin Dashboard
+                      <LayoutDashboard size={14} /> Admin Dashboard
                     </Link>
                   )}
+
+                  {mounted && user && (
+                    <button 
+                      onClick={async () => { 
+                        setOpenMenu(false); 
+                        await logout(); 
+                        router.replace("/"); 
+                      }} 
+                      className="flex items-center gap-2 py-2.5 px-5 text-red-400 font-semibold hover:text-red-300 transition-colors w-full text-left"
+                    >
+                      <LogOut size={14} /> Logout
+                    </button>
+                  )}
                 </div>
+
               </div>
 
-            </div>
-
-            {/* Drawer Bottom Actions */}
-            <div className="p-4 sm:p-5 border-t border-[#E8D9C5] bg-[#F5EADB] space-y-3">
-              <div className="grid grid-cols-2 gap-2.5">
-                <Link 
-                  href="/wishlist" 
-                  onClick={() => setOpenMenu(false)} 
-                  className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-white border border-[#E8D9C5] text-xs font-bold text-[#39160D] shadow-xs"
+              {/* 5. Bottom Social Media Icons (Vedabay style from Image 3) */}
+              <div className="p-5 flex items-center justify-center gap-4 shrink-0">
+                <a 
+                  href="https://www.facebook.com/share/1HuEXx3gQh/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-[#FFF7EB] hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
+                  aria-label="Facebook"
                 >
-                  <Heart size={14} className="text-[#872B10]" />
-                  <span>Wishlist ({mounted ? wishlistItems.length : 0})</span>
-                </Link>
-
-                <Link 
-                  href="/cart" 
-                  onClick={() => setOpenMenu(false)} 
-                  className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-[#39160D] text-[#FFF7EB] text-xs font-bold shadow-xs hover:bg-[#872B10] transition-colors"
+                  <FaFacebookF size={12} />
+                </a>
+                <a 
+                  href="https://www.instagram.com/floramadeofficial/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-[#FFF7EB] hover:bg-white/10 hover:border-white/40 transition-all text-xs" 
+                  aria-label="Instagram"
                 >
-                  <ShoppingBag size={14} />
-                  <span>Cart ({mounted ? cartCount : 0})</span>
-                </Link>
+                  <FaInstagram size={13} />
+                </a>
               </div>
 
-              <div className="flex items-center justify-between pt-1">
-                <Link 
-                  href={mounted && user ? "/account" : "/login"} 
-                  onClick={() => setOpenMenu(false)} 
-                  className="text-xs font-bold text-[#39160D] flex items-center gap-1.5 hover:text-[#872B10]"
-                >
-                  <UserRound size={14} className="text-[#872B10]" />
-                  <span>{mounted && user ? "My Account" : "Login / Account"}</span>
-                </Link>
-
-                {mounted && user && (
-                  <button 
-                    onClick={async () => { 
-                      setOpenMenu(false); 
-                      await logout(); 
-                      router.replace("/"); 
-                    }} 
-                    className="text-xs font-bold text-red-600 flex items-center gap-1"
-                  >
-                    <LogOut size={13} /> Logout
-                  </button>
-                )}
-              </div>
-            </div>
-
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

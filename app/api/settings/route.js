@@ -24,6 +24,7 @@ export async function POST(req) {
 
     const body = await req.json();
     const { 
+      announcement,
       banners, 
       concerns, 
       productHeading, 
@@ -38,6 +39,7 @@ export async function POST(req) {
     } = body;
 
     const saved = await saveSiteSettings({ 
+      announcement,
       banners, 
       concerns, 
       productHeading, 

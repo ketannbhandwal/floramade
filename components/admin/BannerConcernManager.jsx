@@ -27,6 +27,7 @@ import {
   Flower2
 } from "lucide-react";
 import { 
+  DEFAULT_ANNOUNCEMENT,
   DEFAULT_BANNERS, 
   DEFAULT_CONCERNS,
   DEFAULT_PRODUCT_HEADING,
@@ -80,9 +81,10 @@ const BENEFIT_ICON_OPTIONS = [
 ];
 
 export default function BannerConcernManager() {
-  const [subTab, setSubTab] = useState("concerns"); // "concerns" | "banners" | "benefits" | "navLinks" | "testimonials"
+  const [subTab, setSubTab] = useState("concerns"); // "concerns" | "banners" | "benefits" | "navLinks" | "announcement" | "testimonials"
   
   // Data states
+  const [announcement, setAnnouncement] = useState(DEFAULT_ANNOUNCEMENT);
   const [banners, setBanners] = useState([]);
   const [concerns, setConcerns] = useState([]);
   const [productHeading, setProductHeading] = useState(DEFAULT_PRODUCT_HEADING);
@@ -110,6 +112,7 @@ export default function BannerConcernManager() {
         const res = await fetch("/api/settings");
         if (res.ok) {
           const data = await res.json();
+          setAnnouncement(data.announcement || DEFAULT_ANNOUNCEMENT);
           setBanners(Array.isArray(data.banners) && data.banners.length > 0 ? data.banners : DEFAULT_BANNERS);
           setConcerns(Array.isArray(data.concerns) && data.concerns.length > 0 ? data.concerns : DEFAULT_CONCERNS);
           if (data.productHeading) setProductHeading(data.productHeading);
@@ -125,6 +128,7 @@ export default function BannerConcernManager() {
           setTestimonialsSubtitle(data.testimonialsSubtitle || DEFAULT_TESTIMONIALS_SUBTITLE);
           setTestimonials(Array.isArray(data.testimonials) && data.testimonials.length > 0 ? data.testimonials : DEFAULT_TESTIMONIALS);
         } else {
+          setAnnouncement(DEFAULT_ANNOUNCEMENT);
           setBanners(DEFAULT_BANNERS);
           setConcerns(DEFAULT_CONCERNS);
           setBenefits(DEFAULT_BENEFITS);
@@ -133,6 +137,7 @@ export default function BannerConcernManager() {
         }
       } catch (err) {
         console.error("Failed to load settings:", err);
+        setAnnouncement(DEFAULT_ANNOUNCEMENT);
         setBanners(DEFAULT_BANNERS);
         setConcerns(DEFAULT_CONCERNS);
         setBenefits(DEFAULT_BENEFITS);
@@ -176,11 +181,16 @@ export default function BannerConcernManager() {
     }
   }
 
+  function updateAnnouncement(field, value) {
+    setAnnouncement(prev => ({ ...prev, [field]: value }));
+  }
+
   // Save all settings to database
   async function handleSave() {
     try {
       setSaving(true);
       const payload = {
+        announcement,
         banners,
         concerns,
         productHeading,
@@ -216,6 +226,7 @@ export default function BannerConcernManager() {
 
   function handleReset() {
     if (confirm("Reset current sections to default settings?")) {
+      if (subTab === "announcement") setAnnouncement(DEFAULT_ANNOUNCEMENT);
       if (subTab === "concerns") setConcerns(DEFAULT_CONCERNS);
       if (subTab === "banners") setBanners(DEFAULT_BANNERS);
       if (subTab === "benefits") {
@@ -551,6 +562,7 @@ export default function BannerConcernManager() {
           { key: "banners", label: "Hero Banners", icon: ImageIcon, count: banners.length },
           { key: "benefits", label: "Benefits Section", icon: ShieldCheck, count: benefits.length },
           { key: "navLinks", label: "Navbar Links", icon: Navigation, count: navLinks.length },
+          { key: "announcement", label: "Announcement Bar", icon: Sparkles, count: announcement?.enabled !== false ? "Active" : "Off" },
           { key: "testimonials", label: "Testimonials", icon: MessageSquare, count: testimonials.length },
         ].map(tab => (
           <button
@@ -1600,6 +1612,170 @@ export default function BannerConcernManager() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* =====================================================================
+          TAB 6: TOP ANNOUNCEMENT BAR SETTINGS
+          ===================================================================== */}
+      {subTab === "announcement" && (
+        <div className="space-y-6 max-w-4xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-[#39160D] tracking-tight">
+                Top Announcement Bar Settings
+              </h3>
+              <p className="text-xs text-foreground/60 tracking-tight">
+                Customize top header offer banner text, festive discounts, emoji icon, gold highlight badge, or toggle visibility.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#39160D] text-[#FFF7EB] hover:bg-[#872B10] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
+            >
+              {saving ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Save size={14} />
+              )}
+              <span>{saving ? "Saving..." : "Save Changes"}</span>
+            </button>
+          </div>
+
+          {/* Live Preview Card */}
+          <div className="space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#39160D]/70">
+              Live Preview (Header Top Banner)
+            </span>
+            <div className="bg-[#39160D] text-[#FFF7EB] py-2.5 px-4 rounded-xl border border-[#4A1E13] shadow-md flex items-center justify-between text-xs font-medium">
+              <div className="hidden sm:flex items-center gap-2 text-xs text-[#FFF7EB]/80">
+                <span className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 flex items-center justify-center text-[10px]">f</span>
+                <span className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 flex items-center justify-center text-[10px]">📷</span>
+                <span className="text-[11px]">Follow us!</span>
+              </div>
+              <div className="flex-1 text-center truncate px-2">
+                <span className="inline-flex items-center gap-1.5 text-[#FFF7EB] font-semibold text-xs">
+                  {announcement.emoji && <span>{announcement.emoji}</span>}
+                  {announcement.highlight && (
+                    <span className="text-[#DFC77F]">{announcement.highlight}</span>
+                  )}
+                  <span>{announcement.text || "Save Up to 20% + Extra Combo OFF!"}</span>
+                </span>
+              </div>
+              <div className="hidden sm:flex items-center gap-2 text-xs text-[#FFF7EB]/80">
+                <span className="text-[11px]">Get in touch with us</span>
+                <span className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 flex items-center justify-center text-[10px]">📞</span>
+                <span className="h-5 w-5 rounded-full bg-[#FFF7EB]/10 flex items-center justify-center text-[10px]">✉️</span>
+              </div>
+            </div>
+            {announcement.enabled === false && (
+              <p className="text-xs text-amber-700 font-semibold flex items-center gap-1">
+                ⚠️ Announcement bar is currently turned OFF. It will not appear on the website.
+              </p>
+            )}
+          </div>
+
+          {/* Configuration Form Card */}
+          <div className="bg-white/80 backdrop-blur-md border border-[#211b13]/10 rounded-2xl p-6 shadow-xs space-y-5">
+            {/* Enable/Disable Toggle */}
+            <div className="flex items-center justify-between pb-4 border-b border-[#211b13]/10">
+              <div>
+                <p className="text-sm font-bold text-[#39160D]">Show Announcement Bar</p>
+                <p className="text-xs text-foreground/60">Display this top announcement bar on all website pages.</p>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={announcement.enabled !== false}
+                  onChange={(e) => updateAnnouncement("enabled", e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#872B10]"></div>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Emoji */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#39160D] mb-1.5">
+                  Icon / Emoji
+                </label>
+                <input
+                  type="text"
+                  value={announcement.emoji || ""}
+                  onChange={(e) => updateAnnouncement("emoji", e.target.value)}
+                  placeholder="🎉"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#872B10]"
+                />
+              </div>
+
+              {/* Highlight Prefix */}
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#39160D] mb-1.5">
+                  Golden Highlight Prefix (e.g. "Festive Offer:")
+                </label>
+                <input
+                  type="text"
+                  value={announcement.highlight || ""}
+                  onChange={(e) => updateAnnouncement("highlight", e.target.value)}
+                  placeholder="Festive Offer:"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#872B10]"
+                />
+              </div>
+            </div>
+
+            {/* Main Text */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#39160D] mb-1.5">
+                Main Announcement Offer Text
+              </label>
+              <input
+                type="text"
+                value={announcement.text || ""}
+                onChange={(e) => updateAnnouncement("text", e.target.value)}
+                placeholder="Save Up to 20% + Extra Combo OFF!"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#872B10]"
+              />
+              <p className="text-[11px] text-foreground/50 mt-1">
+                Yeh text announcement bar ke beech mein golden prefix ke sath dikhega.
+              </p>
+            </div>
+
+            {/* Optional Link */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#39160D] mb-1.5">
+                Clickable Destination URL (Optional)
+              </label>
+              <input
+                type="text"
+                value={announcement.link || ""}
+                onChange={(e) => updateAnnouncement("link", e.target.value)}
+                placeholder="/collection"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#211b13]/15 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#872B10]/20 focus:border-[#872B10]"
+              />
+              <p className="text-[11px] text-foreground/50 mt-1">
+                Agar user announcement bar par click karega toh ye page open hoga (jaise /collection ya /product/...).
+              </p>
+            </div>
+
+            <div className="pt-3 flex justify-end">
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#39160D] text-[#FFF7EB] hover:bg-[#872B10] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              >
+                {saving ? (
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Save size={15} />
+                )}
+                <span>{saving ? "Saving..." : "Save Announcement"}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
