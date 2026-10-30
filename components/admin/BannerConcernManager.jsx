@@ -550,7 +550,7 @@ export default function BannerConcernManager() {
           { key: "concerns", label: "Shop By Concern", icon: Layers, count: concerns.length },
           { key: "banners", label: "Hero Banners", icon: ImageIcon, count: banners.length },
           { key: "benefits", label: "Benefits Section", icon: ShieldCheck, count: benefits.length },
-          { key: "navLinks", label: "Bottom Navbar", icon: Navigation, count: navLinks.length },
+          { key: "navLinks", label: "Navbar Links", icon: Navigation, count: navLinks.length },
           { key: "testimonials", label: "Testimonials", icon: MessageSquare, count: testimonials.length },
         ].map(tab => (
           <button
@@ -1023,17 +1023,17 @@ export default function BannerConcernManager() {
       )}
 
       {/* =====================================================================
-          TAB 4: BOTTOM NAVBAR LINKS
+          TAB 4: HEADER NAVBAR LINKS
           ===================================================================== */}
       {subTab === "navLinks" && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-bold text-[#39160D] tracking-tight">
-                Bottom Navbar Links ({navLinks.length})
+                Header Navbar Links ({navLinks.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
-                Configure the flagship links shown in row 2 of the top navigation bar.
+                Configure the main header navigation menu links and dropdown items shown across the entire site.
               </p>
             </div>
             <button
