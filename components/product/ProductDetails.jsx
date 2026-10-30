@@ -174,15 +174,8 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           image: b.image || null,
           icon: defaultIcons[idx % defaultIcons.length],
         }))
-        .filter(b => {
-          const lower = b.text.toLowerCase();
-          return !lower.includes("better results") && 
-                 !lower.includes("relief from discomfort");
-        });
+        .filter(b => Boolean(b.text));
 
-      if (valid.length >= 6) {
-        return valid.slice(0, 6);
-      }
       if (valid.length > 0) {
         return valid.slice(0, 6);
       }
@@ -194,15 +187,9 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
         const text = (typeof b === "string" ? b : b?.text || "").trim();
         const image = (Array.isArray(product.benefitImages) && product.benefitImages[idx]) || (typeof b === "object" && b?.image) || null;
         return { text, image, icon: defaultIcons[idx % defaultIcons.length] };
-      }).filter(b => {
-        if (!b.text) return false;
-        const lower = b.text.toLowerCase();
-        return !lower.includes("better results") && 
-               !lower.includes("relief from discomfort") &&
-               lower !== "better" && lower !== "results";
-      });
+      }).filter(b => Boolean(b.text));
 
-      if (valid.length >= 6) return valid.slice(0, 6);
+      if (valid.length > 0) return valid.slice(0, 6);
     }
 
     // Category authentic defaults with crisp SVGs
