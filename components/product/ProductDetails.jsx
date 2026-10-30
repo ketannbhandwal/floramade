@@ -48,7 +48,7 @@ const ProductStructuredData = ({ product }) => {
     },
     "offers": {
       "@type": "Offer",
-      "url": `https://fiveetatv.com/product/${product.slug}`,
+      "url": `https://floramade.in/product/${product.slug}`,
       "priceCurrency": "INR",
       "price": product.discountPrice || product.price,
       "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],

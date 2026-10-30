@@ -13,15 +13,15 @@ const fadeUp = {
 
 export default function CollectionContent({ products }) {
   return (
-    <div className="min-h-screen bg-background text-foreground w-full pt-24 md:pt-32 pb-20">
+    <div className="min-h-screen bg-background text-foreground w-full pt-6 md:pt-10 pb-20">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-10 md:mb-14 text-center max-w-2xl mx-auto space-y-2"
+          className="mb-8 md:mb-12 text-center max-w-2xl mx-auto space-y-2"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-[0.06em] uppercase text-[#872B10]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#872B10]">
             Our Ayurvedic Collection
           </h1>
           <p className="text-xs sm:text-sm md:text-base text-[#39160D]/70 font-normal">

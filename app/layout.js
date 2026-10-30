@@ -8,39 +8,79 @@ import NetworkStatus from "@/components/ui/NetworkStatus";
 import { Toaster } from "react-hot-toast";
 import { FaWhatsapp } from "react-icons/fa";
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Floramade",
-  "url": "https://fiveetatv.com",
-  "logo": "https://fiveetatv.com/floramade-logo.png",
-  "description": "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
-  "founders": [
-    {
+const organizationSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://floramade.in/#organization",
+    "name": "Floramade",
+    "legalName": "Floramade Healthcare Pvt. Ltd.",
+    "alternateName": ["Floramade Ayurveda", "Floramade Healthcare"],
+    "url": "https://floramade.in",
+    "logo": "https://floramade.in/floramade-official-logo.png",
+    "description": "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
+    "founder": {
       "@type": "Person",
-      "name": "Suresh Gaur"
+      "@id": "https://floramade.in/#founder",
+      "name": "Suresh Gaur",
+      "jobTitle": "Founder & Visionary",
+      "url": "https://floramade.in/about",
+      "worksFor": {
+        "@id": "https://floramade.in/#organization"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Delhi",
+        "addressCountry": "IN"
+      }
+    },
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Suresh Gaur"
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rohini Sector 21",
+      "addressLocality": "New Delhi",
+      "postalCode": "110086",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9220251059",
+      "email": "floramade517@gmail.com",
+      "contactType": "customer service",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "sameAs": [
+      "https://www.instagram.com/floramadeofficial/",
+      "https://www.facebook.com/share/1HuEXx3gQh/",
+      "https://twitter.com/floramade"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://floramade.in/#website",
+    "url": "https://floramade.in",
+    "name": "Floramade",
+    "alternateName": ["Floramade Ayurveda"],
+    "publisher": {
+      "@id": "https://floramade.in/#organization"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://floramade.in/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Delhi",
-    "addressCountry": "India"
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+91-9220251059",
-    "email": "floramade517@gmail.com",
-    "contactType": "customer service"
-  },
-  "sameAs": [
-    "https://www.instagram.com/floramadeofficial/",
-    "https://www.facebook.com/share/1HuEXx3gQh/",
-    "https://twitter.com/fiveetatv"
-  ]
-};
+  }
+];
 
 export const metadata = {
-  metadataBase: new URL("https://fiveetatv.com"),
+  metadataBase: new URL("https://floramade.in"),
   title: {
     default: "Floramade | Premium Ayurvedic Wellness Products in Delhi, India",
     template: "%s | Floramade",
@@ -66,7 +106,7 @@ export const metadata = {
     "Ayurvedic supplements",
     "wellness products"
   ],
-  authors: [{ name: "Suresh Gaur", url: "https://fiveetatv.com" }],
+  authors: [{ name: "Suresh Gaur", url: "https://floramade.in" }],
   creator: "Floramade",
   publisher: "Floramade",
   formatDetection: {
@@ -77,7 +117,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://fiveetatv.com",
+    url: "https://floramade.in",
     siteName: "Floramade",
     title: "Floramade | Premium Ayurvedic Wellness Products",
     description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",

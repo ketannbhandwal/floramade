@@ -14,7 +14,7 @@ export default function CartPage() {
 
   return (
     <PageTransition>
-      <div className="min-h-[80vh] bg-[#FFF7EB] w-full pt-28 md:pt-36 pb-20">
+      <div className="min-h-[80vh] bg-[#FFF7EB] w-full pt-6 md:pt-10 pb-20">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10">
           {/* Header */}
           <motion.div

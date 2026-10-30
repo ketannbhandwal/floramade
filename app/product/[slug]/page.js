@@ -65,7 +65,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       type: "website",
       locale: "en_IN",
-      url: `https://fiveetatv.com/product/${slug}`,
+      url: `https://floramade.in/product/${slug}`,
       title: product.name,
       description: product.description,
       images: product.images?.map(img => ({
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }) {
       images: product.images || [],
     },
     alternates: {
-      canonical: `https://fiveetatv.com/product/${slug}`,
+      canonical: `https://floramade.in/product/${slug}`,
     },
   };
 }

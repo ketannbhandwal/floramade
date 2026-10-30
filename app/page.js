@@ -31,7 +31,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://fiveetatv.com",
+    url: "https://floramade.in",
     title: "Floramade | Premium Ayurvedic Wellness Products",
     description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: [

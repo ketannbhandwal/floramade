@@ -30,7 +30,7 @@ export async function generateMetadata() {
     openGraph: {
       type: "website",
       locale: "en_IN",
-      url: "https://fiveetatv.com/collection",
+      url: "https://floramade.in/collection",
       title: "Our Collection | Floramade",
       description: "Explore our complete collection of premium Ayurvedic products by Floramade.",
       images: [
@@ -49,7 +49,7 @@ export async function generateMetadata() {
       images: ["/floramade-logo.png"],
     },
     alternates: {
-      canonical: "https://fiveetatv.com/collection",
+      canonical: "https://floramade.in/collection",
     },
   };
 }

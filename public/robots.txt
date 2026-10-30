@@ -1,21 +1,23 @@
 # Floramade Ayurvedic Wellness - Robots.txt
-# https://fiveetatv.com
+# https://floramade.in
 
 User-agent: *
 Allow: /
 
-Disallow: /api/
-Disallow: /admin/
-Disallow: /account/
-Disallow: /cart/
-Disallow: /checkout/
-Disallow: /login/
-Disallow: /register/
-Disallow: /wishlist/
-Disallow: /search?
+# Private Administrative & User Account Routes
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /account/*
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /wishlist
+Disallow: /search
 
-# Sitemap
-Sitemap: https://fiveetatv.com/sitemap.xml
-
-# Crawl delay
-Crawl-delay: 1
+# Dynamic XML Sitemap
+Sitemap: https://floramade.in/sitemap.xml
