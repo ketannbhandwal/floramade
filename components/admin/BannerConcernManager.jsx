@@ -81,7 +81,7 @@ const BENEFIT_ICON_OPTIONS = [
 ];
 
 export default function BannerConcernManager() {
-  const [subTab, setSubTab] = useState("concerns"); // "concerns" | "banners" | "benefits" | "navLinks" | "announcement" | "testimonials"
+  const [subTab, setSubTab] = useState("banners"); // "banners" | "benefits" | "navLinks" | "announcement" | "testimonials"
   
   // Data states
   const [announcement, setAnnouncement] = useState(DEFAULT_ANNOUNCEMENT);
@@ -525,7 +525,7 @@ export default function BannerConcernManager() {
             Store Content & Navigation
           </h2>
           <p className="text-xs md:text-sm text-foreground/60 tracking-tight mt-1">
-            Manage Shop By Concern, Hero Banners, Benefits Section, Bottom Navbar links, and Testimonials.
+            Manage Hero Banners, Benefits Section, Bottom Navbar links, Announcement Bar, and Testimonials.
           </p>
         </div>
 
@@ -558,7 +558,6 @@ export default function BannerConcernManager() {
       {/* Sub-Tab Navigation Bar */}
       <div className="flex items-center gap-2 border-b border-[#211b13]/10 pb-2 overflow-x-auto no-scrollbar">
         {[
-          { key: "concerns", label: "Shop By Concern", icon: Layers, count: concerns.length },
           { key: "banners", label: "Hero Banners", icon: ImageIcon, count: banners.length },
           { key: "benefits", label: "Benefits Section", icon: ShieldCheck, count: benefits.length },
           { key: "navLinks", label: "Navbar Links", icon: Navigation, count: navLinks.length },
@@ -585,177 +584,7 @@ export default function BannerConcernManager() {
         ))}
       </div>
 
-      {/* =====================================================================
-          TAB 1: SHOP BY CONCERN
-          ===================================================================== */}
-      {subTab === "concerns" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-bold text-[#39160D] tracking-tight">
-                Shop By Concern Cards ({concerns.length})
-              </h3>
-              <p className="text-xs text-foreground/60 tracking-tight">
-                Edit the 6 arch dome concern cards displayed beneath the marquee ticker.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={addConcern}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#872B10] text-[#FFF7EB] hover:bg-[#39160D] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
-            >
-              <Plus size={14} /> Add Concern Card
-            </button>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {concerns.map((concern, idx) => (
-              <div
-                key={concern.id || idx}
-                className="bg-white rounded-2xl border border-[#211b13]/10 p-5 shadow-sm space-y-4 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-black/5 mb-4">
-                    <span className="text-xs font-bold text-[#872B10] uppercase tracking-tight">
-                      Card #{idx + 1}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => moveConcern(idx, -1)}
-                        disabled={idx === 0}
-                        className="p-1 rounded hover:bg-black/5 text-[#39160D] disabled:opacity-30"
-                        title="Move Left"
-                      >
-                        <ChevronUp size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => moveConcern(idx, 1)}
-                        disabled={idx === concerns.length - 1}
-                        className="p-1 rounded hover:bg-black/5 text-[#39160D] disabled:opacity-30"
-                        title="Move Right"
-                      >
-                        <ChevronDown size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => deleteConcern(idx)}
-                        className="p-1 rounded hover:bg-red-50 text-red-600 ml-1"
-                        title="Delete Card"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Visual Preview */}
-                  <div className="flex items-center justify-center p-3 bg-[#FAF6F0] rounded-xl mb-4">
-                    <div
-                      className="w-24 aspect-[1/1.32] rounded-t-[50px] relative flex items-end justify-center overflow-hidden border border-[#DFC77F]/40 shadow-sm"
-                      style={{ backgroundColor: concern.bgColor || "#39160D" }}
-                    >
-                      {concern.image ? (
-                        <div className="relative w-full h-[90%]">
-                          <Image
-                            src={concern.image}
-                            alt={concern.title}
-                            fill
-                            unoptimized
-                            className="object-contain object-bottom"
-                          />
-                        </div>
-                      ) : (
-                        <span className="text-[10px] text-white/50 pb-2">No image</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Inputs */}
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-[11px] font-bold text-foreground/70 uppercase tracking-tight mb-1">
-                        Title / Concern Label
-                      </label>
-                      <input
-                        type="text"
-                        value={concern.title || ""}
-                        onChange={e => updateConcern(idx, "title", e.target.value)}
-                        placeholder="e.g. LIVER CARE"
-                        className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs font-bold text-[#39160D] tracking-tight focus:border-[#DFC77F] focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-bold text-foreground/70 uppercase tracking-tight mb-1">
-                        Link URL (href)
-                      </label>
-                      <input
-                        type="text"
-                        value={concern.href || "/collection"}
-                        onChange={e => updateConcern(idx, "href", e.target.value)}
-                        placeholder="/collection"
-                        className="w-full rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs text-[#39160D] tracking-tight focus:border-[#DFC77F] focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-bold text-foreground/70 uppercase tracking-tight mb-1">
-                        Bottle Image URL
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={concern.image || ""}
-                          onChange={e => updateConcern(idx, "image", e.target.value)}
-                          placeholder="/concerns/liver_detox.png"
-                          className="flex-1 rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-2 text-xs text-[#39160D] tracking-tight focus:border-[#DFC77F] focus:outline-none"
-                        />
-                        <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#39160D] text-[#FFF7EB] hover:bg-[#872B10] text-xs font-bold tracking-tight transition-colors">
-                          <Upload size={13} />
-                          <span>Upload</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={async e => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const url = await handleFileUpload(file, `concern-${idx}`);
-                                if (url) updateConcern(idx, "image", url);
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-bold text-foreground/70 uppercase tracking-tight mb-1">
-                        Dome Background Color
-                      </label>
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="color"
-                          value={concern.bgColor || "#39160D"}
-                          onChange={e => updateConcern(idx, "bgColor", e.target.value)}
-                          className="h-8 w-10 cursor-pointer rounded border border-black/10 p-0"
-                        />
-                        <input
-                          type="text"
-                          value={concern.bgColor || "#39160D"}
-                          onChange={e => updateConcern(idx, "bgColor", e.target.value)}
-                          className="flex-1 rounded-xl border border-black/10 bg-[#FFF7EB]/40 px-3 py-1.5 text-xs text-[#39160D] font-mono tracking-tight"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* =====================================================================
           TAB 2: HERO BANNERS
