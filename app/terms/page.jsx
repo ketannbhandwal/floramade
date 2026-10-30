@@ -23,9 +23,9 @@ const fadeUp = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pt-24 md:pt-32 pb-16 font-sans">
+    <div className="min-h-screen bg-[#FAF6EE] text-[#39160D] pb-16 font-sans">
       {/* Top Header */}
-      <section className="px-6 py-12 md:py-16 text-center">
+      <section className="px-6 pt-4 pb-6 md:pt-6 md:pb-8 text-center">
         <motion.div {...fadeUp} className="max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#872B10]/10 text-[#872B10] text-[11px] font-bold uppercase tracking-wider">
             <FileText size={13} />
