@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
@@ -21,7 +22,15 @@ import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const { cartItems, total, clearCart } = useCart();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      toast("Please sign in to proceed with checkout");
+      router.push("/login?redirect=/checkout");
+    }
+  }, [user, authLoading, router]);
   const [buyNowItems] = useState(() => {
     if (typeof window === "undefined") return [];
     const saved = localStorage.getItem("floramade-buy-now-items");
@@ -294,6 +303,11 @@ export default function CheckoutPage() {
   }
 
   async function handlePayment() {
+    if (!user) {
+      toast("Please sign in to complete your purchase");
+      router.push("/login?redirect=/checkout");
+      return;
+    }
     if (selectedItems.length === 0) return toast.error("Cart is empty");
     if (Object.values(address).some((value) => !String(value).trim())) {
       return toast.error("Please complete delivery address");
@@ -553,9 +567,9 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-6"
+              className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 md:p-8 space-y-6 shadow-xs"
             >
-              <div className="flex items-center gap-3 border-b border-[#E0D9C8] pb-4">
+              <div className="flex items-center gap-3 border-b border-[#DDD2BD] pb-4">
                 <div className="h-9 w-9 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center">
                   <Truck size={17} />
                 </div>
@@ -577,11 +591,11 @@ export default function CheckoutPage() {
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                           selectedAddressId === addr._id
                             ? "border-[#101D17] bg-[#101D17]/5"
-                            : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#101D17]/30"
+                            : "border-[#DDD2BD] bg-[#F8F4E9] hover:border-[#101D17]/30"
                         }`}
                       >
                         <div className="flex items-start gap-2.5">
-                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#101D17]' : 'border-[#E0D9C8]'}`}>
+                          <div className={`h-4 w-4 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${selectedAddressId === addr._id ? 'border-[#101D17]' : 'border-[#DDD2BD]'}`}>
                             {selectedAddressId === addr._id && (
                               <div className="h-2 w-2 rounded-full bg-[#101D17]" />
                             )}
@@ -638,9 +652,9 @@ export default function CheckoutPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] p-5 sm:p-7 md:p-8 space-y-5"
+              className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 md:p-8 space-y-5 shadow-xs"
             >
-              <div className="flex items-center gap-3 border-b border-[#E0D9C8] pb-4">
+              <div className="flex items-center gap-3 border-b border-[#DDD2BD] pb-4">
                 <div className="h-9 w-9 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center">
                   <CreditCard size={17} />
                 </div>
@@ -667,7 +681,7 @@ export default function CheckoutPage() {
                     className={`relative p-4 sm:p-5 rounded-xl border-2 cursor-pointer transition-all duration-200 flex flex-col gap-0.5 ${
                       paymentMethod === method.id
                         ? "border-[#101D17] bg-[#101D17]/5"
-                        : "border-[#E0D9C8] bg-[#F8F4E9] hover:border-[#101D17]/30"
+                        : "border-[#DDD2BD] bg-[#F8F4E9] hover:border-[#101D17]/30"
                     }`}
                   >
                     <input
@@ -848,7 +862,7 @@ export default function CheckoutPage() {
 
               <button
                 onClick={handlePayment}
-                className="w-full bg-[#101D17] text-white py-3.5 rounded-xl font-bold uppercase tracking-[0.06em] text-xs hover:bg-[#101D17]/90 transition-all duration-300 mt-5"
+                className="w-full bg-[#D4AF55] text-[#101D17] hover:bg-[#C49B3D] py-4 rounded-xl font-extrabold uppercase tracking-[0.06em] text-xs sm:text-sm shadow-lg shadow-[#D4AF55]/25 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 mt-5 cursor-pointer flex items-center justify-center gap-2"
               >
                 {paymentMethod === "cod"
                   ? "Place COD Order"
@@ -860,7 +874,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="bg-[#F8F4E9] border border-[#E0D9C8] p-5 sm:p-6 rounded-2xl space-y-2.5">
+            <div className="bg-[#EFE8D8] border border-[#DDD2BD] p-5 sm:p-6 rounded-2xl space-y-2.5 shadow-xs">
               <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-[#171717]/35">
                 Need Help?
               </h4>

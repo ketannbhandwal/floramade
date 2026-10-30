@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf, LockKeyhole, Mail, Phone, ShieldCheck, UserRound } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
@@ -17,6 +17,8 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || searchParams.get("next") || "/";
   const { refreshUser } = useAuth();
 
   function updateField(field, value) {
@@ -54,7 +56,7 @@ export default function RegisterPage() {
 
       await refreshUser();
       toast.success("Your Floramade account is ready.");
-      router.replace("/");
+      router.replace(redirectUrl);
     } catch {
       setErrors({ form: "We couldn’t reach the server. Check your connection and try again." });
     } finally {
@@ -192,7 +194,7 @@ export default function RegisterPage() {
 
               <p className="mt-6 text-center text-sm text-[#746b5c]">
                 Already registered?{" "}
-                <Link href="/login" className="font-semibold text-[#705520] underline-offset-4 transition hover:text-[#17140f] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b18a3b]">Sign in</Link>
+                <Link href={`/login${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`} className="font-semibold text-[#705520] underline-offset-4 transition hover:text-[#17140f] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b18a3b]">Sign in</Link>
               </p>
               <p className="mt-4 flex items-center justify-center gap-2 text-[11px] text-[#8b806e]">
                 <ShieldCheck size={14} aria-hidden="true" /> Your details are used to manage your account and deliveries.

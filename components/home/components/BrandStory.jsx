@@ -81,19 +81,19 @@ export default function BrandStory() {
           transition={{ duration: 0.5, delay: 0.35 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 my-8 sm:my-10 max-w-2xl mx-auto"
         >
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#EFE8D8] border border-[#DDD2BD] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
             <Leaf size={14} className="text-[#2C4436]" />
             <span>100% Pure Herbs</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#EFE8D8] border border-[#DDD2BD] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
             <ShieldCheck size={14} className="text-[#101D17]" />
             <span>Lab Tested</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#EFE8D8] border border-[#DDD2BD] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
             <Sparkles size={14} className="text-[#D4AF55]" />
             <span>Zero Chemicals</span>
           </div>
-          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#F8F4E9] border border-[#E0D9C8] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
+          <div className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#EFE8D8] border border-[#DDD2BD] shadow-xs text-[11px] sm:text-xs font-semibold text-[#171717] tracking-tight">
             <HeartHandshake size={14} className="text-[#171717]" />
             <span>Made in India</span>
           </div>

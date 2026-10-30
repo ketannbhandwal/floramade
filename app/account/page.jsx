@@ -129,7 +129,7 @@ export default function AccountPage() {
   ];
 
   return (
-    <div className="min-h-[80vh] bg-white w-full pt-4 md:pt-6 pb-20">
+    <div className="min-h-[80vh] bg-[#F8F4E9] w-full pt-4 md:pt-6 pb-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10">
         {/* Header */}
         <motion.div
@@ -156,7 +156,7 @@ export default function AccountPage() {
             className="space-y-4"
           >
             {/* User Card */}
-            <div className="bg-white rounded-2xl border border-[#E0D9C8] p-5 flex flex-col items-center text-center space-y-3">
+            <div className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 flex flex-col items-center text-center space-y-3 shadow-xs">
               <div className="h-16 w-16 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center text-2xl font-bold tracking-tight">
                 {user?.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
@@ -167,7 +167,7 @@ export default function AccountPage() {
             </div>
 
             {/* Navigation */}
-            <div className="bg-white rounded-2xl border border-[#E0D9C8] p-2 flex flex-col gap-1">
+            <div className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-2 flex flex-col gap-1 shadow-xs">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -207,7 +207,7 @@ export default function AccountPage() {
                     <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Manage your personal information and preferences.</p>
                   </div>
 
-                  <form onSubmit={saveProfile} className="space-y-5 bg-white rounded-2xl border border-[#E0D9C8] p-5 sm:p-7">
+                  <form onSubmit={saveProfile} className="space-y-5 bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 shadow-xs">
                     <div className="space-y-4">
                       <Input label="Full Name" value={profile.name || user?.name || ""} onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))} />
                       <Input label="Email Address" value={user?.email || ""} disabled />
@@ -227,7 +227,7 @@ export default function AccountPage() {
                     <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Ensure your account stays secure.</p>
                   </div>
 
-                  <form onSubmit={updatePassword} className="space-y-5 bg-white rounded-2xl border border-[#E0D9C8] p-5 sm:p-7">
+                  <form onSubmit={updatePassword} className="space-y-5 bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 shadow-xs">
                     <div className="space-y-4">
                       <Input
                         label="Current Password"
@@ -258,7 +258,7 @@ export default function AccountPage() {
 
                   <div className="space-y-4">
                     {!orders.length ? (
-                      <div className="py-16 border border-[#E0D9C8] rounded-2xl bg-white flex flex-col items-center justify-center text-center space-y-4">
+                      <div className="py-16 border border-[#DDD2BD] rounded-2xl bg-[#EFE8D8] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
                         <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
                           <ShoppingBag size={24} className="text-[#171717]/25" />
                         </div>
@@ -309,7 +309,7 @@ export default function AccountPage() {
 
                   <div className="space-y-3">
                     {!addresses.length ? (
-                      <div className="py-16 border border-[#E0D9C8] rounded-2xl bg-white flex flex-col items-center justify-center text-center space-y-4">
+                      <div className="py-16 border border-[#DDD2BD] rounded-2xl bg-[#EFE8D8] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
                         <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
                           <MapPin size={24} className="text-[#171717]/25" />
                         </div>
@@ -328,7 +328,7 @@ export default function AccountPage() {
                           className={`relative p-4 sm:p-5 rounded-xl border transition-all ${
                             addr.isDefault
                               ? "bg-[#101D17]/5 border-[#101D17]/30"
-                              : "bg-white border-[#E0D9C8]"
+                              : "bg-[#F8F4E9] border-[#DDD2BD]"
                           }`}
                         >
                           {addr.isDefault && (

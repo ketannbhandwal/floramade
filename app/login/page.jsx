@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
@@ -14,6 +14,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || searchParams.get("next") || "/";
   const { refreshUser } = useAuth();
 
   function updateField(field, value) {
@@ -47,7 +49,7 @@ export default function LoginPage() {
 
       await refreshUser();
       toast.success("Welcome back to Floramade.");
-      router.replace("/");
+      router.replace(redirectUrl);
     } catch {
       setErrors({ form: "We couldn’t reach the server. Check your connection and try again." });
     } finally {
@@ -188,7 +190,7 @@ export default function LoginPage() {
 
               <p className="mt-7 text-center text-sm text-[#746b5c]">
                 New to Floramade?{" "}
-                <Link href="/register" className="font-semibold text-[#705520] underline-offset-4 transition hover:text-[#17140f] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b18a3b]">
+                <Link href={`/register${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`} className="font-semibold text-[#705520] underline-offset-4 transition hover:text-[#17140f] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b18a3b]">
                   Create an account
                 </Link>
               </p>

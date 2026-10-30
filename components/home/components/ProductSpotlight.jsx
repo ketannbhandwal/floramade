@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 import { 
   Star, 
@@ -25,6 +26,7 @@ import { MdEmail } from "react-icons/md";
 export default function ProductSpotlight({ products = [], selectedId = "" }) {
   const router = useRouter();
   const { addToCart } = useCart();
+  const { user } = useAuth();
 
   // Find the selected product, or fallback to the first active product
   const product = products.find(p => 
@@ -108,6 +110,11 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
 
   const handleBuyNow = () => {
     addToCart(product, quantity);
+    if (!user) {
+      toast("Please sign in to complete your purchase");
+      router.push("/login?redirect=/checkout");
+      return;
+    }
     router.push("/checkout");
   };
 

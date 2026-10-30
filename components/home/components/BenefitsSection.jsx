@@ -204,7 +204,7 @@ export default function BenefitsSection({ heading = "Benefits", benefits }) {
             return (
               <div
                 key={benefit.id || idx}
-                className="h-full flex flex-col justify-start bg-[#F8F4E9] rounded-2xl sm:rounded-[22px] p-4 sm:p-6 md:p-7 border border-[#DDD2BD] shadow-[0_4px_20px_rgba(18,61,43,0.03)] hover:shadow-[0_10px_30px_rgba(18,61,43,0.07)] hover:-translate-y-1 transition-all duration-300"
+                className="h-full flex flex-col justify-start bg-[#EFE8D8] rounded-2xl sm:rounded-[22px] p-4 sm:p-6 md:p-7 border border-[#DDD2BD] shadow-[0_4px_20px_rgba(18,61,43,0.03)] hover:shadow-[0_10px_30px_rgba(18,61,43,0.07)] hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Icon */}
                 <div className="mb-3 sm:mb-4 md:mb-5 shrink-0 flex items-center">

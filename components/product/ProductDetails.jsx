@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 import { 
   CheckCircle2, 
@@ -97,6 +98,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
   const router = useRouter();
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { user } = useAuth();
 
   // Scroll to top on mount or product change
   useEffect(() => {
@@ -778,7 +780,24 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </button>
               <button
                 type="button"
-                onClick={() => setBuyNowOpen(true)}
+                onClick={() => {
+                  const buyNowItem = [{
+                    productId: product._id,
+                    name: product.name,
+                    quantity,
+                    price: currentPrice,
+                    image: product.images?.[0] || productImages[0],
+                    slug: product.slug,
+                    selectedPack,
+                  }];
+                  localStorage.setItem("floramade-buy-now-items", JSON.stringify(buyNowItem));
+                  if (!user) {
+                    toast("Please sign in to complete your purchase");
+                    router.push("/login?redirect=/checkout");
+                    return;
+                  }
+                  setBuyNowOpen(true);
+                }}
                 className="h-12 sm:h-13 rounded-xl bg-[#D4AF55] text-white flex items-center justify-center gap-2 hover:bg-[#C49B3D] transition-all active:scale-[0.98] font-bold text-xs sm:text-sm uppercase tracking-tight shadow-md shadow-[#D4AF55]/25 cursor-pointer"
               >
                 <Zap size={17} fill="currentColor" />
@@ -1073,7 +1092,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           </div>
 
           {/* Rating Summary Card */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#F8F4E9] rounded-3xl border border-[#E0D9C8] shadow-xs">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#EFE8D8] rounded-3xl border border-[#DDD2BD] shadow-xs">
             <div className="flex flex-col items-center gap-1.5">
               {totalReviews > 0 ? (
                 <>
@@ -1151,7 +1170,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {sortedReviews.map((review, i) => (
               <div 
                 key={i}
-                className="p-5 bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] shadow-xs"
+                className="p-5 bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] shadow-xs"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex text-amber-400">
@@ -1362,7 +1381,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           <button 
             type="button"
             onClick={buyNow}
-            className="w-full h-11 rounded-xl bg-[#101D17] text-white font-bold text-xs uppercase tracking-tight hover:bg-[#071E12] shadow-md transition-all cursor-pointer"
+            className="w-full h-12 rounded-xl bg-[#D4AF55] text-[#101D17] font-extrabold text-xs uppercase tracking-tight hover:bg-[#C49B3D] shadow-md shadow-[#D4AF55]/20 transition-all cursor-pointer flex items-center justify-center"
           >
             Continue to Payment
           </button>

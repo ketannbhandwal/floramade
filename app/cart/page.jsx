@@ -37,7 +37,7 @@ export default function CartPage() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="py-16 sm:py-20 rounded-2xl bg-[#F8F4E9] border border-[#E0D9C8] flex flex-col items-center justify-center text-center space-y-5"
+              className="py-16 sm:py-20 rounded-2xl bg-[#EFE8D8] border border-[#DDD2BD] flex flex-col items-center justify-center text-center space-y-5 shadow-xs"
             >
               <div className="w-16 h-16 rounded-full bg-[#101D17]/8 flex items-center justify-center">
                 <ShoppingBag size={28} className="text-[#101D17]/40" />
@@ -84,7 +84,7 @@ export default function CartPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="h-fit rounded-2xl border border-[#E0D9C8] bg-[#F8F4E9] p-6 sm:p-7 lg:sticky lg:top-32 space-y-5"
+                className="h-fit rounded-2xl border border-[#DDD2BD] bg-[#EFE8D8] p-6 sm:p-7 lg:sticky lg:top-32 space-y-5 shadow-xs"
               >
                 <h2 className="text-lg font-bold tracking-tight text-[#171717]">Order Summary</h2>
 
