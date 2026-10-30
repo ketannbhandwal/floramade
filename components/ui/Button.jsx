@@ -36,7 +36,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       className={clsx(
-        "inline-flex items-center justify-center gap-3 font-medium uppercase tracking-[0.2em] disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden relative group rounded-lg",
+        "inline-flex items-center justify-center gap-3 font-medium uppercase tracking-[0.2em] disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden relative group rounded-xl",
         sizes[size],
         variants[variant],
         className

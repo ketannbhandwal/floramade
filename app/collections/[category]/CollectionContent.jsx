@@ -64,7 +64,7 @@ export default function CollectionContent({ products, category }) {
             </p>
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 h-10 px-6 rounded-lg bg-[#101D17] text-white hover:bg-[#101D17] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
+              className="inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-[#101D17] text-white hover:bg-[#101D17] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
             >
               Back to Home
               <ArrowRight size={14} />

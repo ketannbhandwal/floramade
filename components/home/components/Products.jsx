@@ -52,7 +52,7 @@ export default function Products({
             <div className="mt-9 sm:mt-12 flex justify-center">
               <Link
                 href="/collection"
-                className="group inline-flex items-center gap-2 rounded-lg border border-[#101D17]/20 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#171717] tracking-tight transition-all hover:bg-[#101D17] hover:text-white hover:border-[#101D17] cursor-pointer"
+                className="group inline-flex items-center gap-2 rounded-xl border border-[#101D17]/20 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-semibold text-[#171717] tracking-tight transition-all hover:bg-[#101D17] hover:text-white hover:border-[#101D17] cursor-pointer"
               >
                 View Complete Collection
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

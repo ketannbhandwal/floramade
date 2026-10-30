@@ -109,7 +109,7 @@ export default function BrandStory() {
         >
           <Link
             href="/collection"
-            className="group inline-flex items-center gap-2.5 rounded-lg bg-[#D4AF55] hover:bg-[#C49B3D] text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-tight shadow-md hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer"
+            className="group inline-flex items-center gap-2.5 rounded-xl bg-[#D4AF55] hover:bg-[#C49B3D] text-white px-8 sm:px-10 py-3.5 sm:py-4 text-xs sm:text-sm font-bold uppercase tracking-tight shadow-md hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer"
           >
             <span>Browse Products</span>
             <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />

@@ -309,7 +309,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                 <button
                   type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 py-3.5 px-5 rounded-lg bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                  className="flex-1 py-3.5 px-5 rounded-xl bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
                 >
                   <ShoppingBag size={15} strokeWidth={2.2} />
                   <span>Add to Bag</span>
@@ -319,7 +319,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="w-full py-3.5 px-6 rounded-lg bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-xl bg-[#101D17] hover:bg-[#101D17] text-white font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
               >
                 <Zap size={16} className="fill-[#D4AF55] text-[#D4AF55]" />
                 <span>Buy Now with 1-Click</span>
