@@ -539,7 +539,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
             {/* Main Stage Image (Slightly Darker Warm Beige Background for Definition) */}
-            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#F8F4E9] border border-[#E0D9C8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            <div className="relative aspect-square max-h-[520px] xl:max-h-[560px] w-full rounded-3xl bg-[#EFE8D8] border border-[#DDD2BD] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Left Brand Tag */}
               <div className="absolute top-4 left-4 z-10 pointer-events-none">
                 <span className="text-[#171717]/40 text-xs sm:text-sm font-semibold tracking-tight uppercase select-none">
@@ -551,7 +551,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#EFE8D8]/90 hover:bg-[#EFE8D8] border border-[#DDD2BD] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
@@ -605,7 +605,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#F8F4E9] flex-shrink-0 transition-all p-1 ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#EFE8D8] flex-shrink-0 transition-all p-1 ${
                       activeIdx === idx
                         ? "border-[#101D17] shadow-sm scale-105"
                         : "border-[#E0D9C8] opacity-75 hover:opacity-100 hover:border-[#101D17]/50"
@@ -837,7 +837,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
-              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
+              <div className="border border-[#DDD2BD] rounded-2xl overflow-hidden bg-[#EFE8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
@@ -865,7 +865,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
-              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
+              <div className="border border-[#DDD2BD] rounded-2xl overflow-hidden bg-[#EFE8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
@@ -898,7 +898,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
-              <div className="border border-[#E0D9C8] rounded-2xl overflow-hidden bg-[#F8F4E9] shadow-xs">
+              <div className="border border-[#DDD2BD] rounded-2xl overflow-hidden bg-[#EFE8D8] shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
@@ -1028,7 +1028,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               return (
                 <div 
                   key={i}
-                  className="bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] overflow-hidden shadow-xs transition-colors hover:border-[#101D17]/40"
+                  className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] overflow-hidden shadow-xs transition-colors hover:border-[#101D17]/40"
                 >
                   <button
                     type="button"

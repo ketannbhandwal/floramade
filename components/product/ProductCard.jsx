@@ -49,10 +49,10 @@ function ProductCard({ product, index = 0 }) {
     .trim();
 
   return (
-    <div className="group relative flex flex-col h-full bg-[#F8F4E9] rounded-2xl border border-[#E0D9C8] hover:border-[#D4AF55]/50 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(18,61,43,0.04)] hover:shadow-[0_12px_28px_rgba(18,61,43,0.10)] hover:-translate-y-1">
+    <div className="group relative flex flex-col h-full bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] hover:border-[#D4AF55]/60 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(18,61,43,0.04)] hover:shadow-[0_12px_28px_rgba(18,61,43,0.10)] hover:-translate-y-1">
       
-      {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container */}
-      <div className="relative aspect-square w-full flex items-center justify-center bg-[#F8F4E9] overflow-hidden border-b border-[#E0D9C8]/50">
+      {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container with Slightly Darker Warm Background */}
+      <div className="relative aspect-square w-full flex items-center justify-center bg-[#EFE8D8] overflow-hidden border-b border-[#DDD2BD]/60">
         
         {/* Top-Left: Sleek Terracotta Discount Pill */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 pointer-events-none">
@@ -71,7 +71,7 @@ function ProductCard({ product, index = 0 }) {
         <button
           type="button"
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F8F4E9]/90 hover:bg-[#F8F4E9] border border-[#E0D9C8] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#EFE8D8]/90 hover:bg-[#EFE8D8] border border-[#DDD2BD] text-[#171717]/60 hover:text-[#101D17] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
           aria-label="Save to Wishlist"
         >
           <Heart 
@@ -96,8 +96,8 @@ function ProductCard({ product, index = 0 }) {
         </Link>
       </div>
 
-      {/* 2. BOTTOM STAGE: Clean Warm Info Area with Tight Typography */}
-      <div className="flex flex-col flex-1 justify-between bg-[#F8F4E9] p-3.5 sm:p-4 text-center">
+      {/* 2. BOTTOM STAGE: Clean Warm Info Area with Slightly Darker Background */}
+      <div className="flex flex-col flex-1 justify-between bg-[#EFE8D8] p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-1.5">
           
           {/* Product Title (Centered, Bold, Tight Tracking) */}
