@@ -8,7 +8,6 @@ import BrandStory from "./components/BrandStory";
 import BenefitsSection from "./components/BenefitsSection";
 import FlagshipProducts from "./components/FlagshipProducts";
 import ProductSpotlight from "./components/ProductSpotlight";
-import WhyChooseFloramade from "./components/WhyChooseFloramade";
 
 const Products = dynamic(() => import("./components/Products"), { ssr: true });
 const Review = dynamic(() => import("./components/Review"), { ssr: true });
@@ -43,7 +42,6 @@ export default function HomeSections({
       />
       <FlagshipProducts products={products} />
       <ProductSpotlight products={products} selectedId={spotlightProductId} />
-      <WhyChooseFloramade />
       <Suspense fallback={null}>
         <Review 
           pretitle={testimonialsPretitle}

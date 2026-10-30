@@ -228,7 +228,6 @@ export default function LoadingSkeleton() {
       <MarqueeTickerSkeleton />
       <ProductGridSkeleton count={4} />
       <BenefitsSkeleton />
-      <WhyChooseSkeleton />
       <TestimonialsSkeleton />
     </div>
   );

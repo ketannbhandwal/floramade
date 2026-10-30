@@ -624,7 +624,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 Featured Product Spotlight Section
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
-                Select which flagship product is displayed in the large showcase section above 'Why Choose Floramade'.
+                Select which flagship product is displayed in the large showcase section above Customer Testimonials.
               </p>
             </div>
           </div>
