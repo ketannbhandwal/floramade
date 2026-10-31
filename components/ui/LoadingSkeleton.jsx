@@ -58,9 +58,9 @@ export function ShopByConcernSkeleton() {
 // 4. PRODUCT CARD SKELETON (Exact 1:1 Match to ProductCard.jsx)
 export function ProductCardSkeleton() {
   return (
-    <div className="flex flex-col h-full bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8]/90 overflow-hidden shadow-xs">
+    <div className="flex flex-col h-full bg-white rounded-2xl border border-[#C5D5E8]/90 overflow-hidden shadow-xs">
       {/* 1. TOP STAGE: Warm Luxury Ivory Container Shimmer (Zero Padding) */}
-      <div className="relative aspect-square w-full flex items-center justify-center bg-[#D9E5F3]">
+      <div className="relative aspect-square w-full flex items-center justify-center bg-white">
         {/* Top-Left Pill Shimmer */}
         <div className="absolute top-3 left-3 z-10 w-24 h-4 rounded-full shimmer-luxury-subtle" />
 
@@ -69,7 +69,7 @@ export function ProductCardSkeleton() {
       </div>
 
       {/* 2. BOTTOM STAGE: Centered Text & Info Shimmer */}
-      <div className="flex flex-col flex-1 items-center justify-between bg-[#D9E5F3] p-3.5 sm:p-4 text-center">
+      <div className="flex flex-col flex-1 items-center justify-between bg-white p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-2">
           {/* Centered Title */}
           <div className="h-4 w-3/4 rounded shimmer-luxury" />

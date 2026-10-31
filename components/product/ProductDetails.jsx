@@ -540,13 +540,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               LEFT COLUMN: Sticky on PC so it does NOT scroll away while browsing details
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
-            {/* Main Stage Image (Edge-to-Edge Container with Slightly Darker Warm Beige Background) */}
-            <div className="relative aspect-square w-full rounded-3xl bg-[#D9E5F3] border border-[#C5D5E8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            {/* Main Stage Image (Edge-to-Edge Container with Clean White Background) */}
+            <div className="relative aspect-square w-full rounded-3xl bg-white border border-[#C5D5E8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
               {/* Top-Right Wishlist Button */}
               <button
                 type="button"
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#D9E5F3]/90 hover:bg-[#D9E5F3] border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
@@ -600,7 +600,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                     type="button"
                     onClick={() => setActiveIdx(idx)}
                     aria-label={`View thumbnail ${idx + 1}`}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-[#D9E5F3] flex-shrink-0 transition-all ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 bg-white flex-shrink-0 transition-all ${
                       activeIdx === idx
                         ? "border-[#142B49] shadow-sm scale-105"
                         : "border-[#C5D5E8] opacity-75 hover:opacity-100 hover:border-[#142B49]/50"
@@ -857,7 +857,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             <div className="space-y-2.5 pt-2">
               
               {/* 1. Description Accordion */}
-              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-[#D9E5F3] shadow-xs">
+              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-white shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("description")}
@@ -885,7 +885,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 2. How to Use Accordion (Clean text ritual steps, NO IMAGES) */}
-              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-[#D9E5F3] shadow-xs">
+              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-white shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("howToUse")}
@@ -918,7 +918,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               </div>
 
               {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
-              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-[#D9E5F3] shadow-xs">
+              <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-white shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
@@ -1048,7 +1048,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               return (
                 <div 
                   key={i}
-                  className="bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] overflow-hidden shadow-xs transition-colors hover:border-[#142B49]/40"
+                  className="bg-white rounded-2xl border border-[#C5D5E8] overflow-hidden shadow-xs transition-colors hover:border-[#142B49]/40"
                 >
                   <button
                     type="button"
@@ -1092,7 +1092,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
           </div>
 
           {/* Rating Summary Card */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-[#D9E5F3] rounded-3xl border border-[#C5D5E8] shadow-xs">
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-8 p-6 sm:p-8 bg-white rounded-3xl border border-[#C5D5E8] shadow-xs">
             <div className="flex flex-col items-center gap-1.5">
               {totalReviews > 0 ? (
                 <>
@@ -1170,7 +1170,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             {sortedReviews.map((review, i) => (
               <div 
                 key={i}
-                className="p-5 bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] shadow-xs"
+                className="p-5 bg-white rounded-2xl border border-[#C5D5E8] shadow-xs"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex text-amber-400">

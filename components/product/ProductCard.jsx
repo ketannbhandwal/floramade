@@ -51,21 +51,21 @@ function ProductCard({ product, index = 0 }) {
     .trim();
 
   return (
-    <div className="group relative flex flex-col h-full bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] hover:border-[#D9A441]/60 transition-all duration-300 overflow-hidden shadow-[0_2px_12px_rgba(20,43,73,0.04)] hover:shadow-[0_12px_28px_rgba(20,43,73,0.10)] hover:-translate-y-1">
+    <div className="group relative flex flex-col h-full bg-white rounded-2xl border border-[#C5D5E8]/80 hover:border-[#D9A441] transition-all duration-300 overflow-hidden shadow-[0_4px_16px_rgba(20,43,73,0.05)] hover:shadow-[0_12px_32px_rgba(20,43,73,0.12)] hover:-translate-y-1">
       
-      {/* 1. TOP STAGE: Zero Padding Edge-to-Edge Container with Slightly Darker Warm Background */}
-      <div className="relative aspect-square w-full flex items-center justify-center bg-[#D9E5F3] overflow-hidden border-b border-[#C5D5E8]/60">
+      {/* 1. TOP STAGE: Pristine White Product Image Container */}
+      <div className="relative aspect-square w-full flex items-center justify-center bg-white overflow-hidden border-b border-[#C5D5E8]/40">
         
         {/* Top-Right: Refined Wishlist Heart */}
         <button
           type="button"
           onClick={handleWishlist}
-          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#D9E5F3]/90 hover:bg-[#D9E5F3] border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all duration-200 shadow-xs hover:scale-105 active:scale-90 cursor-pointer backdrop-blur-xs"
           aria-label="Save to Wishlist"
         >
           <Heart 
             size={13} 
-            className={isInWishlist(product._id) ? "fill-[#D9A441] text-[#142B49]" : "text-[#1A2332]/60"} 
+            className={isInWishlist(product._id) ? "fill-[#D9A441] text-[#D9A441]" : "text-[#1A2332]/60"} 
           />
         </button>
 
@@ -79,14 +79,14 @@ function ProductCard({ product, index = 0 }) {
             alt={cleanName}
             fill
             sizes="(max-width: 640px) 240px, (max-width: 1024px) 300px, 25vw"
-            quality={80}
-            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
+            quality={85}
+            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105 p-3 sm:p-4"
           />
         </Link>
       </div>
 
-      {/* 2. BOTTOM STAGE: Clean Warm Info Area with Slightly Darker Background */}
-      <div className="flex flex-col flex-1 justify-between bg-[#D9E5F3] p-3.5 sm:p-4 text-center">
+      {/* 2. BOTTOM STAGE: Clean Luxury Info Area */}
+      <div className="flex flex-col flex-1 justify-between bg-white p-3.5 sm:p-4 text-center">
         <div className="w-full flex flex-col items-center space-y-1.5">
           
           {/* Product Title (Centered, Bold, Tight Tracking) */}
