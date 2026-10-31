@@ -80,7 +80,7 @@ function ProductCard({ product, index = 0 }) {
             fill
             sizes="(max-width: 640px) 240px, (max-width: 1024px) 300px, 25vw"
             quality={85}
-            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105 p-3 sm:p-4"
+            className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
       </div>
