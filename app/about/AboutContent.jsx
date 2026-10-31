@@ -200,7 +200,7 @@ export default function AboutContent() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-[#1A2332]">Suresh Gaur</h4>
-                  <p className="text-[11px] text-[#142B49] font-medium">Founder & Visionary, Floramade Healthcare Pvt. Ltd.</p>
+                  <p className="text-[11px] text-[#142B49] font-medium">Founder & Visionary, Floramade Healthcare</p>
                 </div>
               </div>
               <div className="text-right text-[11px] text-[#1A2332]/60 hidden sm:block">

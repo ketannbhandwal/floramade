@@ -195,7 +195,7 @@ export default function Footer() {
 
           {/* Bottom Bar */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/15 text-xs text-white/70">
-            <p>© {new Date().getFullYear()} Floramade Healthcare Pvt. Ltd. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Floramade Healthcare. All rights reserved.</p>
             <p className="text-[#D9A441] font-medium">100% Certified Ayurvedic Formulations</p>
           </div>
 

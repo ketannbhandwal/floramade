@@ -37,7 +37,7 @@ export default function TermsPage() {
             Terms & Conditions
           </h1>
           <p className="text-xs sm:text-sm text-[#1A2332]/75 max-w-xl mx-auto leading-relaxed">
-            Floramade Healthcare Pvt. Ltd. — By using this website and purchasing products, you agree to the following terms.
+            Floramade Healthcare — By using this website and purchasing products, you agree to the following terms.
           </p>
         </motion.div>
       </section>
@@ -49,7 +49,7 @@ export default function TermsPage() {
           {/* Meta Info Strip */}
           <div className="border-b border-[#C5D5E8] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#1A2332]/60">
             <div>
-              <span className="font-semibold text-[#1A2332]">Entity:</span> Floramade Healthcare Pvt. Ltd.
+              <span className="font-semibold text-[#1A2332]">Entity:</span> Floramade Healthcare
             </div>
             <div>
               <span className="font-semibold text-[#1A2332]">Jurisdiction:</span> New Delhi, India
@@ -65,7 +65,7 @@ export default function TermsPage() {
               <h2 className="text-base sm:text-lg font-bold text-[#1A2332] tracking-tight">Ownership</h2>
             </div>
             <p>
-              This website and all its content are the intellectual property of <strong>Floramade Healthcare Pvt. Ltd.</strong>, including:
+              This website and all its content are the intellectual property of <strong>Floramade Healthcare</strong>, including:
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
               {["Product names", "Logos", "Images", "Text", "Formulations", "Descriptions"].map((item, idx) => (
@@ -210,7 +210,7 @@ export default function TermsPage() {
             <div className="p-5 sm:p-6 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8] space-y-3">
               <div className="font-bold text-sm text-[#1A2332] flex items-center gap-2">
                 <Building2 size={16} className="text-[#142B49]" />
-                <span>Floramade Healthcare Pvt. Ltd.</span>
+                <span>Floramade Healthcare</span>
               </div>
               <div className="flex items-start gap-2 text-xs text-[#1A2332]/80">
                 <MapPin size={15} className="text-[#142B49] shrink-0 mt-0.5" />

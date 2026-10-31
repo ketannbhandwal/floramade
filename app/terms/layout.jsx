@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms & Conditions | Floramade Healthcare Pvt. Ltd.",
+  title: "Terms & Conditions | Floramade Healthcare",
   description: "Read the official terms and conditions governing the purchase and use of Floramade authentic Ayurvedic wellness formulations.",
   alternates: {
     canonical: "https://floramade.in/terms",

@@ -351,7 +351,7 @@ export default function ContactPage() {
                   </span>
                   <h3 className="text-lg font-bold text-[#1A2332] tracking-tight flex items-center gap-2">
                     <Building2 size={18} className="text-[#142B49]" />
-                    <span>Floramade Healthcare Pvt. Ltd.</span>
+                    <span>Floramade Healthcare</span>
                   </h3>
                 </div>
 

@@ -37,7 +37,7 @@ export default function ShippingPolicyPage() {
             Shipping & Delivery Policy
           </h1>
           <p className="text-xs sm:text-sm text-[#1A2332]/75 max-w-xl mx-auto leading-relaxed">
-            Floramade Healthcare Pvt. Ltd. is committed to delivering your order in good condition and on time.
+            Floramade Healthcare is committed to delivering your order in good condition and on time.
           </p>
         </motion.div>
       </section>
@@ -121,7 +121,7 @@ export default function ShippingPolicyPage() {
               </div>
               <h2 className="text-base sm:text-lg font-bold text-[#1A2332] tracking-tight">Privacy Policy (Summary)</h2>
             </div>
-            <p>Your privacy is our priority. <strong>Floramade Healthcare Pvt. Ltd.</strong> ensures:</p>
+            <p>Your privacy is our priority. <strong>Floramade Healthcare</strong> ensures:</p>
             <ul className="list-disc pl-5 space-y-2 text-[#1A2332]/80">
               <li>We only collect necessary data (Name, Address, Phone) required to deliver your products safely.</li>
               <li>Your payment details are processed through encrypted, secure gateways and are never stored on our servers.</li>
@@ -169,7 +169,7 @@ export default function ShippingPolicyPage() {
           <div className="p-5 sm:p-6 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8] space-y-3">
             <div className="font-bold text-sm text-[#1A2332] flex items-center gap-2">
               <Building2 size={16} className="text-[#142B49]" />
-              <span>Floramade Healthcare Pvt. Ltd.</span>
+              <span>Floramade Healthcare</span>
             </div>
             <div className="flex items-start gap-2 text-xs text-[#1A2332]/80">
               <MapPin size={15} className="text-[#142B49] shrink-0 mt-0.5" />

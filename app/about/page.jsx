@@ -8,7 +8,7 @@ export const metadata = {
     "Suresh Gaur Floramade",
     "Floramade founder",
     "Ayurvedic wellness Delhi",
-    "Floramade Healthcare Pvt Ltd",
+    "Floramade Healthcare",
     "Ayurvedic heritage India",
     "herbal formulations India",
     "Pancha Mahabhutas Ayurveda",
@@ -61,10 +61,10 @@ const aboutSchema = {
     "worksFor": {
       "@type": "Organization",
       "@id": "https://floramade.in/#organization",
-      "name": "Floramade Healthcare Pvt. Ltd.",
+      "name": "Floramade Healthcare",
       "url": "https://floramade.in"
     },
-    "description": "Founder and Visionary of Floramade Healthcare Pvt. Ltd., dedicated to classical Ayurvedic formulations and botanical standardization.",
+    "description": "Founder and Visionary of Floramade Healthcare, dedicated to classical Ayurvedic formulations and botanical standardization.",
     "image": "https://floramade.in/assets/aboutus2.webp",
     "address": {
       "@type": "PostalAddress",

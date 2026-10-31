@@ -14,7 +14,7 @@ const organizationSchema = [
     "@type": "Organization",
     "@id": "https://floramade.in/#organization",
     "name": "Floramade",
-    "legalName": "Floramade Healthcare Pvt. Ltd.",
+    "legalName": "Floramade Healthcare",
     "alternateName": ["Floramade Ayurveda", "Floramade Healthcare"],
     "url": "https://floramade.in",
     "logo": "https://floramade.in/floramade-official-logo.png",

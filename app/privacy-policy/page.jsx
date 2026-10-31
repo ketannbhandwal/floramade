@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="text-xs sm:text-sm text-[#1A2332]/75 max-w-xl mx-auto leading-relaxed">
-            Floramade Healthcare Pvt. Ltd. respects your privacy and is committed to protecting your personal information.
+            Floramade Healthcare respects your privacy and is committed to protecting your personal information.
           </p>
         </motion.div>
       </section>
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
           {/* Metadata */}
           <div className="border-b border-[#C5D5E8] pb-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[#1A2332]/60">
             <div>
-              <span className="font-semibold text-[#1A2332]">Entity:</span> Floramade Healthcare Pvt. Ltd.
+              <span className="font-semibold text-[#1A2332]">Entity:</span> Floramade Healthcare
             </div>
             <div>
               <span className="font-semibold text-[#1A2332]">Last Updated:</span> October 2026
@@ -58,7 +58,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Intro Paragraph */}
           <div className="p-4 rounded-xl bg-[#F7F9FC] border border-[#C5D5E8] text-xs text-[#1A2332]/80 leading-relaxed">
-            <strong>Floramade Healthcare Pvt. Ltd.</strong> (&ldquo;Company&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you access our website or purchase our products including <strong>MadhuCurex Diabetes Pro</strong>, <strong>Piles Curex Capsule</strong>, and our herbal wellness formulations. By using our website, you agree to the practices described in this policy.
+            <strong>Floramade Healthcare</strong> (&ldquo;Company&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, &ldquo;us&rdquo;) respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you access our website or purchase our products including <strong>MadhuCurex Diabetes Pro</strong>, <strong>Piles Curex Capsule</strong>, and our herbal wellness formulations. By using our website, you agree to the practices described in this policy.
           </div>
 
           {/* 1. Information We Collect */}
@@ -242,7 +242,7 @@ export default function PrivacyPolicyPage() {
           <div className="p-5 sm:p-6 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8] space-y-3">
             <div className="font-bold text-sm text-[#1A2332] flex items-center gap-2">
               <Building2 size={16} className="text-[#142B49]" />
-              <span>Floramade Healthcare Pvt. Ltd.</span>
+              <span>Floramade Healthcare</span>
             </div>
             <div className="flex items-start gap-2 text-xs text-[#1A2332]/80">
               <MapPin size={15} className="text-[#142B49] shrink-0 mt-0.5" />

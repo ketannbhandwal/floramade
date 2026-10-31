@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy | Floramade Healthcare Pvt. Ltd.",
+  title: "Privacy Policy | Floramade Healthcare",
   description: "Learn how Floramade collects, protects, and safeguards your personal data, order details, and encrypted payment transactions.",
   alternates: {
     canonical: "https://floramade.in/privacy-policy",
