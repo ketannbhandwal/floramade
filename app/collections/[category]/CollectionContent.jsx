@@ -26,10 +26,10 @@ export default function CollectionContent({ products, category }) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 md:mb-12 text-center max-w-2xl mx-auto space-y-2"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#101D17]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#142B49]">
             {categoryTitle}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-[#171717]/70 font-normal">
+          <p className="text-xs sm:text-sm md:text-base text-[#1A2332]/70 font-normal">
             Meticulously crafted formulations for balanced living and holistic wellness.
           </p>
         </motion.div>
@@ -57,14 +57,14 @@ export default function CollectionContent({ products, category }) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="py-16 border border-[#101D17]/10 rounded-2xl bg-[#F8F4E9] flex flex-col items-center justify-center text-center space-y-6"
+            className="py-16 border border-[#142B49]/10 rounded-2xl bg-[#F7F9FC] flex flex-col items-center justify-center text-center space-y-6"
           >
-            <p className="text-base font-light text-[#171717]/70">
+            <p className="text-base font-light text-[#1A2332]/70">
               Products for this collection are coming soon.
             </p>
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-[#101D17] text-white hover:bg-[#101D17] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
+              className="inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-[#142B49] text-white hover:bg-[#142B49] transition-colors duration-300 font-semibold uppercase tracking-wider text-xs"
             >
               Back to Home
               <ArrowRight size={14} />

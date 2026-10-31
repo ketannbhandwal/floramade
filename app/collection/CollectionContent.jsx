@@ -21,10 +21,10 @@ export default function CollectionContent({ products }) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 md:mb-12 text-center max-w-2xl mx-auto space-y-2"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#101D17]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight uppercase text-[#142B49]">
             Our Ayurvedic Collection
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-[#171717]/70 font-normal">
+          <p className="text-xs sm:text-sm md:text-base text-[#1A2332]/70 font-normal">
             Meticulously crafted 100% natural formulations for holistic healing and balanced living.
           </p>
         </motion.div>

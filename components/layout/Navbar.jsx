@@ -27,7 +27,7 @@ import Image from "next/image";
 import { DEFAULT_NAV_LINKS, DEFAULT_ANNOUNCEMENT } from "@/lib/settings-constants";
 import SearchOverlay from "@/components/layout/SearchOverlay";
 
-/* Top Announcement Bar: Floramade Luxury Ayurvedic Theme (#101D17 & #D4AF55) */
+/* Top Announcement Bar: Floramade Luxury Ayurvedic Theme (#142B49 & #D9A441) */
 const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
   if (announcement?.enabled === false) return null;
 
@@ -35,14 +35,14 @@ const AnnouncementBar = ({ announcement = DEFAULT_ANNOUNCEMENT }) => {
     <span className="inline-flex items-center gap-1.5 text-white font-semibold text-[11px] sm:text-xs">
       {announcement.emoji && <span>{announcement.emoji}</span>}
       {announcement.highlight && (
-        <span className="text-[#D4AF55]">{announcement.highlight}</span>
+        <span className="text-[#D9A441]">{announcement.highlight}</span>
       )}
       <span>{announcement.text || "Save Up to 20% + Extra Combo OFF!"}</span>
     </span>
   );
 
   return (
-    <div className="bg-[#101D17] text-white py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#0A2A1A] relative z-[80]">
+    <div className="bg-[#142B49] text-white py-2 px-3 sm:px-6 md:px-8 lg:px-12 border-b border-[#0E1F36] relative z-[80]">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between text-[11px] sm:text-xs font-medium tracking-tight">
         
         {/* Left: Social Media + Follow us! (Hidden on mobile for clean centered offer) */}
@@ -207,8 +207,8 @@ export default function Navbar() {
       >
         <AnnouncementBar announcement={announcement} />
 
-        {/* Floramade Premium Herbal Header: Dark Green #101D17 */}
-        <div className={`bg-[#101D17] border-b border-[#0A2A1A] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#101D17]/15' : ''}`}>
+        {/* Floramade Premium Herbal Header: Dark Green #142B49 */}
+        <div className={`bg-[#142B49] border-b border-[#0E1F36] transition-all duration-300 ${scrolled ? 'shadow-md shadow-[#142B49]/15' : ''}`}>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
             
             {/* =========================================================================
@@ -249,14 +249,14 @@ export default function Navbar() {
                           type="button"
                           onClick={() => setOpenDropdownId(isOpen ? null : itemId)}
                           className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 select-none ${
-                            isOpen ? "text-[#D4AF55]" : "text-white/90 hover:text-[#D4AF55]"
+                            isOpen ? "text-[#D9A441]" : "text-white/90 hover:text-[#D9A441]"
                           }`}
                         >
                           <span>{item.label}</span>
                           <ChevronDown 
                             size={12} 
                             strokeWidth={2.4}
-                            className={`text-[#D4AF55] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
+                            className={`text-[#D9A441] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
                           />
                         </button>
 
@@ -270,10 +270,10 @@ export default function Navbar() {
                           onMouseEnter={() => handleMouseEnterDropdown(itemId)}
                           onMouseLeave={handleMouseLeaveDropdown}
                         >
-                          <div className="bg-white border border-[#E0D9C8] rounded-2xl shadow-[0_15px_40px_rgba(18,61,43,0.12)] p-2.5 backdrop-blur-xl">
+                          <div className="bg-white border border-[#C5D5E8] rounded-2xl shadow-[0_15px_40px_rgba(20,43,73,0.12)] p-2.5 backdrop-blur-xl">
                             {item.subHeading && (
-                              <div className="px-3 py-1.5 border-b border-[#101D17]/10 mb-1 flex items-center justify-between">
-                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#101D17] flex items-center gap-1.5">
+                              <div className="px-3 py-1.5 border-b border-[#142B49]/10 mb-1 flex items-center justify-between">
+                                <p className="text-[10px] uppercase tracking-wider font-bold text-[#142B49] flex items-center gap-1.5">
                                   <Sparkles size={11} /> {item.subHeading}
                                 </p>
                               </div>
@@ -289,32 +289,32 @@ export default function Navbar() {
                                     onClick={() => setOpenDropdownId(null)}
                                     className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-all group/item ${
                                       isTargetProduct
-                                        ? "bg-[#101D17]/10 hover:bg-[#101D17]/20 border border-[#101D17]/25 shadow-xs"
-                                        : "hover:bg-[#F8F4E9]/80 border border-transparent"
+                                        ? "bg-[#142B49]/10 hover:bg-[#142B49]/20 border border-[#142B49]/25 shadow-xs"
+                                        : "hover:bg-[#F7F9FC]/80 border border-transparent"
                                     }`}
                                   >
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2">
-                                        <span className="text-[13px] font-bold text-[#171717] group-hover/item:text-[#101D17] transition-colors tracking-tight">
+                                        <span className="text-[13px] font-bold text-[#1A2332] group-hover/item:text-[#142B49] transition-colors tracking-tight">
                                           {sub.label}
                                         </span>
                                         {sub.badge && (
                                           <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full tracking-tight ${
                                             isTargetProduct
-                                              ? "bg-[#101D17] text-white"
-                                              : "bg-[#101D17]/10 text-[#171717]"
+                                              ? "bg-[#142B49] text-white"
+                                              : "bg-[#142B49]/10 text-[#1A2332]"
                                           }`}>
                                             {sub.badge}
                                           </span>
                                         )}
                                       </div>
                                       {sub.description && (
-                                        <p className="text-[11px] text-[#171717]/70 mt-0.5 leading-snug font-normal line-clamp-1">
+                                        <p className="text-[11px] text-[#1A2332]/70 mt-0.5 leading-snug font-normal line-clamp-1">
                                           {sub.description}
                                         </p>
                                       )}
                                     </div>
-                                    <ArrowRight size={12} className="text-[#101D17] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
+                                    <ArrowRight size={12} className="text-[#142B49] opacity-50 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 transition-all shrink-0" />
                                   </Link>
                                 );
                               })}
@@ -329,7 +329,7 @@ export default function Navbar() {
                     <Link
                       key={itemId}
                       href={item.href || "/"}
-                      className="text-[13.5px] xl:text-[14px] font-semibold tracking-tight text-white/90 hover:text-[#D4AF55] transition-colors whitespace-nowrap py-3 outline-none focus:outline-none focus-visible:outline-none ring-0 select-none"
+                      className="text-[13.5px] xl:text-[14px] font-semibold tracking-tight text-white/90 hover:text-[#D9A441] transition-colors whitespace-nowrap py-3 outline-none focus:outline-none focus-visible:outline-none ring-0 select-none"
                     >
                       {item.label}
                     </Link>
@@ -342,7 +342,7 @@ export default function Navbar() {
                 {mounted && (user?.role === "admin" || user?.isAdmin) && (
                   <Link
                     href="/admin"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] hover:bg-[#D4AF55] hover:text-[#101D17] font-bold text-[10px] uppercase tracking-tight transition-all border border-[#101D17]/20 whitespace-nowrap mr-1 shadow-xs"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D9A441]/20 text-[#D9A441] hover:bg-[#D9A441] hover:text-[#142B49] font-bold text-[10px] uppercase tracking-tight transition-all border border-[#142B49]/20 whitespace-nowrap mr-1 shadow-xs"
                     title="Open Admin Dashboard"
                   >
                     <LayoutDashboard size={12} />
@@ -352,7 +352,7 @@ export default function Navbar() {
 
                 <Link 
                   href={mounted && user ? "/account" : "/login"} 
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D9A441] hover:bg-[#142B49]/5 transition-all focus:outline-none"
                   title={mounted && user ? "My Account" : "Login / Account"}
                   aria-label="User Account"
                 >
@@ -362,7 +362,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none cursor-pointer"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D9A441] hover:bg-[#142B49]/5 transition-all focus:outline-none cursor-pointer"
                   title="Search Products"
                   aria-label="Search"
                 >
@@ -371,13 +371,13 @@ export default function Navbar() {
 
                 <Link 
                   href="/wishlist" 
-                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
+                  className="p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D9A441] hover:bg-[#142B49]/5 transition-all relative focus:outline-none hidden sm:inline-flex"
                   title="Wishlist"
                   aria-label="Wishlist"
                 >
                   <Heart size={20} strokeWidth={1.9} />
                   {mounted && wishlistItems.length > 0 && (
-                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#101D17] text-white shadow-xs">
+                    <span className="absolute top-1 right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[9px] font-bold bg-[#142B49] text-white shadow-xs">
                       {wishlistItems.length}
                     </span>
                   )}
@@ -385,12 +385,12 @@ export default function Navbar() {
 
                 <Link 
                   href="/cart" 
-                  className="relative p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D4AF55] hover:bg-[#101D17]/5 transition-all focus:outline-none group active:scale-95"
+                  className="relative p-2 sm:p-2.5 rounded-full text-white/90 hover:text-[#D9A441] hover:bg-[#142B49]/5 transition-all focus:outline-none group active:scale-95"
                   title="Shopping Cart"
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={21} strokeWidth={1.9} className="group-hover:scale-105 transition-transform" />
-                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#101D17] text-white shadow-sm ring-2 ring-[#101D17]">
+                  <span className="absolute top-1 right-0.5 sm:top-1 sm:right-1 h-[17px] min-w-[17px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#142B49] text-white shadow-sm ring-2 ring-[#142B49]">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -409,7 +409,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setOpenMenu(true)}
-                  className="p-1.5 text-white/90 hover:text-[#D4AF55] transition-colors focus:outline-none"
+                  className="p-1.5 text-white/90 hover:text-[#D9A441] transition-colors focus:outline-none"
                   aria-label="Open Navigation Menu"
                 >
                   <Menu size={22} strokeWidth={2.2} />
@@ -418,7 +418,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-1.5 text-white/90 hover:text-[#D4AF55] transition-colors focus:outline-none"
+                  className="p-1.5 text-white/90 hover:text-[#D9A441] transition-colors focus:outline-none"
                   aria-label="Search"
                 >
                   <Search size={20} strokeWidth={2.2} />
@@ -443,11 +443,11 @@ export default function Navbar() {
               <div className="flex items-center justify-end shrink-0">
                 <Link 
                   href="/cart" 
-                  className="relative p-1.5 text-white/90 hover:text-[#D4AF55] transition-colors focus:outline-none active:scale-95"
+                  className="relative p-1.5 text-white/90 hover:text-[#D9A441] transition-colors focus:outline-none active:scale-95"
                   aria-label="View Shopping Cart"
                 >
                   <ShoppingBag size={22} strokeWidth={2} />
-                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#101D17] text-white shadow-xs">
+                  <span className="absolute -top-0.5 -right-1 h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#142B49] text-white shadow-xs">
                     {mounted ? cartCount : 0}
                   </span>
                 </Link>
@@ -464,7 +464,7 @@ export default function Navbar() {
 
       {/* =========================================================================
           MOBILE DRAWER NAVIGATION - EXACT VEDABAY STYLE (IMAGE 3)
-          Deep Ayurvedic Brown #39160D, Menu Header, '+' Accordion, Contact & Footer
+          Deep Ayurvedic Brown #0E1F36, Menu Header, '+' Accordion, Contact & Footer
           ========================================================================= */}
       <AnimatePresence>
         {openMenu && (
@@ -485,7 +485,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#101D17] text-white flex flex-col justify-between shadow-2xl overflow-y-auto"
+              className="fixed top-0 bottom-0 left-0 w-[84vw] max-w-[340px] z-[100] bg-[#142B49] text-white flex flex-col justify-between shadow-2xl overflow-y-auto"
             >
               {/* Scrollable Container */}
               <div className="flex-1 flex flex-col">
@@ -516,7 +516,7 @@ export default function Navbar() {
                           <button 
                             type="button"
                             onClick={() => setMobileOpenDropdownId(isMobOpen ? null : itemId)} 
-                            className="flex items-center justify-between w-full py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#D4AF55] transition-colors focus:outline-none text-left"
+                            className="flex items-center justify-between w-full py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#D9A441] transition-colors focus:outline-none text-left"
                           >
                             <span>{item.label}</span>
                             <span className="text-xl font-light text-white/80 leading-none">
@@ -531,19 +531,19 @@ export default function Navbar() {
                                 animate={{ height: 'auto', opacity: 1 }} 
                                 exit={{ height: 0, opacity: 0 }} 
                                 transition={{ duration: 0.22 }}
-                                className="bg-[#0A2A1A] px-5 py-2 space-y-2 border-t border-white/5 overflow-hidden"
+                                className="bg-[#0E1F36] px-5 py-2 space-y-2 border-t border-white/5 overflow-hidden"
                               >
                                 {item.subLinks.map((sub, sIdx) => (
                                   <Link 
                                     key={sub.id || sIdx}
                                     href={sub.href || "/product/madhucurex-diabetes-pro"} 
                                     onClick={() => setOpenMenu(false)}
-                                    className="block py-2 text-sm text-white/90 hover:text-[#D4AF55] transition-colors"
+                                    className="block py-2 text-sm text-white/90 hover:text-[#D9A441] transition-colors"
                                   >
                                     <div className="flex items-center gap-2">
                                       <span className="font-medium">{sub.label}</span>
                                       {sub.badge && (
-                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#101D17] text-white">
+                                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#142B49] text-white">
                                           {sub.badge}
                                         </span>
                                       )}
@@ -565,7 +565,7 @@ export default function Navbar() {
                         key={itemId}
                         href={item.href || "/"} 
                         onClick={() => setOpenMenu(false)} 
-                        className="flex items-center justify-between py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#D4AF55] transition-colors"
+                        className="flex items-center justify-between py-3.5 px-5 text-[15px] font-semibold text-white hover:text-[#D9A441] transition-colors"
                       >
                         <span>{item.label}</span>
                       </Link>
@@ -579,27 +579,27 @@ export default function Navbar() {
                   <Link 
                     href={mounted && user ? "/account" : "/login"} 
                     onClick={() => setOpenMenu(false)} 
-                    className="flex items-center gap-3 py-3 px-5 text-sm font-semibold text-white hover:text-[#D4AF55] transition-colors"
+                    className="flex items-center gap-3 py-3 px-5 text-sm font-semibold text-white hover:text-[#D9A441] transition-colors"
                   >
-                    <span className="text-[#D4AF55] text-base">⚡</span>
+                    <span className="text-[#D9A441] text-base">⚡</span>
                     <span>{mounted && user ? "My Account" : "Register / Login"}</span>
                   </Link>
 
                   {/* Email */}
                   <a 
                     href="mailto:floramade517@gmail.com" 
-                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#D4AF55] transition-colors"
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#D9A441] transition-colors"
                   >
-                    <Mail size={15} className="text-[#D4AF55] shrink-0" />
+                    <Mail size={15} className="text-[#D9A441] shrink-0" />
                     <span>floramade517@gmail.com</span>
                   </a>
 
                   {/* Phone */}
                   <a 
                     href="tel:+919220251059" 
-                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#D4AF55] transition-colors"
+                    className="flex items-center gap-3 py-2.5 px-5 text-xs text-white/85 hover:text-[#D9A441] transition-colors"
                   >
-                    <Phone size={15} className="text-[#D4AF55] shrink-0" />
+                    <Phone size={15} className="text-[#D9A441] shrink-0" />
                     <span>+91 9220251059</span>
                   </a>
                 </div>
@@ -609,28 +609,28 @@ export default function Navbar() {
                   <Link 
                     href="/" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-white/80 hover:text-[#D4AF55] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#D9A441] font-medium transition-colors"
                   >
                     Home
                   </Link>
                   <Link 
                     href="/contact" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-white/80 hover:text-[#D4AF55] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#D9A441] font-medium transition-colors"
                   >
                     Contact us
                   </Link>
                   <Link 
                     href="/about" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-white/80 hover:text-[#D4AF55] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#D9A441] font-medium transition-colors"
                   >
                     About Floramade
                   </Link>
                   <Link 
                     href="/collection" 
                     onClick={() => setOpenMenu(false)} 
-                    className="block py-2.5 px-5 text-white/80 hover:text-[#D4AF55] font-medium transition-colors"
+                    className="block py-2.5 px-5 text-white/80 hover:text-[#D9A441] font-medium transition-colors"
                   >
                     All Products
                   </Link>
@@ -639,7 +639,7 @@ export default function Navbar() {
                     <Link 
                       href="/admin" 
                       onClick={() => setOpenMenu(false)} 
-                      className="flex items-center gap-2 py-2.5 px-5 text-[#D4AF55] font-bold hover:underline"
+                      className="flex items-center gap-2 py-2.5 px-5 text-[#D9A441] font-bold hover:text-[#D9A441]"
                     >
                       <LayoutDashboard size={14} /> Admin Dashboard
                     </Link>

@@ -28,8 +28,8 @@ export default function AccountPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="animate-pulse flex flex-col items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-[#101D17]/10" />
-          <p className="text-xs text-[#171717]/40 tracking-tight font-semibold">Loading...</p>
+          <div className="h-10 w-10 rounded-full bg-[#142B49]/10" />
+          <p className="text-xs text-[#1A2332]/40 tracking-tight font-semibold">Loading...</p>
         </div>
       </div>
     );
@@ -129,7 +129,7 @@ export default function AccountPage() {
   ];
 
   return (
-    <div className="min-h-[80vh] bg-[#F8F4E9] w-full pt-4 md:pt-6 pb-20">
+    <div className="min-h-[80vh] bg-[#F7F9FC] w-full pt-4 md:pt-6 pb-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10">
         {/* Header */}
         <motion.div
@@ -139,10 +139,10 @@ export default function AccountPage() {
           className="mb-8 md:mb-10"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-[#101D17]" />
-            <span className="text-[10px] uppercase tracking-[0.08em] text-[#171717]/50 font-semibold">Your Space</span>
+            <span className="h-[1px] w-8 bg-[#142B49]" />
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#1A2332]/50 font-semibold">Your Space</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#171717]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#1A2332]">
             My Account
           </h1>
         </motion.div>
@@ -156,33 +156,33 @@ export default function AccountPage() {
             className="space-y-4"
           >
             {/* User Card */}
-            <div className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 flex flex-col items-center text-center space-y-3 shadow-xs">
-              <div className="h-16 w-16 rounded-full bg-[#101D17]/8 text-[#101D17] flex items-center justify-center text-2xl font-bold tracking-tight">
+            <div className="bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] p-5 flex flex-col items-center text-center space-y-3 shadow-xs">
+              <div className="h-16 w-16 rounded-full bg-[#142B49]/8 text-[#142B49] flex items-center justify-center text-2xl font-bold tracking-tight">
                 {user?.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
               <div>
-                <p className="text-sm font-bold tracking-tight text-[#171717]">{user?.name || "User"}</p>
-                <p className="text-xs text-[#171717]/40 tracking-tight">{user?.email}</p>
+                <p className="text-sm font-bold tracking-tight text-[#1A2332]">{user?.name || "User"}</p>
+                <p className="text-xs text-[#1A2332]/40 tracking-tight">{user?.email}</p>
               </div>
             </div>
 
             {/* Navigation */}
-            <div className="bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-2 flex flex-col gap-1 shadow-xs">
+            <div className="bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] p-2 flex flex-col gap-1 shadow-xs">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     activeSection === item.id
-                      ? "bg-[#101D17] text-white"
-                      : "hover:bg-[#101D17]/5 text-[#171717]/60"
+                      ? "bg-[#142B49] text-white"
+                      : "hover:bg-[#142B49]/5 text-[#1A2332]/60"
                   }`}
                 >
                   <item.icon size={16} strokeWidth={2} />
                   <span className="text-xs uppercase tracking-[0.06em] font-bold">{item.label}</span>
                 </button>
               ))}
-              <div className="border-t border-[#E0D9C8] mt-1 pt-1">
+              <div className="border-t border-[#C5D5E8] mt-1 pt-1">
                 <button
                   onClick={async () => {
                     await logout();
@@ -203,17 +203,17 @@ export default function AccountPage() {
               {activeSection === "profile" && (
                 <motion.div key="profile" {...fadeAnim} className="space-y-5 max-w-2xl">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#171717]">Personal Details</h2>
-                    <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Manage your personal information and preferences.</p>
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A2332]">Personal Details</h2>
+                    <p className="text-xs text-[#1A2332]/45 tracking-tight mt-1">Manage your personal information and preferences.</p>
                   </div>
 
-                  <form onSubmit={saveProfile} className="space-y-5 bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 shadow-xs">
+                  <form onSubmit={saveProfile} className="space-y-5 bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] p-5 sm:p-7 shadow-xs">
                     <div className="space-y-4">
                       <Input label="Full Name" value={profile.name || user?.name || ""} onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))} />
                       <Input label="Email Address" value={user?.email || ""} disabled />
                       <Input label="Phone Number" placeholder="e.g. 9220251059" value={profile.phone || user?.phone || ""} onChange={(e) => setProfile((p) => ({ ...p, phone: e.target.value }))} />
                     </div>
-                    <button type="submit" className="h-11 px-7 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
+                    <button type="submit" className="h-11 px-7 rounded-full bg-[#142B49] text-white flex items-center justify-center gap-2 hover:bg-[#142B49] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
                       Save Changes
                     </button>
                   </form>
@@ -223,11 +223,11 @@ export default function AccountPage() {
               {activeSection === "settings" && (
                 <motion.div key="settings" {...fadeAnim} className="space-y-5 max-w-2xl">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#171717]">Security</h2>
-                    <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Ensure your account stays secure.</p>
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A2332]">Security</h2>
+                    <p className="text-xs text-[#1A2332]/45 tracking-tight mt-1">Ensure your account stays secure.</p>
                   </div>
 
-                  <form onSubmit={updatePassword} className="space-y-5 bg-[#EFE8D8] rounded-2xl border border-[#DDD2BD] p-5 sm:p-7 shadow-xs">
+                  <form onSubmit={updatePassword} className="space-y-5 bg-[#D9E5F3] rounded-2xl border border-[#C5D5E8] p-5 sm:p-7 shadow-xs">
                     <div className="space-y-4">
                       <Input
                         label="Current Password"
@@ -242,7 +242,7 @@ export default function AccountPage() {
                         onChange={(e) => setPasswordForm((p) => ({ ...p, newPassword: e.target.value }))}
                       />
                     </div>
-                    <button type="submit" className="h-11 px-7 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17]/90 transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
+                    <button type="submit" className="h-11 px-7 rounded-full bg-[#142B49] text-white flex items-center justify-center gap-2 hover:bg-[#142B49]/90 transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em] w-full sm:w-auto">
                       Update Password
                     </button>
                   </form>
@@ -252,23 +252,23 @@ export default function AccountPage() {
               {activeSection === "orders" && (
                 <motion.div key="orders" {...fadeAnim} className="space-y-5">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#171717]">Order History</h2>
-                    <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Track your past purchases.</p>
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A2332]">Order History</h2>
+                    <p className="text-xs text-[#1A2332]/45 tracking-tight mt-1">Track your past purchases.</p>
                   </div>
 
                   <div className="space-y-4">
                     {!orders.length ? (
-                      <div className="py-16 border border-[#DDD2BD] rounded-2xl bg-[#EFE8D8] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
-                        <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
-                          <ShoppingBag size={24} className="text-[#171717]/25" />
+                      <div className="py-16 border border-[#C5D5E8] rounded-2xl bg-[#D9E5F3] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
+                        <div className="w-14 h-14 rounded-full bg-[#142B49]/5 flex items-center justify-center">
+                          <ShoppingBag size={24} className="text-[#1A2332]/25" />
                         </div>
                         <div className="space-y-1">
-                          <p className="text-sm font-bold text-[#171717]/70 tracking-tight">No orders yet</p>
-                          <p className="text-xs text-[#171717]/40 tracking-tight">Start your wellness journey today</p>
+                          <p className="text-sm font-bold text-[#1A2332]/70 tracking-tight">No orders yet</p>
+                          <p className="text-xs text-[#1A2332]/40 tracking-tight">Start your wellness journey today</p>
                         </div>
                         <Link
                           href="/"
-                          className="h-10 px-6 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-2 hover:bg-[#101D17] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
+                          className="h-10 px-6 rounded-full bg-[#142B49] text-white flex items-center justify-center gap-2 hover:bg-[#142B49] transition-colors duration-300 text-xs font-bold uppercase tracking-[0.06em]"
                         >
                           Shop Now <ArrowRight size={13} strokeWidth={2} />
                         </Link>
@@ -296,12 +296,12 @@ export default function AccountPage() {
                 <motion.div key="addresses" {...fadeAnim} className="space-y-5">
                   <div className="flex items-start sm:items-center justify-between gap-3 flex-col sm:flex-row">
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#171717]">Saved Addresses</h2>
-                      <p className="text-xs text-[#171717]/45 tracking-tight mt-1">Manage your delivery addresses.</p>
+                      <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1A2332]">Saved Addresses</h2>
+                      <p className="text-xs text-[#1A2332]/45 tracking-tight mt-1">Manage your delivery addresses.</p>
                     </div>
                     <Link
                       href="/account/add-address"
-                      className="h-9 px-5 rounded-full bg-[#101D17] text-white flex items-center justify-center gap-1.5 hover:bg-[#101D17] transition-colors duration-300 text-[11px] font-bold uppercase tracking-[0.06em] flex-shrink-0"
+                      className="h-9 px-5 rounded-full bg-[#142B49] text-white flex items-center justify-center gap-1.5 hover:bg-[#142B49] transition-colors duration-300 text-[11px] font-bold uppercase tracking-[0.06em] flex-shrink-0"
                     >
                       <Plus size={13} strokeWidth={2.5} /> Add Address
                     </Link>
@@ -309,13 +309,13 @@ export default function AccountPage() {
 
                   <div className="space-y-3">
                     {!addresses.length ? (
-                      <div className="py-16 border border-[#DDD2BD] rounded-2xl bg-[#EFE8D8] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
-                        <div className="w-14 h-14 rounded-full bg-[#101D17]/5 flex items-center justify-center">
-                          <MapPin size={24} className="text-[#171717]/25" />
+                      <div className="py-16 border border-[#C5D5E8] rounded-2xl bg-[#D9E5F3] flex flex-col items-center justify-center text-center space-y-4 shadow-xs">
+                        <div className="w-14 h-14 rounded-full bg-[#142B49]/5 flex items-center justify-center">
+                          <MapPin size={24} className="text-[#1A2332]/25" />
                         </div>
                         <div className="space-y-1">
-                          <p className="text-sm font-bold text-[#171717]/70 tracking-tight">No saved addresses</p>
-                          <p className="text-xs text-[#171717]/40 tracking-tight">Add an address for faster checkout</p>
+                          <p className="text-sm font-bold text-[#1A2332]/70 tracking-tight">No saved addresses</p>
+                          <p className="text-xs text-[#1A2332]/40 tracking-tight">Add an address for faster checkout</p>
                         </div>
                         <Link href="/account/add-address">
                           <Button className="text-xs">Add Your First Address</Button>
@@ -327,24 +327,24 @@ export default function AccountPage() {
                           key={addr._id}
                           className={`relative p-4 sm:p-5 rounded-xl border transition-all ${
                             addr.isDefault
-                              ? "bg-[#101D17]/5 border-[#101D17]/30"
-                              : "bg-[#F8F4E9] border-[#DDD2BD]"
+                              ? "bg-[#142B49]/5 border-[#142B49]/30"
+                              : "bg-[#F7F9FC] border-[#C5D5E8]"
                           }`}
                         >
                           {addr.isDefault && (
-                            <span className="absolute top-3 right-3 text-[10px] font-bold text-[#101D17] uppercase tracking-[0.06em]">Default</span>
+                            <span className="absolute top-3 right-3 text-[10px] font-bold text-[#142B49] uppercase tracking-[0.06em]">Default</span>
                           )}
                           <div className="space-y-1">
-                            <p className="text-sm font-bold tracking-tight text-[#171717]">{addr.fullName}</p>
-                            <p className="text-xs text-[#171717]/50 tracking-tight">{addr.phone}</p>
-                            <p className="text-xs text-[#171717]/50 tracking-tight">{addr.addressLine}</p>
-                            <p className="text-xs text-[#171717]/50 tracking-tight">{addr.city}, {addr.state} - {addr.pincode}</p>
+                            <p className="text-sm font-bold tracking-tight text-[#1A2332]">{addr.fullName}</p>
+                            <p className="text-xs text-[#1A2332]/50 tracking-tight">{addr.phone}</p>
+                            <p className="text-xs text-[#1A2332]/50 tracking-tight">{addr.addressLine}</p>
+                            <p className="text-xs text-[#1A2332]/50 tracking-tight">{addr.city}, {addr.state} - {addr.pincode}</p>
                           </div>
                           <div className="flex gap-3 mt-3">
                             {!addr.isDefault && (
                               <button
                                 onClick={() => setDefaultAddress(addr._id)}
-                                className="text-[10px] uppercase tracking-[0.06em] font-bold text-[#101D17] hover:text-[#171717] transition-colors"
+                                className="text-[10px] uppercase tracking-[0.06em] font-bold text-[#142B49] hover:text-[#1A2332] transition-colors"
                               >
                                 Set Default
                               </button>

@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="rounded-[2rem] border border-border bg-[#F8F4E9]/50 backdrop-blur-sm p-8 shadow-sm"
+          className="rounded-[2rem] border border-border bg-[#F7F9FC]/50 backdrop-blur-sm p-8 shadow-sm"
         >
           {!sent ? (
             <>
@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-[#F8F4E9]/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-foreground/10 bg-[#F7F9FC]/50 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     required
                   />
                 </div>

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function PolicyCTA() {
   return (
     <section className="py-12 sm:py-16 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto rounded-3xl bg-[#101D17] text-white p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-md">
+      <div className="max-w-4xl mx-auto rounded-3xl bg-[#142B49] text-white p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-md">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function PolicyCTA() {
               href="mailto:floramade517@gmail.com" 
               className="p-4 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-colors flex flex-col items-center gap-2 text-center"
             >
-              <div className="h-10 w-10 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-[#D9A441]/20 text-[#D9A441] flex items-center justify-center">
                 <Mail className="h-5 w-5" />
               </div>
               <span className="text-xs font-semibold text-white truncate max-w-[190px]">floramade517@gmail.com</span>
@@ -40,7 +40,7 @@ export default function PolicyCTA() {
               href="tel:+919220251059" 
               className="p-4 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-colors flex flex-col items-center gap-2 text-center"
             >
-              <div className="h-10 w-10 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-[#D9A441]/20 text-[#D9A441] flex items-center justify-center">
                 <Phone className="h-5 w-5" />
               </div>
               <span className="text-xs font-semibold text-white">+91 9220251059</span>
@@ -51,7 +51,7 @@ export default function PolicyCTA() {
               href="/contact" 
               className="p-4 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-colors flex flex-col items-center gap-2 text-center sm:col-span-2 md:col-span-1"
             >
-              <div className="h-10 w-10 rounded-full bg-[#D4AF55]/20 text-[#D4AF55] flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-[#D9A441]/20 text-[#D9A441] flex items-center justify-center">
                 <MessageSquare className="h-5 w-5" />
               </div>
               <span className="text-xs font-semibold text-white">Contact Desk</span>
@@ -61,8 +61,8 @@ export default function PolicyCTA() {
         </motion.div>
 
         {/* Ambient glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF55]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#101D17]/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D9A441]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#142B49]/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
       </div>
     </section>
   );

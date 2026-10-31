@@ -12,11 +12,11 @@ const certificateImages = [
 
 export default function WhyChooseFloramade() {
   return (
-    <section className="w-full py-12 sm:py-16 md:py-20 bg-background relative border-t border-[#E0D9C8]/40">
+    <section className="w-full py-12 sm:py-16 md:py-20 bg-background relative border-t border-[#C5D5E8]/40">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         {/* Section Heading */}
         <div className="text-center mb-10 sm:mb-12 md:mb-14">
-          <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold tracking-tight text-[#171717]">
+          <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold tracking-tight text-[#1A2332]">
             Why Choose Floramade?
           </h2>
         </div>

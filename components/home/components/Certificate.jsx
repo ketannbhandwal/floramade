@@ -10,17 +10,17 @@ const certificates = [
 
 function CertificateSlider() {
   return (
-    <section className="py-20 overflow-hidden relative bg-[#F8F4E9]">
+    <section className="py-20 overflow-hidden relative bg-[#F7F9FC]">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
-        <h2 className="text-center text-3xl md:text-4xl font-light text-[#171717] mb-16 tracking-tight">
-          Certified by <span className="font-medium italic text-[#101D17]">Years of Trust</span>
+        <h2 className="text-center text-3xl md:text-4xl font-light text-[#1A2332] mb-16 tracking-tight">
+          Certified by <span className="font-medium italic text-[#142B49]">Years of Trust</span>
         </h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
           {certificates.map((cert) => (
             <div
               key={cert.id}
-              className="group flex flex-col items-center gap-6 p-8 bg-[#F8F4E9] border border-[#E0D9C8] rounded-3xl hover:border-[#101D17]/30 transition-all duration-500 hover:shadow-xl hover:shadow-[#101D17]/5"
+              className="group flex flex-col items-center gap-6 p-8 bg-[#F7F9FC] border border-[#C5D5E8] rounded-3xl hover:border-[#142B49]/30 transition-all duration-500 hover:shadow-xl hover:shadow-[#142B49]/5"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 relative grayscale group-hover:grayscale-0 transition-all duration-500">
                 <Image 
@@ -31,10 +31,10 @@ function CertificateSlider() {
                 />
               </div>
               <div className="text-center space-y-1">
-                <span className="block text-[#171717] font-semibold text-lg tracking-tight">
+                <span className="block text-[#1A2332] font-semibold text-lg tracking-tight">
                   {cert.title}
                 </span>
-                <span className="block text-[10px] uppercase tracking-widest text-[#171717]/50 font-bold">
+                <span className="block text-[10px] uppercase tracking-widest text-[#1A2332]/50 font-bold">
                   {cert.name}
                 </span>
               </div>

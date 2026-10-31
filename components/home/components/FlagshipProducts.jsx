@@ -64,20 +64,20 @@ export default function FlagshipProducts({
   if (items.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-22 bg-background border-t border-[#E0D9C8]/50">
+    <section className="relative overflow-hidden py-14 sm:py-18 lg:py-22 bg-background border-t border-[#C5D5E8]/50">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         
         {/* Section Header */}
         <div className="mb-8 sm:mb-10 md:mb-12 text-center max-w-2xl mx-auto space-y-1.5 px-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#101D17]/10 text-[#101D17] text-[11px] font-bold tracking-tight uppercase mb-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E7EFD8] text-[#142B49] border border-[#C5D5E8] text-[11px] font-bold tracking-tight uppercase mb-1">
             <Sparkles size={12} />
             <span>Handpicked Ayurvedic Formulations</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold tracking-tight text-[#171717] uppercase">
+          <h2 className="text-2xl sm:text-3xl md:text-[34px] font-bold tracking-tight text-[#1A2332] uppercase">
             {heading}
           </h2>
           {subheading && (
-            <p className="text-xs sm:text-sm md:text-base text-[#171717]/70 font-normal tracking-tight">
+            <p className="text-xs sm:text-sm md:text-base text-[#1A2332]/70 font-normal tracking-tight">
               {subheading}
             </p>
           )}
@@ -95,9 +95,9 @@ export default function FlagshipProducts({
                 onClick={scrollPrev}
                 disabled={!canScrollPrev}
                 aria-label="Previous Products"
-                className={`absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] text-[#171717] border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
+                className={`absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F7F9FC] text-[#1A2332] border border-[#C5D5E8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
                   canScrollPrev
-                    ? "hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
+                    ? "hover:bg-[#142B49] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
                     : "opacity-30 cursor-not-allowed pointer-events-none"
                 }`}
               >
@@ -110,9 +110,9 @@ export default function FlagshipProducts({
                 onClick={scrollNext}
                 disabled={!canScrollNext}
                 aria-label="Next Products"
-                className={`absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F8F4E9] text-[#171717] border border-[#E0D9C8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
+                className={`absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#F7F9FC] text-[#1A2332] border border-[#C5D5E8] shadow-lg flex items-center justify-center transition-all duration-200 backdrop-blur-xs ${
                   canScrollNext
-                    ? "hover:bg-[#101D17] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
+                    ? "hover:bg-[#142B49] hover:text-white hover:scale-105 active:scale-95 cursor-pointer"
                     : "opacity-30 cursor-not-allowed pointer-events-none"
                 }`}
               >
@@ -150,8 +150,8 @@ export default function FlagshipProducts({
                 aria-label={`Go to slide ${dotIdx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   selectedIndex === dotIdx
-                    ? "w-7 h-2 bg-[#101D17]"
-                    : "w-2 h-2 bg-[#101D17]/20 hover:bg-[#101D17]/40"
+                    ? "w-7 h-2 bg-[#142B49]"
+                    : "w-2 h-2 bg-[#142B49]/20 hover:bg-[#142B49]/40"
                 }`}
               />
             ))}

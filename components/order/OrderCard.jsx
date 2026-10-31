@@ -28,7 +28,7 @@ import {
 const STATUS_DETAILS = {
   placed: {
     label: "Order Placed",
-    color: "bg-[#101D17]/10 text-[#101D17] border-[#101D17]/25",
+    color: "bg-[#142B49]/10 text-[#142B49] border-[#142B49]/25",
     description: "Your order has been confirmed. Our team is preparing your Ayurvedic remedies.",
   },
   processing: {
@@ -144,27 +144,27 @@ export default function OrderCard({ order, onStatusUpdate }) {
   };
 
   return (
-    <div className="rounded-2xl sm:rounded-3xl border border-[#E0D9C8] bg-white shadow-[0_4px_20px_rgba(18,61,43,0.03)] hover:shadow-[0_8px_30px_rgba(18,61,43,0.06)] transition-all duration-300 overflow-hidden">
+    <div className="rounded-2xl sm:rounded-3xl border border-[#C5D5E8] bg-white shadow-[0_4px_20px_rgba(20,43,73,0.03)] hover:shadow-[0_8px_30px_rgba(20,43,73,0.06)] transition-all duration-300 overflow-hidden">
       {/* 1. Header Bar */}
-      <div className="p-4 sm:p-6 border-b border-[#E0D9C8]/80 bg-white/40 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 sm:p-6 border-b border-[#C5D5E8]/80 bg-white/40 flex flex-wrap items-center justify-between gap-3">
         {/* Left: Order ID & Date */}
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-xs uppercase tracking-tight font-bold text-[#171717]/50">Order</span>
-            <span className="font-bold text-sm sm:text-base tracking-tight text-[#171717]">
+            <span className="text-xs uppercase tracking-tight font-bold text-[#1A2332]/50">Order</span>
+            <span className="font-bold text-sm sm:text-base tracking-tight text-[#1A2332]">
               #{order.orderId || order._id}
             </span>
             <button
               onClick={handleCopyOrderId}
               title="Copy Order ID"
-              className="p-1 rounded-md text-[#171717]/40 hover:text-[#101D17] hover:bg-[#101D17]/10 transition-colors"
+              className="p-1 rounded-md text-[#1A2332]/40 hover:text-[#142B49] hover:bg-[#142B49]/10 transition-colors"
             >
-              {copied ? <Check size={13} className="text-[#101D17]" /> : <Copy size={13} />}
+              {copied ? <Check size={13} className="text-[#142B49]" /> : <Copy size={13} />}
             </button>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#171717]/55 tracking-tight">
-            <Calendar size={12} className="text-[#101D17]/70" />
+          <div className="flex items-center gap-2 text-xs text-[#1A2332]/55 tracking-tight">
+            <Calendar size={12} className="text-[#142B49]/70" />
             <span>{formattedDate}</span>
             <span>•</span>
             <span>{formattedTime}</span>
@@ -182,15 +182,15 @@ export default function OrderCard({ order, onStatusUpdate }) {
           </span>
 
           {/* Payment Method Badge */}
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-tight border border-[#E0D9C8] bg-white text-[#171717]">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-tight border border-[#C5D5E8] bg-white text-[#1A2332]">
             {paymentMethod === "cod" ? (
               <>
-                <Banknote size={12} className="text-[#101D17]" />
+                <Banknote size={12} className="text-[#142B49]" />
                 <span>Cash on Delivery</span>
               </>
             ) : (
               <>
-                <CreditCard size={12} className="text-[#101D17]" />
+                <CreditCard size={12} className="text-[#142B49]" />
                 <span>Prepaid (Razorpay)</span>
               </>
             )}
@@ -199,21 +199,21 @@ export default function OrderCard({ order, onStatusUpdate }) {
       </div>
 
       {/* 2. Order Tracking Timeline Section */}
-      <div className="p-4 sm:p-6 sm:pb-5 space-y-4 border-b border-[#E0D9C8]/60 bg-white">
+      <div className="p-4 sm:p-6 sm:pb-5 space-y-4 border-b border-[#C5D5E8]/60 bg-white">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h4 className="text-xs uppercase tracking-[0.06em] font-bold text-[#171717]/50">
+            <h4 className="text-xs uppercase tracking-[0.06em] font-bold text-[#1A2332]/50">
               Live Order Status
             </h4>
-            <p className="text-xs sm:text-sm text-[#171717]/80 tracking-tight font-medium mt-0.5">
+            <p className="text-xs sm:text-sm text-[#1A2332]/80 tracking-tight font-medium mt-0.5">
               {statusInfo.description}
             </p>
           </div>
 
           {statusKey !== "delivered" && statusKey !== "cancelled" && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#101D17]/5 border border-[#101D17]/20 text-[#101D17] text-xs font-bold tracking-tight self-start sm:self-auto">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#142B49]/5 border border-[#142B49]/20 text-[#142B49] text-xs font-bold tracking-tight self-start sm:self-auto">
               <span>Expected Delivery:</span>
-              <span className="underline decoration-[#101D17]/40">{formattedEstDelivery}</span>
+              <span className="underline decoration-[#142B49]/40">{formattedEstDelivery}</span>
             </div>
           )}
         </div>
@@ -227,11 +227,11 @@ export default function OrderCard({ order, onStatusUpdate }) {
       {/* 3. Items Summary */}
       <div className="p-4 sm:p-6 space-y-3">
         <div className="flex items-center justify-between">
-          <h4 className="text-xs uppercase tracking-[0.06em] font-bold text-[#171717]/50">
+          <h4 className="text-xs uppercase tracking-[0.06em] font-bold text-[#1A2332]/50">
             Items ({(order.items || []).length})
           </h4>
-          <span className="text-xs font-bold text-[#171717] tracking-tight">
-            Order Total: <span className="text-base sm:text-lg text-[#101D17]">₹{order.amount?.toLocaleString()}</span>
+          <span className="text-xs font-bold text-[#1A2332] tracking-tight">
+            Order Total: <span className="text-base sm:text-lg text-[#142B49]">₹{order.amount?.toLocaleString()}</span>
           </span>
         </div>
 
@@ -242,7 +242,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
               className="py-3 first:pt-1 last:pb-1 flex items-center justify-between gap-3"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="relative h-12 w-12 sm:h-14 sm:w-14 rounded-xl border border-[#E0D9C8] bg-white/50 overflow-hidden flex-shrink-0">
+                <div className="relative h-12 w-12 sm:h-14 sm:w-14 rounded-xl border border-[#C5D5E8] bg-white/50 overflow-hidden flex-shrink-0">
                   <Image
                     src={item.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80"}
                     alt={item.name}
@@ -254,12 +254,12 @@ export default function OrderCard({ order, onStatusUpdate }) {
                 <div className="min-w-0">
                   <Link
                     href={`/product/${item.slug || "madhu-diabetes-pro"}`}
-                    className="text-xs sm:text-sm font-bold tracking-tight text-[#171717] hover:text-[#101D17] transition-colors line-clamp-1"
+                    className="text-xs sm:text-sm font-bold tracking-tight text-[#1A2332] hover:text-[#142B49] transition-colors line-clamp-1"
                   >
                     {item.name}
                   </Link>
-                  <p className="text-[11px] text-[#171717]/50 tracking-tight mt-0.5">
-                    Qty: <span className="font-bold text-[#171717]">{item.quantity}</span>
+                  <p className="text-[11px] text-[#1A2332]/50 tracking-tight mt-0.5">
+                    Qty: <span className="font-bold text-[#1A2332]">{item.quantity}</span>
                     {item.price && (
                       <span className="ml-2">@ ₹{item.price.toLocaleString()} each</span>
                     )}
@@ -270,13 +270,13 @@ export default function OrderCard({ order, onStatusUpdate }) {
               {/* Action: Buy Again Button */}
               <div className="flex items-center gap-2 flex-shrink-0">
                 {item.price && (
-                  <span className="text-xs sm:text-sm font-bold text-[#171717] tracking-tight hidden sm:block">
+                  <span className="text-xs sm:text-sm font-bold text-[#1A2332] tracking-tight hidden sm:block">
                     ₹{(item.price * item.quantity).toLocaleString()}
                   </span>
                 )}
                 <button
                   onClick={() => handleBuyAgain(item)}
-                  className="px-3 py-1.5 rounded-full border border-[#E0D9C8] bg-white hover:bg-[#101D17] hover:text-white hover:border-[#101D17] text-[#171717] text-[11px] font-bold tracking-tight transition-all duration-200 flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-full border border-[#C5D5E8] bg-white hover:bg-[#142B49] hover:text-white hover:border-[#142B49] text-[#1A2332] text-[11px] font-bold tracking-tight transition-all duration-200 flex items-center gap-1"
                 >
                   <RotateCcw size={11} />
                   <span>Buy Again</span>
@@ -289,52 +289,52 @@ export default function OrderCard({ order, onStatusUpdate }) {
 
       {/* 4. Expandable Order Details & Delivery Address */}
       {expanded && (
-        <div className="px-4 sm:px-6 pb-6 pt-2 border-t border-[#E0D9C8]/60 bg-white/30 space-y-4 text-xs animate-in fade-in-50 duration-300">
+        <div className="px-4 sm:px-6 pb-6 pt-2 border-t border-[#C5D5E8]/60 bg-white/30 space-y-4 text-xs animate-in fade-in-50 duration-300">
           <div className="grid sm:grid-cols-2 gap-4 pt-2">
             {/* Delivery Address Card */}
-            <div className="p-4 rounded-xl border border-[#E0D9C8] bg-white space-y-2">
-              <div className="flex items-center gap-2 text-[#101D17] font-bold uppercase tracking-tight text-[11px]">
+            <div className="p-4 rounded-xl border border-[#C5D5E8] bg-white space-y-2">
+              <div className="flex items-center gap-2 text-[#142B49] font-bold uppercase tracking-tight text-[11px]">
                 <MapPin size={13} />
                 <span>Shipping Address</span>
               </div>
-              <p className="font-bold text-sm text-[#171717] tracking-tight">
+              <p className="font-bold text-sm text-[#1A2332] tracking-tight">
                 {order.address?.fullName || "Recipient"}
               </p>
-              <p className="text-xs text-[#171717]/70 tracking-tight leading-relaxed">
+              <p className="text-xs text-[#1A2332]/70 tracking-tight leading-relaxed">
                 {order.address?.addressLine}
                 {order.address?.city ? `, ${order.address.city}` : ""}
                 {order.address?.state ? `, ${order.address.state}` : ""}
                 {order.address?.pincode ? ` - ${order.address.pincode}` : ""}
               </p>
               {order.address?.phone && (
-                <div className="flex items-center gap-1.5 text-xs text-[#171717]/70 tracking-tight pt-1">
-                  <Phone size={11} className="text-[#101D17]" />
+                <div className="flex items-center gap-1.5 text-xs text-[#1A2332]/70 tracking-tight pt-1">
+                  <Phone size={11} className="text-[#142B49]" />
                   <span>{order.address.phone}</span>
                 </div>
               )}
             </div>
 
             {/* Price Breakdown Card */}
-            <div className="p-4 rounded-xl border border-[#E0D9C8] bg-white space-y-2">
-              <div className="flex items-center gap-2 text-[#101D17] font-bold uppercase tracking-tight text-[11px]">
+            <div className="p-4 rounded-xl border border-[#C5D5E8] bg-white space-y-2">
+              <div className="flex items-center gap-2 text-[#142B49] font-bold uppercase tracking-tight text-[11px]">
                 <Package size={13} />
                 <span>Payment & Cost Summary</span>
               </div>
-              <div className="space-y-1.5 pt-1 text-xs text-[#171717]/75">
+              <div className="space-y-1.5 pt-1 text-xs text-[#1A2332]/75">
                 <div className="flex justify-between">
                   <span>Items Total</span>
-                  <span className="font-bold text-[#171717]">₹{order.amount?.toLocaleString()}</span>
+                  <span className="font-bold text-[#1A2332]">₹{order.amount?.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Delivery Charges</span>
                   <span className="font-bold text-emerald-700">FREE</span>
                 </div>
-                <div className="flex justify-between border-t border-[#E0D9C8] pt-1.5 text-sm font-bold text-[#171717]">
+                <div className="flex justify-between border-t border-[#C5D5E8] pt-1.5 text-sm font-bold text-[#1A2332]">
                   <span>Grand Total</span>
-                  <span className="text-[#101D17]">₹{order.amount?.toLocaleString()}</span>
+                  <span className="text-[#142B49]">₹{order.amount?.toLocaleString()}</span>
                 </div>
                 {order.paymentId && (
-                  <p className="text-[10px] text-[#171717]/40 tracking-tight pt-1">
+                  <p className="text-[10px] text-[#1A2332]/40 tracking-tight pt-1">
                     Razorpay Ref: {order.paymentId}
                   </p>
                 )}
@@ -345,11 +345,11 @@ export default function OrderCard({ order, onStatusUpdate }) {
       )}
 
       {/* 5. Footer Controls Bar */}
-      <div className="p-4 sm:px-6 border-t border-[#E0D9C8] bg-white flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 sm:px-6 border-t border-[#C5D5E8] bg-white flex flex-wrap items-center justify-between gap-3">
         {/* Toggle Details Button */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-xs font-bold text-[#101D17] hover:text-[#171717] transition-colors flex items-center gap-1.5 tracking-tight"
+          className="text-xs font-bold text-[#142B49] hover:text-[#1A2332] transition-colors flex items-center gap-1.5 tracking-tight"
         >
           <span>{expanded ? "Hide Details" : "View Delivery Address & Receipt"}</span>
           {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -360,7 +360,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
           {/* Print Receipt */}
           <button
             onClick={handlePrintReceipt}
-            className="px-3 py-1.5 rounded-full border border-[#E0D9C8] bg-white hover:bg-white text-[#171717] text-xs font-bold tracking-tight transition-colors flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-full border border-[#C5D5E8] bg-white hover:bg-white text-[#1A2332] text-xs font-bold tracking-tight transition-colors flex items-center gap-1.5"
           >
             <Printer size={12} />
             <span className="hidden sm:inline">Print</span> Invoice
@@ -392,13 +392,13 @@ export default function OrderCard({ order, onStatusUpdate }) {
       {/* Cancel Confirmation Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 border border-[#E0D9C8] shadow-2xl">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 border border-[#C5D5E8] shadow-2xl">
             <div className="h-10 w-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
               <AlertTriangle size={20} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#171717] tracking-tight">Cancel this order?</h3>
-              <p className="text-xs text-[#171717]/70 tracking-tight mt-1 leading-relaxed">
+              <h3 className="text-base font-bold text-[#1A2332] tracking-tight">Cancel this order?</h3>
+              <p className="text-xs text-[#1A2332]/70 tracking-tight mt-1 leading-relaxed">
                 Are you sure you want to cancel Order <strong>#{order.orderId || order._id}</strong>? If this was prepaid, a full refund will be initiated to your original payment method.
               </p>
             </div>
@@ -406,7 +406,7 @@ export default function OrderCard({ order, onStatusUpdate }) {
               <button
                 disabled={isCancelling}
                 onClick={() => setShowCancelModal(false)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-[#171717]/70 hover:bg-[#101D17]/5 transition-colors"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#1A2332]/70 hover:bg-[#142B49]/5 transition-colors"
               >
                 Keep Order
               </button>

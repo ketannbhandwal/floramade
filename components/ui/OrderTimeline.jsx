@@ -58,11 +58,11 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
       {/* Stepper Container */}
       <div className="relative">
         {/* Background Track Line */}
-        <div className="absolute top-4 left-6 right-6 sm:left-8 sm:right-8 h-1 bg-[#E0D9C8]/60 -translate-y-1/2 z-0 rounded-full" />
+        <div className="absolute top-4 left-6 right-6 sm:left-8 sm:right-8 h-1 bg-[#C5D5E8]/60 -translate-y-1/2 z-0 rounded-full" />
         
         {/* Active Progress Line */}
         <div
-          className="absolute top-4 left-6 sm:left-8 h-1 bg-[#101D17] -translate-y-1/2 z-0 rounded-full transition-all duration-700 ease-out"
+          className="absolute top-4 left-6 sm:left-8 h-1 bg-[#142B49] -translate-y-1/2 z-0 rounded-full transition-all duration-700 ease-out"
           style={{ width: `calc(${progressPercent}% * (100% - 3rem) / 100)` }}
         />
 
@@ -80,10 +80,10 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
                 <div
                   className={`h-8 w-8 sm:h-9 sm:w-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 relative ${
                     isCompleted
-                      ? "bg-[#101D17] text-white shadow-xs"
+                      ? "bg-[#142B49] text-white shadow-xs"
                       : isCurrent
-                      ? "bg-[#101D17] text-white ring-4 ring-[#101D17]/20 shadow-md shadow-[#101D17]/20"
-                      : "bg-white border-2 border-[#E0D9C8] text-[#171717]/40"
+                      ? "bg-[#142B49] text-white ring-4 ring-[#142B49]/20 shadow-md shadow-[#142B49]/20"
+                      : "bg-white border-2 border-[#C5D5E8] text-[#1A2332]/40"
                   }`}
                 >
                   {isCompleted ? (
@@ -94,7 +94,7 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
 
                   {/* Pulsing glow for current stage */}
                   {isCurrent && (
-                    <span className="absolute inset-0 rounded-full bg-[#101D17] animate-ping opacity-25 pointer-events-none" />
+                    <span className="absolute inset-0 rounded-full bg-[#142B49] animate-ping opacity-25 pointer-events-none" />
                   )}
                 </div>
 
@@ -103,15 +103,15 @@ export default function OrderTimeline({ status = "placed", className = "" }) {
                   <p
                     className={`text-[11px] sm:text-xs font-bold tracking-tight leading-tight ${
                       isCurrent
-                        ? "text-[#101D17]"
+                        ? "text-[#142B49]"
                         : isCompleted
-                        ? "text-[#171717]"
-                        : "text-[#171717]/40"
+                        ? "text-[#1A2332]"
+                        : "text-[#1A2332]/40"
                     }`}
                   >
                     {step.label}
                   </p>
-                  <p className="hidden sm:block text-[10px] text-[#171717]/45 tracking-tight mt-0.5 leading-tight">
+                  <p className="hidden sm:block text-[10px] text-[#1A2332]/45 tracking-tight mt-0.5 leading-tight">
                     {step.subtext}
                   </p>
                 </div>

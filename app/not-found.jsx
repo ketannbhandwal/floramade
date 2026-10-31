@@ -41,13 +41,13 @@ export default function NotFound() {
         <div className="pt-8">
           <p className="text-sm text-foreground/50 mb-4">Popular pages:</p>
           <div className="flex flex-wrap justify-center gap-2">
-            <Link href="/collection" className="text-sm text-accent hover:underline">All Products</Link>
+            <Link href="/collection" className="text-sm text-accent hover:text-[#D9A441]">All Products</Link>
             <span className="text-foreground/30">•</span>
-            <Link href="/collections/diabetes" className="text-sm text-accent hover:underline">Diabetes Care</Link>
+            <Link href="/collections/diabetes" className="text-sm text-accent hover:text-[#D9A441]">Diabetes Care</Link>
             <span className="text-foreground/30">•</span>
-            <Link href="/collections/digestion" className="text-sm text-accent hover:underline">Digestive Health</Link>
+            <Link href="/collections/digestion" className="text-sm text-accent hover:text-[#D9A441]">Digestive Health</Link>
             <span className="text-foreground/30">•</span>
-            <Link href="/about" className="text-sm text-accent hover:underline">About Us</Link>
+            <Link href="/about" className="text-sm text-accent hover:text-[#D9A441]">About Us</Link>
           </div>
         </div>
       </div>

@@ -59,7 +59,7 @@ export default function Landing({ banners }) {
       <h1 className="sr-only">Floramade Ayurvedic wellness</h1>
       
       {/* Full-width Banner Container with Zero Padding */}
-      <div className="group relative w-full overflow-hidden bg-[#101D17]">
+      <div className="group relative w-full overflow-hidden bg-[#142B49]">
         <div 
           className="overflow-hidden w-full aspect-[1587/2245] md:aspect-[1700/780]" 
           ref={emblaRef}
@@ -125,14 +125,14 @@ export default function Landing({ banners }) {
             <button 
               aria-label="Previous banner" 
               onClick={goPrev} 
-              className="absolute left-2 sm:left-4 md:left-6 top-1/2 flex h-9 w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#101D17]/70 text-white backdrop-blur-md opacity-75 hover:opacity-100 hover:bg-[#101D17] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl z-20 md:opacity-0 md:group-hover:opacity-100 border border-white/20"
+              className="absolute left-2 sm:left-4 md:left-6 top-1/2 flex h-9 w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#142B49]/70 text-white backdrop-blur-md opacity-75 hover:opacity-100 hover:bg-[#142B49] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl z-20 md:opacity-0 md:group-hover:opacity-100 border border-white/20"
             >
               <ChevronLeft size={22} className="sm:w-6 sm:h-6" />
             </button>
             <button 
               aria-label="Next banner" 
               onClick={goNext} 
-              className="absolute right-2 sm:right-4 md:right-6 top-1/2 flex h-9 w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#101D17]/70 text-white backdrop-blur-md opacity-75 hover:opacity-100 hover:bg-[#101D17] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl z-20 md:opacity-0 md:group-hover:opacity-100 border border-white/20"
+              className="absolute right-2 sm:right-4 md:right-6 top-1/2 flex h-9 w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#142B49]/70 text-white backdrop-blur-md opacity-75 hover:opacity-100 hover:bg-[#142B49] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl z-20 md:opacity-0 md:group-hover:opacity-100 border border-white/20"
             >
               <ChevronRight size={22} className="sm:w-6 sm:h-6" />
             </button>
@@ -141,7 +141,7 @@ export default function Landing({ banners }) {
 
         {/* Pagination Dots */}
         {activeSlides.length > 1 && (
-          <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#101D17]/75 px-3 py-1.5 backdrop-blur-md z-20 border border-white/20">
+          <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#142B49]/75 px-3 py-1.5 backdrop-blur-md z-20 border border-white/20">
             {activeSlides.map((slide, index) => (
               <button
                 key={slide.desktop || index}

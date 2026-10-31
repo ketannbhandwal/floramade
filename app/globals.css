@@ -5,15 +5,17 @@
 @tailwind utilities;
 
 :root {
-  /* Floramade Premium Herbal Wellness Theme */
-  --background: #F8F4E9;
-  --foreground: #171717;
-  --primary: #101D17;
-  --accent: #D4AF55;
-  --highlight: #D4AF55;
-  --muted: #F0EBE0;
-  --border: #E0D9C8;
-  --footer: #101D17;
+  /* Floramade Premium Ocean Navy & Pearl Theme */
+  --background: #F7F9FC;
+  --foreground: #1A2332;
+  --primary: #142B49;
+  --accent: #D9A441;
+  --highlight: #D9A441;
+  --muted: #EDF1F7;
+  --border: #C5D5E8;
+  --footer: #142B49;
+  --pearl-blue: #D9E5F3;
+  --soft-sage: #E7EFD8;
   --font-dm-sans: "DM Sans", sans-serif;
   --font-funnel: "DM Sans", sans-serif;
 }
@@ -74,12 +76,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C8BDA8;
+  background: #A8BDD5;
 }
 
 ::selection {
-  background: var(--foreground);
-  color: var(--background);
+  background: #142B49;
+  color: #F7F9FC;
 }
 
 button,
@@ -154,7 +156,7 @@ html.lenis, html.lenis body {
   scrollbar-width: none !important;
 }
 
-/* Floramade Luxury Shimmer Effect */
+/* Floramade Luxury Shimmer Effect - Ocean Navy & Pearl */
 @keyframes shimmerWave {
   0% {
     background-position: -200% 0;
@@ -167,9 +169,9 @@ html.lenis, html.lenis body {
 .shimmer-luxury {
   background: linear-gradient(
     90deg,
-    #EAE0D2 0%,
-    #FAF4EB 50%,
-    #EAE0D2 100%
+    #D9E5F3 0%,
+    #F7F9FC 50%,
+    #D9E5F3 100%
   );
   background-size: 200% 100%;
   animation: shimmerWave 1.8s infinite ease-in-out;
@@ -178,11 +180,10 @@ html.lenis, html.lenis body {
 .shimmer-luxury-subtle {
   background: linear-gradient(
     90deg,
-    #F2E8DC 0%,
-    #FCF8F2 50%,
-    #F2E8DC 100%
+    #E3ECF5 0%,
+    #F7F9FC 50%,
+    #E3ECF5 100%
   );
   background-size: 200% 100%;
   animation: shimmerWave 2s infinite ease-in-out;
 }
-
