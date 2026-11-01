@@ -11,6 +11,16 @@ export async function GET(_, { params }) {
   if (!product && decodedSlug !== slug) {
     product = await Product.findOne({ slug });
   }
+  if (!product) {
+    const slugified = (decodedSlug || "").toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+    product = await Product.findOne({ slug: slugified });
+  }
+  if (!product) {
+    if (decodedSlug?.includes("madhucurex") || decodedSlug?.includes("diabetes-pro")) {
+      product = (await Product.findOne({ slug: "madhucurex-diabetes-pro" }))
+        || (await Product.findOne({ slug: "diabetes-pro-madhucurex-powder" }));
+    }
+  }
   if (!product) return NextResponse.json({ message: "Not found" }, { status: 404 });
   return NextResponse.json({ product });
 }

@@ -18,6 +18,13 @@ async function getProduct(slug) {
     const slugified = normalizedSlug.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
     product = await Product.findOne({ slug: slugified }).lean();
   }
+  // Fallback aliases for MadhuCurex
+  if (!product) {
+    if (normalizedSlug.includes("madhucurex") || normalizedSlug.includes("diabetes-pro")) {
+      product = (await Product.findOne({ slug: "madhucurex-diabetes-pro" }).lean())
+        || (await Product.findOne({ slug: "diabetes-pro-madhucurex-powder" }).lean());
+    }
+  }
   if (!product) return null;
 
   // Older catalog rows store their gallery under `featureImages` rather than

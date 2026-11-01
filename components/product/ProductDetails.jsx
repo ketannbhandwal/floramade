@@ -297,6 +297,20 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     return "100% natural Ayurvedic formulation crafted with time-tested botanical herbs for holistic wellness, sustained vitality, and natural health balance.";
   }, [product.description]);
 
+  // How to use steps from admin or fallback
+  const usageSteps = useMemo(() => {
+    if (Array.isArray(product.usage) && product.usage.length > 0) {
+      return product.usage.map((u) => String(u).trim()).filter(Boolean);
+    }
+    if (typeof product.usage === "string" && product.usage.trim()) {
+      const parts = product.usage.includes("\n")
+        ? product.usage.split("\n")
+        : product.usage.split(",");
+      return parts.map((p) => p.trim()).filter(Boolean);
+    }
+    return [];
+  }, [product.usage]);
+
   // Pricing
   const currentPrice = selectedPack?.price || product.discountPrice || product.price;
   const currentMRP = selectedPack?.mrp || product.price;
@@ -904,13 +918,51 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50 space-y-2">
-                        <p className="font-semibold text-[#142B49]">🌿 Recommended Daily Ritual:</p>
-                        <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#1A2332]/80">
-                          <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
-                          <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
-                          <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
-                        </ul>
+                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50 space-y-3">
+                        <p className="font-semibold text-[#142B49] flex items-center gap-1.5">
+                          <span>🌿</span> Recommended Daily Ritual:
+                        </p>
+
+                        {usageSteps.length > 0 ? (
+                          <div className="space-y-2">
+                            {usageSteps.map((step, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-start gap-2.5 rounded-xl border border-[#C5D5E8]/60 bg-[#F7F9FC] p-3 text-xs sm:text-sm text-[#1A2332]/90 leading-relaxed shadow-2xs"
+                              >
+                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#142B49] text-[10px] font-bold text-white mt-0.5">
+                                  {idx + 1}
+                                </span>
+                                <span>{step}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <ul className="space-y-1.5 list-disc pl-4 text-xs sm:text-sm text-[#1A2332]/80">
+                            <li><strong>Dosage:</strong> Take 1 to 2 scoops or tablets daily, or as advised by your Ayurvedic physician.</li>
+                            <li><strong>Timing:</strong> Best consumed with lukewarm water or warm milk after meals (morning and evening).</li>
+                            <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
+                          </ul>
+                        )}
+
+                        {Array.isArray(product.usageImages) && product.usageImages.length > 0 && (
+                          <div className="pt-2">
+                            <p className="mb-2 text-xs font-semibold text-[#142B49]/80">Visual Usage Guide:</p>
+                            <div className="grid grid-cols-3 gap-2.5">
+                              {product.usageImages.map((img, iIdx) => (
+                                <div key={iIdx} className="relative aspect-square overflow-hidden rounded-xl border border-[#C5D5E8] bg-white shadow-2xs">
+                                  <Image
+                                    src={img}
+                                    alt={`How to use step ${iIdx + 1}`}
+                                    fill
+                                    sizes="(max-width: 640px) 30vw, 140px"
+                                    className="object-cover transition-transform duration-300 hover:scale-105"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   )}
