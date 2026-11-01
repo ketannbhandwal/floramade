@@ -9,7 +9,9 @@ export async function POST(req) {
     if (!email || !password) {
       return NextResponse.json({ message: "Email and password are required" }, { status: 400 });
     }
-      const { data: authData, error: authError } = await getSupabaseAdmin().auth.signInWithPassword({ email: email.toLowerCase(), password });
+      const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = typeof password === "string" ? password.trim() : password;
+    const { data: authData, error: authError } = await getSupabaseAdmin().auth.signInWithPassword({ email: cleanEmail, password: cleanPassword });
     if (authError || !authData.user) return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     const user = await User.findById(authData.user.id);
     if (!user) return NextResponse.json({ message: "Account profile not found" }, { status: 403 });

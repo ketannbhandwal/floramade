@@ -64,7 +64,11 @@ export default function LoginPage() {
 
       await refreshUser();
       toast.success("Welcome back to Floramade.");
-      router.replace(redirectUrl);
+      if (typeof window !== "undefined") {
+        window.location.href = redirectUrl;
+      } else {
+        router.replace(redirectUrl);
+      }
     } catch {
       setErrors({
         form: "We couldn’t reach the server. Check your connection and try again.",
