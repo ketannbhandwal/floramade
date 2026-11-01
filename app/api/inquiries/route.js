@@ -7,7 +7,7 @@ const inquirySession = new Map();
 
 export async function POST(req) {
   try {
-      const body = await req.json();
+    const body = await req.json();
     const { name, phone, email, message, type, productSlug } = body;
 
     const sanitizedName = sanitizeInput(name);
@@ -65,7 +65,10 @@ export async function GET(req) {
   try {
     const user = await getCurrentUser();
     if (!user || user.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    const inquiries = await Inquiry.find().sort({ createdAt: -1 });
+    const rawInquiries = await Inquiry.find().sort({ createdAt: -1 });
+    const inquiries = (Array.isArray(rawInquiries) ? rawInquiries : []).filter(
+      (inq) => inq && inq._id !== "00000000-0000-0000-0000-000000000002" && (inq.name || inq.phone)
+    );
     return NextResponse.json(inquiries);
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch inquiries" }, { status: 500 });

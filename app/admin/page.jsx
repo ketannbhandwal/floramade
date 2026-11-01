@@ -6,11 +6,12 @@ import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
-import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload, Copy, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
+import { LayoutDashboard, Package, ReceiptText, Users, ArrowUpRight, TrendingUp, DollarSign, Activity, BarChart3, Settings, LogOut, MessageSquare, Trash2, Check, X, Phone, Plus, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Star, Sparkles, Upload, Copy, GripVertical, ArrowUp, ArrowDown, ShieldCheck, ShieldAlert } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import BannerConcernManager from "@/components/admin/BannerConcernManager";
 import { slugify } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
@@ -21,6 +22,9 @@ const CartesianGrid = dynamic(() => import("recharts").then(mod => mod.Cartesian
 const XAxis = dynamic(() => import("recharts").then(mod => mod.XAxis), { ssr: false });
 const YAxis = dynamic(() => import("recharts").then(mod => mod.YAxis), { ssr: false });
 const Tooltip = dynamic(() => import("recharts").then(mod => mod.Tooltip), { ssr: false });
+const PieChart = dynamic(() => import("recharts").then(mod => mod.PieChart), { ssr: false });
+const Pie = dynamic(() => import("recharts").then(mod => mod.Pie), { ssr: false });
+const Cell = dynamic(() => import("recharts").then(mod => mod.Cell), { ssr: false });
 
 export const FEATURE_ICONS = [
   { id: "gut", name: "Gut & Digestion", icon: "/feature/1.svg", defaultText: "Promotes Healthy Digestion" },
@@ -66,6 +70,9 @@ const fadeAnim = {
 
 export default function AdminPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+  const [loadingData, setLoadingData] = useState(true);
+  const [updatingRoleUserId, setUpdatingRoleUserId] = useState(null);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
@@ -185,25 +192,87 @@ export default function AdminPage() {
   }, [orders]);
 
   async function loadData() {
-    const [p, o, u, i] = await Promise.all([
-      fetch("/api/products?includeAll=true"),
-      fetch("/api/orders/all"),
-      fetch("/api/users/all"),
-      fetch("/api/inquiries"),
-    ]);
-    const pData = await p.json();
-    const oData = await o.json();
-    const uData = await u.json();
-    const iData = await i.json();
-    setProducts(pData.products || []);
-    setOrders(oData.orders || []);
-    setUsers(uData.users || []);
-    setInquiries(iData || []);
+    setLoadingData(true);
+    try {
+      const [pRes, oRes, uRes, iRes] = await Promise.all([
+        fetch("/api/products?includeAll=true"),
+        fetch("/api/orders/all"),
+        fetch("/api/users/all"),
+        fetch("/api/inquiries"),
+      ]);
+
+      if (pRes.status === 401 || oRes.status === 401 || uRes.status === 401 || iRes.status === 401) {
+        toast.error("Admin session expired. Please log in as admin.");
+        router.replace("/login?redirect=/admin");
+        return;
+      }
+
+      const pData = await pRes.json().catch(() => ({ products: [] }));
+      const oData = await oRes.json().catch(() => ({ orders: [] }));
+      const uData = await uRes.json().catch(() => ({ users: [] }));
+      const iData = await iRes.json().catch(() => []);
+
+      setProducts(Array.isArray(pData?.products) ? pData.products : []);
+      setOrders(Array.isArray(oData?.orders) ? oData.orders : []);
+      setUsers(Array.isArray(uData?.users) ? uData.users : []);
+      setInquiries(Array.isArray(iData) ? iData : (iData?.inquiries || []));
+    } catch (err) {
+      console.error("Failed to load admin data:", err);
+      toast.error("Failed to load dashboard data. Please refresh.");
+    } finally {
+      setLoadingData(false);
+    }
   }
 
   useEffect(() => {
+    if (authLoading) return;
+    if (!user || user.role !== "admin") {
+      toast.error("Admin access required.");
+      router.replace("/login?redirect=/admin");
+      return;
+    }
     loadData();
-  }, []);
+  }, [authLoading, user]);
+
+  async function handleToggleAdmin(targetUser) {
+    const targetId = targetUser._id || targetUser.id;
+    const isCurrentAdmin = targetUser.role === "admin";
+    const newRole = isCurrentAdmin ? "user" : "admin";
+    const targetName = targetUser.name || targetUser.email || "this user";
+
+    const confirmed = window.confirm(
+      isCurrentAdmin
+        ? `Are you sure you want to revoke admin privileges from "${targetName}"?`
+        : `Are you sure you want to make "${targetName}" an Admin?`
+    );
+    if (!confirmed) return;
+
+    setUpdatingRoleUserId(targetId);
+    try {
+      const res = await fetch("/api/users/role", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: targetId, role: newRole }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update user role");
+      }
+
+      toast.success(data.message || `Role updated to ${newRole}`);
+      setUsers((prev) =>
+        prev.map((u) =>
+          (u._id || u.id) === targetId ? { ...u, role: newRole } : u
+        )
+      );
+    } catch (err) {
+      console.error("Role update error:", err);
+      toast.error(err.message || "Failed to update role");
+    } finally {
+      setUpdatingRoleUserId(null);
+    }
+  }
 
   async function handleFileUpload(file, type = 'image') {
     if (!file) return null;
@@ -578,8 +647,21 @@ export default function AdminPage() {
     { key: "orders", label: "Transactions", icon: ReceiptText },
     { key: "reviews", label: "Reviews", icon: MessageSquare },
     { key: "inquiries", label: "Inquiries", icon: Phone },
-    { key: "users", label: "Customers", icon: Users },
+    { key: "users", label: "Customers & Admins", icon: Users },
+    { key: "analytics", label: "Analytics", icon: BarChart3 },
+    { key: "settings", label: "Settings", icon: Settings },
   ];
+
+  if (authLoading || !user || user.role !== "admin") {
+    return (
+      <div className="flex min-h-[85vh] flex-col items-center justify-center space-y-4 bg-[#F7F9FC] px-4">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#142B49]/20 border-t-[#142B49]" />
+        <p className="text-sm font-semibold tracking-wide text-[#142B49]">
+          Verifying admin access…
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-background pb-12 pt-16 md:pb-16 md:pt-20 lg:pt-20">
@@ -1701,42 +1783,110 @@ export default function AdminPage() {
             {/* USERS TAB */}
             {activeTab === "users" && (
               <motion.div key="users" {...fadeAnim} className="space-y-8">
-                <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] overflow-hidden shadow-sm">
-                  <div className="p-8 border-b border-foreground/5">
-                    <h2 className="text-3xl font-display italic text-secondary tracking-tight">Customer Directory</h2>
+                <div className="overflow-hidden rounded-[2.5rem] border border-[#C5D5E8] bg-white shadow-sm">
+                  <div className="flex flex-col gap-2 border-b border-[#C5D5E8] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+                    <div>
+                      <h2 className="text-2xl font-bold tracking-tight text-[#142B49] sm:text-3xl">
+                        Customer & Admin Directory
+                      </h2>
+                      <p className="mt-1 text-xs text-[#8E9AA8] sm:text-sm">
+                        Manage registered accounts and assign administrative privileges
+                      </p>
+                    </div>
+                    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[#142B49]/10 px-3.5 py-1 text-xs font-bold text-[#142B49]">
+                      {users.length} {users.length === 1 ? "Account" : "Accounts"}
+                    </span>
                   </div>
-                  <table className="w-full text-left">
-                    <thead className="bg-foreground/5 text-xs uppercase tracking-tight text-foreground/50">
-                      <tr>
-                        <th className="px-8 py-6 font-medium">Customer</th>
-                        <th className="px-8 py-6 font-medium">Contact</th>
-                        <th className="px-8 py-6 font-medium">Role</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-foreground/5">
-                      {users.map((u) => (
-                        <tr key={u._id} className="hover:bg-white/40 transition-colors">
-                          <td className="px-8 py-6">
-                            <div className="flex items-center gap-3">
-                              <div className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-sm font-medium">
-                                {u.name?.charAt(0) || "U"}
-                              </div>
-                              <p className="font-medium text-foreground">{u.name}</p>
-                            </div>
-                          </td>
-                          <td className="px-8 py-6">
-                            <p className="text-sm">{u.email}</p>
-                            <p className="text-xs text-foreground/50">{u.phone || "No phone"}</p>
-                          </td>
-                          <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-tight font-bold ${u.role === 'admin' ? 'bg-accent/20 text-accent' : 'bg-foreground/5 text-foreground/60'}`}>
-                              {u.role}
-                            </span>
-                          </td>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead className="bg-[#F7F9FC] text-xs font-bold uppercase tracking-wider text-[#142B49]/70">
+                        <tr>
+                          <th className="px-6 py-5 sm:px-8">Customer</th>
+                          <th className="px-6 py-5 sm:px-8">Contact</th>
+                          <th className="px-6 py-5 sm:px-8">Role</th>
+                          <th className="px-6 py-5 text-right sm:px-8">Admin Privileges</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-[#C5D5E8]/60 text-sm">
+                        {users.map((u) => {
+                          const uId = u._id || u.id;
+                          const isSelf = u.email === user?.email || uId === (user?._id || user?.id);
+                          const isAdmin = u.role === "admin";
+                          const isUpdating = updatingRoleUserId === uId;
+
+                          return (
+                            <tr key={uId} className="transition-colors hover:bg-[#F7F9FC]/60">
+                              <td className="px-6 py-5 sm:px-8">
+                                <div className="flex items-center gap-3">
+                                  <div
+                                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                                      isAdmin
+                                        ? "bg-[#142B49] text-white"
+                                        : "bg-[#D9E5F3] text-[#142B49]"
+                                    }`}
+                                  >
+                                    {u.name?.charAt(0)?.toUpperCase() || "U"}
+                                  </div>
+                                  <div>
+                                    <p className="font-semibold text-[#142B49]">{u.name || "Customer"}</p>
+                                    <p className="text-xs text-[#8E9AA8]">
+                                      Joined {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "Recently"}
+                                    </p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="px-6 py-5 sm:px-8">
+                                <p className="font-medium text-[#1A2332]">{u.email}</p>
+                                <p className="text-xs text-[#8E9AA8]">{u.phone || "No phone registered"}</p>
+                              </td>
+                              <td className="px-6 py-5 sm:px-8">
+                                <span
+                                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${
+                                    isAdmin
+                                      ? "border border-[#D9A441]/40 bg-[#D9A441]/15 text-[#8F661B]"
+                                      : "border border-[#C5D5E8] bg-[#F7F9FC] text-[#142B49]/70"
+                                  }`}
+                                >
+                                  {isAdmin && <ShieldCheck size={13} className="text-[#D9A441]" />}
+                                  {u.role || "user"}
+                                </span>
+                              </td>
+                              <td className="px-6 py-5 text-right sm:px-8">
+                                {isSelf ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-[#142B49]/10 px-3 py-1 text-xs font-semibold text-[#142B49]">
+                                    Current Account (You)
+                                  </span>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    disabled={isUpdating}
+                                    onClick={() => handleToggleAdmin(u)}
+                                    className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
+                                      isAdmin
+                                        ? "border border-rose-200 bg-rose-50 text-rose-700 hover:border-rose-300 hover:bg-rose-100"
+                                        : "bg-[#142B49] text-white shadow-xs hover:bg-[#D9A441]"
+                                    } disabled:opacity-50`}
+                                  >
+                                    {isUpdating ? (
+                                      <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                    ) : isAdmin ? (
+                                      <>
+                                        <ShieldAlert size={14} /> Revoke Admin
+                                      </>
+                                    ) : (
+                                      <>
+                                        <ShieldCheck size={14} /> Make Admin
+                                      </>
+                                    )}
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -1744,36 +1894,36 @@ export default function AdminPage() {
             {/* ANALYTICS TAB */}
             {activeTab === "analytics" && (
               <motion.div key="analytics" {...fadeAnim} className="space-y-8">
-                <div className="bg-white/60 backdrop-blur-md border border-foreground/5 rounded-[2.5rem] p-8 shadow-sm">
-                  <h2 className="text-3xl font-display italic text-secondary tracking-tight mb-8">Analytics Overview</h2>
+                <div className="rounded-[2.5rem] border border-[#C5D5E8] bg-white p-8 shadow-sm">
+                  <h2 className="mb-8 font-display text-3xl italic tracking-tight text-[#142B49]">Analytics Overview</h2>
                   <div className="grid gap-6 lg:grid-cols-2">
-                    <div className="bg-muted/30 rounded-2xl p-6 space-y-4">
-                      <h3 className="text-lg font-light tracking-tight">Sales Trend</h3>
+                    <div className="space-y-4 rounded-2xl bg-[#F7F9FC] p-6 border border-[#C5D5E8]/60">
+                      <h3 className="text-lg font-semibold tracking-tight text-[#142B49]">Sales Trend</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
                           <AreaChart data={chartData}>
                             <defs>
                               <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#b18a3b" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#b18a3b" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#D9A441" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#D9A441" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6dfd3" />
-                            <XAxis dataKey="index" stroke="#2b2b2b" fontSize={12} />
-                            <YAxis stroke="#2b2b2b" fontSize={12} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#C5D5E8" />
+                            <XAxis dataKey="index" stroke="#142B49" fontSize={12} />
+                            <YAxis stroke="#142B49" fontSize={12} />
                             <Tooltip />
-                            <Area type="monotone" dataKey="revenue" stroke="#b18a3b" fillOpacity={1} fill="url(#colorRevenue)" />
+                            <Area type="monotone" dataKey="revenue" stroke="#D9A441" fillOpacity={1} fill="url(#colorRevenue)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       )}
                     </div>
-                    <div className="bg-muted/30 rounded-2xl p-6 space-y-4">
-                      <h3 className="text-lg font-light tracking-tight">Payment Methods</h3>
+                    <div className="space-y-4 rounded-2xl bg-[#F7F9FC] p-6 border border-[#C5D5E8]/60">
+                      <h3 className="text-lg font-semibold tracking-tight text-[#142B49]">Payment Methods</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
                           <PieChart>
-                            <Pie data={paymentData} cx="50%" cy="50%" outerRadius={60} dataKey="value">
-                              {paymentData.map((entry, index) => (
+                            <Pie data={paymentSplit} cx="50%" cy="50%" outerRadius={60} dataKey="value">
+                              {paymentSplit.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                               ))}
                             </Pie>
@@ -1782,16 +1932,16 @@ export default function AdminPage() {
                         </ResponsiveContainer>
                       )}
                     </div>
-                    <div className="bg-muted/30 rounded-2xl p-6 space-y-4 lg:col-span-2">
-                      <h3 className="text-lg font-light tracking-tight">Top Products</h3>
+                    <div className="space-y-4 rounded-2xl bg-[#F7F9FC] p-6 border border-[#C5D5E8]/60 lg:col-span-2">
+                      <h3 className="text-lg font-semibold tracking-tight text-[#142B49]">Top Products</h3>
                       {chartsReady && (
                         <ResponsiveContainer width="100%" height={200}>
-                          <BarChart data={topProducts}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6dfd3" />
-                            <XAxis dataKey="name" stroke="#2b2b2b" fontSize={12} />
-                            <YAxis stroke="#2b2b2b" fontSize={12} />
+                          <BarChart data={topProductsData}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#C5D5E8" />
+                            <XAxis dataKey="name" stroke="#142B49" fontSize={12} />
+                            <YAxis stroke="#142B49" fontSize={12} />
                             <Tooltip />
-                            <Bar dataKey="quantity" fill="#b18a3b" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="quantity" fill="#142B49" radius={[4, 4, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
                       )}

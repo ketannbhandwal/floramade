@@ -40,6 +40,7 @@ export function rateLimit({ limit = 10, window = 60000 }) {
 
 export const config = {
   matcher: [
+    "/admin/:path*",
     "/api/:path*",
   ],
 };
@@ -47,6 +48,17 @@ export const config = {
 export function middleware(request) {
   const pathname = request.nextUrl.pathname;
   
+  // Protect admin routes: unauthenticated visitors are redirected to /login immediately
+  if (pathname.startsWith("/admin")) {
+    const token = request.cookies.get("token")?.value;
+    if (!token) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    return NextResponse.next();
+  }
+
   const publicPaths = ["/api/products", "/api/search"];
   const isPublicPath = publicPaths.some(path => pathname.startsWith(path));
   
