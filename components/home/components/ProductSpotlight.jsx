@@ -215,7 +215,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                       alt={`${cleanName} thumbnail ${idx + 1}`}
                       fill
                       sizes="80px"
-                      className="object-contain"
+                      className="object-cover select-none"
                     />
                   </button>
                 ))}

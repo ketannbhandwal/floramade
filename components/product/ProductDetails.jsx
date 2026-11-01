@@ -644,7 +644,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       fill
                       sizes="80px"
                       quality={75}
-                      className="object-contain p-1"
+                      className="object-cover select-none"
                     />
                   </button>
                 ))}
