@@ -116,6 +116,56 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
   }, [product]);
 
   const [activeIdx, setActiveIdx] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const isPointerDownRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const currentDragXRef = useRef(0);
+
+  const handlePointerDown = (e) => {
+    if (productImages.length <= 1) return;
+    if (e.button && e.button !== 0) return;
+    if (e.target.closest("button")) return;
+    isPointerDownRef.current = true;
+    dragStartXRef.current = e.clientX;
+    currentDragXRef.current = e.clientX;
+    setIsDragging(true);
+    setDragOffset(0);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (_) {}
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isPointerDownRef.current) return;
+    currentDragXRef.current = e.clientX;
+    const diff = e.clientX - dragStartXRef.current;
+    setDragOffset(diff);
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isPointerDownRef.current) return;
+    isPointerDownRef.current = false;
+    setIsDragging(false);
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch (_) {}
+
+    const diff = currentDragXRef.current - dragStartXRef.current;
+    const threshold = 40;
+    if (diff < -threshold) {
+      setActiveIdx(prev => (prev + 1) % productImages.length);
+    } else if (diff > threshold) {
+      setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length);
+    }
+    setDragOffset(0);
+  };
+
+  const handlePointerCancel = () => {
+    isPointerDownRef.current = false;
+    setIsDragging(false);
+    setDragOffset(0);
+  };
   const [quantity, setQuantity] = useState(1);
   const [selectedPack, setSelectedPack] = useState(null);
   const [buyNowOpen, setBuyNowOpen] = useState(false);
@@ -572,13 +622,24 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
               LEFT COLUMN: Sticky on PC so it does NOT scroll away while browsing details
               ========================================================================= */}
           <div className="lg:col-span-6 lg:sticky lg:top-[96px] lg:self-start space-y-4">
-            {/* Main Stage Image (Edge-to-Edge Container with Clean White Background) */}
-            <div className="relative aspect-square w-full rounded-3xl bg-white border border-[#C5D5E8] overflow-hidden flex items-center justify-center shadow-xs select-none group">
+            {/* Main Stage Image (Smooth Drag & Slide Carousel) */}
+            <div 
+              className={`relative aspect-square w-full rounded-3xl bg-white border border-[#C5D5E8] overflow-hidden flex items-center justify-center shadow-xs select-none group touch-pan-y ${
+                productImages.length > 1 ? "cursor-grab active:cursor-grabbing" : ""
+              }`}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+            >
               {/* Top-Right Wishlist Button */}
               <button
                 type="button"
-                onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleWishlist();
+                }}
+                className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/90 hover:bg-white border border-[#C5D5E8] text-[#1A2332]/60 hover:text-[#142B49] flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs"
                 aria-label="Save to Wishlist"
               >
                 <Heart 
@@ -587,17 +648,28 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 />
               </button>
 
-              {/* Main Product Image (Zero Side Insets, Edge-to-Edge Fit) */}
-              <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src={productImages[activeIdx] || "/placeholder.png"}
-                  alt={product.name}
-                  fill
-                  priority={activeIdx === 0}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  quality={85}
-                  className="object-cover select-none transition-transform duration-300 group-hover:scale-105"
-                />
+              {/* Slider Track with Smooth Slide Animation */}
+              <div 
+                className="flex w-full h-full will-change-transform"
+                style={{
+                  transform: `translateX(calc(-${activeIdx * 100}% + ${dragOffset}px))`,
+                  transition: isDragging ? "none" : "transform 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+              >
+                {productImages.map((img, idx) => (
+                  <div key={idx} className="relative w-full h-full flex-shrink-0 select-none">
+                    <Image
+                      src={img || "/placeholder.png"}
+                      alt={`${product.name} ${idx + 1}`}
+                      fill
+                      priority={idx === 0}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      quality={85}
+                      draggable={false}
+                      className="object-cover select-none pointer-events-none"
+                    />
+                  </div>
+                ))}
               </div>
 
               {/* Left/Right Arrows */}
@@ -605,17 +677,23 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 <>
                   <button
                     type="button"
-                    onClick={() => setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveIdx(prev => (prev - 1 + productImages.length) % productImages.length);
+                    }}
                     aria-label="Previous Image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F7F9FC]/95 hover:bg-[#142B49] text-[#1A2332] hover:text-white border border-[#C5D5E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F7F9FC]/95 hover:bg-[#142B49] text-[#1A2332] hover:text-white border border-[#C5D5E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <ChevronLeft size={18} />
                   </button>
                   <button
                     type="button"
-                    onClick={() => setActiveIdx(prev => (prev + 1) % productImages.length)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveIdx(prev => (prev + 1) % productImages.length);
+                    }}
                     aria-label="Next Image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F7F9FC]/95 hover:bg-[#142B49] text-[#1A2332] hover:text-white border border-[#C5D5E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F7F9FC]/95 hover:bg-[#142B49] text-[#1A2332] hover:text-white border border-[#C5D5E8] shadow-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <ChevronRight size={18} />
                   </button>
