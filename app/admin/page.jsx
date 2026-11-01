@@ -238,14 +238,6 @@ export default function AdminPage() {
     const targetId = targetUser._id || targetUser.id;
     const isCurrentAdmin = targetUser.role === "admin";
     const newRole = isCurrentAdmin ? "user" : "admin";
-    const targetName = targetUser.name || targetUser.email || "this user";
-
-    const confirmed = window.confirm(
-      isCurrentAdmin
-        ? `Are you sure you want to revoke admin privileges from "${targetName}"?`
-        : `Are you sure you want to make "${targetName}" an Admin?`
-    );
-    if (!confirmed) return;
 
     setUpdatingRoleUserId(targetId);
     try {

@@ -246,6 +246,9 @@ export default function BannerConcernManager({ products: initialProducts = [] })
 
       const data = await res.json();
       if (res.ok) {
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("floramade-settings-updated", { detail: payload }));
+        }
         toast.success("Settings saved successfully! Website updated live.");
       } else {
         throw new Error(data.error || "Failed to save settings");
@@ -1308,13 +1311,24 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 Configure the main header navigation menu links and dropdown items shown across the entire site.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={addNavLink}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#142B49] text-white hover:bg-[#142B49] text-xs font-bold uppercase tracking-tight transition-all shadow-sm"
-            >
-              <Plus size={14} /> Add Navbar Link
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={addNavLink}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#142B49]/20 text-[#142B49] hover:bg-[#142B49]/5 text-xs font-bold uppercase tracking-tight transition-all"
+              >
+                <Plus size={14} /> Add Navbar Link
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-sm disabled:opacity-50 cursor-pointer"
+              >
+                <Save size={14} />
+                <span>{saving ? "Saving..." : "Save Navbar Links"}</span>
+              </button>
+            </div>
           </div>
 
           <div className="space-y-5">
@@ -1622,6 +1636,21 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 )}
               </div>
             ))}
+          </div>
+
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Navbar Links&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
+            </button>
           </div>
         </div>
       )}

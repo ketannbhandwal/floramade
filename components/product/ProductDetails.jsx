@@ -944,25 +944,6 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                             <li><strong>Course Duration:</strong> Continue consistently for 6 to 8 weeks for sustained and best holistic results.</li>
                           </ul>
                         )}
-
-                        {Array.isArray(product.usageImages) && product.usageImages.length > 0 && (
-                          <div className="pt-2">
-                            <p className="mb-2 text-xs font-semibold text-[#142B49]/80">Visual Usage Guide:</p>
-                            <div className="grid grid-cols-3 gap-2.5">
-                              {product.usageImages.map((img, iIdx) => (
-                                <div key={iIdx} className="relative aspect-square overflow-hidden rounded-xl border border-[#C5D5E8] bg-white shadow-2xs">
-                                  <Image
-                                    src={img}
-                                    alt={`How to use step ${iIdx + 1}`}
-                                    fill
-                                    sizes="(max-width: 640px) 30vw, 140px"
-                                    className="object-cover transition-transform duration-300 hover:scale-105"
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </motion.div>
                   )}

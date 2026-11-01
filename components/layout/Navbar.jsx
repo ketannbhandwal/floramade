@@ -142,13 +142,13 @@ export default function Navbar() {
   const lastScrollYRef = useRef(0);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    let isSubscribed = true;
-    fetch("/api/settings")
-      .then(r => r.json())
-      .then(data => {
-        if (!isSubscribed) return;
+  const loadNavSettings = () => {
+    fetch(`/api/settings?t=${Date.now()}`, {
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+    })
+      .then((r) => r.json())
+      .then((data) => {
         if (data?.announcement) {
           setAnnouncement(data.announcement);
         }
@@ -157,7 +157,26 @@ export default function Navbar() {
         }
       })
       .catch(() => {});
-    return () => { isSubscribed = false; };
+  };
+
+  useEffect(() => {
+    setMounted(true);
+    loadNavSettings();
+
+    const handleSettingsUpdated = (e) => {
+      if (e?.detail) {
+        if (e.detail.announcement) setAnnouncement(e.detail.announcement);
+        if (Array.isArray(e.detail.navLinks) && e.detail.navLinks.length > 0) {
+          setNavLinks(e.detail.navLinks);
+        }
+      }
+      loadNavSettings();
+    };
+
+    window.addEventListener("floramade-settings-updated", handleSettingsUpdated);
+    return () => {
+      window.removeEventListener("floramade-settings-updated", handleSettingsUpdated);
+    };
   }, []);
 
   const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
@@ -245,20 +264,46 @@ export default function Navbar() {
                         onMouseEnter={() => handleMouseEnterDropdown(itemId)}
                         onMouseLeave={handleMouseLeaveDropdown}
                       >
-                        <button
-                          type="button"
-                          onClick={() => setOpenDropdownId(isOpen ? null : itemId)}
-                          className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 select-none ${
-                            isOpen ? "text-[#D9A441]" : "text-white/90 hover:text-[#D9A441]"
-                          }`}
-                        >
-                          <span>{item.label}</span>
-                          <ChevronDown 
-                            size={12} 
-                            strokeWidth={2.4}
-                            className={`text-[#D9A441] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
-                          />
-                        </button>
+                        {item.href && item.href !== "#" ? (
+                          <Link
+                            href={item.href}
+                            className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer select-none ${
+                              isOpen ? "text-[#D9A441]" : "text-white/90 hover:text-[#D9A441]"
+                            }`}
+                          >
+                            <span>{item.label}</span>
+                            <span
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setOpenDropdownId(isOpen ? null : itemId);
+                              }}
+                              className="p-0.5 hover:text-[#D9A441]"
+                              title="Toggle dropdown menu"
+                            >
+                              <ChevronDown 
+                                size={12} 
+                                strokeWidth={2.4}
+                                className={`text-[#D9A441] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
+                              />
+                            </span>
+                          </Link>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setOpenDropdownId(isOpen ? null : itemId)}
+                            className={`text-[13.5px] xl:text-[14px] font-semibold tracking-tight flex items-center gap-1.5 transition-colors py-1 cursor-pointer outline-none focus:outline-none focus-visible:outline-none ring-0 select-none ${
+                              isOpen ? "text-[#D9A441]" : "text-white/90 hover:text-[#D9A441]"
+                            }`}
+                          >
+                            <span>{item.label}</span>
+                            <ChevronDown 
+                              size={12} 
+                              strokeWidth={2.4}
+                              className={`text-[#D9A441] transition-transform duration-200 group-hover/nav:rotate-180 ${isOpen ? 'rotate-180' : ''}`} 
+                            />
+                          </button>
+                        )}
 
                         {/* Floating Luxury Ayurvedic Dropdown */}
                         <div 
