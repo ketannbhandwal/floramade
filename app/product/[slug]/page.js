@@ -66,7 +66,7 @@ export async function generateMetadata({ params }) {
       "natural wellness",
       product.category || "Ayurvedic medicine",
       "Ayurvedic wellness Delhi",
-      "Suresh Gaur",
+      "Suraj Gaur",
       ...product.ingredients || [],
     ],
     openGraph: {

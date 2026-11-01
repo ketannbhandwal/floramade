@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Floramade | Premium Ayurvedic Wellness Products in Delhi, India",
-  description: "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Shop natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
+  description: "Floramade - Premium Ayurvedic wellness brand founded by Suraj Gaur in Delhi, India. Shop natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
   keywords: [
     "Floramade",
     "Ayurvedic products",
@@ -19,7 +19,7 @@ export const metadata = {
     "sugar balance",
     "digestive health",
     "Ayurvedic wellness Delhi",
-    "Suresh Gaur",
+    "Suraj Gaur",
     "traditional Ayurveda",
     "herbal remedies",
     "Ayurvedic formulations",
@@ -34,7 +34,7 @@ export const metadata = {
     locale: "en_IN",
     url: "https://floramade.in",
     title: "Floramade | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    description: "Premium Ayurvedic wellness brand founded by Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: [
       {
         url: "/floramade-logo.png",
@@ -47,7 +47,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Floramade | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    description: "Premium Ayurvedic wellness brand founded by Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: ["/floramade-logo.png"],
   },
 };

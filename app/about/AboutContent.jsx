@@ -76,7 +76,7 @@ export default function AboutContent() {
             </h1>
 
             <p className="text-xs sm:text-base text-[#1A2332]/75 max-w-2xl mx-auto leading-relaxed font-normal">
-              Founded in Delhi by Suresh Gaur, <strong>Floramade</strong> bridges classical Ayurvedic science with botanical purity—formulating high-potency herbal remedies that nurture daily balance, sugar metabolism, and long-term vitality.
+              Founded in Delhi by Suraj Gaur, <strong>Floramade</strong> bridges classical Ayurvedic science with botanical purity—formulating high-potency herbal remedies that nurture daily balance, sugar metabolism, and long-term vitality.
             </p>
           </motion.div>
 
@@ -151,7 +151,7 @@ export default function AboutContent() {
                   At <strong>Floramade</strong>, our formulations are deeply anchored in the timeless Ayurvedic doctrine of the <em>Pancha Mahabhutas</em>—Akasha (Space), Vayu (Air), Agni (Fire), Jala (Water), and Prithvi (Earth). When these primordial forces fall into disharmony, fatigue and chronic ailments begin to take hold.
                 </p>
                 <p>
-                  Founded by <strong>Suresh Gaur</strong>, Floramade was established to dispel the confusion of mass-produced, chemically laden supplements. We believe true healing requires patience, purity, and clinical precision. By utilizing traditional extraction methods alongside modern quality benchmarks, we preserve the full bio-active matrix of every medicinal root, leaf, and seed.
+                  Founded by <strong>Suraj Gaur</strong>, Floramade was established to dispel the confusion of mass-produced, chemically laden supplements. We believe true healing requires patience, purity, and clinical precision. By utilizing traditional extraction methods alongside modern quality benchmarks, we preserve the full bio-active matrix of every medicinal root, leaf, and seed.
                 </p>
               </div>
 
@@ -199,7 +199,7 @@ export default function AboutContent() {
                   SG
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#1A2332]">Suresh Gaur</h4>
+                  <h4 className="text-sm font-bold text-[#1A2332]">Suraj Gaur</h4>
                   <p className="text-[11px] text-[#142B49] font-medium">Founder & Visionary, Floramade Healthcare</p>
                 </div>
               </div>

@@ -18,11 +18,11 @@ const organizationSchema = [
     "alternateName": ["Floramade Ayurveda", "Floramade Healthcare"],
     "url": "https://floramade.in",
     "logo": "https://floramade.in/floramade-official-logo.png",
-    "description": "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
+    "description": "Floramade - Premium Ayurvedic wellness brand founded by Suraj Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness.",
     "founder": {
       "@type": "Person",
       "@id": "https://floramade.in/#founder",
-      "name": "Suresh Gaur",
+      "name": "Suraj Gaur",
       "jobTitle": "Founder & Visionary",
       "url": "https://floramade.in/about",
       "worksFor": {
@@ -37,7 +37,7 @@ const organizationSchema = [
     "founders": [
       {
         "@type": "Person",
-        "name": "Suresh Gaur"
+        "name": "Suraj Gaur"
       }
     ],
     "address": {
@@ -85,7 +85,7 @@ export const metadata = {
     default: "Floramade | Premium Ayurvedic Wellness Products in Delhi, India",
     template: "%s | Floramade",
   },
-  description: "Floramade - Premium Ayurvedic wellness brand founded by Suresh Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
+  description: "Floramade - Premium Ayurvedic wellness brand founded by Suraj Gaur in Delhi, India. Natural Ayurvedic products for sugar balance, digestive health, and overall wellness. 100% natural, lab-tested formulations.",
   keywords: [
     "Floramade",
     "Ayurvedic products",
@@ -96,7 +96,7 @@ export const metadata = {
     "sugar balance",
     "digestive health",
     "Ayurvedic wellness Delhi",
-    "Suresh Gaur",
+    "Suraj Gaur",
     "traditional Ayurveda",
     "herbal remedies",
     "Ayurvedic formulations",
@@ -106,7 +106,7 @@ export const metadata = {
     "Ayurvedic supplements",
     "wellness products"
   ],
-  authors: [{ name: "Suresh Gaur", url: "https://floramade.in" }],
+  authors: [{ name: "Suraj Gaur", url: "https://floramade.in" }],
   creator: "Floramade",
   publisher: "Floramade",
   formatDetection: {
@@ -120,7 +120,7 @@ export const metadata = {
     url: "https://floramade.in",
     siteName: "Floramade",
     title: "Floramade | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    description: "Premium Ayurvedic wellness brand founded by Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: [
       {
         url: "/floramade-logo.png",
@@ -133,7 +133,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Floramade | Premium Ayurvedic Wellness Products",
-    description: "Premium Ayurvedic wellness brand founded by Suresh Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
+    description: "Premium Ayurvedic wellness brand founded by Suraj Gaur. Natural products for sugar balance, digestive health, and overall wellness.",
     images: ["/floramade-logo.png"],
   },
   robots: {
