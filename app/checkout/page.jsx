@@ -215,15 +215,6 @@ export default function CheckoutPage() {
       } catch (e) {}
     }
 
-    // Default fallbacks if backend settings hasn't initialized
-    if (!match) {
-      if (code === "FLAT05") {
-        match = { code: "FLAT05", discountType: "percentage", discountValue: 5, minOrderAmount: 0 };
-      } else if (code === "FLAT10") {
-        match = { code: "FLAT10", discountType: "percentage", discountValue: 10, minOrderAmount: 3000 };
-      }
-    }
-
     if (!match) {
       const err = "Invalid or expired coupon code";
       setCouponError(err);

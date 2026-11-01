@@ -37,6 +37,7 @@ export async function POST(req) {
       testimonialsSubtitle,
       testimonials,
       spotlightProductId,
+      showOffersSection,
       coupons
     } = body;
 
@@ -54,6 +55,7 @@ export async function POST(req) {
       testimonialsSubtitle,
       testimonials,
       spotlightProductId,
+      showOffersSection,
       coupons
     });
     

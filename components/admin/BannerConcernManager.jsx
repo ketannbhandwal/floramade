@@ -25,7 +25,9 @@ import {
   Lightbulb,
   ShieldCheck,
   Flower2,
-  Tag
+  Tag,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import { 
   DEFAULT_ANNOUNCEMENT,
@@ -40,6 +42,7 @@ import {
   DEFAULT_TESTIMONIALS_TITLE,
   DEFAULT_TESTIMONIALS_SUBTITLE,
   DEFAULT_TESTIMONIALS,
+  DEFAULT_SHOW_OFFERS_SECTION,
   DEFAULT_COUPONS,
 } from "@/lib/settings-constants";
 
@@ -102,6 +105,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
   const [testimonialsSubtitle, setTestimonialsSubtitle] = useState(DEFAULT_TESTIMONIALS_SUBTITLE);
   const [testimonials, setTestimonials] = useState([]);
   const [coupons, setCoupons] = useState(DEFAULT_COUPONS);
+  const [showOffersSection, setShowOffersSection] = useState(true);
   const [spotlightProductId, setSpotlightProductId] = useState("");
   const [availableProducts, setAvailableProducts] = useState(Array.isArray(initialProducts) ? initialProducts : []);
 
@@ -142,7 +146,8 @@ export default function BannerConcernManager({ products: initialProducts = [] })
           setTestimonialsTitle(data.testimonialsTitle || DEFAULT_TESTIMONIALS_TITLE);
           setTestimonialsSubtitle(data.testimonialsSubtitle || DEFAULT_TESTIMONIALS_SUBTITLE);
           setTestimonials(Array.isArray(data.testimonials) && data.testimonials.length > 0 ? data.testimonials : DEFAULT_TESTIMONIALS);
-          setCoupons(Array.isArray(data.coupons) && data.coupons.length > 0 ? data.coupons : DEFAULT_COUPONS);
+          setShowOffersSection(data.showOffersSection !== false);
+          setCoupons(Array.isArray(data.coupons) ? data.coupons : DEFAULT_COUPONS);
           setSpotlightProductId(data.spotlightProductId || "");
         } else {
           setAnnouncement(DEFAULT_ANNOUNCEMENT);
@@ -151,6 +156,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
           setBenefits(DEFAULT_BENEFITS);
           setNavLinks(DEFAULT_NAV_LINKS);
           setTestimonials(DEFAULT_TESTIMONIALS);
+          setShowOffersSection(DEFAULT_SHOW_OFFERS_SECTION);
           setCoupons(DEFAULT_COUPONS);
           setSpotlightProductId("");
         }
@@ -271,7 +277,10 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         setBenefits(DEFAULT_BENEFITS);
       }
       if (subTab === "navLinks") setNavLinks(DEFAULT_NAV_LINKS);
-      if (subTab === "coupons") setCoupons(DEFAULT_COUPONS);
+      if (subTab === "coupons") {
+        setShowOffersSection(DEFAULT_SHOW_OFFERS_SECTION);
+        setCoupons(DEFAULT_COUPONS);
+      }
       if (subTab === "testimonials") {
         setTestimonialsPretitle(DEFAULT_TESTIMONIALS_PRETITLE);
         setTestimonialsTitle(DEFAULT_TESTIMONIALS_TITLE);
@@ -563,11 +572,15 @@ export default function BannerConcernManager({ products: initialProducts = [] })
   }
 
   function deleteCoupon(index) {
-    if (coupons.length <= 1) {
-      toast.error("You must keep at least 1 coupon.");
-      return;
-    }
     setCoupons(prev => prev.filter((_, i) => i !== index));
+    toast.success("Coupon deleted.");
+  }
+
+  function clearAllCoupons() {
+    if (confirm("Are you sure you want to remove all coupons?")) {
+      setCoupons([]);
+      toast.success("All coupons removed.");
+    }
   }
 
   function addCoupon() {
@@ -643,7 +656,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
         {[
           { key: "banners", label: "Hero Banners", icon: ImageIcon, count: banners.length },
           { key: "spotlight", label: "Product Spotlight", icon: Star, count: spotlightProductId ? "1 Set" : "Auto" },
-          { key: "coupons", label: "Coupons & Offers", icon: Tag, count: coupons.length },
+          { key: "coupons", label: "Coupons & Offers", icon: Tag, count: !showOffersSection ? "OFF" : (coupons.filter(c => c.isActive !== false && c.showOnProductPage !== false).length + " Live") },
           { key: "benefits", label: "Benefits Section", icon: ShieldCheck, count: benefits.length },
           { key: "navLinks", label: "Navbar Links", icon: Navigation, count: navLinks.length },
           { key: "announcement", label: "Announcement Bar", icon: Sparkles, count: announcement?.enabled !== false ? "Active" : "Off" },
@@ -795,230 +808,349 @@ export default function BannerConcernManager({ products: initialProducts = [] })
           ===================================================================== */}
       {subTab === "coupons" && (
         <div className="space-y-6">
+          {/* Header Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <h3 className="text-lg font-bold text-[#1A2332] tracking-tight">
                 Discount Coupons & Offers ({coupons.length})
               </h3>
               <p className="text-xs text-foreground/60 tracking-tight">
-                Create and manage coupons. Toggle which coupons appear in &apos;Offers for You&apos; on product pages, and set minimum order thresholds.
+                Manage promotional coupons, discount amounts, and toggle visibility on product pages.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={addCoupon}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#142B49] text-white hover:bg-[#142B49] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer shrink-0"
-            >
-              <Plus size={14} /> Add Coupon
-            </button>
+            <div className="flex items-center gap-2 flex-wrap">
+              {coupons.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearAllCoupons}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-xs font-bold uppercase tracking-tight transition-all cursor-pointer"
+                  title="Remove all coupons"
+                >
+                  <Trash2 size={13} /> Clear All
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={addCoupon}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-sm cursor-pointer shrink-0"
+              >
+                <Plus size={14} /> Add Coupon
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2E6930] text-white hover:bg-[#235325] text-xs font-bold uppercase tracking-tight transition-all shadow-sm disabled:opacity-50 cursor-pointer shrink-0"
+              >
+                <Save size={14} />
+                <span>{saving ? "Saving..." : "Save Offers"}</span>
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {coupons.map((coupon, idx) => (
-              <div 
-                key={coupon.id || idx}
-                className="bg-white rounded-2xl border border-[#211b13]/10 p-5 shadow-sm space-y-4 relative"
-              >
-                {/* Header Row: Badge & Reorder/Delete */}
-                <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#142B49]/10 text-[#142B49] text-xs font-bold flex items-center justify-center">
-                      {idx + 1}
-                    </span>
-                    <span className="text-xs font-bold uppercase tracking-tight text-[#1A2332]">
-                      {coupon.code || "UNTITLED"}
-                    </span>
-                    {coupon.showOnProductPage && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2E6930]/10 text-[#2E6930]">
-                        On Product Page
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    {idx > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => moveCoupon(idx, -1)}
-                        className="p-1 rounded text-foreground/40 hover:text-foreground hover:bg-black/5 cursor-pointer"
-                        title="Move Up"
-                      >
-                        <ChevronUp size={15} />
-                      </button>
-                    )}
-                    {idx < coupons.length - 1 && (
-                      <button
-                        type="button"
-                        onClick={() => moveCoupon(idx, 1)}
-                        className="p-1 rounded text-foreground/40 hover:text-foreground hover:bg-black/5 cursor-pointer"
-                        title="Move Down"
-                      >
-                        <ChevronDown size={15} />
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => deleteCoupon(idx)}
-                      className="p-1 rounded text-red-500 hover:bg-red-50 ml-1 cursor-pointer"
-                      title="Delete Coupon"
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Live Preview Card */}
-                <div className="p-3.5 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8] flex items-center justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      {coupon.badge && (
-                        <span className="text-[10px] font-bold text-white bg-[#142B49] px-2 py-0.5 rounded-md uppercase tracking-tight">
-                          {coupon.badge}
-                        </span>
-                      )}
-                      <span className="text-xs font-bold text-[#1A2332] tracking-tight">
-                        {coupon.title || "Coupon Title"}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-[#1A2332]/75 tracking-tight">
-                      {coupon.description || "Coupon description..."}
-                    </p>
-                  </div>
-                  <span className="px-3 py-1.5 rounded-xl border border-[#142B49]/20 bg-white text-[#1A2332] text-xs font-bold tracking-tight shrink-0">
-                    {coupon.code || "CODE"}
+          {/* MASTER SECTION TOGGLE: Offers For You On Product Pages */}
+          <div className={`p-5 rounded-2xl border transition-all ${
+            showOffersSection 
+              ? "bg-[#F7F9FC] border-[#142B49]/20 shadow-xs" 
+              : "bg-red-50/40 border-red-200"
+          }`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`w-3 h-3 rounded-full ${showOffersSection ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`} />
+                  <h4 className="text-sm font-bold text-[#1A2332] uppercase tracking-tight">
+                    Offers for You Section (Product Pages)
+                  </h4>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight ${
+                    showOffersSection 
+                      ? "bg-emerald-100 text-emerald-800" 
+                      : "bg-red-100 text-red-800"
+                  }`}>
+                    {showOffersSection ? "ON — Visible on Product Pages" : "OFF — Hidden from Entire Site"}
                   </span>
                 </div>
-
-                {/* Form Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Coupon Code
-                    </label>
-                    <input
-                      type="text"
-                      value={coupon.code || ""}
-                      onChange={e => updateCoupon(idx, "code", e.target.value.toUpperCase().replace(/\s+/g, ""))}
-                      placeholder="e.g. FLAT05"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold tracking-wider uppercase text-[#1A2332] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Badge Text (Tag)
-                    </label>
-                    <input
-                      type="text"
-                      value={coupon.badge || ""}
-                      onChange={e => updateCoupon(idx, "badge", e.target.value)}
-                      placeholder="e.g. FIRST ORDER, BEST VALUE"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Discount Type
-                    </label>
-                    <select
-                      value={coupon.discountType || "percentage"}
-                      onChange={e => updateCoupon(idx, "discountType", e.target.value)}
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49] cursor-pointer"
-                    >
-                      <option value="percentage">Percentage Discount (%)</option>
-                      <option value="fixed">Flat Amount Discount (₹)</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Discount Value {coupon.discountType === "percentage" ? "(%)" : "(₹)"}
-                    </label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={coupon.discountValue || ""}
-                      onChange={e => updateCoupon(idx, "discountValue", Number(e.target.value))}
-                      placeholder={coupon.discountType === "percentage" ? "e.g. 5 for 5%" : "e.g. 200 for ₹200"}
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold text-[#142B49] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Min Order Value (₹)
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={coupon.minOrderAmount || 0}
-                      onChange={e => updateCoupon(idx, "minOrderAmount", Number(e.target.value))}
-                      placeholder="e.g. 0 or 3000"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Display Title
-                    </label>
-                    <input
-                      type="text"
-                      value={coupon.title || ""}
-                      onChange={e => updateCoupon(idx, "title", e.target.value)}
-                      placeholder="e.g. Flat 5% OFF"
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
-                      Description
-                    </label>
-                    <input
-                      type="text"
-                      value={coupon.description || ""}
-                      onChange={e => updateCoupon(idx, "description", e.target.value)}
-                      placeholder="e.g. Get flat 5% OFF on your first order. Applicable on all products."
-                      className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#1A2332] outline-none focus:border-[#142B49]"
-                    />
-                  </div>
-                </div>
-
-                {/* Toggles */}
-                <div className="pt-2 border-t border-black/5 flex flex-wrap items-center justify-between gap-3">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={coupon.showOnProductPage !== false}
-                      onChange={e => updateCoupon(idx, "showOnProductPage", e.target.checked)}
-                      className="w-4 h-4 rounded border-black/20 accent-[#142B49]"
-                    />
-                    <span className="text-xs font-semibold text-[#1A2332]">
-                      Show in &apos;Offers for You&apos; on Product Page
-                    </span>
-                  </label>
-
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={coupon.isActive !== false}
-                      onChange={e => updateCoupon(idx, "isActive", e.target.checked)}
-                      className="w-4 h-4 rounded border-black/20 accent-[#142B49]"
-                    />
-                    <span className="text-xs font-semibold text-[#1A2332]">
-                      Active (Can be redeemed)
-                    </span>
-                  </label>
-                </div>
+                <p className="text-xs text-[#1A2332]/70 max-w-2xl">
+                  {showOffersSection
+                    ? "Product pages will show the 'Offers for You' section with any active coupons below. Turn this OFF if you want to completely remove the offers section."
+                    : "The 'Offers for You' section is completely hidden from all product pages. Customers will not see any offer cards."}
+                </p>
               </div>
-            ))}
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setShowOffersSection(!showOffersSection)}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-tight cursor-pointer transition-all ${
+                    showOffersSection
+                      ? "bg-red-50 text-red-700 hover:bg-red-100 border border-red-200"
+                      : "bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm"
+                  }`}
+                >
+                  {showOffersSection ? (
+                    <>
+                      <EyeOff size={14} /> Turn OFF Offers Section
+                    </>
+                  ) : (
+                    <>
+                      <Eye size={14} /> Turn ON Offers Section
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Empty State */}
+          {coupons.length === 0 ? (
+            <div className="p-8 rounded-2xl border border-dashed border-[#142B49]/20 bg-white/60 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-[#142B49]/10 text-[#142B49] flex items-center justify-center mx-auto">
+                <Tag size={22} />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-[#1A2332]">No Coupons Configured</h4>
+                <p className="text-xs text-[#1A2332]/60 mt-1 max-w-md mx-auto">
+                  Currently no promotional coupons exist. Click &apos;+ Add Coupon&apos; above to create one, or leave this empty to keep offers hidden.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={addCoupon}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight cursor-pointer"
+              >
+                <Plus size={14} /> Add Coupon
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {coupons.map((coupon, idx) => (
+                <div 
+                  key={coupon.id || idx}
+                  className="bg-white rounded-2xl border border-[#211b13]/10 p-5 shadow-sm space-y-4 relative"
+                >
+                  {/* Header Row: Badge & Reorder/Delete */}
+                  <div className="flex items-center justify-between border-b border-black/5 pb-3">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="w-6 h-6 rounded-full bg-[#142B49]/10 text-[#142B49] text-xs font-bold flex items-center justify-center">
+                        {idx + 1}
+                      </span>
+                      <span className="text-xs font-bold uppercase tracking-tight text-[#1A2332]">
+                        {coupon.code || "UNTITLED"}
+                      </span>
+                      {coupon.showOnProductPage !== false ? (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2E6930]/10 text-[#2E6930]">
+                          On Product Page
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/5 text-foreground/50">
+                          Hidden from Product Page
+                        </span>
+                      )}
+                      {coupon.isActive === false && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">
+                          Inactive
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      {idx > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => moveCoupon(idx, -1)}
+                          className="p-1 rounded text-foreground/40 hover:text-foreground hover:bg-black/5 cursor-pointer"
+                          title="Move Up"
+                        >
+                          <ChevronUp size={15} />
+                        </button>
+                      )}
+                      {idx < coupons.length - 1 && (
+                        <button
+                          type="button"
+                          onClick={() => moveCoupon(idx, 1)}
+                          className="p-1 rounded text-foreground/40 hover:text-foreground hover:bg-black/5 cursor-pointer"
+                          title="Move Down"
+                        >
+                          <ChevronDown size={15} />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => deleteCoupon(idx)}
+                        className="p-1 rounded text-red-500 hover:bg-red-50 ml-1 cursor-pointer"
+                        title="Delete Coupon"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Live Preview Card */}
+                  <div className="p-3.5 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8] flex items-center justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        {coupon.badge && (
+                          <span className="text-[10px] font-bold text-white bg-[#142B49] px-2 py-0.5 rounded-md uppercase tracking-tight">
+                            {coupon.badge}
+                          </span>
+                        )}
+                        <span className="text-xs font-bold text-[#1A2332] tracking-tight">
+                          {coupon.title || "Coupon Title"}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-[#1A2332]/75 tracking-tight">
+                        {coupon.description || "Coupon description..."}
+                      </p>
+                    </div>
+                    <span className="px-3 py-1.5 rounded-xl border border-[#142B49]/20 bg-white text-[#1A2332] text-xs font-bold tracking-tight shrink-0">
+                      {coupon.code || "CODE"}
+                    </span>
+                  </div>
+
+                  {/* Form Fields */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Coupon Code
+                      </label>
+                      <input
+                        type="text"
+                        value={coupon.code || ""}
+                        onChange={e => updateCoupon(idx, "code", e.target.value.toUpperCase().replace(/\s+/g, ""))}
+                        placeholder="e.g. FLAT05"
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold tracking-wider uppercase text-[#1A2332] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Badge Text (Tag)
+                      </label>
+                      <input
+                        type="text"
+                        value={coupon.badge || ""}
+                        onChange={e => updateCoupon(idx, "badge", e.target.value)}
+                        placeholder="e.g. FIRST ORDER, BEST VALUE"
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Discount Type
+                      </label>
+                      <select
+                        value={coupon.discountType || "percentage"}
+                        onChange={e => updateCoupon(idx, "discountType", e.target.value)}
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49] cursor-pointer"
+                      >
+                        <option value="percentage">Percentage Discount (%)</option>
+                        <option value="fixed">Flat Amount Discount (₹)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Discount Value {coupon.discountType === "percentage" ? "(%)" : "(₹)"}
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={coupon.discountValue || ""}
+                        onChange={e => updateCoupon(idx, "discountValue", Number(e.target.value))}
+                        placeholder={coupon.discountType === "percentage" ? "e.g. 5 for 5%" : "e.g. 200 for ₹200"}
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-bold text-[#142B49] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Min Order Value (₹)
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={coupon.minOrderAmount || 0}
+                        onChange={e => updateCoupon(idx, "minOrderAmount", Number(e.target.value))}
+                        placeholder="e.g. 0 or 3000"
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Display Title
+                      </label>
+                      <input
+                        type="text"
+                        value={coupon.title || ""}
+                        onChange={e => updateCoupon(idx, "title", e.target.value)}
+                        placeholder="e.g. Flat 5% OFF"
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 font-semibold text-[#1A2332] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-[11px] font-bold uppercase tracking-tight text-[#1A2332] mb-1">
+                        Description
+                      </label>
+                      <input
+                        type="text"
+                        value={coupon.description || ""}
+                        onChange={e => updateCoupon(idx, "description", e.target.value)}
+                        placeholder="e.g. Get flat 5% OFF on your first order. Applicable on all products."
+                        className="w-full rounded-xl border border-black/10 bg-white/40 px-3 py-2 text-xs text-[#1A2332] outline-none focus:border-[#142B49]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Toggles */}
+                  <div className="pt-2 border-t border-black/5 flex flex-wrap items-center justify-between gap-3">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={coupon.showOnProductPage !== false}
+                        onChange={e => updateCoupon(idx, "showOnProductPage", e.target.checked)}
+                        className="w-4 h-4 rounded border-black/20 accent-[#142B49]"
+                      />
+                      <span className="text-xs font-semibold text-[#1A2332]">
+                        Show in &apos;Offers for You&apos; on Product Page
+                      </span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={coupon.isActive !== false}
+                        onChange={e => updateCoupon(idx, "isActive", e.target.checked)}
+                        className="w-4 h-4 rounded border-black/20 accent-[#142B49]"
+                      />
+                      <span className="text-xs font-semibold text-[#1A2332]">
+                        Active (Can be redeemed)
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Bottom Save Action Bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Coupons & Offers&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Coupons & Offers"}</span>
+            </button>
           </div>
         </div>
       )}
-
-
 
       {/* =====================================================================
           TAB 2: HERO BANNERS
@@ -1188,6 +1320,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               </div>
             ))}
           </div>
+
+          {/* Bottom Save Action Bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Navbar Links&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -1293,6 +1441,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom Save Action Bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Navbar Links&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
+            </button>
           </div>
         </div>
       )}
@@ -1652,6 +1816,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
               <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
             </button>
           </div>
+
+          {/* Bottom Save Action Bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Navbar Links&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -1901,6 +2081,22 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom Save Action Bar */}
+          <div className="flex items-center justify-between pt-4 border-t border-[#142B49]/10 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-[#C5D5E8]">
+            <p className="text-xs text-[#142B49]/70 font-medium">
+              Click &quot;Save Navbar Links&quot; to push changes live instantly across the entire website.
+            </p>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#142B49] text-white hover:bg-[#0E1F36] text-xs font-bold uppercase tracking-tight transition-all shadow-md disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={15} />
+              <span>{saving ? "Saving Changes..." : "Save Navbar Links"}</span>
+            </button>
           </div>
         </div>
       )}

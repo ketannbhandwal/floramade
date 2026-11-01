@@ -244,38 +244,56 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     ];
   }, [product]);
 
-  // Dynamic coupons managed by admin
-  const [coupons, setCoupons] = useState([
-    {
-      code: "FLAT05",
-      badge: "FIRST ORDER",
-      title: "Flat 5% OFF",
-      description: "Get flat 5% OFF on your first order. Applicable on all products.",
-      showOnProductPage: true,
-      isActive: true,
-    },
-    {
-      code: "FLAT10",
-      badge: "BEST VALUE",
-      title: "Flat 10% OFF",
-      description: "Get flat 10% OFF on orders above ₹3,000. Applicable on all products.",
-      showOnProductPage: true,
-      isActive: true,
-    },
-  ]);
+  // Dynamic coupons managed by admin (empty by default, controlled via Admin Customizer)
+  const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data?.coupons) && data.coupons.length > 0) {
-          const activeCoupons = data.coupons.filter(c => c.isActive !== false && c.showOnProductPage !== false);
-          if (activeCoupons.length > 0) {
-            setCoupons(activeCoupons);
+    function loadOffers() {
+      fetch("/api/settings?t=" + Date.now())
+        .then(res => res.json())
+        .then(data => {
+          if (data?.showOffersSection === false) {
+            setCoupons([]);
+            return;
           }
-        }
-      })
-      .catch(() => {});
+          if (Array.isArray(data?.coupons)) {
+            const activeCoupons = data.coupons.filter(
+              c => c.isActive !== false && c.showOnProductPage !== false
+            );
+            setCoupons(activeCoupons);
+          } else {
+            setCoupons([]);
+          }
+        })
+        .catch(() => {});
+    }
+
+    loadOffers();
+
+    function handleSettingsUpdated(e) {
+      const detail = e?.detail;
+      if (!detail) {
+        loadOffers();
+        return;
+      }
+      if (detail.showOffersSection === false) {
+        setCoupons([]);
+      } else if (Array.isArray(detail.coupons)) {
+        const activeCoupons = detail.coupons.filter(
+          c => c.isActive !== false && c.showOnProductPage !== false
+        );
+        setCoupons(activeCoupons);
+      }
+    }
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("floramade-settings-updated", handleSettingsUpdated);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("floramade-settings-updated", handleSettingsUpdated);
+      }
+    };
   }, []);
 
   const applyAndCopyCoupon = (coupon) => {
