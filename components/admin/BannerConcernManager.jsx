@@ -1247,7 +1247,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       </label>
                     </div>
                     {banner.desktop && (
-                      <div className="relative aspect-[21/9] w-full rounded-xl overflow-hidden border border-black/10 bg-slate-100">
+                      <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-black/10 bg-slate-100">
                         <Image src={banner.desktop} alt={banner.alt || "Desktop preview"} fill unoptimized className="object-cover" />
                       </div>
                     )}
@@ -1284,7 +1284,7 @@ export default function BannerConcernManager({ products: initialProducts = [] })
                       </label>
                     </div>
                     {banner.mobile && (
-                      <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-black/10 bg-slate-100">
+                      <div className="relative aspect-[3/4] max-w-[260px] mx-auto rounded-xl overflow-hidden border border-black/10 bg-slate-100">
                         <Image src={banner.mobile} alt={banner.alt || "Mobile preview"} fill unoptimized className="object-cover" />
                       </div>
                     )}

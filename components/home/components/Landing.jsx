@@ -61,7 +61,7 @@ export default function Landing({ banners }) {
       {/* Full-width Banner Container with Zero Padding */}
       <div className="group relative w-full overflow-hidden bg-[#142B49]">
         <div 
-          className="overflow-hidden w-full aspect-[1587/2245] md:aspect-[1700/780]" 
+          className="overflow-hidden w-full aspect-[3/4] md:aspect-[16/9]" 
           ref={emblaRef}
         >
           <div className="flex h-full w-full">
@@ -84,7 +84,8 @@ export default function Landing({ banners }) {
                             alt={slide.alt || "Floramade banner"} 
                             fill 
                             priority={index === 0} 
-                            quality={80}
+                            quality={90}
+                            unoptimized
                             sizes="100vw" 
                             className="object-cover object-center w-full h-full" 
                           />
@@ -95,7 +96,8 @@ export default function Landing({ banners }) {
                             alt={slide.alt || "Floramade banner"} 
                             fill 
                             priority={index === 0} 
-                            quality={85}
+                            quality={90}
+                            unoptimized
                             sizes="100vw" 
                             className="object-cover object-center w-full h-full" 
                           />
@@ -107,7 +109,8 @@ export default function Landing({ banners }) {
                         alt={slide.alt || "Floramade banner"} 
                         fill 
                         priority={index === 0} 
-                        quality={85}
+                        quality={90}
+                        unoptimized
                         sizes="100vw" 
                         className="object-cover object-center w-full h-full" 
                       />
