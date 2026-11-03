@@ -48,8 +48,8 @@ export default function HomeSections({
       <PromoBanner 
         src="/assets/bg2.jpg"
         alt="Safe and Tested - Recommended by Health Professionals - Honest Ayurveda Brand"
-        width={1374}
-        height={605}
+        width={2734}
+        height={1226}
       />
       <BenefitsSection 
         heading={benefitsHeading}
