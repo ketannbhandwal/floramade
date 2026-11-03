@@ -60,15 +60,28 @@ export default function Landing({ banners }) {
       
       {/* Full-width Banner Container with Zero Padding */}
       <div className="group relative w-full overflow-hidden bg-[#142B49]">
+        <style dangerouslySetInnerHTML={{ __html: `
+          .hero-banner-viewport {
+            width: 100%;
+            overflow: hidden;
+            aspect-ratio: 3 / 4;
+            background-color: #142B49;
+          }
+          @media (min-width: 768px) {
+            .hero-banner-viewport {
+              aspect-ratio: 16 / 9;
+            }
+          }
+        `}} />
         <div 
-          className="overflow-hidden w-full aspect-[3/4] md:aspect-[16/9]" 
+          className="hero-banner-viewport overflow-hidden w-full aspect-[3/4] md:aspect-[16/9] bg-[#142B49]" 
           ref={emblaRef}
         >
           <div className="flex h-full w-full">
             {activeSlides.map((slide, index) => (
               <div 
                 key={slide.desktop || index} 
-                className="relative h-full w-full min-w-0 flex-[0_0_100%]"
+                className="relative h-full w-full min-w-0 flex-[0_0_100%] bg-[#142B49]"
               >
                 <Link 
                   href={slide.href || "/collection"} 
@@ -86,8 +99,8 @@ export default function Landing({ banners }) {
                             priority={index === 0} 
                             quality={90}
                             unoptimized
-                            sizes="100vw" 
-                            className="object-cover object-center w-full h-full" 
+                            sizes="(max-width: 768px) 100vw, 50vw" 
+                            className="object-contain object-center w-full h-full select-none" 
                           />
                         </div>
                         <div className="relative hidden md:block w-full h-full">
@@ -99,7 +112,7 @@ export default function Landing({ banners }) {
                             quality={90}
                             unoptimized
                             sizes="100vw" 
-                            className="object-cover object-center w-full h-full" 
+                            className="object-contain object-center w-full h-full select-none" 
                           />
                         </div>
                       </>
@@ -112,7 +125,7 @@ export default function Landing({ banners }) {
                         quality={90}
                         unoptimized
                         sizes="100vw" 
-                        className="object-cover object-center w-full h-full" 
+                        className="object-contain object-center w-full h-full select-none" 
                       />
                     )}
                   </div>
@@ -144,7 +157,7 @@ export default function Landing({ banners }) {
 
         {/* Pagination Dots */}
         {activeSlides.length > 1 && (
-          <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#142B49]/75 px-3 py-1.5 backdrop-blur-md z-20 border border-white/20">
+          <div className="absolute bottom-1.5 sm:bottom-2.5 md:bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-[#142B49]/80 px-2.5 py-1 backdrop-blur-md z-20 border border-white/20 shadow-md">
             {activeSlides.map((slide, index) => (
               <button
                 key={slide.desktop || index}
@@ -153,7 +166,7 @@ export default function Landing({ banners }) {
                 onClick={() => emblaApi?.scrollTo(index)}
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                   activeSlide === index 
-                    ? "w-6 sm:w-8 bg-white shadow-[0_0_8px_rgba(255,247,235,0.7)]" 
+                    ? "w-5 sm:w-6 bg-white shadow-[0_0_8px_rgba(255,247,235,0.7)]" 
                     : "w-1.5 sm:w-2 bg-white/50 hover:bg-white"
                 }`}
               />

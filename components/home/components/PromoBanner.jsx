@@ -30,8 +30,9 @@ export default function PromoBanner({
               height={height}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1440px"
               quality={90}
+              unoptimized
               priority={priority}
-              className="w-full h-auto object-cover select-none transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+              className="w-full h-auto object-contain select-none transition-transform duration-500 ease-out group-hover:scale-[1.01]"
             />
           </Link>
         </motion.div>
