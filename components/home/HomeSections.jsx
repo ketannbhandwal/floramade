@@ -56,7 +56,17 @@ export default function HomeSections({
         benefits={benefits}
       />
       <FlagshipProducts products={products} />
-      <ProductSpotlight products={products} selectedId={spotlightProductId} />
+      <ProductSpotlight products={products} selectedId={spotlightProductId || "madhucurex-diabetes-pro"} />
+      {/* Banner applied after MadhuCurex product */}
+      <PromoBanner 
+        src="/assets/nature-enriched-banner.jpg"
+        alt="Floramade - Enriched With Goodness Of Nature"
+        width={1024}
+        height={349}
+        href="/product/pilecurex-kit"
+      />
+      {/* Pilecurex kit product showcase with dynamic server data */}
+      <ProductSpotlight products={products} selectedId="pilecurex-kit" />
       <Suspense fallback={null}>
         <Review 
           pretitle={testimonialsPretitle}

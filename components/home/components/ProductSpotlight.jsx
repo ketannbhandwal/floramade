@@ -190,6 +190,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                   fill
                   sizes="(max-width: 640px) 320px, (max-width: 1024px) 500px, 600px"
                   quality={90}
+                  unoptimized
                   className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
                   priority
                 />
@@ -215,6 +216,7 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
                       alt={`${cleanName} thumbnail ${idx + 1}`}
                       fill
                       sizes="80px"
+                      unoptimized
                       className="object-cover select-none"
                     />
                   </button>
