@@ -57,12 +57,12 @@ export default function HomeSections({
       />
       <FlagshipProducts products={products} />
       <ProductSpotlight products={products} selectedId={spotlightProductId || "madhucurex-diabetes-pro"} />
-      {/* Banner applied after MadhuCurex product */}
+      {/* Banner applied above Pilecurex kit product */}
       <PromoBanner 
-        src="/assets/nature-enriched-banner.jpg"
-        alt="Floramade - Enriched With Goodness Of Nature"
+        src="/assets/choose-pure-ayurveda-banner.jpg"
+        alt="Floramade - Choose Pure Choose Ayurveda"
         width={1024}
-        height={349}
+        height={242}
         href="/product/pilecurex-kit"
       />
       {/* Pilecurex kit product showcase with dynamic server data */}
