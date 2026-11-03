@@ -40,8 +40,8 @@ export default function HomeSections({
       <PromoBanner 
         src="/assets/bg1.jpg"
         alt="Floramade - Enriched With Goodness Of Nature"
-        width={1372}
-        height={497}
+        width={1024}
+        height={349}
       />
       <BrandStory />
       {/* Banner 2: Applied above Benefits Section */}
