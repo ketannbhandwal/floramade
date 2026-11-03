@@ -42,9 +42,8 @@ const organizationSchema = [
     ],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rohini Sector 21",
-      "addressLocality": "New Delhi",
-      "postalCode": "110086",
+      "addressLocality": "Delhi",
+      "addressRegion": "Delhi",
       "addressCountry": "IN"
     },
     "contactPoint": {

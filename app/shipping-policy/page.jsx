@@ -173,7 +173,7 @@ export default function ShippingPolicyPage() {
             </div>
             <div className="flex items-start gap-2 text-xs text-[#1A2332]/80">
               <MapPin size={15} className="text-[#142B49] shrink-0 mt-0.5" />
-              <span>Rohini Sector 21, New Delhi - 110086, India</span>
+              <span>Delhi, India</span>
             </div>
             <div className="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-[#142B49]">
               <a href="mailto:floramade517@gmail.com" className="flex items-center gap-1.5 hover:underline">

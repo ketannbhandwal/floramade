@@ -358,7 +358,7 @@ export default function ContactPage() {
                 <div className="space-y-3 text-xs text-[#1A2332]/80">
                   <div className="flex items-start gap-2.5">
                     <MapPin size={16} className="text-[#142B49] shrink-0 mt-0.5" />
-                    <span>Rohini Sector 21, New Delhi - 110086, India</span>
+                    <span>Delhi, India</span>
                   </div>
 
                   <div className="flex items-start gap-2.5">

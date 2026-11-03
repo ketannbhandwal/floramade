@@ -183,7 +183,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="font-semibold text-white">Location</p>
-                  <p className="text-white/80">Rohini Sector 21, New Delhi - 110086, India</p>
+                  <p className="text-white/80">Delhi, India</p>
                 </div>
                 <div>
                   <p className="font-semibold text-white">Timings</p>

@@ -68,9 +68,8 @@ const aboutSchema = {
     "image": "https://floramade.in/assets/aboutus2.webp",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rohini Sector 21",
-      "addressLocality": "New Delhi",
-      "postalCode": "110086",
+      "addressLocality": "Delhi",
+      "addressRegion": "Delhi",
       "addressCountry": "IN"
     }
   }

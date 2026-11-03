@@ -256,7 +256,7 @@ export default function AboutContent() {
                 </div>
               </div>
               <div className="text-right text-[11px] text-[#1A2332]/60 hidden sm:block">
-                <span>Rohini, New Delhi • India</span>
+                <span>Delhi, India</span>
               </div>
             </div>
           </motion.div>
