@@ -38,7 +38,7 @@ export default function HomeSections({
       />
       {/* Banner 1: Applied after Featured Product Section */}
       <PromoBanner 
-        src="/assets/bg1.jpg"
+        src="/assets/nature-centered-banner.jpg"
         alt="Floramade - Enriched With Goodness Of Nature"
         width={1024}
         height={349}
@@ -46,7 +46,7 @@ export default function HomeSections({
       <BrandStory />
       {/* Banner 2: Applied above Benefits Section */}
       <PromoBanner 
-        src="/assets/bg2.jpg"
+        src="/assets/doctor-navy-banner.jpg"
         alt="Safe and Tested - Recommended by Health Professionals - Honest Ayurveda Brand"
         width={2734}
         height={1226}
