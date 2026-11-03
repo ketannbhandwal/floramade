@@ -97,10 +97,11 @@ export default function Footer() {
               <div className="flex items-center justify-start">
                 <Link href="/" className="inline-block group focus:outline-none">
                   <Image 
-                    src="/floramade-logo-gold.png" 
+                    src="/floramade-gold-official.png" 
                     alt="Floramade Logo" 
-                    width={200} 
-                    height={58} 
+                    width={220} 
+                    height={64} 
+                    unoptimized
                     className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
                   />
                 </Link>

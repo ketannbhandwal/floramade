@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
@@ -31,10 +31,16 @@ function ProductCard({ product, index = 0 }) {
     toast.success("Added to Bag");
   }, [product, addToCart]);
 
-  const productImage = product.images?.[0]
+  const initialImage = product.images?.[0]
     || product.featureImages?.[0]
     || product.formulaimage
     || "/placeholder.png";
+
+  const [imgSrc, setImgSrc] = useState(initialImage);
+
+  useEffect(() => {
+    setImgSrc(initialImage);
+  }, [initialImage]);
 
   const currentPrice = Number(product.discountPrice || product.price || 0);
   const regularPrice = Number(product.price || currentPrice);
@@ -75,11 +81,20 @@ function ProductCard({ product, index = 0 }) {
           className="relative block w-full h-full cursor-pointer"
         >
           <Image
-            src={productImage}
+            src={imgSrc}
             alt={cleanName}
             fill
             sizes="(max-width: 640px) 240px, (max-width: 1024px) 300px, 25vw"
             quality={85}
+            unoptimized
+            onError={() => {
+              const fallback = product.images?.[1] || product.featureImages?.[1] || "/placeholder.png";
+              if (imgSrc !== fallback && fallback !== imgSrc) {
+                setImgSrc(fallback);
+              } else if (imgSrc !== "/placeholder.png") {
+                setImgSrc("/placeholder.png");
+              }
+            }}
             className="object-contain select-none transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>

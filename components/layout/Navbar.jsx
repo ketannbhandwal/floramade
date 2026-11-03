@@ -239,11 +239,12 @@ export default function Navbar() {
               <div className="flex items-center shrink-0">
                 <Link href="/" className="flex items-center focus:outline-none group">
                   <Image
-                    src="/floramade-logo-gold.png"
+                    src="/floramade-gold-official.png"
                     alt="Floramade Ayurveda"
-                    width={200}
-                    height={50}
+                    width={220}
+                    height={64}
                     priority
+                    unoptimized
                     className="h-10 sm:h-11 md:h-12 w-auto object-contain cursor-pointer transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                 </Link>
@@ -474,11 +475,12 @@ export default function Navbar() {
               <div className="flex-1 flex justify-center items-center px-2">
                 <Link href="/" className="flex items-center focus:outline-none">
                   <Image
-                    src="/floramade-logo-gold.png"
+                    src="/floramade-gold-official.png"
                     alt="Floramade Ayurveda"
                     width={180}
-                    height={44}
+                    height={52}
                     priority
+                    unoptimized
                     className="h-8 sm:h-9 w-auto object-contain cursor-pointer"
                   />
                 </Link>

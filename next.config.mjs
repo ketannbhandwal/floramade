@@ -4,15 +4,11 @@ const nextConfig = {
     optimizePackageImports: ['framer-motion', 'lucide-react', '@mux/mux-node'],
   },
   images: {
+    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "res.cloudinary.com" },
-      { protocol: "https", hostname: "i.pravatar.cc" },
-      { protocol: "https", hostname: "image.mux.com" },
-      { protocol: "https", hostname: "stream.mux.com" },
-      { protocol: "https", hostname: "player.mux.com" },
-      { protocol: "https", hostname: "gcxfqnqewpfypocphmml.supabase.co" },
+      { protocol: "https", hostname: "**" },
+      { protocol: "http", hostname: "**" },
     ],
     localPatterns: [
       {
