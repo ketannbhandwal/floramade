@@ -86,6 +86,113 @@ const ProductStructuredData = ({ product }) => {
   );
 };
 
+function FormattedDescription({ text }) {
+  if (!text) return null;
+
+  // Split into structured blocks by double newlines or multiple newlines
+  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+
+  return (
+    <div className="space-y-4 text-xs sm:text-sm text-[#1A2332]/90 leading-relaxed pt-2">
+      {blocks.map((block, bIdx) => {
+        // 1. Highlight top title/headline line
+        if (bIdx === 0 && (block.toLowerCase().includes("floramade") || block.toLowerCase().includes("kit") || block.length < 90)) {
+          return (
+            <div key={bIdx} className="p-3.5 rounded-xl bg-[#142B49]/5 border-l-4 border-[#142B49]">
+              <p className="font-bold text-xs sm:text-sm text-[#142B49] leading-snug">
+                {block}
+              </p>
+            </div>
+          );
+        }
+
+        // 2. Section Heading block (e.g. "Suitable For:", "Key Benefits:", or ending with ":")
+        const isHeaderOnly = block.endsWith(":") || /^(suitable for|key benefits|how it works|why choose floramade|clinical advantages|highlights):?$/i.test(block);
+        if (isHeaderOnly) {
+          const title = block.replace(/:$/, "");
+          return (
+            <div key={bIdx} className="pt-2 pb-1 border-b border-[#C5D5E8]/70">
+              <h4 className="font-bold text-xs sm:text-sm text-[#142B49] uppercase tracking-wide flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#D9A441] shrink-0" />
+                <span>{title}:</span>
+              </h4>
+            </div>
+          );
+        }
+
+        // 3. Multi-line block with list items or steps
+        if (block.includes("\n")) {
+          const lines = block.split("\n").map(l => l.trim()).filter(Boolean);
+          return (
+            <div key={bIdx} className="space-y-2">
+              {lines.map((line, lIdx) => {
+                const isLineHeading = line.endsWith(":") || /^(suitable for|key benefits|indications):?$/i.test(line);
+                if (isLineHeading) {
+                  return (
+                    <div key={lIdx} className="pt-2 pb-1 border-b border-[#C5D5E8]/70">
+                      <h4 className="font-bold text-xs sm:text-sm text-[#142B49] uppercase tracking-wide flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#D9A441] shrink-0" />
+                        <span>{line}</span>
+                      </h4>
+                    </div>
+                  );
+                }
+
+                // Check for Dash / Colon: "External Relief – Instantly soothes burning..."
+                const dashSplit = line.split(/–| - |:\s/);
+                const hasKeyVal = dashSplit.length >= 2 && dashSplit[0].length < 35;
+                const cleanLine = line.replace(/^[-•*]\s*/, "");
+
+                return (
+                  <div key={lIdx} className="flex items-start gap-2.5 pl-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#142B49] mt-2 shrink-0 opacity-70" />
+                    <div className="leading-relaxed text-[#1A2332]/85">
+                      {hasKeyVal ? (
+                        <>
+                          <strong className="font-bold text-[#142B49]">{dashSplit[0].trim()} – </strong>
+                          <span>{dashSplit.slice(1).join(" - ").trim()}</span>
+                        </>
+                      ) : (
+                        <span>{cleanLine}</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+
+        // 4. Single line that is a key feature (e.g. "External Relief – Instantly soothes...")
+        const dashSplit = block.split(/–| - |:\s/);
+        if (dashSplit.length >= 2 && dashSplit[0].length < 35 && (
+          dashSplit[0].toLowerCase().includes("relief") || 
+          dashSplit[0].toLowerCase().includes("healing") || 
+          dashSplit[0].toLowerCase().includes("correction") ||
+          dashSplit[0].toLowerCase().includes("step")
+        )) {
+          return (
+            <div key={bIdx} className="flex items-start gap-2.5 p-3 rounded-xl bg-[#F7F9FC] border border-[#C5D5E8]/60 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#D9A441] mt-1.5 shrink-0" />
+              <div className="leading-relaxed text-[#1A2332]/90">
+                <strong className="font-bold text-[#142B49]">{dashSplit[0].trim()}: </strong>
+                <span>{dashSplit.slice(1).join(" - ").trim()}</span>
+              </div>
+            </div>
+          );
+        }
+
+        // 5. Standard narrative paragraph with preserved newlines
+        return (
+          <p key={bIdx} className="leading-relaxed whitespace-pre-line text-[#1A2332]/85">
+            {block}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 const ratingLabels = {
   1: "1/5 - Poor",
   2: "2/5 - Fair",
@@ -1034,7 +1141,7 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50">
-                        <p>{cleanDescription}</p>
+                        <FormattedDescription text={cleanDescription} />
                       </div>
                     </motion.div>
                   )}

@@ -915,8 +915,11 @@ export default function AdminPage() {
 
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="product-description" className="ml-0.5 block text-[11px] font-semibold uppercase tracking-tight text-foreground/60">Product description</label>
-                      <textarea id="product-description" className="min-h-[130px] w-full resize-y rounded-xl border border-border bg-white p-4 text-sm leading-6 text-foreground outline-none transition placeholder:text-foreground/35 focus:border-primary focus:ring-2 focus:ring-primary/15" placeholder="Describe the formulation, its intended use, and what makes it special..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+                      <div className="flex items-center justify-between">
+                        <label htmlFor="product-description" className="ml-0.5 block text-[11px] font-semibold uppercase tracking-tight text-foreground/60">Product description</label>
+                        <span className="text-[11px] text-[#142B49] font-medium">Line breaks &amp; spacing are preserved</span>
+                      </div>
+                      <textarea id="product-description" className="min-h-[180px] w-full resize-y rounded-xl border border-border bg-white p-4 text-sm leading-6 text-foreground outline-none transition placeholder:text-foreground/35 focus:border-primary focus:ring-2 focus:ring-primary/15" placeholder="Describe the formulation, its intended use, and what makes it special... Use line breaks for paragraphs, headings (ending with ':') and bullet points." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
                     </div>
                     
                     {/* Kit / Multi-Product Ingredients Section */}
