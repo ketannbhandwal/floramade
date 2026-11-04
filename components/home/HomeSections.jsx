@@ -9,6 +9,7 @@ import BenefitsSection from "./components/BenefitsSection";
 import FlagshipProducts from "./components/FlagshipProducts";
 import ProductSpotlight from "./components/ProductSpotlight";
 import PromoBanner from "./components/PromoBanner";
+import WhyChooseSection from "./components/WhyChooseSection";
 
 const Products = dynamic(() => import("./components/Products"), { ssr: true });
 const Review = dynamic(() => import("./components/Review"), { ssr: true });
@@ -55,6 +56,7 @@ export default function HomeSections({
         heading={benefitsHeading}
         benefits={benefits}
       />
+      <WhyChooseSection />
       <FlagshipProducts products={products} />
       <ProductSpotlight products={products} selectedId={spotlightProductId || "madhucurex-diabetes-pro"} />
       {/* Banner applied above Pilecurex kit product */}
