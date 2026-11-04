@@ -62,6 +62,15 @@ function ProductCard({ product, index = 0 }) {
       {/* 1. TOP STAGE: Pristine White Product Image Container */}
       <div className="relative aspect-square w-full flex items-center justify-center bg-white overflow-hidden border-b border-[#C5D5E8]/40">
         
+        {/* Top-Left: Kit Badge if product is a combo kit */}
+        {(product.isKit || (Array.isArray(product.kitProducts) && product.kitProducts.length > 0)) && (
+          <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
+            <span className="inline-flex items-center gap-1 bg-[#142B49] text-[#D9A441] text-[10px] font-bold tracking-tight px-2 py-0.5 rounded-full shadow-xs">
+              Kit
+            </span>
+          </div>
+        )}
+
         {/* Top-Right: Refined Wishlist Heart */}
         <button
           type="button"

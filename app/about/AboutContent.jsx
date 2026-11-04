@@ -225,38 +225,102 @@ export default function AboutContent() {
         {/* =========================================================================
             7. FOUNDER SPOTLIGHT: SURAJ GAUR
             ========================================================================= */}
-        <section className="max-w-4xl mx-auto px-4 sm:px-6 py-6 md:py-8">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12">
           <motion.div 
             {...fadeUp}
-            className="rounded-3xl bg-white border border-[#C5D5E8]/90 shadow-xs p-6 sm:p-8 md:p-10 space-y-5"
+            className="rounded-3xl bg-white border border-[#C5D5E8] shadow-sm p-6 sm:p-10 space-y-7 relative overflow-hidden"
           >
+            {/* Top decorative accent */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#142B49] via-[#D9A441] to-[#142B49]" />
+
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#142B49]/10 text-[#142B49] text-[10px] font-bold uppercase tracking-wider">
-                <Building2 size={12} />
-                <span>Founder&apos;s Vision</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#142B49]/10 text-[#142B49] text-[11px] font-bold uppercase tracking-wider">
+                <Building2 size={13} className="text-[#D9A441]" />
+                <span>Founder&apos;s Story &amp; Vision</span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-[#142B49] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#142B49] tracking-tight">
                 A Personal Word from Our Founder
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#1A2332]/80 leading-relaxed font-normal">
-                &ldquo;Having witnessed how modern lifestyles, high stress, and processed diets have disrupted natural vitality, I felt a deep responsibility to make genuine, unadulterated Ayurvedic health solutions accessible to every household. Floramade is dedicated to zero compromises—every bottle delivers the exact herbal purity and therapeutic potency we would trust for our own families.&rdquo;
+              <p className="text-xs sm:text-sm text-[#D9A441] font-semibold tracking-wide uppercase">
+                The Purpose &amp; Promise Behind Floramade Healthcare
               </p>
             </div>
 
-            <div className="pt-4 border-t border-[#C5D5E8]/60 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#142B49] text-[#D9A441] font-serif font-bold text-lg flex items-center justify-center shrink-0 shadow-xs">
+            {/* Founder Story & Purpose Narrative */}
+            <div className="space-y-4 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed">
+              <p>
+                &ldquo;Having witnessed firsthand how modern lifestyles, high daily stress, and chemically processed diets have disrupted vitality across families, I felt a deep responsibility to bridge ancient wisdom with modern daily living. Floramade was born in Delhi out of a personal commitment: to give people honest, unadulterated Ayurvedic solutions that genuinely work at the root cause.&rdquo;
+              </p>
+              <p>
+                &ldquo;In a market crowded with mass-produced supplements packed with synthetic fillers, artificial binders, and diluted herbs, we chose a zero-compromise path. Every formulation we create strictly honors classical Shastriya methodologies (Charaka &amp; Sushruta Samhita) while passing rigorous contemporary laboratory screenings for purity, heavy metals, and active botanical standardization.&rdquo;
+              </p>
+            </div>
+
+            {/* Founder's 3 Pillars of Integrity */}
+            <div className="grid sm:grid-cols-3 gap-3.5 pt-1">
+              <div className="p-3.5 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8]/70 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#142B49]">
+                  <Leaf size={14} className="text-[#2E7D32]" />
+                  <span>Whole Botanical Purity</span>
+                </div>
+                <p className="text-[11px] text-[#1A2332]/75 leading-relaxed">
+                  100% pure standardized herbal extracts. Zero chemical shortcuts, zero hidden steroids, zero preservatives.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8]/70 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#142B49]">
+                  <FlaskConical size={14} className="text-[#142B49]" />
+                  <span>Root-Cause Therapeutics</span>
+                </div>
+                <p className="text-[11px] text-[#1A2332]/75 leading-relaxed">
+                  Formulations designed to balance underlying doshas and metabolic health rather than temporarily masking symptoms.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-[#F7F9FC] border border-[#C5D5E8]/70 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#142B49]">
+                  <ShieldCheck size={14} className="text-[#D9A441]" />
+                  <span>The Family-First Rule</span>
+                </div>
+                <p className="text-[11px] text-[#1A2332]/75 leading-relaxed">
+                  If a remedy is not safe or potent enough for my own parents or children, it will never bear the Floramade seal.
+                </p>
+              </div>
+            </div>
+
+            {/* Quote Highlight Box */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#142B49]/5 border-l-4 border-[#D9A441] space-y-2">
+              <div className="flex items-start gap-2.5">
+                <Quote size={20} className="text-[#D9A441] shrink-0 mt-0.5" />
+                <p className="text-xs sm:text-sm font-medium text-[#142B49] italic leading-relaxed">
+                  &ldquo;Ayurveda is not ancient history—it is a living, breathing science for modern well-being. When you invite Floramade into your home, my personal pledge to you is absolute honesty, unyielding purity, and genuine therapeutic care in every single bottle.&rdquo;
+                </p>
+              </div>
+            </div>
+
+            {/* Founder Profile Details & Location */}
+            <div className="pt-4 border-t border-[#C5D5E8]/70 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="w-13 h-13 rounded-2xl bg-[#142B49] text-[#D9A441] font-serif font-bold text-xl flex items-center justify-center shrink-0 shadow-sm border border-[#D9A441]/30">
                   SG
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-[#1A2332]">Suraj Gaur</h4>
-                  <p className="text-[11px] text-[#142B49] font-medium">Founder &amp; Visionary, Floramade Healthcare</p>
+                <div className="space-y-0.5">
+                  <h4 className="text-base font-bold text-[#1A2332] tracking-tight">Suraj Gaur</h4>
+                  <p className="text-xs text-[#142B49] font-semibold">Founder &amp; Visionary, Floramade Healthcare</p>
+                  <p className="text-[11px] text-[#1A2332]/60">Ayurvedic Formulations &amp; Botanical Research • Delhi, India</p>
                 </div>
               </div>
-              <div className="text-right text-[11px] text-[#1A2332]/60 hidden sm:block">
-                <span>Delhi, India</span>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="px-3 py-1 rounded-full bg-[#F7F9FC] border border-[#C5D5E8] text-[11px] font-semibold text-[#142B49]">
+                  50,000+ Families Served
+                </span>
+                <span className="px-3 py-1 rounded-full bg-[#142B49] text-white text-[11px] font-bold">
+                  Delhi, India
+                </span>
               </div>
             </div>
           </motion.div>

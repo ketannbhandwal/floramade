@@ -54,6 +54,8 @@ const defaultTrustBadges = [
 const empty = {
   name: "", slug: "", category: "Ayurvedic", price: 0, discountPrice: 0, stock: 0,
   isVisible: true, description: "", benefits: "", ingredients: "",
+  isKit: false,
+  kitProducts: [],
   usage: "", images: [], ingredientImages: {}, usageImages: [], packs: [], formulaimage: "", trustQuality: {},
   trustBadges: defaultTrustBadges,
   keyBenefits: defaultKeyBenefits,
@@ -322,6 +324,25 @@ export default function AdminPage() {
       ? sanitizedKeyBenefits.map(b => b.image)
       : (form.benefitImages && form.benefitImages.length > 0 ? form.benefitImages : []);
 
+    const sanitizedKitProducts = form.isKit
+      ? (form.kitProducts || []).map((kp) => ({
+          name: kp.name?.trim() || "",
+          quantity: kp.quantity?.trim() || "",
+          description: kp.description?.trim() || "",
+          ingredients: Array.isArray(kp.ingredients)
+            ? kp.ingredients.map((x) => String(x).trim()).filter(Boolean)
+            : (kp.ingredients || "").split(",").map((x) => x.trim()).filter(Boolean),
+          usage: kp.usage?.trim() || "",
+        })).filter((kp) => kp.name)
+      : [];
+
+    let finalIngredients = form.ingredients ? form.ingredients.split(",").map((x) => x.trim()).filter(Boolean) : [];
+    if (form.isKit && sanitizedKitProducts.length > 0) {
+      finalIngredients = sanitizedKitProducts.map((kp) => 
+        kp.quantity ? `${kp.name} (${kp.quantity}): ${kp.ingredients.join(", ")}` : `${kp.name}: ${kp.ingredients.join(", ")}`
+      );
+    }
+
     const payload = {
       name: form.name,
       slug: form.slug ? slugify(form.slug) : slugify(form.name),
@@ -330,11 +351,13 @@ export default function AdminPage() {
       discountPrice: Number(form.discountPrice) || 0,
       stock: Number(form.stock) || 0,
       isVisible: form.isVisible,
+      isKit: Boolean(form.isKit && sanitizedKitProducts.length > 0),
+      kitProducts: sanitizedKitProducts,
       description: form.description || "",
       keyBenefits: sanitizedKeyBenefits,
       benefits: benefitsArray,
       benefitImages: benefitImagesArray,
-      ingredients: form.ingredients ? form.ingredients.split(",").map((x) => x.trim()).filter(Boolean) : [],
+      ingredients: finalIngredients,
       usage: form.usage ? form.usage.split(",").map((x) => x.trim()).filter(Boolean) : [],
       ingredientImages: form.ingredientImages || {},
       usageImages: form.usageImages || [],
@@ -492,6 +515,33 @@ export default function AdminPage() {
       keyBenefits = defaultKeyBenefits;
     }
 
+    let isKit = Boolean(product.isKit);
+    let kitProducts = [];
+
+    if (Array.isArray(product.kitProducts) && product.kitProducts.length > 0) {
+      isKit = true;
+      kitProducts = product.kitProducts.map(kp => ({
+        name: kp.name || "",
+        quantity: kp.quantity || "",
+        description: kp.description || "",
+        ingredients: Array.isArray(kp.ingredients) ? kp.ingredients.join(", ") : (kp.ingredients || ""),
+        usage: kp.usage || ""
+      }));
+    } else if (Array.isArray(product.ingredients) && product.ingredients.some(i => typeof i === "string" && i.includes(":"))) {
+      isKit = true;
+      kitProducts = product.ingredients.map(ing => {
+        if (typeof ing !== "string") return null;
+        const colonIdx = ing.indexOf(":");
+        if (colonIdx === -1) return { name: "Product", quantity: "", description: "", ingredients: ing, usage: "" };
+        const rawName = ing.slice(0, colonIdx).trim();
+        const herbs = ing.slice(colonIdx + 1).trim();
+        const parenMatch = rawName.match(/^(.*?)\s*\((.*?)\)$/);
+        const name = parenMatch ? parenMatch[1].trim() : rawName;
+        const quantity = parenMatch ? parenMatch[2].trim() : "";
+        return { name, quantity, description: "", ingredients: herbs, usage: "" };
+      }).filter(Boolean);
+    }
+
     setForm({
       name: product.name || "",
       slug: product.slug || "",
@@ -500,6 +550,8 @@ export default function AdminPage() {
       discountPrice: product.discountPrice || 0,
       stock: product.stock || 0,
       isVisible: product.isVisible ?? true,
+      isKit,
+      kitProducts,
       description: product.description || "",
       benefits: keyBenefits.map(b => b.text).join(", "),
       keyBenefits: keyBenefits,
@@ -579,6 +631,23 @@ export default function AdminPage() {
         })
       : defaultTrustBadges;
 
+    let isKit = Boolean(product.isKit);
+    let kitProducts = [];
+
+    if (Array.isArray(product.kitProducts) && product.kitProducts.length > 0) {
+      isKit = true;
+      kitProducts = product.kitProducts.map(kp => {
+        const { _id, id, ...rest } = kp || {};
+        return {
+          name: rest.name || "",
+          quantity: rest.quantity || "",
+          description: rest.description || "",
+          ingredients: Array.isArray(rest.ingredients) ? rest.ingredients.join(", ") : (rest.ingredients || ""),
+          usage: rest.usage || ""
+        };
+      });
+    }
+
     setForm({
       name: newName,
       slug: newSlug,
@@ -587,6 +656,8 @@ export default function AdminPage() {
       discountPrice: product.discountPrice || 0,
       stock: product.stock || 100,
       isVisible: true,
+      isKit,
+      kitProducts,
       description: product.description || "",
       benefits: keyBenefits.map(b => b.text).join(", "),
       keyBenefits: keyBenefits,
@@ -848,10 +919,162 @@ export default function AdminPage() {
                       <textarea id="product-description" className="min-h-[130px] w-full resize-y rounded-xl border border-border bg-white p-4 text-sm leading-6 text-foreground outline-none transition placeholder:text-foreground/35 focus:border-primary focus:ring-2 focus:ring-primary/15" placeholder="Describe the formulation, its intended use, and what makes it special..." value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
                     </div>
                     
-                    <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2">
-                      <Input label="Ingredients (comma separated)" value={form.ingredients} onChange={(e) => setForm((f) => ({ ...f, ingredients: e.target.value }))} />
-                      <Input label="How to use steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
-                    </div>
+                    {/* Kit / Multi-Product Ingredients Section */}
+                    <section className="space-y-4 rounded-2xl border border-[#C5D5E8] bg-[#F7F9FC] p-4 sm:p-5">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={Boolean(form.isKit)}
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                setForm((f) => ({
+                                  ...f,
+                                  isKit: checked,
+                                  kitProducts: checked && (!f.kitProducts || f.kitProducts.length === 0)
+                                    ? [
+                                        { name: "Product 1 (e.g., Advance Capsules)", quantity: "60 Veg Caps", description: "", ingredients: "", usage: "" },
+                                        { name: "Product 2 (e.g., Healing Gel)", quantity: "30g Gel", description: "", ingredients: "", usage: "" },
+                                        { name: "Product 3 (e.g., Shuddhi Churan)", quantity: "100g Powder", description: "", ingredients: "", usage: "" },
+                                      ]
+                                    : f.kitProducts,
+                                }));
+                              }}
+                              className="w-4 h-4 rounded text-[#142B49] focus:ring-[#142B49] cursor-pointer"
+                            />
+                            <span className="text-sm font-bold text-[#142B49]">
+                              This is a Kit / Combo Product (Contains 2, 3, or 4+ Products)
+                            </span>
+                          </label>
+                          <p className="mt-1 text-xs text-[#1A2332]/65">
+                            Enable if this product is a combination kit (like Pilecurex Kit). Add individual products and their specific ingredients!
+                          </p>
+                        </div>
+
+                        {form.isKit && (
+                          <button
+                            type="button"
+                            onClick={() => setForm((f) => ({
+                              ...f,
+                              kitProducts: [
+                                ...(f.kitProducts || []),
+                                { name: `Product ${(f.kitProducts || []).length + 1}`, quantity: "", description: "", ingredients: "", usage: "" },
+                              ],
+                            }))}
+                            className="rounded-full bg-[#142B49] text-white px-3.5 py-1.5 text-xs font-bold hover:bg-[#0E1F36] transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                          >
+                            <Plus size={14} /> Add Product to Kit
+                          </button>
+                        )}
+                      </div>
+
+                      {form.isKit ? (
+                        <div className="space-y-4 pt-2">
+                          {(form.kitProducts || []).map((kp, idx) => (
+                            <div key={idx} className="rounded-xl border border-[#C5D5E8] bg-white p-4 space-y-3 shadow-2xs">
+                              <div className="flex items-center justify-between pb-2 border-b border-[#C5D5E8]/60">
+                                <span className="text-xs font-bold text-[#142B49] uppercase tracking-wider flex items-center gap-2">
+                                  <span className="w-5 h-5 rounded-full bg-[#142B49] text-white text-[10px] flex items-center justify-center font-bold">
+                                    {idx + 1}
+                                  </span>
+                                  <span>Kit Product {idx + 1}</span>
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => setForm((f) => ({
+                                    ...f,
+                                    kitProducts: f.kitProducts.filter((_, i) => i !== idx),
+                                  }))}
+                                  className="text-red-500 hover:text-red-700 text-xs font-semibold transition-colors cursor-pointer"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+
+                              <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                                <Input
+                                  label="Product Name / Title"
+                                  placeholder="e.g., Advance Capsules"
+                                  value={kp.name}
+                                  onChange={(e) => setForm((f) => {
+                                    const kps = [...(f.kitProducts || [])];
+                                    kps[idx] = { ...kps[idx], name: e.target.value };
+                                    return { ...f, kitProducts: kps };
+                                  })}
+                                />
+                                <Input
+                                  label="Quantity / Pack Spec"
+                                  placeholder="e.g., 60 Veg Capsules"
+                                  value={kp.quantity}
+                                  onChange={(e) => setForm((f) => {
+                                    const kps = [...(f.kitProducts || [])];
+                                    kps[idx] = { ...kps[idx], quantity: e.target.value };
+                                    return { ...f, kitProducts: kps };
+                                  })}
+                                />
+                              </div>
+
+                              <div>
+                                <Input
+                                  label="Ingredients for this product (comma separated)"
+                                  placeholder="e.g., Nagkesar, Lajjalu, Kutaj, Arshoghni Vati, Guggulu, Amla"
+                                  value={kp.ingredients}
+                                  onChange={(e) => setForm((f) => {
+                                    const kps = [...(f.kitProducts || [])];
+                                    kps[idx] = { ...kps[idx], ingredients: e.target.value };
+                                    return { ...f, kitProducts: kps };
+                                  })}
+                                />
+                                <p className="text-[11px] text-[#1A2332]/50 mt-1">Separate botanical herbs with commas.</p>
+                              </div>
+
+                              <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                                <Input
+                                  label="How to use / Dosage for this product"
+                                  placeholder="e.g., 1-2 capsules twice daily with warm water after meals"
+                                  value={kp.usage}
+                                  onChange={(e) => setForm((f) => {
+                                    const kps = [...(f.kitProducts || [])];
+                                    kps[idx] = { ...kps[idx], usage: e.target.value };
+                                    return { ...f, kitProducts: kps };
+                                  })}
+                                />
+                                <Input
+                                  label="Short Action / Therapeutic Benefit"
+                                  placeholder="e.g., Relieves acute pain & reduces swollen veins"
+                                  value={kp.description}
+                                  onChange={(e) => setForm((f) => {
+                                    const kps = [...(f.kitProducts || [])];
+                                    kps[idx] = { ...kps[idx], description: e.target.value };
+                                    return { ...f, kitProducts: kps };
+                                  })}
+                                />
+                              </div>
+                            </div>
+                          ))}
+
+                          <button
+                            type="button"
+                            onClick={() => setForm((f) => ({
+                              ...f,
+                              kitProducts: [
+                                ...(f.kitProducts || []),
+                                { name: `Product ${(f.kitProducts || []).length + 1}`, quantity: "", description: "", ingredients: "", usage: "" },
+                              ],
+                            }))}
+                            className="w-full py-2.5 rounded-xl border-2 border-dashed border-[#C5D5E8] hover:border-[#142B49] text-xs font-bold text-[#142B49] hover:bg-[#142B49]/5 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                          >
+                            <Plus size={14} /> + Add Another Product to this Kit
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 pt-1">
+                          <Input label="Ingredients (comma separated)" value={form.ingredients} onChange={(e) => setForm((f) => ({ ...f, ingredients: e.target.value }))} />
+                          <Input label="How to use steps (comma separated)" value={form.usage} onChange={(e) => setForm((f) => ({ ...f, usage: e.target.value }))} />
+                        </div>
+                      )}
+                    </section>
 
                     {/* Pack Management Section */}
                     <section className="space-y-4 rounded-2xl border border-[#e6dcc8] bg-[#fffdf8] p-4 sm:p-5">

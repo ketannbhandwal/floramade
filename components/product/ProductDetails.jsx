@@ -379,6 +379,48 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     return [];
   }, [product.usage]);
 
+  // Multi-Product Kit System
+  const kitProductsList = useMemo(() => {
+    // 1. Explicit kitProducts array
+    if (Array.isArray(product.kitProducts) && product.kitProducts.length > 0) {
+      return product.kitProducts.map(kp => ({
+        name: kp.name || "Product Formulation",
+        quantity: kp.quantity || "",
+        description: kp.description || "",
+        usage: kp.usage || "",
+        ingredients: Array.isArray(kp.ingredients)
+          ? kp.ingredients.map(x => String(x).trim()).filter(Boolean)
+          : (kp.ingredients || "").split(/[,•|]/).map(x => x.trim()).filter(Boolean)
+      })).filter(kp => Boolean(kp.name));
+    }
+
+    // 2. Fallback parser for legacy format "Product Name: Herb 1, Herb 2..."
+    if (Array.isArray(product.ingredients) && product.ingredients.some(i => typeof i === "string" && i.includes(":"))) {
+      return product.ingredients.map(ing => {
+        if (typeof ing !== "string") return null;
+        const colonIdx = ing.indexOf(":");
+        if (colonIdx === -1) return null;
+        const rawName = ing.slice(0, colonIdx).trim();
+        const herbsRaw = ing.slice(colonIdx + 1).trim();
+        const parenMatch = rawName.match(/^(.*?)\s*\((.*?)\)$/);
+        const name = parenMatch ? parenMatch[1].trim() : rawName;
+        const quantity = parenMatch ? parenMatch[2].trim() : "";
+        const ingredients = herbsRaw.split(/[,•|]|\s{2,}/).map(x => x.trim()).filter(Boolean);
+        return {
+          name,
+          quantity,
+          description: "",
+          usage: "",
+          ingredients: ingredients.length > 0 ? ingredients : [herbsRaw]
+        };
+      }).filter(Boolean);
+    }
+
+    return [];
+  }, [product]);
+
+  const hasKitProducts = Boolean(product.isKit || kitProductsList.length > 0);
+
   // Pricing
   const currentPrice = selectedPack?.price || product.discountPrice || product.price;
   const currentMRP = selectedPack?.mrp || product.price;
@@ -737,12 +779,17 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
             
             {/* Title & Category Tag */}
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <span className="text-[10px] font-bold text-[#142B49] uppercase tracking-tight bg-[#E7EFD8] px-2.5 py-0.5 rounded-full border border-[#C5D5E8]">
                   🌿 {product.category || "Ayurvedic Formulation"}
                 </span>
+                {hasKitProducts && (
+                  <span className="text-[10px] font-bold text-[#142B49] uppercase tracking-tight bg-[#D9A441]/20 px-2.5 py-0.5 rounded-full border border-[#D9A441]/40 flex items-center gap-1">
+                    📦 Complete {kitProductsList.length > 0 ? `${kitProductsList.length}-Product ` : ""}Kit
+                  </span>
+                )}
                 <span className="text-[10px] font-semibold text-[#1A2332]/60 uppercase tracking-tight">
-                  100% Organic & Lab-Tested
+                  100% Organic &amp; Lab-Tested
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-bold text-[#1A2332] tracking-tight leading-tight">
@@ -1019,7 +1066,28 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                           <span>🌿</span> Recommended Daily Ritual:
                         </p>
 
-                        {usageSteps.length > 0 ? (
+                        {hasKitProducts && kitProductsList.some(kp => kp.usage) ? (
+                          <div className="space-y-2.5">
+                            {kitProductsList.map((kp, idx) => (
+                              <div
+                                key={idx}
+                                className="rounded-xl border border-[#C5D5E8]/70 bg-[#F7F9FC] p-3 text-xs sm:text-sm text-[#1A2332]/90 leading-relaxed shadow-2xs space-y-1"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#142B49] text-[10px] font-bold text-white">
+                                    {idx + 1}
+                                  </span>
+                                  <span className="font-bold text-xs sm:text-sm text-[#142B49]">
+                                    {kp.name} {kp.quantity ? `(${kp.quantity})` : ""}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-[#1A2332]/85 pl-7">
+                                  {kp.usage || "Use as directed on label or by your Ayurvedic physician."}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        ) : usageSteps.length > 0 ? (
                           <div className="space-y-2">
                             {usageSteps.map((step, idx) => (
                               <div
@@ -1046,14 +1114,21 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                 </AnimatePresence>
               </div>
 
-              {/* 3. Ingredients Accordion (Clean herb list, NO IMAGES) */}
+              {/* 3. Ingredients Accordion (Multi-Product Kit View OR Single Product List) */}
               <div className="border border-[#C5D5E8] rounded-2xl overflow-hidden bg-white shadow-xs">
                 <button
                   type="button"
                   onClick={() => toggleAccordion("ingredients")}
                   className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-[#1A2332] hover:bg-[#C5D5E8]/30 transition-colors cursor-pointer select-none"
                 >
-                  <span>Ingredients</span>
+                  <div className="flex items-center gap-2">
+                    <span>Ingredients</span>
+                    {hasKitProducts && kitProductsList.length > 0 && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#142B49]/10 text-[#142B49]">
+                        {kitProductsList.length} Formulations
+                      </span>
+                    )}
+                  </div>
                   <Plus size={16} className={`transition-transform duration-300 ease-in-out ${accordionOpen.ingredients ? "rotate-45 text-[#142B49]" : ""}`} />
                 </button>
                 <AnimatePresence initial={false}>
@@ -1066,28 +1141,91 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
                       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50 space-y-2.5">
-                        <p className="font-semibold text-[#142B49]">🌿 100% Pure Botanical Ingredients:</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {(product.ingredients && product.ingredients.length > 0 
-                            ? product.ingredients 
-                            : ["Ashwagandha", "Safed Musli", "Shatavari", "Gokshura", "Kaunch Beej", "Amla", "Vidarikand", "Gudmar", "Jamun", "Karela"]
-                          ).map((ing, idx) => {
-                            const name = typeof ing === "string" ? ing : ing?.name || "";
-                            return (
-                              <span 
-                                key={idx}
-                                className="inline-block px-2.5 py-1 rounded-full bg-[#F7F9FC] border border-[#C5D5E8] text-xs font-semibold text-[#1A2332] capitalize tracking-tight"
-                              >
-                                {name}
-                              </span>
-                            );
-                          })}
+                      {hasKitProducts && kitProductsList.length > 0 ? (
+                        <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50 space-y-3.5">
+                          <div className="flex items-center justify-between gap-2 flex-wrap pb-1 border-b border-[#C5D5E8]/40">
+                            <p className="font-semibold text-[#142B49] flex items-center gap-1.5 text-xs sm:text-sm">
+                              <span>🌿</span> 100% Pure Botanical Ingredients by Product:
+                            </p>
+                            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#142B49]/10 text-[#142B49]">
+                              {kitProductsList.length} Products Included
+                            </span>
+                          </div>
+
+                          <div className="space-y-3">
+                            {kitProductsList.map((kp, idx) => (
+                              <div key={idx} className="rounded-xl border border-[#C5D5E8] bg-[#F7F9FC] p-3.5 space-y-2 shadow-2xs">
+                                <div className="flex items-center justify-between gap-2 flex-wrap">
+                                  <div className="flex items-center gap-2">
+                                    <span className="w-5 h-5 rounded-full bg-[#142B49] text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                                      {idx + 1}
+                                    </span>
+                                    <h4 className="font-bold text-xs sm:text-sm text-[#142B49]">
+                                      {kp.name}
+                                    </h4>
+                                  </div>
+                                  {kp.quantity && (
+                                    <span className="text-[11px] font-semibold text-[#142B49] bg-white px-2 py-0.5 rounded-md border border-[#C5D5E8]">
+                                      {kp.quantity}
+                                    </span>
+                                  )}
+                                </div>
+
+                                {kp.description && (
+                                  <p className="text-[11px] text-[#1A2332]/75 italic pl-7">
+                                    {kp.description}
+                                  </p>
+                                )}
+
+                                <div className="pl-7 flex flex-wrap gap-1.5 pt-0.5">
+                                  {(kp.ingredients && kp.ingredients.length > 0 ? kp.ingredients : []).map((herb, hIdx) => (
+                                    <span
+                                      key={hIdx}
+                                      className="inline-block px-2.5 py-1 rounded-full bg-white border border-[#C5D5E8] text-[11px] sm:text-xs font-semibold text-[#1A2332] shadow-2xs"
+                                    >
+                                      {herb}
+                                    </span>
+                                  ))}
+                                </div>
+
+                                {kp.usage && (
+                                  <div className="pl-7 pt-1 text-[11px] text-[#142B49] flex items-center gap-1.5 font-medium">
+                                    <span>🕒 Dosage:</span>
+                                    <span className="text-[#1A2332]/80">{kp.usage}</span>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+
+                          <p className="text-[11px] sm:text-xs text-[#1A2332]/65 leading-relaxed pt-1 border-t border-[#C5D5E8]/50">
+                            Ethically sourced standardized extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
+                          </p>
                         </div>
-                        <p className="text-[11px] sm:text-xs text-[#1A2332]/65 leading-relaxed pt-1 border-t border-[#C5D5E8]/50">
-                          Ethically sourced pure extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
-                        </p>
-                      </div>
+                      ) : (
+                        <div className="px-4 pb-4 pt-2 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed border-t border-[#C5D5E8]/50 space-y-2.5">
+                          <p className="font-semibold text-[#142B49]">🌿 100% Pure Botanical Ingredients:</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {(product.ingredients && product.ingredients.length > 0 
+                              ? product.ingredients 
+                              : ["Ashwagandha", "Safed Musli", "Shatavari", "Gokshura", "Kaunch Beej", "Amla", "Vidarikand", "Gudmar", "Jamun", "Karela"]
+                            ).map((ing, idx) => {
+                              const name = typeof ing === "string" ? ing : ing?.name || "";
+                              return (
+                                <span 
+                                  key={idx}
+                                  className="inline-block px-2.5 py-1 rounded-full bg-[#F7F9FC] border border-[#C5D5E8] text-xs font-semibold text-[#1A2332] capitalize tracking-tight"
+                                >
+                                  {name}
+                                </span>
+                              );
+                            })}
+                          </div>
+                          <p className="text-[11px] sm:text-xs text-[#1A2332]/65 leading-relaxed pt-1 border-t border-[#C5D5E8]/50">
+                            Ethically sourced pure extracts. Zero added sugar, no artificial chemicals, no synthetic binders.
+                          </p>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

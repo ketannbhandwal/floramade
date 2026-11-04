@@ -229,9 +229,16 @@ export default function ProductSpotlight({ products = [], selectedId = "" }) {
           <div className="space-y-4 sm:space-y-5">
             
             {/* Category / Super-title */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142B49]/10 text-[#142B49] text-[11px] font-bold tracking-tight uppercase">
-              <Sparkles size={12} />
-              <span>Ayurvedic Spotlight Formulation</span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142B49]/10 text-[#142B49] text-[11px] font-bold tracking-tight uppercase">
+                <Sparkles size={12} />
+                <span>Ayurvedic Spotlight Formulation</span>
+              </div>
+              {(product.isKit || (Array.isArray(product.kitProducts) && product.kitProducts.length > 0)) && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#D9A441]/20 text-[#142B49] text-[11px] font-bold tracking-tight uppercase border border-[#D9A441]/40">
+                  📦 Complete Combo Kit
+                </span>
+              )}
             </div>
 
             {/* Title */}
