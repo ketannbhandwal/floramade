@@ -44,9 +44,9 @@ const trustMetrics = [
     subtitle: "Standardized Lab Verifications"
   },
   {
-    icon: Users,
-    title: "50,000+ Seekers",
-    subtitle: "Trusted Families Across India"
+    icon: Award,
+    title: "Honest Formulations",
+    subtitle: "Zero Synthetic Binders or Steroids"
   }
 ];
 
@@ -251,10 +251,13 @@ export default function AboutContent() {
             {/* Founder Story & Purpose Narrative */}
             <div className="space-y-4 text-xs sm:text-sm text-[#1A2332]/85 leading-relaxed">
               <p>
-                &ldquo;Having witnessed firsthand how modern lifestyles, high daily stress, and chemically processed diets have disrupted vitality across families, I felt a deep responsibility to bridge ancient wisdom with modern daily living. Floramade was born in Delhi out of a personal commitment: to give people honest, unadulterated Ayurvedic solutions that genuinely work at the root cause.&rdquo;
+                Floramade was founded by <strong>Suraj Gaur</strong> in Delhi with a singular conviction: genuine Ayurvedic healing must be honest, unadulterated, and free of commercial compromises. Having observed how lifestyle stress, irregular diets, and metabolic imbalances were affecting modern families, he recognized that most mass-market products offered only quick-fix claims loaded with synthetic fillers, hidden binders, and diluted herbs.
               </p>
               <p>
-                &ldquo;In a market crowded with mass-produced supplements packed with synthetic fillers, artificial binders, and diluted herbs, we chose a zero-compromise path. Every formulation we create strictly honors classical Shastriya methodologies (Charaka &amp; Sushruta Samhita) while passing rigorous contemporary laboratory screenings for purity, heavy metals, and active botanical standardization.&rdquo;
+                Driven by a personal commitment to authentic herbal science, Suraj Gaur set out to build Floramade on classical Shastriya principles (Charaka &amp; Sushruta Samhita) paired with modern laboratory standardization. Each formulation is developed in close consultation with experienced Ayurvedic Vaidyas and botanical experts, using 100% active herbal extracts to address root causes—from blood sugar balance in MadhuCurex and anorectal care in Pilecurex to gut motility in Paachan Sathi.
+              </p>
+              <p>
+                Operating directly from Delhi, Floramade maintains strict batch-level testing to ensure zero heavy metal contamination, zero steroids, and zero artificial preservatives. For Suraj Gaur, every customer order is treated as a family trust.
               </p>
             </div>
 
@@ -303,22 +306,17 @@ export default function AboutContent() {
 
             {/* Founder Profile Details & Location */}
             <div className="pt-4 border-t border-[#C5D5E8]/70 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3.5">
-                <div className="w-13 h-13 rounded-2xl bg-[#142B49] text-[#D9A441] font-serif font-bold text-xl flex items-center justify-center shrink-0 shadow-sm border border-[#D9A441]/30">
-                  SG
-                </div>
-                <div className="space-y-0.5">
-                  <h4 className="text-base font-bold text-[#1A2332] tracking-tight">Suraj Gaur</h4>
-                  <p className="text-xs text-[#142B49] font-semibold">Founder &amp; Visionary, Floramade Healthcare</p>
-                  <p className="text-[11px] text-[#1A2332]/60">Ayurvedic Formulations &amp; Botanical Research • Delhi, India</p>
-                </div>
+              <div className="space-y-0.5">
+                <h4 className="text-base font-bold text-[#1A2332] tracking-tight">Suraj Gaur</h4>
+                <p className="text-xs text-[#142B49] font-semibold">Founder &amp; Visionary, Floramade Healthcare</p>
+                <p className="text-[11px] text-[#1A2332]/60">Ayurvedic Formulations &amp; Botanical Research • Delhi, India</p>
               </div>
 
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full bg-[#F7F9FC] border border-[#C5D5E8] text-[11px] font-semibold text-[#142B49]">
-                  50,000+ Families Served
+                <span className="px-3.5 py-1 rounded-full bg-[#F7F9FC] border border-[#C5D5E8] text-[11px] font-semibold text-[#142B49]">
+                  Classical Shastriya Formulations
                 </span>
-                <span className="px-3 py-1 rounded-full bg-[#142B49] text-white text-[11px] font-bold">
+                <span className="px-3.5 py-1 rounded-full bg-[#142B49] text-white text-[11px] font-bold">
                   Delhi, India
                 </span>
               </div>
