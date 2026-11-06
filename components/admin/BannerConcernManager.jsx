@@ -45,6 +45,7 @@ import {
   DEFAULT_SHOW_OFFERS_SECTION,
   DEFAULT_COUPONS,
 } from "@/lib/settings-constants";
+import { uploadMediaFile } from "@/lib/client-upload";
 
 const PRESET_COLORS = [
   { name: "Floramade Brown", hex: "#142B49" },
@@ -188,28 +189,13 @@ export default function BannerConcernManager({ products: initialProducts = [] })
     loadSettings();
   }, []);
 
-  // Upload helper
+  // Upload helper using safe client-side compressor & FormData
   async function handleFileUpload(file, targetKey) {
-    if (!file) return;
+    if (!file) return null;
     try {
       setUploadingTarget(targetKey);
-      const base64 = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-      });
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ file: base64, type: "image" }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
-
-      return data.url;
+      const url = await uploadMediaFile(file, { type: "image", maxWidth: 2560 });
+      return url;
     } catch (err) {
       console.error("Upload error:", err);
       toast.error(err.message || "Failed to upload image");

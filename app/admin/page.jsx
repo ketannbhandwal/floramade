@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import BannerConcernManager from "@/components/admin/BannerConcernManager";
 import { slugify } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
+import { uploadMediaFile } from "@/lib/client-upload";
 
 const AreaChart = dynamic(() => import("recharts").then(mod => mod.AreaChart), { ssr: false });
 const BarChart = dynamic(() => import("recharts").then(mod => mod.BarChart), { ssr: false });
@@ -270,21 +271,9 @@ export default function AdminPage() {
 
   async function handleFileUpload(file, type = 'image') {
     if (!file) return null;
-    
     try {
-      const base64 = await fileToBase64(file);
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          file: base64,
-          type 
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || data.message || `Upload failed (${res.status})`);
-      return data.url;
+      const url = await uploadMediaFile(file, { type, maxWidth: 2400 });
+      return url;
     } catch (error) {
       console.error("Upload error:", error);
       toast.error(`${type.charAt(0).toUpperCase() + type.slice(1)} upload failed: ${error.message}`);

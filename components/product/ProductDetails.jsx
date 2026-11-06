@@ -35,6 +35,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/product/ProductCard";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
+import { uploadMediaFile } from "@/lib/client-upload";
 
 const ProductStructuredData = ({ product }) => {
   const productSchema = {
@@ -642,28 +643,13 @@ export default function ProductDetails({ product, relatedProducts = [] }) {
     }
   };
 
-  async function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
-  }
-
   async function handleImageUpload(file) {
     if (!file) return null;
     try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: JSON.stringify({ file: await fileToBase64(file), type: "image" }),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!res.ok) throw new Error("Upload failed");
-      const data = await res.json();
-      return data.url;
-    } catch {
-      toast.error("Image upload failed");
+      const url = await uploadMediaFile(file, { type: "image", maxWidth: 1600 });
+      return url;
+    } catch (err) {
+      toast.error(err.message || "Image upload failed");
       return null;
     }
   }
